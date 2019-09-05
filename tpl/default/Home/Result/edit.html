@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>修改作业</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit.css" />
+    <script type="text/javascript" src="__ADMIN_JS__/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+</head>
+
+<body>
+    <div id="wrap" >
+		<div class="cen">
+			<div class="kuan">
+				<form method="POST" action="__ACTION__">
+					<input type="hidden" name="id" value="{$msg['id']}">
+					<div class="xin">
+					<div class="xinleft">
+						&nbsp;船&nbsp;&nbsp;名<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<select class="select1" name="shipid">
+							<volist name="shiplist" id="v">
+								<option value="{$v['id']}" 
+								<if condition="$v['id'] == $msg['shipid']">
+									selected
+								</if>	
+								>{$v['shipname']}</option>
+							</volist>
+						</select>
+					</div>
+				</div>
+				<foreach name="personalitylist" item="v">
+				<div class="xin">
+					<div class="xinleft">
+						&nbsp;{$v.title}<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="{$v.name}" class="input1" value='<?php
+							echo $personalitymsg[$v['name']];
+						?>' required maxlength="20">
+					</div>
+				</div>					
+				</foreach>
+
+				<!-- <div class="xin">
+					<div class="xinleft">
+						&nbsp;作业地点<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="locationname" class="input1" value="{$msg['locationname']}" required maxlength="20">
+					</div>
+				</div>
+				<div class="xin">
+					<div class="xinleft">
+						&nbsp;货&nbsp;&nbsp;名<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="goodsname" class="input1" value="{$msg['goodsname']}" required maxlength="20">
+					</div>
+				</div>
+				<div class="xin">
+					<div class="xinleft">
+						&nbsp;运&nbsp;单&nbsp;量<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="transport" class="input1" value="{$msg['transport']}" required maxlength="10">
+					</div>
+				</div>
+				<div class="xin">
+					<div class="xinleft">
+						&nbsp;起&nbsp;运&nbsp;港<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="start" class="input1" value="{$msg['start']}" required maxlength="20">
+					</div>
+				</div>
+				<div class="xin">
+					<div class="xinleft">
+						&nbsp;目&nbsp;的&nbsp;港<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="objective" class="input1" value="{$msg['objective']}" required maxlength="20">
+					</div>
+				</div> -->
+				<div class="tijiao">
+					<input type="submit" class="div1" id="submit" value="提&nbsp;&nbsp;交" style="border:none;display:block" />
+				</div>
+				</form>
+			</div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+	$("select[name=shipid]").change(function () {
+        var id = $("select[name=shipid]").val();
+ 		var r;
+		var msg;
+ 		$.ajax({
+            url:"{:U('Result/judge_time')}",
+            data:'shipid='+id,
+            type:'post',
+            async:false,
+            dataType:'json',
+            success:function(res){
+            	console.log(res.code);
+                if (res.code == '1') {
+                	$('#submit').attr("disabled",false);
+                	var sub = $('#submit')
+                	$('#submit').css('background-color','#3ca0fe');
+                }else{
+                	msg = res.msg;
+                	layer.msg(msg, {icon: 5});
+                	$('#submit').attr("disabled",true);
+                	$('#submit').css('background-color','#DDDDDD');
+                	$("select[name=shipid]").val("")
+                }
+            }
+        });
+	});
+</script>
+</html>

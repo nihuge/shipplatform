@@ -1,0 +1,452 @@
+<extend name="Public:base"/>
+<block name='navhover5'>dropbtnhover</block>
+<block name='title'>船舶管理</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <link rel="stylesheet" href="__INDEX_CSS__/ship.css">
+    <!-- <link rel="stylesheet" href="__INDEX_CSS__/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__INDEX_CSS__/checkbox.css">
+
+    <div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            管理员设置>船舶管理
+        </div>
+    </div>
+    <div class='xia'>
+        <hr style="width: 710px">
+        <button class="addbut" id='addbut1'>新建船舶</button>
+        <button class="addbut" id='addbut2'>新建船舱</button>
+        <hr style="width: 50px">
+        <table id="customers">
+            <tr>
+                <th>船名</th>
+                <th>膨胀倍数</th>
+                <th>舱总数</th>
+                <th>管线容量</th>
+                <th>底量测量孔</th>
+                <th>纵横倾修正表</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list" id="v">
+                <tr>
+                    <td>{$v['shipname']}</td>
+                    <td>{$v['coefficient']}</td>
+                    <td>{$v['cabinnum']}</td>
+                    <td>
+                        <if condition="$v['is_guanxian'] == '1'">
+                            包含
+                            <elseif condition="$v['is_guanxian'] == '2'"/>
+                            未包含
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$v['is_diliang'] == '1'">
+                            有
+                            <elseif condition="$v['is_diliang'] == '2'"/>
+                            无
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$v['suanfa'] == 'a'">
+                            无
+                            <elseif condition="$v['suanfa'] == 'b'"/>
+                            有
+                            <elseif condition="$v['suanfa'] == 'c'"/>
+                            有
+                        </if>
+                    </td>
+                    <td>
+                        <a href="javascript:;" onclick="edit({$v['id']})" class='aa1'>修改</a>
+                        &nbsp;&nbsp;
+                        <a href="{:U('Cabin/index',array('shipid'=>$v['id']))}" class='aa2'>船舱管理</a>
+                    </td>
+                </tr>
+            </volist>
+            <tr style="background-color: #fff">
+                <td colspan="7" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 新建船舶 -->
+    <div class="editMask5">
+        <div class="editBox1">
+            <div class="bar">新建船舶</div>
+            <div class="bar1">船舶信息</div>
+            <ul class="pass">
+                <li>
+                    <label>船舶公司</label>
+                    <p>
+                        <select name="firmid" id='firmid' class=''>
+                            <option value="">请选择公司</option>
+                            <volist name="firmlist" id="v">
+                                <option value="{$v['id']}">{$v['firmname']}</option>
+                            </volist>
+                        </select>
+                    </p>
+                </li>
+                <li>
+                    <label>船&nbsp;名</label>
+                    <p><input type="text" name="shipname" placeholder="请输入船名" class="i-box" id="shipname"
+                              maxlength="12"></p>
+                </li>
+                <li>
+                    <label>膨胀倍数</label>
+                    <p>
+                        <input type="text" name="coefficient" placeholder="请输入膨胀倍数" class="i-box" id="coefficient"
+                               maxlength="3">
+                        <img src="__INDEX_IMAGE__/question.png" class="wenimg" onclick="b()">
+                    </p>
+                </li>
+                <li>
+                    <label>舱&nbsp;总&nbsp;数</label>
+                    <p>
+                        <input type="text" name="cabinnum" placeholder="请输入舱总数" class="i-box" id="cabinnum"
+                               maxlength="2">
+                        <img src="__INDEX_IMAGE__/question.png" class="wenimg" onclick="a('船舶总共有多少舱')">
+                    </p>
+                </li>
+            </ul>
+            <div class="bar1">舱容表信息</div>
+            <ul class="pass">
+                <li>
+                    <label>管线容量</label>
+                    <p>
+                    <div class='radios'>
+                        <label><input type="radio" name="is_guanxian" value='1' checked class="regular-checkbox">&nbsp;&nbsp;包含</label>
+                        <label><input type="radio" name="is_guanxian" value='2' class="regular-checkbox">&nbsp;&nbsp;未包含</label>
+                    </div>
+                    <img src="__INDEX_IMAGE__/question.png" onclick="a('舱容表所列容积值是否包含管线容量')">
+                    </p>
+                </li>
+                <li>
+                    <label>底量测量孔</label>
+                    <p>
+                    <div class='radios'>
+                        <label><input type="radio" name="is_diliang" value='1'
+                                      class="regular-checkbox">&nbsp;&nbsp;有</label>
+                        <label><input type="radio" name="is_diliang" value='2' checked class="regular-checkbox">&nbsp;&nbsp;无</label>
+                    </div>
+                    <img src="__INDEX_IMAGE__/question.png" class="wenimg"
+                         onclick="a('部分船舶每个舱有底量和装货容量两个测量孔，相应地有两本舱容表')">
+                    </p>
+                </li>
+                <li>
+                    <label>纵横倾修正表</label>
+                    <p>
+                        <select name="suanfa" id='suanfa' class=''>
+                            <option value="a">无</option>
+                            <option value="b">有</option>
+                        </select>
+                        <img src="__INDEX_IMAGE__/question.png" class="wenimg" onclick="a('请查阅检定证书目录确认是否有纵倾、横倾修正表')">
+                    </p>
+                </li>
+                <li><label>舱容表有效期</label>
+                    <p><input type='text' class='i-box' id='dateinput' value=''
+                              name='expire_time'>
+                        <img src='./tpl/default/Index/Public/image/question.png' class='wenimg'
+                             onclick="a( '查看有效文案底部有效期')"></p></li>
+            </ul>
+            <div class="bar">
+                <input type="submit" value="取&nbsp;消" class="mmqx passbtn">
+                <input type="submit" onclick="addr()" value="提&nbsp;交" class="mmqd passbtn">
+            </div>
+        </div>
+        <script>
+            laydate.render({
+                elem: '#dateinput' //指定元素
+                , theme: 'grid' //主题
+                , format: 'yyyy-MM-dd' //自定义格式
+                , min: 0
+            });
+
+            $(document).on("click", "#addbut1", function () {
+                event.preventDefault();
+                $('.editMask5').addClass('is-visible3');
+                $('.editMask5').find(".tip_info i").remove()
+            })
+            $('.editMask5').on('click', function (event) {
+                if ($(event.target).is('.mmqx') || $(event.target).is('.editMask5')) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function addr() {
+                var firmid = $('#firmid').val();
+                var shipname = $('#shipname').val();
+                var coefficient = $('#coefficient').val();
+                var cabinnum = $('#cabinnum').val();
+                var suanfa = $('#suanfa').val();
+                var is_guanxian = $('input[name="is_guanxian"]:checked').val();
+                var is_diliang = $('input[name="is_diliang"]:checked').val();
+                var expir_time = $('#dateinput').val();
+                $.ajax({
+                    url: "{:U('Ship/addship')}",
+                    type: "POST",
+                    data: {
+                        'firmid': firmid,
+                        'shipname': shipname,
+                        'coefficient': coefficient,
+                        'cabinnum': cabinnum,
+                        'suanfa': suanfa,
+                        'is_guanxian': is_guanxian,
+                        'is_diliang': is_diliang,
+                        'expire_time': expir_time,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <!-- 修改船舶 -->
+    <div class="editMask6">
+        <div class="editBox1" id='editBox1'>
+
+        </div>
+        <script>
+            $('.editMask6').on('click', function (event) {
+                if ($(event.target).is('.mmqx') || $(event.target).is('.editMask6')) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function edit(id) {
+                // 判断作业是否已开始
+                $.ajax({
+                    url: "{:U('Ship/shipmsg')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.state == 1) {
+                            $("#editBox1").html(data.content);
+                            event.preventDefault();
+                            $('.editMask6').addClass('is-visible3');
+                            $('.editMask6').find(".tip_info i").remove()
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+
+            function editr() {
+                var id = $('#shipid').val();
+                var firmid = $('#firmid1').val();
+                var shipname = $('#shipname1').val();
+                var coefficient = $('#coefficient1').val();
+                var cabinnum = $('#cabinnum1').val();
+                var suanfa = $('#suanfa1').val();
+                var is_guanxian = $('input[name="is_guanxian1"]:checked').val();
+                var is_diliang = $('input[name="is_diliang1"]:checked').val();
+                var expir_time = $('#dateinput1').val();
+                $.ajax({
+                    url: "{:U('Ship/editship')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                        'firmid': firmid,
+                        'shipname': shipname,
+                        'coefficient': coefficient,
+                        'cabinnum': cabinnum,
+                        'suanfa': suanfa,
+                        'is_guanxian': is_guanxian,
+                        'is_diliang': is_diliang,
+                        'expire_time': expir_time,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <!-- 新建船舱 -->
+    <div class="editMask7">
+        <div class="editBox1">
+            <div class="bar">新建船舱</div>
+            <div class="bar1">基本信息</div>
+            <ul class="pass">
+                <li>
+                    <label>所属船舶</label>
+                    <p>
+                        <select name="shipidd" id='shipidd' class=''>
+                            <option value="">请选择所属船舶</option>
+                            <volist name="shiplist" id="v">
+                                <option value="{$v['id']}">{$v['shipname']}</option>
+                            </volist>
+                        </select>
+                    </p>
+                </li>
+                <li>
+                    <label>舱&nbsp;名</label>
+                    <p><input type="text" name="cabinname" placeholder="请输入舱名" class="i-box" id="cabinname"
+                              maxlength="12"></p>
+                </li>
+                <li>
+                    <label>管线容量</label>
+                    <p>
+                        <input type="text" name="pipe_line" placeholder="请输入管线容量" class="i-box" id="pipe_line"
+                               maxlength="5">
+                    </p>
+                </li>
+            </ul>
+            <div class="bar1">容量表信息</div>
+            <ul class="pass">
+                <li>
+                    <label>基准高度</label>
+                    <p>
+                        <input type="text" name="altitudeheight" placeholder="请输入基准高度" class="i-box" id="altitudeheight"
+                               maxlength="5">
+                    </p>
+                </li>
+                <li>
+                    <label>底&nbsp;量</label>
+                    <p>
+                        <input type="text" name="bottom_volume" placeholder="请输入底量" class="i-box" id="bottom_volume"
+                               maxlength="5">
+                    </p>
+                </li>
+            </ul>
+            <div style="display: none;" id="hiden">
+                <div class="bar1">底量表信息</div>
+                <ul class="pass">
+                    <li>
+                        <label>基准高度</label>
+                        <p>
+                            <input type="text" name="dialtitudeheight" placeholder="请输入基准高度" class="i-box"
+                                   id="dialtitudeheight" maxlength="5">
+                        </p>
+                    </li>
+                    <li>
+                        <label>底&nbsp;量</label>
+                        <p>
+                            <input type="text" name="bottom_volume_di" placeholder="请输入底量" class="i-box"
+                                   id="bottom_volume_di" maxlength="5">
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="bar">
+                <input type="submit" value="取&nbsp;消" class="mmqx passbtn">
+                <input type="submit" onclick="addc()" value="提&nbsp;交" class="mmqd passbtn">
+            </div>
+        </div>
+        <script>
+            $(document).on("click", "#addbut2", function () {
+                event.preventDefault();
+                $('.editMask7').addClass('is-visible3');
+                $('.editMask7').find(".tip_info i").remove()
+            })
+            $('.editMask7').on('click', function (event) {
+                if ($(event.target).is('.mmqx') || $(event.target).is('.editMask7')) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function addc() {
+                var shipid = $('#shipidd').val();
+                var cabinname = $('#cabinname').val();
+                var pipe_line = $('#pipe_line').val();
+                var altitudeheight = $('#altitudeheight').val();
+                var bottom_volume = $('#bottom_volume').val();
+                var dialtitudeheight = $('#dialtitudeheight').val();
+                var bottom_volume_di = $('#bottom_volume_di').val();
+
+                $.ajax({
+                    url: "{:U('Cabin/add')}",
+                    type: "POST",
+                    data: {
+                        'shipid': shipid,
+                        'cabinname': cabinname,
+                        'pipe_line': pipe_line,
+                        'altitudeheight': altitudeheight,
+                        'bottom_volume': bottom_volume,
+                        'dialtitudeheight': dialtitudeheight,
+                        'bottom_volume_di': bottom_volume_di,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+    <div id="tong1" hidden>
+        <img src="__INDEX_IMAGE__/tong.png" style="width: 450px;height:290px;">
+    </div>
+    <script type="text/javascript">
+        function a(msgs) {
+            layer.msg(msgs);
+        }
+
+        function b() {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: '450px 300px',
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: $('#tong1')
+            });
+        }
+
+        function ti() {
+            $('#submit').click();
+        }
+
+        // 下拉选择判断是否有底量表
+        $("select[name=shipidd]").change(function () {
+            var h = $("#hiden");
+            $.ajax({
+                url: "{:U('Cabin/ajax_diliang')}",
+                data: 'shipid=' + $(this).val(),
+                type: 'post',
+                async: false,
+                dataType: 'json',
+                success: function (res) {
+                    if (res == '1') {
+                        h.show();
+                    } else {
+                        h.hide();
+                    }
+                }
+            });
+        });
+    </script>
+</block>

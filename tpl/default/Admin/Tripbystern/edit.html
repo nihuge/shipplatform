@@ -1,0 +1,94 @@
+<extend name="Public:base" />
+<block name="title">纵倾表管理</block>
+<block name="navtitle">
+	<li class="active">
+        纵倾表管理
+    </li>
+    <li class="active">
+        修改纵倾表
+    </li>
+</block>
+<block name="active7">class="active"</block>
+<block name="content">
+	<div class="page-container">
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+            <form action="__ACTION__" method="post">
+            <input type="hidden" name="id" value="{$msg['id']}">
+            <input type="hidden" name="tname" value="{$tname}">
+            <tr>
+                <td>所属仓</td>
+                <td>
+                    <select class=" col-xs-10 col-sm-5" id="form-field-select-1" name="cabinid" required>
+                        <volist name="cabinlist" id="v">
+                            <option value="{$v['id']}" 
+                            <if condition="$msg['cabinid'] == $v['id']">
+                                selected
+                            </if>
+                             >{$v['cabinname']}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">实高</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['sounding']}" name="sounding"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">空高</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['ullage']}" name="ullage"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值-1.0/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern1']}" name="tripbystern1"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值-0.5/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern2']}" name="tripbystern2"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值0/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern3']}" name="tripbystern3"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值0.5/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern4']}" name="tripbystern4"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值1/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern5']}" name="tripbystern5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值1.5/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern6']}" name="tripbystern6"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">纵倾值2/m</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['tripbystern7']}" name="tripbystern7"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2 style="text-align: center;">
+                    <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                </td>
+            </tr>
+            </form>
+		</table>
+	</div>
+</block>

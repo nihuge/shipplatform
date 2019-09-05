@@ -1,0 +1,8 @@
+Time:2019-09-05 16:20:05
+内容:{"cabinweight":251.075,"qiu":[{"capacity":1}],"ulist":[{"ullage":"2","capacity":"251"}],"keys":["capacity"],"correntkong":null,"gx":"0.075"}
+Time:2019-09-05 16:20:05
+内容:{"cabinweight":224.075,"qiu":[{"capacity":1}],"ulist":[{"ullage":"2","capacity":"224"}],"keys":["capacity"],"correntkong":null,"gx":"0.075"}
+Time:2019-09-05 16:22:27
+内容:{"cabinweight":236.24,"qiu":[{"capacity":1}],"ulist":[{"ullage":"3","capacity":"122"},{"ullage":"2","capacity":"251"}],"keys":["capacity"],"correntkong":"2.115","gx":"0.075"}
+Time:2019-09-05 16:22:27
+内容:{"cabinweight":210.176,"qiu":[{"capacity":1}],"ulist":[{"ullage":"3","capacity":"101"},{"ullage":"2","capacity":"224"}],"keys":["capacity"],"correntkong":"2.113","gx":"0.075"}

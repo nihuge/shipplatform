@@ -1,0 +1,147 @@
+<extend name="Public:base"/>
+<block name="title">船管理</block>
+<block name="navtitle">
+    <li class="active">
+        船管理
+    </li>
+    <li class="active">
+        船列表
+    </li>
+</block>
+<block name="activeopen11">class="active open"</block>
+<block name="active31">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div>
+            <form action="__ACTION__" method="get">
+                <input type="hidden" name="c" value="Review">
+                <input type="hidden" name="a" value="create_ship_index">
+<!--                <select class=" col-xs-10 col-sm-2" id="form-field-select-1" name="firmid">-->
+<!--                    <option value="">选择所属公司</option>-->
+<!--                    <volist name="firmlist" id="v">-->
+<!--                        <option value="{$v['id']}">{$v['firmname']}</option>-->
+<!--                    </volist>-->
+<!--                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <label style="color: #858585;">船名：<input style="border:1px solid #D5D5D5;height: 30px;"
+                                                         id="form-field-input-1" name="shipname"></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核状态：<select name="del_sign"
+                                                                       style='width:130px;text-align: center'>
+                <option value="">--选择审核状态--</option>
+                <option value="1">未审核</option>
+                <option value="2">已审核</option>
+            </select>
+                <button class="btn btn-sm btn-primary">查询</button>
+            </form>
+        </div>
+        <br/>
+
+        <h4></h4>
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>船名</th>
+                <th>所属公司</th>
+                <th>编号</th>
+                <th>舱总数</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <volist name="data" id="v">
+                <tr align='center'>
+                    <td>{$v['id']}</td>
+                    <td>{$v['shipname']}</td>
+                    <td>{$v['firmname']}</td>
+                    <td>{$v['number']}</td>
+                    <td>{$v['cabinnum']}</td>
+                    <td>
+                        <a href="{:U('Review/edit',array('id'=>$v['id']))}">查看</a>
+                    </td>
+                </tr>
+            </volist>
+            <tr>
+                <td colspan=6 class="pages">{$page}</td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+            function delShip(shipid) {
+                layer.confirm('您确定要删除船舶吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: "{:U('Ship/del_ship')}",
+                        type: "POST",
+                        data: {
+                            shipid: shipid
+                        },
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //刷新
+                                location.reload()
+                            } else {
+                                layer.msg(data.msg, {
+                                    icon: 5
+                                });
+                            }
+
+                        }
+
+                    });
+                })
+            }
+
+            function recoverShip(shipid) {
+                layer.confirm('您确定要恢复船舶吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: "{:U('Ship/recoverShip')}",
+                        type: "POST",
+                        data: {
+                            shipid: shipid
+                        },
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //刷新
+                                location.reload()
+                            } else {
+                                layer.msg(data.msg, {
+                                    icon: 5
+                                });
+                            }
+
+                        }
+
+                    });
+                })
+            }
+        </script>
+        <if condition="$adminmsg['group_id'] eq 1">
+            <script type="text/javascript">
+                function relDelShip(shipid) {
+                    layer.confirm('危险操作，此操作无法撤回数据。您确定要彻底删除船舶吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: "{:U('Ship/relDelShip')}",
+                            type: "POST",
+                            data: {
+                                shipid: shipid
+                            },
+                            success: function (data) {
+                                if (data.code == 1) {
+                                    //刷新
+                                    location.reload()
+                                } else {
+                                    layer.msg(data.msg, {
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        });
+                    })
+                }
+            </script>
+        </if>
+    </div>
+</block>

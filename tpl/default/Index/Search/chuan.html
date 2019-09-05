@@ -1,0 +1,54 @@
+<extend name="Public:base" />
+<block name='navhover3'>dropbtnhover</block>
+<block name='title'>查询系统</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <script src="__INDEX_JS__/jquery-1.9.1.min.js"></script> 
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    <div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            查询系统>船舶公司列表 
+        </div>
+    </div>
+    <div class='xia'>
+        <table id="customers">
+
+            <tr>
+                <th>公司名称</th>
+                <th>总作业次数</th>
+                <th>总作业吨位</th>
+                <th>评价星级</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id="v">
+            <?php static $xu = 1;?>
+            <tr>
+                <td>{$v['firmname']}</td>
+	            <td>{$v['num']}</td>
+	            <td>{$v['weight']}</td>
+	            <td>
+                    <div class="evaluate1">  
+                        <div id="starts{$xu}" class='starts'></div></div>  
+                    </div> 
+                </td>
+	            <td>
+	            	<a href="__CONTROLLER__/chuanmsg/firmid/{$v['id']}" class='aa2'>详情</a>
+                </td>
+            </tr>
+            <?php $xu++;?>	
+        	</volist>
+            <tr style="background-color: #fff;">
+            	<td colspan="5" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        <?php 
+            foreach($data as $v){
+               static $xu1 = 1;
+                echo '$("#starts'.$xu1.'").raty({ readOnly:true,number:5,path : "__INDEX_IMAGE__",starOn:"star-on.png",starOff : "star-off.png",starHalf:"star-half.png",score:'.$v['pin'].',});';
+                $xu1++;
+            }
+        ?>
+    </script>
+</block>

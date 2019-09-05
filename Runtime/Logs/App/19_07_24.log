@@ -1,0 +1,208 @@
+[ 2019-07-24T13:31:04+08:00 ] 192.168.1.195 /shipplatform2/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-07-24T13:31:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=pdf
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0740s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0410s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-24T13:33:18+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=pdf
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '1' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0560s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 3  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 4  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 5  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 6  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 7  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 8  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT f.pdf,f.personality FROM firm f left join user u on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 943 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 944 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 945 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 946 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 947 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 948 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 949 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 950 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 951 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 8 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 943 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 944 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 945 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 946 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 947 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 948 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 949 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 950 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 951 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 9 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 943 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 944 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 945 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 946 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 947 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 948 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 949 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 950 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 951 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 10 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 943 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 944 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 945 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 946 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 947 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 948 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 949 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 950 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 951 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 11 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 943 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 944 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 945 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 946 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 947 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 948 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 949 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 950 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 951 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 953 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 954 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 955 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 956 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 957 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 958 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 959 行.
+NOTIC: [8] Undefined offset: 12 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 960 行.
+NOTIC: [8] Undefined index: thermometer D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 1083 行.
+NOTIC: [8] Undefined index: dipstick D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 1085 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+

@@ -1,0 +1,60 @@
+<extend name="Public:base" />
+<block name="title">船舱管理</block>
+<block name="crumbs"><a>船舱管理</a>&nbsp;>&nbsp;<a>船舱列表</a></block>   
+<block name="content">
+	<!-- -->
+    <table class="biaoge">
+        <tr class="th">
+            <th>船名</th>
+                <th>舱名</th>
+                <th>基准高度</th>
+                <th>底量</th>
+                <th>管线容量</th>
+                <th>操作</th>
+        </tr>
+        <volist name="data" id="v">
+        <tr class="td">
+            <td>{$v['shipname']}</td>
+            <td>{$v['cabinname']}</td>
+            <td>{$v['altitudeheight']}</td>
+            <td>{$v['bottom_volume']}</td>
+            <td>{$v['pipe_line']}</td>
+            <td><a href="javascript:;" onclick="edit({$v['id']})" id="del">修改</a></td>
+        </tr>	
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=6  class="pages">{$page}</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        /*增加*/
+        function add(){
+            var url="__CONTROLLER__/add";
+            layer.open({
+                title: '新增船舶',
+                type: 2,
+                area: ['840px', '650px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        /*编辑*/
+        function edit(id){
+            var url = "{:U('Cabin/edit/id/" + id + "')}";
+            layer.open({
+                title: '修改船舱',
+                type: 2,
+                area: ['840px', '550px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+</block>

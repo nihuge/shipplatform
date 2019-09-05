@@ -1,0 +1,536 @@
+[ 2019-08-05T14:47:41+08:00 ] 127.0.0.1 /app.php?XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-08-05T14:47:58+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0070s ]
+SQL: INSERT INTO `forntrecord` (`forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`solt`,`resultid`) VALUES ('0','0','0','0','0.8','0.8','1','161') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A47%3A58------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0350s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:48:04+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A48%3A04------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:48:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:48:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2019-08-05T14:48:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:48:41+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2019-08-05T14:48:41+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2019-08-05T14:48:46+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:49:19+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:49:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0270s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0290s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0800s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A49%3A27------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:49:34+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A49%3A34------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:50:09+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0120s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A50%3A09------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:50:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A50%3A14------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T14:50:26+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A50%3A26------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:50:36+08:00 ] 127.0.0.1 /app.php?XDEBUG_SESSION_START=15262
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-08-05T14:50:43+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A50%3A43------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003001s ]
+
+[ 2019-08-05T14:50:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=19600
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A50%3A45------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:52:00+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=15262
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A51%3A22------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0010s ]
+
+[ 2019-08-05T14:52:03+08:00 ] 127.0.0.1 /app.php?XDEBUG_SESSION_START=12596
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-08-05T14:52:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=12596
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A52%3A32------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:53:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=12596
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A53%3A03------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-05T14:54:25+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=12596
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0100s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A54%3A25------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-05T15:23:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt&XDEBUG_SESSION_START=12596
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0130s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 508 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 512 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 517 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='161' WHERE `solt` = 1 AND `resultid` = 161 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 161 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-05+14%3A56%3A05------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 161 AND `is_work` = 1  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0140s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0210s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0250s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0330s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 912 行.
+NOTIC: [8] Undefined index: is_guanxian xdebug://debug-eval(1) : eval()'d code 第 1 行.
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 748 行.
+NOTIC: [8] Undefined variable: qiu D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 785 行.
+NOTIC: [2] array_keys() expects parameter 1 to be array, null given D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 1096 行.
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `ullage` = 3.385 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `cabinid` = 188 AND `ullage` < '3.385' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `cabinid` = 188 AND `ullage` > '3.385' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `ullage` = 3.385 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `cabinid` = 188 AND `ullage` < 3.385 ORDER BY ullage desc LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `cabinid` = 188 AND `ullage` > 3.385 ORDER BY ullage asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 161 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `resultlist` (`temperature`,`cabinweight`,`cabinid`,`ullage`,`sounding`,`time`,`resultid`,`solt`,`standardcapacity`,`volume`,`expand`,`correntkong`,`listcorrection`,`is_work`) VALUES ('20','0.645','188','3.385','0.012','1564989805','161','1','0.643','0.9964','1','3.385','0','1') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0200s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2006  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2006 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `qianweight`='0.643',`qiantotal`='-0.001' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `weight`='0.001' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-08-05+14%3A57%3A15------------------%0D%0Adensity%3A0.0000+then%3A%0D%0A%5Ct+VC%3D+ROUND%281.0108020095+-+7.2343515319+%2A+0.0001+%2A++Cabin_termperature+%2B+2.1996598346+%2A+0.0000001+%2A+%28Cabin_termperature+%2A+Cabin_termperature%29%2C4%29%3D0.9964%0D%0A%09VC%3D0.9964%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A20%E2%84%83+then%3A%0D%0A%5Ct+EC%3D+round%28%281+%2B+0.000012+%2A+%28coefficient%29+%2A+%28%28Cabin_temperature%29+-+20%29%29%2C+6%29%3D1%0D%0A+%09EC%3D1%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0Amethod%3AC%2Ctable_used%3Adiliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E8%A1%A8%EF%BC%8C%E9%94%99%E8%AF%AF%EF%BC%81%0D%0A%09TC%3D0%0D%0A+TC%3A0%2C+-Sounding%3A-0.012+then%3A%0D%0A%09NowTC%3D0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D3.385+-+0%3D3.385%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09Received+capacity_table%3A%5Cr%5Cn%5CtU1%283.377%29-%3ECV1%281.051%29%0D%0A%09U2%283.387%29-%3ECV2%281.051%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0Ainterpolation_calculation_result+%3Dround%28Cbig-Csmall%2C3%29%2F%28Xbig-Xsmall%29%2A%28X-Xsmall%29%2BCsmall%3Dround%28%280.543-%281.051%29%29%2C3%29%2F%283.387-%283.377%29%29%2A%283.385-%283.377%29%29%2B1.051+%3D+0.64460000000001%0D%0A+final_result%3D0.64460000000001+%0D%0Acabin_first_result%3D0.645%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D0.645%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+0.643%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%280.643+%2A+%280.0000+-+0.0011%29%2C4%29+%3D-0.001%0D%0A' WHERE `id` = 2006 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 161 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 189 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 912 行.
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 748 行.
+NOTIC: [8] Undefined variable: qiu D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 785 行.
+NOTIC: [2] array_keys() expects parameter 1 to be array, null given D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 1096 行.
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `ullage` = 3.39 AND `cabinid` = 189 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `cabinid` = 189 AND `ullage` < '3.390' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `ullage` FROM `trimcorrectionzi1552963684j_2` WHERE `cabinid` = 189 AND `ullage` > '3.390' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `ullage` = 3.39 AND `cabinid` = 189 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `cabinid` = 189 AND `ullage` < 3.39 ORDER BY ullage desc LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_2` WHERE `cabinid` = 189 AND `ullage` > 3.39 ORDER BY ullage asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 189 AND `resultid` = 161 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `resultlist` (`temperature`,`cabinweight`,`cabinid`,`ullage`,`sounding`,`time`,`resultid`,`solt`,`standardcapacity`,`volume`,`expand`,`correntkong`,`listcorrection`,`is_work`) VALUES ('20','0.391','189','3.39','0.015','1564989806','161','1','0.39','0.9964','1','3.39','0','1') [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2007  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2007 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 161 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `qianweight`='1.033',`qiantotal`='-0.001' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `weight`='0.001' WHERE `id` = 161 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-08-05+15%3A23%3A25------------------%0D%0Adensity%3A0.0000+then%3A%0D%0A%5Ct+VC%3D+ROUND%281.0108020095+-+7.2343515319+%2A+0.0001+%2A++Cabin_termperature+%2B+2.1996598346+%2A+0.0000001+%2A+%28Cabin_termperature+%2A+Cabin_termperature%29%2C4%29%3D0.9964%0D%0A%09VC%3D0.9964%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A20%E2%84%83+then%3A%0D%0A%5Ct+EC%3D+round%28%281+%2B+0.000012+%2A+%28coefficient%29+%2A+%28%28Cabin_temperature%29+-+20%29%29%2C+6%29%3D1%0D%0A+%09EC%3D1%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0Amethod%3AC%2Ctable_used%3Adiliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E8%A1%A8%EF%BC%8C%E9%94%99%E8%AF%AF%EF%BC%81%0D%0A%09TC%3D0%0D%0A+TC%3A0%2C+-Sounding%3A-0.015+then%3A%0D%0A%09NowTC%3D0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D3.390+-+0%3D3.39%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09Received+capacity_table%3A%5Cr%5Cn%5CtU1%283.387%29-%3ECV1%280.543%29%0D%0A%09U2%283.397%29-%3ECV2%280.543%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0Ainterpolation_calculation_result+%3Dround%28Cbig-Csmall%2C3%29%2F%28Xbig-Xsmall%29%2A%28X-Xsmall%29%2BCsmall%3Dround%28%280.035-%280.543%29%29%2C3%29%2F%283.397-%283.387%29%29%2A%283.39-%283.387%29%29%2B0.543+%3D+0.39059999999999%0D%0A+final_result%3D0.39059999999999+%0D%0Acabin_first_result%3D0.391%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D0.391%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+0.39%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%281.033+%2A+%280.0000+-+0.0011%29%2C4%29+%3D-0.001%0D%0A' WHERE `id` = 2007 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+

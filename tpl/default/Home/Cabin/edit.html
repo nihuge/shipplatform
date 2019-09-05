@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit.css" />
+    <script src="__ADMIN_JS__/jquery-1.9.1.min.js"></script> <!-- 你必须先引入jQuery1.8或以上版本 -->
+    <script src="__ADMIN_JS__/layer/layer.js"></script>
+</head>
+
+<body>
+    <div id="wrap" class="wrap">
+		<div class="cen">
+			<div class="kuan">
+				<form method="post" action="__ACTION__">
+					<input type="hidden" name="id" value="{$msg['id']}">
+				<div style="height: 30px;line-height: 30px;text-align: center;">基本信息</div> 
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;船&nbsp;&nbsp;名<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<select class="select1" name="shipid" required>
+							<option value=''>--选择船舶--</option>
+							<volist name="shiplist" id="v">
+	                            <option value="{$v['id']}"  {:($v['id'] == $msg['shipid']) ? 'selected' : ''}>{$v['shipname']}</option>
+	                        </volist>
+						</select>
+					</div>
+				</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;舱&nbsp;&nbsp;名<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="cabinname" value="{$msg['cabinname']}"  class="input1" required maxlength="10">
+					</div>
+				</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;管线容量<span style="float: right" >|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="pipe_line" class="input1" required maxlength="5" value="{$msg['pipe_line']}">
+					</div>
+				</div>
+				<div style="height: 30px;line-height: 30px;text-align: center;">容量表信息</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;基准高度<span style="float: right" >|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" name="altitudeheight" class="input1" required maxlength="5"  value="{$msg['altitudeheight']}">
+					</div>
+				</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;底&nbsp;&nbsp;量<span style="float: right" >|</span>
+					</div>
+					<div class="xinright">
+						<input type="text" value="{$msg['bottom_volume']}" name="bottom_volume" class="input1" required maxlength="5">
+					</div>
+				</div>
+				<!-- 底量 -->
+				<div style="display: none;" id="hiden">
+					<div style="height: 30px;line-height: 30px;text-align: center;">底量表信息</div>
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;基准高度<span style="float: right" >|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="dialtitudeheight" class="input1" maxlength="5" value="{$msg['dialtitudeheight']}">
+						</div>
+					</div>
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;底&nbsp;&nbsp;量<span style="float: right" >|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" value="{$msg['bottom_volume_di']}"  name="bottom_volume_di" class="input1" maxlength="5">
+						</div>
+					</div>
+				</div>
+				<div class="tijiao">
+					<a href="javascript:;" onclick="ti()">
+	                    <div class="div1">
+		                    提&nbsp;&nbsp;交
+		                    </div>
+	                </a>
+					<input type="submit" id="submit" value="提&nbsp;&nbsp;交" style="display: none;"/>
+				</div>	
+				</form>
+				
+			</div>
+		</div>
+    </div>
+    <script type="text/javascript">
+    	// 获取原来的联级效果
+		var a = $("select[name=shipid]");
+		if (a.val() != '') {
+			var h = $("#hiden");
+	 		$.ajax({
+	 			url:"{:U('Cabin/ajax_diliang')}",
+	 			data:'shipid='+a.val(),
+	 			type:'post',
+	 			async:false,
+	 			dataType:'json',
+	 			success:function(res){
+		 			if (res == '1') {
+		 				h.show();
+		 			}else{
+		 				h.hide();
+		 			}
+	 			}
+	 		});
+		}
+    	// 下拉效果
+    	$("select[name=shipid]").change(function () {
+	    	var h = $("#hiden");
+	 		$.ajax({
+	 			url:"{:U('Cabin/ajax_diliang')}",
+	 			data:'shipid='+$(this).val(),
+	 			type:'post',
+	 			async:false,
+	 			dataType:'json',
+	 			success:function(res){
+		 			if (res == '1') {
+		 				h.show();
+		 			}else{
+		 				h.hide();
+		 			}
+	 			}
+	 		});
+		});
+
+		function ti(){
+	        $('#submit').click();
+	    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+Time:2018-05-02 11:21:30
+内容:SELECT * FROM `ship` WHERE `shipname` = 'asd' LIMIT 1  

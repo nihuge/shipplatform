@@ -1,0 +1,82 @@
+<extend name="Public:base" />
+<block name='title'>查询系统</block>
+<block name='navhover3'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/search.css">
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    <div class="biaotis">
+            船舶基本信息
+    </div>
+    <div class='divmsg_111'>
+		<div style="display: inline-block;">
+			<img src="{:($data['img'] == '') ? '__INDEX_IMAGE__/no_photo_big.png' : $data['img']}" class='img'>
+			<div class="xuanfu">
+				<img src="__INDEX_IMAGE__/erima.png" class='erweima'>
+				<p class='pp'>扫描二维码，将船舶推荐给更多人!</p>
+			</div>
+		</div>
+		<div class="ziliao">
+			<p class='title'>{$data['shipname']}</p>
+			<div style="text-align: center;margin-top: 11px;">
+				<div class="evaluate1">  
+	                <div id="starts1" class='starts'></div>
+	            </div>
+			</div>
+		</div>
+    </div>
+    <div class='dadiv'>
+        <div class="xinx_3">
+        	<p class="pp1">类型</p>
+    		<p class="pp2">{$data['type']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">吨位</p>
+    		<p class="pp2">{$data['weight']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">舱数</p>
+    		<p class="pp2">{$data['cabinnum']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">船舶识别号</p>
+    		<p class="pp2">{$data['shibie_num']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">所有者</p>
+    		<p class="pp2"><a href="{:U('Search/chuanmsg',array('firmid'=>$data['firmid']))}" style="color: #0e83dc">{$data['firmname']}</a></p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">制造单位</p>
+    		<p class="pp2">{$data['make']}</p>
+        </div>
+    	<div class="biaotis">
+            历史汇总数据
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">总作业次数</p>
+    		<p class="pp2">{$data['num']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">总作业吨位</p>
+    		<p class="pp2">{$data['weights']}</p>
+        </div>
+        <div class="xinx_3">
+        	<p class="pp1">停泊码头数</p>
+    		<p class="pp2">{$data['mooring_num']}</p>
+        </div>
+    </div>
+    <div style="height: 100px;"></div>
+    <script>
+    	$("#starts1").raty({ 
+    		readOnly: true, 
+    		number : 5,
+    		path : "__INDEX_IMAGE__",
+    		starOn : "star-on.png",
+    		starOff : "star-off.png",
+    		starHalf    : "star-half.png",
+    		precision: true,
+    		score:<?php echo $data['grade'];?>,
+    	});
+ 
+    </script>
+</block>

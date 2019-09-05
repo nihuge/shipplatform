@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cmU36z2" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __justepbasexid__="__baseID__" __cid="cmU36z2" components="$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/scrollView/scrollView,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/list/list,$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/button/button,">
+  <style>.select-list-itmes-bg.cmU36z2{background-image: url(@justepContextPath@/warehouse_capacity/img/rad_bg_04.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 225px; padding-top: 20px; padding-right: 20px; padding-left: 25px} .select-list-itmes-div-bg.cmU36z2{padding-top: 10px; padding-left: 10px; text-align: left; height: 40px; background-color: rgb(209, 231, 255)} .select-list-itmes-div-text.cmU36z2{font-size: 15px}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onActive:modelActive" __cid="cmU36z2" class="cmU36z2"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full p5aa51bbac699486dba69c0b916dda883-iosstatusbar cmU36z2" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cmU36z2"> 
+    <div class="x-panel-top cmU36z2" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cmU36z2"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cmU36z2" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;往 期 作 业&#34;}" __cid="cmU36z2"> 
+        <div class="x-titlebar-left cmU36z2" __cid="cmU36z2"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cmU36z2" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},event:{click:$model._callModelFn.bind($model, 'backBtnClick')}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cmU36z2"> 
+            <i class="icon-chevron-left cmU36z2" __cid="cmU36z2"></i>  
+            <span __cid="cmU36z2" class="cmU36z2"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cmU36z2" __cid="cmU36z2">往 期 作 业</div>  
+        <div class="x-titlebar-right  cmU36z2" xid="div1" __cid="cmU36z2">
+          <div class="empty cmU36z2" __cid="cmU36z2"></div>
+        </div>
+      </div> 
+    </div>  
+    <div class="x-titlebar-right reverse cmU36z2" __cid="cmU36z2"></div>
+    <div class="x-panel-content  x-scroll-view cmU36z2" xid="content1" style="bottom: 0px;" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cmU36z2">
+      <div class="x-scroll cmU36z2" component="$model/UI2/system/components/justep/scrollView/scrollView" xid="scrollView1" data-bind="component:{name:'$model/UI2/system/components/justep/scrollView/scrollView'}" data-events="onPullDown:scrollView1PullDown;onPullUp:scrollView1PullUp" __cid="cmU36z2"> 
+        <div class="x-content-center x-pull-down container cmU36z2" xid="div4" __cid="cmU36z2"> 
+          <i class="x-pull-down-img glyphicon x-icon-pull-down cmU36z2" xid="i2" __cid="cmU36z2"></i>  
+          <span class="x-pull-down-label cmU36z2" xid="span2" __cid="cmU36z2">下拉刷新...</span>
+        </div>  
+        <div class="x-scroll-content cmU36z2" xid="div5" __cid="cmU36z2"> 
+          <div component="$model/UI2/system/components/justep/list/list" class="x-list cmU36z2" xid="list1" data-bind="component:{name:'$model/UI2/system/components/justep/list/list'}" data-config="{&#34;data&#34;:&#34;homework_instructions&#34;}" __cid="cmU36z2"> 
+            <ul class="x-list-template hide cmU36z2" xid="listTemplateUl1" __cid="cmU36z2" data-bind="foreach:{data:$model.foreach_list1($element),afterRender:$model.foreach_afterRender_list1.bind($model,$element)}"> 
+              <li xid="li1" style="margin-top:10px;padding-left:10px;padding-right:10px;" __cid="cmU36z2" class="cmU36z2" data-bind="event:{click:$model._callModelFn.bind($model, 'li1Click')}"> 
+                <div xid="div9" class="select-list-itmes-bg cmU36z2" __cid="cmU36z2"> 
+                  <div xid="div8" class="select-list-itmes-div-bg cmU36z2" __cid="cmU36z2"> 
+                    <span xid="span4" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2">船 名：</span>  
+                    <span xid="shipName" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2" data-bind="text:ref('shipname')"></span>
+                  </div>  
+                  <div xid="div7" class="select-list-itmes-div-bg cmU36z2" style="margin-top:10px;" __cid="cmU36z2"> 
+                    <span xid="span7" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2">航 次：</span>  
+                    <span xid="span10" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2" data-bind="text:ref('voyage')"></span>
+                  </div>  
+                  <div xid="div10" class="select-list-itmes-div-bg cmU36z2" style="margin-top:10px;" __cid="cmU36z2"> 
+                    <span xid="span11" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2">作业地点：</span>  
+                    <span xid="span12" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2" data-bind="text:ref('locationname')"></span>
+                  </div>  
+                  <div xid="div2" class="select-list-itmes-div-bg cmU36z2" style="margin-top:10px;" __cid="cmU36z2"> 
+                    <span xid="span5" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2">总 吨 位：</span>  
+                    <span xid="span1" class="select-list-itmes-div-text cmU36z2" __cid="cmU36z2" data-bind="text:ref('weight')"></span>
+                  </div>
+                </div> 
+              </li> 
+            </ul> 
+          </div> 
+        </div>  
+        <div class="x-content-center x-pull-up cmU36z2" xid="div6" __cid="cmU36z2"> 
+          <span class="x-pull-up-label cmU36z2" xid="span3" __cid="cmU36z2">加载更多...</span>
+        </div> 
+      </div>
+    </div>  
+    <style __cid="cmU36z2" class="cmU36z2">.x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p5aa51bbac699486dba69c0b916dda883-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

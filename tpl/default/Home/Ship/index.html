@@ -1,0 +1,110 @@
+<extend name="Public:base" />
+<block name="title">船舶管理</block>
+<block name="crumbs"><a>船舶管理</a>&nbsp;>&nbsp;<a>船舶列表</a></block>   
+<block name="content">
+	<div style="height:40px;line-height: 40px;">
+        
+        <a href="javascript:;" onclick="addcabin()">
+            <div style="float:right;margin-right:40px;background-color: #3ca0fe;color:white;padding:0px 5px;margin:5px;width:80px;text-align:center">
+            新增船舱
+            </div>
+        </a>
+        <a href="javascript:;" onclick="add()">
+            <div style="float:right;margin-right:40px;background-color: #3ca0fe;color:white;padding:0px 5px;margin:5px;width:80px;text-align:center">
+            新增船舶
+            </div>
+        </a>
+	</div>
+    <table class="biaoge">
+        <tr class="th">
+            <th>船名</th>
+            <th>膨胀倍数</th>
+            <th>舱总数</th>
+            <th>管线容量</th>
+            <th>底量测量孔</th>
+            <th>纵横倾修正表</th>
+            <th>操作</th>
+        </tr>
+        <volist name="list" id="v">
+        <tr class="td">
+            <td>{$v['shipname']}</td>
+            <td>{$v['coefficient']}</td>
+            <td>{$v['cabinnum']}</td>
+            <td>
+                <if condition="$v['is_guanxian'] == '1'">
+                    包含
+                <elseif condition="$v['is_guanxian'] == '2'" />
+                    未包含
+                </if>
+            </td>
+            <td>
+                <if condition="$v['is_diliang'] == '1'">
+                    有
+                <elseif condition="$v['is_diliang'] == '2'" />
+                    无
+                </if>
+            </td>
+            <td>
+                <if condition="$v['suanfa'] == 'a'">
+                    无
+                <elseif condition="$v['suanfa'] == 'b'" />
+                    有
+                <elseif condition="$v['suanfa'] == 'c'" />
+                    有
+                </if>
+            </td>
+            <td><a href="javascript:;" onclick="edit({$v['id']})" id="del">修改</a>
+            <a href="{:U('Cabin/index',array('shipid'=>$v['id']))}" id="edit">船舱管理</a></td>
+        </tr>	
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=7  class="pages">{$page}</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        /*增加船舶*/
+        function add(){
+            var url="__CONTROLLER__/add";
+            layer.open({
+                title: '新增船舶',
+                type: 2,
+                area: ['840px', '650px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        /*增加船舶*/
+        function addcabin(){
+            var url="{:U('Cabin/add')}";
+            layer.open({
+                title: '新增船舱',
+                type: 2,
+                area: ['840px', '650px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        /*编辑*/
+        function edit(id){
+            var url = "{:U('Ship/edit/id/" + id + "')}";
+            layer.open({
+                title: '修改船舶',
+                type: 2,
+                area: ['840px', '550px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+</block>

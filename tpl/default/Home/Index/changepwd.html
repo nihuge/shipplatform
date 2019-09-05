@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit.css" />
+    <script src="__ADMIN_JS__/jquery-1.9.1.min.js"></script> <!-- 你必须先引入jQuery1.8或以上版本 -->
+    <script src="__ADMIN_JS__/layer/layer.js"></script>
+</head>
+
+<body>
+    <div id="wrap" class="wrap">
+		<div class="cen">
+			<div class="kuan">
+				<form method="post" action="{:U('Index/changepwd')}">
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;原始密码<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="password" name="oldpwd" class="input1" required maxlength="16">
+					</div>
+				</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;新&nbsp;密&nbsp;码<span style="float: right">|</span>
+					</div>
+					<div class="xinright">
+						<input type="password" name="newpwd" class="input1" required maxlength="16" minlength="6">
+					</div>
+				</div>
+				<div class="changepwd">
+					<div class="xinleft">
+						&nbsp;确认密码<span style="float: right" >|</span>
+					</div>
+					<div class="xinright">
+						<input type="password" name="repeatpwd" class="input1" required maxlength="16" minlength="6">
+					</div>
+				</div>
+
+				<div class="tijiao">
+					<a href="javascript:;" onclick="ti()">
+	                    <div class="div1">
+	                    提&nbsp;&nbsp;交
+	                   </div>
+	                </a>
+	                <input type="submit" id="submit" value="提&nbsp;&nbsp;交" style="display: none;"/>
+				</div>	
+				</form>
+				
+			</div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+	function ti(){
+        $('#submit').click();
+    }
+</script>
+</html>

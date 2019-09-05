@@ -1,0 +1,86 @@
+<html>
+	<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	
+	</head>
+	<body style="color:gray;margin:0px;text-align:center;padding-top:20%">
+		正在努力加载中......
+		<script type='text/javascript'>
+			var appMode = "@appMode@";
+			var realUrl = './vbmiMf2-zh_CN-/warehouse_capacity/index.w';
+			var INDEX_URL = "__indexUrl";
+			if (appMode == "1"){
+				window.location.href=realUrl;		
+			}else{
+				function newGuid(){	
+					var guid = '';	
+					for (var i = 1; i <= 32; i++){		
+						var n = Math.floor(Math.random()*16.0).toString(16);		
+						guid += n;		
+						if((i==8)||(i==12)||(i==16)||(i==20))			
+							guid += '-';	
+					}	
+					return guid;
+				}
+				function getIndexFromLocal(){
+					var url = "";
+					if (window.localStorage && window.localStorage.getItem){
+						url = localStorage.getItem(INDEX_URL);
+					}	
+					if (!url){
+						url = realUrl;
+					}
+					return url;
+				}
+				
+				var request = null;
+				try {	
+					request = new XMLHttpRequest();
+				}catch (tryMS) {	
+					try {		
+						request = new ActiveXObject('Msxml2.XMLHTTP');	
+					}catch(otherMS) {		
+						try {			
+							request = new ActiveXObject('Miscrosoft.XMLHTTP');		
+						}catch (failed) {
+							request = null;
+						}   
+					}
+				}
+				if (request) {	
+					var indexUrl = './indexUrl_in_server.txt';	
+					if (indexUrl.indexOf('indexUrl_in_server.txt') != -1){
+						indexUrl += "?_=" + newGuid();						
+					}
+					request.open('GET',indexUrl,false);
+					var url = "";
+					request.onreadystatechange=function(){
+						if((request.readyState == 4) && (request.status == 200)){			
+							url = request.responseText;
+							if (window.localStorage && localStorage.setItem)
+								localStorage.setItem(INDEX_URL, url);	
+						}
+					}	
+					try{
+						request.send(null);	
+					}catch(e1){}
+					if (!url)
+						url = getIndexFromLocal();
+					
+					if (window.location.search){
+						if (url.indexOf("?") !== -1){
+							url += "&";
+						}else{
+							url += "?";
+						}
+						url += window.location.search.substr(1);
+					}	
+					window.location.href=url;		
+				}else{	
+					alert('首页加载失败，原因：XMLHttpRequest创建出错!');
+				}
+			}
+		</script>
+	</body>
+</html>

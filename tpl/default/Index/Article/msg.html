@@ -1,0 +1,39 @@
+<extend name="Public:base" />
+<block name='title'>资讯详情-{$data['current']['title']}</block>
+<block name="center">
+	<link rel="stylesheet" href="__INDEX_CSS__/article.css">
+	<div class='article'>
+		<div style="width: 100%;height: 10px;"></div>
+		<div class='title'>
+			{$data['current']['title']}
+		</div>
+		<div style="margin: 20px 0px 50px;padding-left: 30px;">
+			<p class='auther'>{$data['current']['author']}</p>
+			<p class='times'>&nbsp;&nbsp;|&nbsp;&nbsp;{$data['current']['addtime']|date='Y-m-d H:i',###}</p>
+		</div>
+		<div class='content'>
+			{$data['current']['content']}
+		</div>
+		<div class='pre'>
+			<div class='prevnext'>
+				<img src="__INDEX_IMAGE__/s_down_u.png">
+				上一篇：
+				<if condition="!empty($data['prev'])">
+					<a href="{$data['prev']['url']}">{$data['prev']['title']}</a>	
+				<else />
+					<span style="color: #8c8c8c">没有了</span>
+				</if>
+			</div>
+			<div class='prevnext'>
+				<img src="__INDEX_IMAGE__/s_down.png">
+				下一篇：
+				<if condition="!empty($data['next'])">
+					<a href="{$data['next']['url']}">{$data['next']['title']}</a>	
+				<else />
+					<span style="color: #8c8c8c">没有了</span>
+				</if>
+			</div>			
+		</div>
+
+	</div>
+</block>

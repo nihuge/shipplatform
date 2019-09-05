@@ -1,0 +1,83 @@
+.draft-div-select-bg {
+	background-image: url(./img/s_bg_10.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.draft-div-fornt-bg {
+	background-image: url(./img/violet_s_bg_08.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 155px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.draft-div-after-bg {
+	background-image: url(./img/blue_s_bg_08.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 155px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.draft-div-tem-denty-bg {
+	background-image: url(./img/rad_s_bg_08.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 140px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.draft-div-qian-bg {
+	background-image: url(./img/violet_s_bg_08.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 155px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.draft-div-itmes-style {
+	background-image: url(./img/b.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.draft-div-text {
+	font-size: 15px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+	padding-right: 3px;
+	
+}
+
+.draft-div-text-input {
+	height: 30px;
+	margin-left: 3px;
+	border-style: none none none none;
+	background-color: transparent
+}

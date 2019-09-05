@@ -1,0 +1,64 @@
+<extend name="Public:base" />
+<block name="title">容量表管理</block>
+<block name="navtitle">
+	<li class="active">
+        容量表管理
+    </li>
+    <li class="active">
+        修改容量表
+    </li>
+</block>
+<block name="active7">class="active"</block>
+<block name="content">
+	<div class="page-container">
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+            <form action="__ACTION__" method="post">
+            <input type="hidden" name="id" value="{$msg['id']}">
+            <input type="hidden" name="tname" value="{$tname}">
+            <tr>
+                <td>所属仓</td>
+                <td>
+                    <select class=" col-xs-10 col-sm-5" id="form-field-select-1" name="cabinid" required>
+                        <volist name="cabinlist" id="v">
+                            <option value="{$v['id']}"
+                            <if condition="$v['id'] == $msg['cabinid']" >
+                                selected
+                            </if>
+                            >{$v['cabinname']}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">实高</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['sounding']}" name="sounding"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">空高</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['ullage']}" name="ullage"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">容量</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['capacity']}" name="capacity"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">厘米容量</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['diff']}" name="diff"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2 style="text-align: center;">
+                    <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                </td>
+            </tr>
+            </form>
+		</table>
+	</div>
+</block>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>纵倾修正</title>
+    <style>
+        .table-c table {
+            border-right: 1px solid grey;
+            border-bottom: 1px solid #F00
+        }
+
+        .table-c table td {
+            border-left: 1px solid grey;
+            border-top: 1px solid #F00
+        }
+    </style>
+</head>
+<body>
+<form action="http://shipplatform2.test/vcget.php" method="post">
+    <div>当前空高<input type="text" name="konggao"></div>
+    <div>当前吃水差<input type="text" name="chishui"></div>
+    <br/>
+    <div class="table-c">
+        <table>
+            <tr>
+                <td>在表内填入纵倾修正表的
+                    <br/>对应片段</td>
+                <td>刻度1<input type="text" name="draft1"></td>
+                <td>刻度2<input type="text" name="draft2"></td>
+            </tr>
+            <tr>
+                <td>空高1<input type="text" name="ullage1"></td>
+                <td>&nbsp;&nbsp;&nbsp;值1<input type="text" name="value1"></td>
+                <td>&nbsp;&nbsp;&nbsp;值2<input type="text" name="value2"></td>
+            </tr>
+            <tr>
+                <td>空高2<input type="text" name="ullage2"></td>
+                <td>&nbsp;&nbsp;&nbsp;值3<input type="text" name="value3"></td>
+                <td>&nbsp;&nbsp;&nbsp;值4<input type="text" name="value4"></td>
+            </tr>
+        </table>
+    </div>
+    <button type="submit"> 提交</button>
+</form>
+</body>
+</html>

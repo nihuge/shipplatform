@@ -1,0 +1,205 @@
+<extend name="Public:base"/>
+<block name="title">作业查询</block>
+<block name="navtitle">
+    <li class="active">
+        作业查询
+    </li>
+    <li class="active">
+        作业列表
+    </li>
+</block>
+<block name="active12">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div>
+            <form action="__ACTION__" method="get">
+                <input type="hidden" name="c" value="Search">
+                <input type="hidden" name="a" value="index">
+                公司：<select id="form-field-select-1" name="firmid" style='width:160px;'>
+                <option value="">--选择公司--</option>
+                <volist name="firmlist" id="v">
+                    <option value="{$v['id']}">{$v['firmname']}</option>
+                </volist>
+            </select>&nbsp;船名：
+                <div id='shipname' style='display: inline-block;'>
+                    <input type="text" name="shipname" id='shipid' class="input1" placeholder="船名">
+                </div>
+
+
+                起运港：<input type="text" name="start" class="input1" placeholder="起运港">&nbsp;
+                目的港：<input type="text" name="objective" class="input1" placeholder="目的港">&nbsp;<br><br>
+                作业地点：<input type="text" name="locationname" class="input1" placeholder="作业地点">
+                航次：<input type="text" name="voyage" class="input1" placeholder="航次">
+                删除状态：<select name="del_sign" style='width:130px;text-align: center'>
+                <option value="">--选择删除状态--</option>
+                <option value="1">未删除</option>
+                <option value="2">已删除</option>
+            </select>
+                <button class="btn btn-sm btn-primary">查询</button>
+            </form>
+        </div>
+        <h4></h4>
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>公司名</th>
+                <th>船名</th>
+                <th>航次</th>
+                <th>作业地点</th>
+                <th>货名</th>
+                <th>运单量</th>
+                <th>作业量</th>
+                <th>起运港</th>
+                <th>目的港</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <volist name="data" id="v">
+                <tr align='center'>
+                    <td>{$v['firmname']}</td>
+                    <td>{$v['shipname']}</td>
+                    <td>{$v['personality']['voyage']}</td>
+                    <td>{$v['personality']['locationname']}</td>
+                    <td>{$v['personality']['goodsname']}</td>
+                    <td>{$v['personality']['transport']}</td>
+                    <td>{$v['weight']}</td>
+                    <td>{$v['personality']['start']}</td>
+                    <td>{$v['personality']['objective']}</td>
+                    <td><a href="__CONTROLLER__/msg/resultid/{$v['id']}" style="color:#3ca0fe">查看</a>&nbsp;/&nbsp;
+                        <if condition="$v['del_sign'] eq 1">
+                            <a href="javascript:;" onclick="delWork({$v['id']})" style="color:#3ca0fe">删除</a>
+                    <else/>
+                    <a href="javascript:;" onclick="recoverWork({$v['id']})" style="color:#3ca0fe">恢复</a>
+                    <if condition="$adminmsg['group_id'] eq 1">
+                        &nbsp;/&nbsp;<a href="javascript:;" onclick="relDelWork({$v['id']})"
+                                        style="color:#3ca0fe">彻底删除</a>
+                    </if>
+                    </if>
+                    </td>
+            </volist>
+            <tr>
+                <td colspan="10" class="pages">{$page}</td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        $("#shipid").bigAutocomplete({
+            width: 163,
+            data: [
+            <?php
+                foreach($shiplist as $l){
+                    echo '{title:"'.$l['shipname'].'",show:"'.$l['shipname'].'"},';
+                }
+            ?>
+        ],
+        callback:function (data) {
+            //alert(data.title);
+        }
+        });
+
+        //下拉获取公司船列表
+        $("select[name=firmid]").change(function () {
+            var id = $(this).val();
+            // alert(id);
+            var shipname = $("#shipname");
+            if (id == '') {
+                // var res = "<input type='text' name='shipid' id='shipid1' class='input1' placeholder='船名'>";
+                // shipname.html(res);
+                location.reload();
+            } else {
+                $.ajax({
+                    url: "{:U('Search/getFirmShip')}",
+                    data: 'firmid=' + id,
+                    type: 'post',
+                    async: false,
+                    dataType: 'html',
+                    success: function (res) {
+                        // console.log(res);
+                        shipname.html(res);
+                    }
+                });
+            }
+
+        });
+
+        function delWork(resultid) {
+            layer.confirm('您确定要删除作业吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    url: "{:U('Search/del_work')}",
+                    type: "POST",
+                    data: {
+                        resultid: resultid
+                    },
+                    success: function (data) {
+                        if (data.code == 1) {
+                            //刷新
+                            location.reload()
+                        } else {
+                            layer.msg(data.msg, {
+                                icon: 5
+                            });
+                        }
+
+                    }
+
+                });
+            })
+        }
+
+        function recoverWork(resultid) {
+            layer.confirm('您确定要恢复作业吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    url: "{:U('Search/recoverWork')}",
+                    type: "POST",
+                    data: {
+                        resultid: resultid
+                    },
+                    success: function (data) {
+                        if (data.code == 1) {
+                            //刷新
+                            location.reload()
+                        } else {
+                            layer.msg(data.msg, {
+                                icon: 5
+                            });
+                        }
+
+                    }
+
+                });
+            })
+        }
+    </script>
+    <if condition="$adminmsg['group_id'] eq 1">
+        <script type="text/javascript">
+            function relDelWork(resultid) {
+                layer.confirm('危险操作，此操作无法撤回数据。您确定要彻底删除作业吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: "{:U('Search/relDelWork')}",
+                        type: "POST",
+                        data: {
+                            resultid: resultid
+                        },
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //刷新
+                                location.reload()
+                            } else {
+                                layer.msg(data.msg, {
+                                    icon: 5
+                                });
+                            }
+                        }
+                    });
+                })
+            }
+        </script>
+    </if>
+
+</block>

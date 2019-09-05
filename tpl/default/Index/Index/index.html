@@ -1,0 +1,103 @@
+<extend name="Public:base" />
+<block name='title'>计量首页</block>
+<block name='navhover1'>dropbtnhover</block>
+<block name="center">
+	<link rel="stylesheet" href="__INDEX_CSS__/index.css">
+    <div class='article'>
+        <div class='article1'>
+            <img src="__INDEX_IMAGE__/article.png">
+		</div>
+        <div class='article2'>
+            <div id="marquee1">
+                <ul>
+                	<volist name="data.data" id="v">
+                    <li>
+                    	<a href="{:U('Article/msg',array('aid'=>$v['aid']))}">
+                        	<div class='kongbai'>
+                        		<img src="{$v['pic_path']}" / >
+                        		<span>{$v['title']}</span>
+                        	</div>
+                    	</a>
+                    </li>
+                	</volist>
+                </ul>
+            </div>
+            <script src="__INDEX_JS__/Marquee.js"></script>
+            <script>
+            // 一次横向滚动一个
+            $('#marquee1').kxbdSuperMarquee({
+                distance: 380,
+                time: 3,
+                btnGo: { left: '#goL', right: '#goR' },
+                direction: 'left'
+            });
+            </script>
+        </div>
+    </div>
+    <div class='result'>
+    	<div class='article1'>
+            <img src="__INDEX_IMAGE__/result.png">
+		</div>
+		<div class='result1'>
+			<div class='result1_1'>
+				<a href="{:U('Liquid/index')}">
+					<img class='imager' src="__INDEX_IMAGE__/Liquid-carg-ship.png">
+				</a>
+			</div>
+			<div class='result1_2'>
+				<a href="">
+					<img class='imager' src="__INDEX_IMAGE__/Bulk-carrier.png">
+				</a>
+			</div>			
+		</div>
+    </div>
+    <div class='search'>
+    	<div class='article1'>
+            <img src="__INDEX_IMAGE__/search.png">
+		</div>
+		<div id="search1">
+            <ul>
+                <li>
+                	<a href="{:U('Search/jian')}" class='Quality'>
+                		<img src="__INDEX_IMAGE__/Quality_inspection.png"/ >
+                		<p>检验公司</p>
+                	</a>
+                </li>
+                <li>
+                	<a href="{:U('Search/chuan')}" class='Shipping'>
+                		<img src="__INDEX_IMAGE__/Shipping_company.png"/>
+                		<p>船舶公司</p>
+                	</a>
+                </li>
+                <li>
+                	<a href="{:U('Search/ship')}" class='ship'>
+                		<img src="__INDEX_IMAGE__/ship.png"/ >
+                		<p>船舶</p>
+                	</a>
+                </li>
+            </ul>
+            <script>
+            	$(document).ready(function() {
+					$(".Quality").hover(function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/Quality_inspection_hover.png');
+					}, function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/Quality_inspection.png');
+					});
+
+					$(".Shipping").hover(function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/Shipping_company_hover.png');
+					}, function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/Shipping_company.png');
+					});
+
+					$(".ship").hover(function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/ship_hover.png');
+					}, function() {
+					    $(this).find('img').attr('src', '__INDEX_IMAGE__/ship.png');
+					});
+				});
+            </script>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
+</block>

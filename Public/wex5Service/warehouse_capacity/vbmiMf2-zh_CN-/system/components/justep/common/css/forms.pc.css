@@ -1,0 +1,6 @@
+/*
+增加pc的可选样式
+*/
+*{
+	-webkit-user-select: auto;
+}

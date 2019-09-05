@@ -1,0 +1,319 @@
+[ 2019-06-21T13:03:59+08:00 ] 127.0.0.1 /app.php?uid=8&imei=86537103175286&resultid=111487&solt=1&shipid=9&cabinid=36&altitudeheight=4417&qufen=rongliang&quantity=2&is_work=1&is_pipeline=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-06-21T13:04:39+08:00 ] 127.0.0.1 /app.php?uid=8&imei=86537103175286&resultid=111487&solt=1&shipid=9&cabinid=36&altitudeheight=4417&qufen=rongliang&quantity=2&is_work=1&is_pipeline=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-06-21T13:04:45+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0260s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0100s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 111487 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:05:08+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 111487 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:05:15+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 111487 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003001s ]
+
+[ 2019-06-21T13:06:49+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0090s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0110s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 111487 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004000s ]
+
+[ 2019-06-21T13:09:25+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0040s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 111487 LIMIT 1   [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-06-21T13:10:10+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 28 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 28 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:10:33+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0100s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:24:30+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 826 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 828 行.
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0080s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `tankcapacity808` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacity808` LIMIT 1   [ RunTime:0.0320s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 865 行.
+NOTIC: [8] Undefined index: ullage D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 868 行.
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `ullage` = null AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `cabinid` = 36 AND `ullage` < null ORDER BY ullage desc LIMIT 1   [ RunTime:0.0040s ]
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `cabinid` = 36 AND `ullage` > null ORDER BY ullage asc LIMIT 1   [ RunTime:0.0040s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 706 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 896 行.
+NOTIC: [8] Undefined index: sounding D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 900 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `temperature`='',`cabinweight`='0',`cabinid`='36',`ullage`='0',`sounding`='0',`resultid`='3',`solt`='2',`standardcapacity`='0',`volume`='1.0095',`expand`='0.99928',`is_work`='1' WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 40  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 40 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 3 AND `solt` = 2  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `houweight`='2373.365',`houtotal`='2472.673' WHERE `id` = 3 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `weight`='2445.015' WHERE `id` = 3 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0200s ]
+SQL: UPDATE `resultrecord` SET `resultid`='3',`solt`='2',`shipid`='9',`cabinid`='36',`altitudeheight`='4417',`qufen`='rongliang',`quantity`='2',`is_work`='1',`is_pipeline`='1' WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 [ RunTime:0.0180s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-06-21T13:33:16+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:34:55+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:35:32+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-06-21T13:48:06+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0100s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0090s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0090s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 36 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `tankcapacity808` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacity808` LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `ullage` = 0.194 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `cabinid` = 36 AND `ullage` < '0.194' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0040s ]
+SQL: SELECT `tripbystern3`,`tripbystern4`,`ullage` FROM `tankcapacity808` WHERE `cabinid` = 36 AND `ullage` > '0.194' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `temperature`='138',`cabinweight`='397.089',`cabinid`='36',`ullage`='0.194',`sounding`='4.815',`resultid`='3',`solt`='2',`standardcapacity`='368.788',`volume`='0.9248',`expand`='1.004248',`is_work`='1' WHERE `cabinid` = 36 AND `resultid` = 3 AND `solt` = 2 [ RunTime:0.0180s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 40  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 40 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 3 AND `solt` = 2  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `houweight`='2742.153',`houtotal`='2856.913' WHERE `id` = 3 [ RunTime:0.0010s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `weight`='2829.255' WHERE `id` = 3 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultrecord` SET `resultid`='3',`sounding`='4.815',`ullage`='0.194',`temperature`='138',`solt`='2',`shipid`='9',`cabinid`='36',`altitudeheight`='4417',`qufen`='rongliang',`quantity`='2',`is_work`='1',`is_pipeline`='1' WHERE `solt` = 2 AND `cabinid` = 36 AND `resultid` = 3 [ RunTime:0.0170s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+

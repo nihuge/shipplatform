@@ -1,0 +1,59 @@
+[ 2019-06-24T14:30:34+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 78 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 150 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 150 AND `resultid` = 3 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-06-24T14:35:42+08:00 ] 127.0.0.1 /app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-06-24T14:37:09+08:00 ] 127.0.0.1 /app.php?s=Result/reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 78 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0110s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 2 AND `cabinid` = 150 AND `resultid` = 144 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 150 AND `resultid` = 144 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 78 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 144 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0090s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 150 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 78 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1540951578i` [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1540951578p` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1540951578i` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1540951578p` LIMIT 1   [ RunTime:0.0030s ]
+

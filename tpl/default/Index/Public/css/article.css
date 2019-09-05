@@ -1,0 +1,78 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'AdobeHeitiStd';
+    src: url("./font/AdobeHeitiStd-Regular.otf"),
+    src:local('☺'),
+       url('./font/AdobeHeitiStd-Regular.eot?#iefix') format('embedded-opentype'),
+         /*url('fonts/webfont.woff') format('woff'),*/
+        url('./font/AdobeHeitiStd-Regular.otf') format('otf'),
+        /*url('fonts/webfont.svg#webfontOTINA1xY') format('svg');*/
+        font-weight:normal;
+        font-style:normal;
+}
+
+/*面包屑*/
+.center{
+	width: 1200px;
+    min-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    margin-bottom: 40px;
+}
+.shang{
+    background-color: #f2f2f2;
+    padding: 6px 30px;
+}
+
+.nav{
+    margin-top: 14px;
+    font-size: 18px;
+    color: #666666;
+}
+
+.article{
+    width: 900px;
+    height: 100%;
+    margin: 25px 150px 40px;
+}
+.title{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	height: 25px;
+	line-height: 25px;
+	margin: 20px;
+	color: #4c4c4c;
+}
+.auther{
+	font-size: 16px;
+	color: #4c4c4c;
+	font-family: 'AdobeHeitiStd';
+	display: inline-block;
+}
+.times{
+	font-family: heiti;
+	display: inline-block;
+	font-size: 16px;
+	color: #666666
+}
+.content{
+	font-size: 14px;
+	color: #666666;
+	font-family: "Microsoft YaHei";
+	margin: 10px 0px;
+}
+.pre{
+	margin: 50px 10px;
+}
+.prevnext{
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	color: #587d96;
+}
+.prevnext a{
+	font-size: 14px;
+	color: #587d96;
+}

@@ -1,0 +1,308 @@
+[ 2019-07-16T08:35:43+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.011000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.012000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `LBP`,`DF`,`DA`,`DM` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: LBP D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 475 行.
+NOTIC: [8] Undefined index: DF D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 478 行.
+NOTIC: [8] Undefined index: DA D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 479 行.
+NOTIC: [8] Undefined index: DM D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 480 行.
+NOTIC: [2] Division by zero D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 521 行.
+NOTIC: [2] Division by zero D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 522 行.
+NOTIC: [2] Division by zero D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 523 行.
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.26',`fornt`='10.4',`center`='10.33',`after`='10.285',`Fc`='0',`Ac`='0',`Mc`='0',`Am`='10.285',`Mm`='10.33',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_TC`='-0.115',`qianD_M`='10.33313',`qianprocess`='nowtime%3A2019-07-16+08%3A35%3A43------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.26%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D1.0185%2CLBP%3D0%2C%0D%0A+Df%3D0%2CDa%3D0%2CDm%3D0%2C%0D%0APf%3D1%2CPa%3D1%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.26%29+%2F+2%2C+5%29%3D10.285%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.285+-+10.4%3D-0.115+then+Tf%3D1%2CFflag%3D0%2CAflag%3D0%2CMflag%3D0%2C%0D%0ALBM%3Dround%280+%2B+pow%28-1%2C+1%29+%2A+0+-+pow%28-1%2C+1%29+%2A+0%2C+5%29%3D0%2C%0D%0AFc%3Dround%28abs%280+%2A+-0.115+%2F+0%29%2C+5%29%3D0%2CAc%3Dround%28abs%280+%2A+-0.115+%2F+0%29%2C+5%29%3D0%2CMc%3Dround%28abs%280+%2A+-0.115+%2F+0%29%2C+5%29%3D0%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D10.4%2CAm%3Dround%2810.285+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D10.285%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D10.33%2C%0D%0ATC+%3D+round%2810.285+-+10.4%2C+5%29%3D-0.115%2CD_M%3Dround%28%2810.4+%2B+10.285+%2B+%286+%2A+10.33%29%29+%2F+8%2C+5%2910.33313soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.115%2CD_M%3D10.33313%0D%0A' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.005001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005001s ]
+
+[ 2019-07-16T08:37:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `LBP`,`DF`,`DA`,`DM` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-07-16T08:38:21+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `LBP`,`DF`,`DA`,`DM` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.26',`fornt`='10.4',`center`='10.33',`after`='10.285',`Fc`='0.00207',`Ac`='0.00421',`Mc`='0.00028',`Am`='10.28079',`Mm`='10.33028',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0020s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_TC`='-0.12128',`qianD_M`='10.33307',`qianprocess`='nowtime%3A2019-07-16+08%3A38%3A21------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.26%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D1.0185%2CLBP%3D192%2C%0D%0A+Df%3D-3.4%2CDa%3D6.9%2CDm%3D-0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.26%29+%2F+2%2C+5%29%3D10.285%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.285+-+10.4%3D-0.115+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+-3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D188.5%2C%0D%0AFc%3Dround%28abs%28-3.4+%2A+-0.115+%2F+188.5%29%2C+5%29%3D0.00207%2CAc%3Dround%28abs%286.9+%2A+-0.115+%2F+188.5%29%2C+5%29%3D0.00421%2CMc%3Dround%28abs%28-0.46+%2A+-0.115+%2F+188.5%29%2C+5%29%3D0.00028%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00207%2C+5%29%3D10.40207%2CAm%3Dround%2810.285+%2B+pow%28-1%2C+1%29+%2A+0.00421%2C+5%29%3D10.28079%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00028%2C+5%29%3D10.33028%2C%0D%0ATC+%3D+round%2810.28079+-+10.40207%2C+5%29%3D-0.12128%2CD_M%3Dround%28%2810.40207+%2B+10.28079+%2B+%286+%2A+10.33028%29%29+%2F+8%2C+5%2910.33307soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.12128%2CD_M%3D10.33307%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-16T08:41:05+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0040s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `LBP`,`DF`,`DA`,`DM` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`Fc`='0.00081',`Ac`='0.00165',`Mc`='0.00011',`Am`='10.35335',`Mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_TC`='-0.04746',`qianD_M`='10.34185',`qianprocess`='nowtime%3A2019-07-16+08%3A41%3A05------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D1.0185%2CLBP%3D192%2C%0D%0A+Df%3D-3.4%2CDa%3D6.9%2CDm%3D-0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+-3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D188.5%2C%0D%0AFc%3Dround%28abs%28-3.4+%2A+-0.045+%2F+188.5%29%2C+5%29%3D0.00081%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+188.5%29%2C+5%29%3D0.00165%2CMc%3Dround%28abs%28-0.46+%2A+-0.045+%2F+188.5%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00081%2C+5%29%3D10.40081%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00165%2C+5%29%3D10.35335%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35335+-+10.40081%2C+5%29%3D-0.04746%2CD_M%3Dround%28%2810.40081+%2B+10.35335+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%2910.34185soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.04746%2CD_M%3D10.34185%0D%0A' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-16T08:45:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `LBP`,`DF`,`DA`,`DM` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`Fc`='0.00084',`Ac`='0.00171',`Mc`='0.00011',`Am`='10.35329',`Mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_TC`='-0.04755',`qianD_M`='10.34185',`qianprocess`='nowtime%3A2019-07-16+08%3A45%3A55------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D1.0185%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00084%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00171%2CMc%3Dround%28abs%280.46+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00084%2C+5%29%3D10.40084%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00171%2C+5%29%3D10.35329%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35329+-+10.40084%2C+5%29%3D-0.04755%2CD_M%3Dround%28%2810.40084+%2B+10.35329+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%2910.34185soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.04755%2CD_M%3D10.34185%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-16T09:56:10+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-16T09:56:21+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: PWD D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 467 行.
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: qian_TC D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 580 行.
+NOTIC: [8] Undefined index: qianD_M D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 580 行.
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`fc`='0.00084',`ac`='0.00171',`mc`='0.00011',`fm`='10.40084',`am`='10.35329',`mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.04755',`qian_d_m`='10.34185',`qianprocess`='nowtime%3A2019-07-16+09%3A56%3A21------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D0%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00084%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00171%2CMc%3Dround%28abs%280.46+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00084%2C+5%29%3D10.40084%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00171%2C+5%29%3D10.35329%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35329+-+10.40084%2C+5%29%3D-0.04755%2CD_M%3Dround%28%2810.40084+%2B+10.35329+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%2910.34185soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D%2CD_M%3D%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-16T09:57:21+08:00 ] 192.168.1.195 /shipplatform2/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-07-16T09:58:35+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.017001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: PWD D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 467 行.
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`fc`='0.00084',`ac`='0.00171',`mc`='0.00011',`fm`='10.40084',`am`='10.35329',`mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.04755',`qian_d_m`='10.34185',`qianprocess`='nowtime%3A2019-07-16+09%3A58%3A35------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D0%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00084%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00171%2CMc%3Dround%28abs%280.46+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00084%2C+5%29%3D10.40084%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00171%2C+5%29%3D10.35329%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35329+-+10.40084%2C+5%29%3D-0.04755%2CD_M%3Dround%28%2810.40084+%2B+10.35329+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%2910.34185soltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.04755%2CD_M%3D10.34185%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-16T10:10:16+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: PWD D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 467 行.
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0070s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`fc`='0.00084',`ac`='0.00171',`mc`='0.00011',`fm`='10.40084',`am`='10.35329',`mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.04755',`qian_d_m`='10.34185',`qian_pwd`='1.0185',`qianprocess`='nowtime%3A2019-07-16+10%3A10%3A16------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D0%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00084%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00171%2CMc%3Dround%28abs%280.46+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00084%2C+5%29%3D10.40084%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00171%2C+5%29%3D10.35329%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35329+-+10.40084%2C+5%29%3D-0.04755%2CD_M%3Dround%28%2810.40084+%2B+10.35329+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%29%3D10.34185%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.04755%2CD_M%3D10.34185%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-16T20:22:58+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+NOTIC: [8] Undefined index: volume D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 1242 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 1242 行.
+
+[ 2019-07-16T20:24:35+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0070s ]
+
+[ 2019-07-16T20:24:54+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+
+[ 2019-07-16T20:29:12+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+
+[ 2019-07-16T20:30:31+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+
+[ 2019-07-16T20:30:37+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+
+[ 2019-07-16T20:31:17+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0100s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱11','17.447','0.999','2','1','3','1','17.42955') [ RunTime:0.0290s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱112','10.004','0.997','2','1','3','1','9.97399') [ RunTime:0.0010s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱113','10.115','0.997','1.447','1','3','1','10.08466') [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

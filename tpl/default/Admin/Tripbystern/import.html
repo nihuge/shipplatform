@@ -1,0 +1,67 @@
+<extend name="Public:base" />
+<block name="title">用户管理</block>
+<block name="navtitle">
+    <li class="active">
+        纵倾表管理
+    </li>
+    <li class="active">
+        纵倾导入列表
+    </li>
+</block>
+<block name="content">
+    <div style="margin: 50px auto;text-align: center;width:500px" class="main_box">
+        <form action="__ACTION__" method="post" style="padding-left:10px" enctype="multipart/form-data">
+            <select name="shipid" id="shipid">
+                    <option value="">--选择船--</option>
+                <volist name="shiplist" id="v">
+                    <option value="{$v['id']}" >{$v['shipname']}</option>
+                </volist>
+            </select>
+            <select name="cabinid" id="cabinid">
+                <option value="">--选择舱--</option>
+            </select>
+            <br/>
+            <br/>
+            <input type="radio" name="r" value="y" id="yo" checked="checked"><label for="yo">覆盖</label>
+            <input type="radio" name="r" value="n" id="no"><label for="no">不覆盖</label>
+            <input type="file" name="file">
+            <input type="hidden" name="tname" id="tname" value="">
+            <!-- <input type="text" name="aaa" style="display: none"> -->
+
+            <input type="submit" value="确认上传" class="sub">
+        </form>
+    </div>
+    <script type="text/javascript">
+        //下拉获取cang
+    $("select[name=shipid]").change(function () {
+        if($(this).children().is(':selected')){
+            var id = $(this).val();
+            
+            if(id !== '')
+            {
+                var edc = $("#cabinid");
+                var tn = $("#tname");
+                $.ajax({
+                    url:"{:U('Tripbystern/cabin_op')}",
+                    data:'shipid='+id,
+                    type:'post',
+                    async:false,
+                    dataType:'html',
+                    success:function(res){
+                        var d='';
+                        d= eval("("+res+")"); 
+                        edc.html(d.sc);  //下拉赋值
+                        tn.val(d.tripbystern);  //隐藏域改变val值
+                    }
+                });
+            }else{
+                var edc = $("#cabinid");
+                edc.html('<option value="">--选择舱--</option>');
+            }
+        }else{
+             var edc = $("#cabinid");
+             edc.empty();
+        }
+    });
+    </script>
+</block>

@@ -1,0 +1,169 @@
+<extend name="Public:base" />
+<block name='title'>查询系统</block>
+<block name='navhover3'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/search.css">
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    <script src="__INDEX_JS__/echarts.min.js"></script>
+    <div class="biaotis">
+            船舶基本信息
+    </div>
+    <div class='divmsg_111'>
+		<div style="display: inline-block;">
+			<img src="{:($data['img'] == '') ? '__INDEX_IMAGE__/no_photo_big.png' : $data['img']}" class='img'>
+			<div class="xuanfu">
+				<img src="__INDEX_IMAGE__/erima.png" class='erweima'>
+				<p class='pp'>扫描二维码，将船舶推荐给更多人!</p>
+			</div>
+		</div>
+		<div class="ziliao">
+			<p class='title'>{$data['shipname']}</p>
+			<div style="text-align: center;margin-top: 11px;">
+				<div class="evaluate1">  
+	                <div id="starts1" class='starts'></div>
+	            </div>
+			</div>
+		</div>
+    </div>
+    <div class='dadiv'>
+       <div class="xinx_3">
+            <p class="pp1">类型</p>
+            <p class="pp2">{$data['type']}</p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">吨位</p>
+            <p class="pp2">{$data['weight']}</p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">舱数</p>
+            <p class="pp2">{$data['cabinnum']}</p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">船舶识别号</p>
+            <p class="pp2">{$data['shibie_num']}</p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">所有者</p>
+            <p class="pp2"><a href="{:U('Search/chuanmsg',array('firmid'=>$data['firmid']))}" style="color: #0e83dc">{$data['firmname']}</a></p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">制造单位</p>
+            <p class="pp2">{$data['make']}</p>
+        </div>
+        <div class="biaotis">
+            历史汇总数据
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">总作业次数</p>
+            <p class="pp2">{$data['num']}</p>
+            <a href="{:U('Search/result',array('shipid'=>$data['id']))}" style="padding: 5px 10px;background-color: #80aae6;color: #ffffff;font-size: 14px;float: right;margin-right: 10px;border-radius: 5px;">查看历史作业</a>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">总作业吨位</p>
+            <p class="pp2">{$data['weights']}</p>
+        </div>
+        <div class="xinx_3">
+            <p class="pp1">停泊码头数</p>
+            <p class="pp2">{$data['mooring_num']}</p>
+        </div> 
+    </div>
+    
+    <div id="container" style="height: 400px;">
+        
+    </div>
+    <div style="height: 50px;"></div>
+    <script>
+    	$("#starts1").raty({ 
+    		readOnly: true, 
+    		number : 5,
+    		path : "__INDEX_IMAGE__",
+    		starOn : "star-on.png",
+    		starOff : "star-off.png",
+    		starHalf    : "star-half.png",
+    		precision: true,
+    		score:<?php echo $data['grade'];?>,
+    	});
+
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        option = null;
+
+        var xAxisData = [
+        <?php
+            $aaa = '';
+            foreach ($voyage as $k=>$s)
+            {
+                $aaa .= "'".$s."',";
+            }
+            echo substr($aaa,0,-1);
+            ?>
+        ];
+        var data1 = [<?php
+            $aaa = '';
+            foreach ($cha as $k=>$s)
+            {
+                $aaa .= "'".$s."',";
+            }
+            echo substr($aaa,0,-1);
+            ?>];
+
+        var itemStyle = {
+            normal: {
+            },
+            emphasis: {
+                barBorderWidth: 1,
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowColor: 'rgba(0,0,0,0.5)'
+            }
+        };
+
+        option = {
+            title : {
+                text: '作业差量柱状图',
+                subtext: '',
+                x:'center',
+                top:10,
+            },
+            backgroundColor: '#fff',
+            legend: {
+                data: ['bar'],
+                align: 'left',
+                left: 900,
+                top:10,
+            },
+            tooltip: {},
+            xAxis: {
+                data: xAxisData,
+                name: '',
+                silent: false,
+                axisLine: {onZero: true},
+                splitLine: {show: false},
+                splitArea: {show: false}
+            },
+            yAxis: {
+                inverse: false,
+                splitArea: {show: false}
+            },
+            grid: {
+                left: 100
+            },
+            series: [
+                {
+                    name: 'bar',
+                    type: 'bar',
+                    stack: 'one',
+                    itemStyle: itemStyle,
+                    data: data1
+                }
+            ]
+        };
+
+        myChart.on();
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</block>

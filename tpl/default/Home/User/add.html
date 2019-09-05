@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>人员新增</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit1.css" />
+    <script src="__ADMIN_JS__/jquery-1.9.1.min.js"></script> <!-- 你必须先引入jQuery1.8或以上版本 -->
+    <script src="__ADMIN_JS__/layer/layer.js"></script>
+</head>
+
+<body>
+    <div id="wrap" class="wrap">
+		<div class="cen">
+			<div class="kuan">
+				<form method="post" action="__ACTION__">
+					<input type="hidden" name="firmid" value="{$firmmsg['id']}">
+                    <input type="hidden" name="pid" value="{$_SESSION['uid']}">
+                    <div style="height: 30px;line-height: 30px;text-align: center;">基本信息</div>
+                    <div class="changepwd">
+						<div class="xinleft">
+							&nbsp;账&nbsp;&nbsp;号<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="title" class="input1" required maxlength="15">
+						</div>
+					</div>
+					<div class="wen">
+						<div class="wenimg"></div>
+					</div>
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;用&nbsp;户&nbsp;名<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="username" class="input1" required maxlength="15">
+						</div>
+					</div>
+
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;联系电话<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="phone" class="input1" required maxlength="14">
+						</div>
+					</div>
+					<div class="wen"><div class="wenimg"></div></div>
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;公司名<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="firmname" class="input1" readonly value="{$firmmsg['firmname']}" maxlength="15">
+						</div>
+					</div>
+					<div style="height: 30px;line-height: 30px;text-align: center;width: 100%;">操作权限</div>
+					<div style="border: 1px solid black;">
+						<volist name="shiplist" id="v" empty=''>
+                        <label>
+                            <input class="ace ace-checkbox-2" type="checkbox" name='operation_jur[]' value="{$v['id']}"/>
+                            <span class="lbl"> {$v['shipname']}</span> 
+                        </label>
+                        </volist>
+					</div>
+					<div class="tijiao">
+						<a href="javascript:;" onclick="ti()">
+		                    <div class="div1">
+		                    提&nbsp;&nbsp;交
+		                   </div>
+		                </a>
+						<input type="submit" id="submit" value="提&nbsp;&nbsp;交" style="display: none;"/>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+	function ti(){
+        $('#submit').click();
+    }
+</script>
+</html>

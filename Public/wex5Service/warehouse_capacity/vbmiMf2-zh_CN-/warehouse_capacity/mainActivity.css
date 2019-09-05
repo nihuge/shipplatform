@@ -1,0 +1,175 @@
+.index-moder-div-top {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.index-moder-div-image-border {
+	width:90%;
+	display: inline-block;
+	padding: 5px 5px 5px 5px;
+	border-style: solid solid solid solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #e6e6e6 #e6e6e6 #e6e6e6 #e6e6e6;
+}
+
+.index-moder-image-left {
+	width: 40%;
+	padding-right: 5px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+}
+
+.index-moder-image-span {
+	display: inline-block;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+	height: 100%;
+}
+
+.index-moder-image-right {
+	margin-left: 2px;
+	width: 40%;
+}
+
+.working_add {
+	margin-right: 10px;
+}
+
+.working-list-itmes-bg {
+	background-image: url(./img/rad_bg_04.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 225px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.working-list-itmes-div-bg {
+	padding-top: 10px;
+	padding-left: 10px;
+	text-align: left;
+	height: 40px;
+	background-color: #d1e7ff;
+}
+
+.working-list-itmes-div-text {
+	font-size: 15px;
+}
+
+.hidden {
+	display: none;
+}
+
+.select-main-div-bg {
+	background-image: url(./img/bg_11.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 295px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.select-div-itmes-style {
+	background-image: url(./img/b.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.select-div-text {
+	font-size: 15px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+	padding-right: 3px;
+}
+
+.select-div-text-input {
+	height: 30px;
+	margin-left: 3px;
+	border-style: none none none none;
+	background-color: transparent
+}
+
+.select-div-text-input-data {
+	height: 30px;
+	margin-left: 3px;
+	border-style: none none none none;
+	background: url(./img/calendar.png) no-repeat right 10px center;
+	background-size: 25px 25px;
+}
+
+.own-top-bg {
+	background-image: url(./img/mine_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 200px;
+	padding-top: 40px;
+}
+
+.own-div-itmes-style {
+	background-image: url(./img/own_btn_unclick_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 8px;
+	padding-left: 10px;
+}
+
+.own-div-itmes-text {
+	font-size: 15px;
+	color: #000000;
+}
+
+.own-div-itmes-arrow {
+	width: 25px;
+	margin-right: 5px;
+}
+
+.text {
+	border: solid 0px #ccc;
+	width: 400px;
+	height: 40px;
+	background: url(./img/calendar.png) no-repeat right 10px center;
+}
+
+.input {
+	float: left;
+	border: solid 2px #ccc;
+	background: none;
+	height: 40px;
+	line-height: 30px;
+	width: 100%;
+	text-indent: 32px;
+}
+
+.text {
+	border: solid 0px #ccc;
+	width: 400px;
+	height: 40px;
+	background: url(./img/calendar.png) no-repeat right 10px center;
+}
+
+.input {
+	float: left;
+	border: solid 2px #ccc;
+	background: none;
+	height: 40px;
+	line-height: 30px;
+	width: 100%;
+	text-indent: 32px;
+}

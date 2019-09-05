@@ -1,0 +1,134 @@
+<extend name="Public:base" />
+<block name="title">个性化管理</block>
+<block name="navtitle">
+    <li class="active">
+        个性化管理
+    </li>
+    <li class="active">
+        个性化设置
+    </li>
+</block>
+<block name="active11">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="col-sm-12">
+            <div class="tabbable">
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                    <li class="active">
+                        <a data-toggle="tab" href="#home1">列表</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="add()">新增</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="home1" class="tab-pane in active">
+                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>中文名称</th>
+                                    <th>英文名称</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <volist name="data" id="v">
+                                <tr align='center'>
+                                    <td>{$v.title}</td>
+                                    <td>{$v.name}</td>
+                                    <td><a href="javascript:;" perId="{$v.id}" perName="{$v.name}" perTitle="{$v.title}" onclick="edit(this)">修改</a></td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <td colspan="10" class="pages">{$page}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ship-add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                        <h4 class="modal-title" id="myModalLabel"> 添加</h4></div>
+                    <div class="modal-body">
+                        <form id="bjy-form" class="form-inline" action="{:U('Personality/add')}" method="post">
+                            <table class="table table-striped table-bordered table-hover table-condensed">
+                                <tr>
+                                    <th width="17%" style="vertical-align: middle;">中文名称：</th>
+                                    <td>
+                                        <input class="input-medium" type="text" name="title" required maxlength="25">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: middle;">英文名称：</th>
+                                    <td>
+                                        <input class="input-medium" type="text" name="name" required maxlength="25"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <input class="btn btn-success" type="submit" value="添加">
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ship-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                        <h4 class="modal-title" id="myModalLabel"> 修改</h4></div>
+                    <div class="modal-body">
+                        <form id="bjy-form" class="form-inline" action="{:U('Personality/edit')}" method="post">
+                            <input type="hidden" name="id">
+                            <table class="table table-striped table-bordered table-hover table-condensed">
+                                <tr>
+                                    <th width="17%">中文名称：</th>
+                                    <td>
+                                        <input class="input-medium" type="text" name="title" required maxlength="25">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>英文名称：</th>
+                                    <td>
+                                        <input class="input-medium" type="text" name="name" readonly maxlength="25"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <input class="btn btn-success" type="submit" value="修改">
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // 新增
+    function add() {
+        $('#ship-add').modal('show');
+    }
+
+    // 修改
+    function edit(obj) {
+        var perId = $(obj).attr('perId');
+        var perName = $(obj).attr('perName');
+        var perTitle = $(obj).attr('perTitle');
+        $("input[name='id']").val(perId);
+        $("input[name='name']").val(perName);
+        $("input[name='title']").val(perTitle);
+        $('#ship-edit').modal('show');
+    }
+    </script>
+</block>

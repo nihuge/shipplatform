@@ -1,0 +1,64 @@
+<extend name="Public:base" />
+<block name="title">公司管理</block>
+<block name="navtitle">
+    <li class="active">
+        公司管理
+    </li>
+    <li class="active">
+        个性化设置
+    </li>
+</block>
+<block name="active4">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="col-sm-12">
+            <div id="home1" class="tab-pane in active">
+                <form action="__ACTION__" method="post">
+                    <input type="hidden" name="id" value="{$id}">
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th width='10%'>排序</th>
+                            <th>个性化名称</th>
+                        </tr>
+                    </thead>
+                    <foreach name="perlist" item="v" key='k'>
+                        <tr class='b-group'>
+                            <td>
+                                <input class="input-medium" readonly style="width:40px;height:25px;" type="text" name="{$v.id}" value="<?php
+                                    foreach($data as $key => $value){
+                                        if($v['id'] == $value){
+                                            echo $key;
+                                    }
+                                }
+                                ?>">
+                            </td>
+                            <td><label><input type="checkbox" class="ace ace-checkbox-2" name="personality[]" {:in_array($v['id'],$data) ? 'checked' : ''}><span class="lbl">  {$v.title}</span> </label></td>
+                        </tr>
+                    </foreach>
+                    <tr>
+                        <td colspan=2 style="text-align: center;">
+                            <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                        </td>
+                    </tr>
+                </table>                    
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //单选获取
+        $(":checkbox[type=checkbox]").change(function(){
+            var a = $(this).parents('.b-group').eq(0).find("input[type='text']");
+            if($(this).is(':checked')){
+                a.removeAttr('readonly');
+                a.attr("required","required");
+            }else{
+                a.removeAttr('required');
+                a.attr("readonly","readonly");
+                a.attr("value","");
+            }
+        });
+    </script>
+</block>

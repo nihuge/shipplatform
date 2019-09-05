@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/hover-effects.css">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <script src="__ADMIN_JS__/jquery-1.9.1.min.js"></script> <!-- 你必须先引入jQuery1.8或以上版本 -->
+    <script src="__ADMIN_JS__/layer/layer.js"></script>
+</head>
+
+<body>
+    <!-- 头部开始 -->
+    <include file="Public/header" />
+    <!-- 头部结束 -->
+    <!-- 大图开始 -->
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background:url(__HOME_IMG__/img1.png) 50% 0 no-repeat;background-size:100% 100%;"></li>
+            <li style="background:url(__HOME_IMG__/img2.png) 50% 0 no-repeat;background-size:100% 100%;"></li>
+        </ul>
+    </div>
+    <!-- 大图结束 -->
+    <!-- 中间开始-->
+    <div class="content">
+        <div id="select">
+            <ul>
+                <li>
+                    <div class="port-2 effect-1">
+                        <div class="image-box">
+                            <img src="__HOME_IMG__/home_01.png" alt="home_01">
+                        </div>
+                        <div class="text-desc">
+                            <a href="__ROOT__/index.php"><img src="__HOME_IMG__/home.png" /></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="port-2 effect-2">
+                        <div class="image-box">
+                            <img src="__HOME_IMG__/zuoye_01.png" alt="zuoye_01">
+                        </div>
+                        <div class="text-desc">
+                            <a href="{:U('Result/index')}"><img src="__HOME_IMG__/zuoye.png" /></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="port-2 effect-2">
+                        <div class="image-box">
+                            <img src="__HOME_IMG__/search_01.png" alt="search_01">
+                        </div>
+                        <div class="text-desc">
+                            <a href="{:U('Search/index')}"><img src="__HOME_IMG__/search.png" /></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 中间结束-->
+    <!-- 底部开始 -->
+    <include file="Public/footer" />
+    <!-- 底部结束 -->
+    <script type="text/javascript" src="__HOME_JS__/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="__HOME_JS__/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.flexslider').flexslider({
+            directionNav: true,
+            pauseOnAction: false,
+        });
+    });
+    </script>
+</body>
+
+</html>

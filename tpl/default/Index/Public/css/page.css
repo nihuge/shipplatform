@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+.b-page {
+  box-shadow: 0px 1px 2px 0px #E2E2E2;
+}
+.page {
+  padding: 30px 15px;
+  text-align: center;
+  overflow: hidden;
+}
+.page .first,
+.page .prev,
+.page .current,
+.page .num,
+.page .current,
+.page .next,
+.page .end {
+  padding: 8px 16px;
+  margin: 0px 5px;
+  display: inline-block;
+  color: #808080;
+  border: 1px solid #808080;
+  /*border-radius: 5px;*/
+}
+.page .first:hover,
+.page .prev:hover,
+.page .current:hover,
+.page .num:hover,
+.page .current:hover,
+.page .next:hover,
+.page .end:hover {
+  text-decoration: none;
+  border: 1px solid #3f7fda;
+}
+.page .current {
+  color: #3f7fda;
+  /*border-radius: 5px;*/
+  border: 1px solid #3f7fda;
+}
+.page .current:hover {
+  text-decoration: none;
+  color: #3f7fda;
+  border: 1px solid #3f7fda;
+}
+.page .not-allowed {
+  cursor: not-allowed;
+}

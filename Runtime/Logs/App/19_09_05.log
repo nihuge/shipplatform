@@ -1,0 +1,2191 @@
+[ 2019-09-05T08:36:47+08:00 ] 192.168.1.102 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0280s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0450s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0660s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0820s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 165 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0340s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.1320s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565228403t_1` [ RunTime:0.0260s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565228403t_1` [ RunTime:0.0210s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`sounding`,`ullage`,`solt`,`temperature`,`cabinid`,`is_work`,`cabinweight` FROM `resultlist` WHERE `resultid` = 165 AND `solt` = 1  [ RunTime:0.0630s ]
+SQL: SELECT `id`,`sounding`,`ullage`,`solt`,`temperature`,`cabinid`,`is_work`,`cabinweight` FROM `resultlist` WHERE `resultid` = 165 AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T08:41:25+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T08:42:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T08:42:54+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+
+[ 2019-09-05T08:42:58+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+
+[ 2019-09-05T08:52:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+
+[ 2019-09-05T08:54:39+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 213 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0130s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0260s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 213 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 213 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0240s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 213 LIMIT 1   [ RunTime:0.0310s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T08:55:39+08:00 ] 192.168.1.195 /shipplatform2/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-09-05T08:56:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 84 AND `personality` LIKE '%\"voyage\":\"航次1225\"%' LIMIT 1   [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 84 AND `personality` LIKE '%\"voyage\":\"航次1225\"%' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT `name` FROM `personality`  [ RunTime:0.0000s ]
+SQL: INSERT INTO `result` (`uid`,`shipid`,`time`,`personality`) VALUES ('9','84','1567645015','{\"voyage\":\"航次1225\",\"locationname\":\"作业地点123\",\"start\":\"起运港1234\",\"objective\":\"目的港1234\",\"goodsname\":\"货名1234\",\"transport\":\"运单量1234\",\"number\":\"作业编号111\",\"thermometer\":\"温度计编号123124\",\"dipstick\":\"量油尺编号1123\"}') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `consumption` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE ( id='9' ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE ( id='21' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname`,`balance`,`creditline`,`service`,`number` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `username` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `consumption` WHERE `number` = 'zkh201909050856553623t' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `consumption` (`number`,`resultid`,`firmid`,`firmname`,`servicemoney`,`contractnumber`,`balance`,`username`,`uid`,`time`) VALUES ('zkh201909050856553623t','166','21','携众测试检验公司','0','1','109999','携众','9','1567645015') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: UPDATE `firm` SET `balance`='109999' WHERE `id` = 21 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `is_diliang`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0050s ]
+SQL: SELECT `mooring` FROM `ship_historical_sum` WHERE `shipid` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship_historical_sum` SET `mooring`='起运港1234,目的港1234' WHERE `shipid` = 84 [ RunTime:0.1040s ]
+SQL: SHOW COLUMNS FROM `firm_historical_sum` [ RunTime:0.0050s ]
+SQL: UPDATE `firm_historical_sum` SET `num`=num+1 WHERE `firmid` = 21 [ RunTime:0.0570s ]
+SQL: SHOW COLUMNS FROM `user_historical_sum` [ RunTime:0.0050s ]
+SQL: UPDATE `user_historical_sum` SET `num`=num+1 WHERE `userid` = 9 [ RunTime:0.0600s ]
+SQL: UPDATE `ship_historical_sum` SET `num`=num+1 WHERE `shipid` = 84 [ RunTime:0.0550s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-09-05T08:58:25+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_1` [ RunTime:0.0050s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.114 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` < '2.114' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` > '2.114' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1270 行.
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1271 行.
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_1` [ RunTime:0.0060s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.117 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1315 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultlist` (`temperature`,`cabinweight`,`cabinid`,`ullage`,`sounding`,`time`,`resultid`,`solt`,`standardcapacity`,`volume`,`expand`,`correntkong`,`listcorrection`,`is_work`) VALUES ('140','64.431','188','2.114','3.637','1567645105','166','1','59.131','0.9138','1.00432','2.117','-0.003','1') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2012 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `qianweight`='59.131',`qiantotal`='-0.065' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `weight`='0.065' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+08%3A58%3A25------------------%0D%0Adensity%3A+then%3A%0D%0A%0D%0A%09VC%3D0.9138%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D0.017%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09Ua%281.897%29%3ADa%28%29%3DCaa%28-3%29%0D%0A%09Ub%282.397%29%3ADa%28%3DCba%28-4%29%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+-3.434%0D%0A+final_result%3D-3.434+%0D%0ATC%3D-0.003%0D%0A+TC%3A-0.003%2C+-Sounding%3A-3.457+then%3A%0D%0A%09NowTC%3D-0.003%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.003%3D2.117%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09Received+capacity_table%3A%5Cr%5Cn%5CtU1%282.117%29-%3ECV1%2864.414%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414cabin_first_result%3D64.431%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D64.431%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+59.131%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2859.131+%2A+%28+-+0.0011%29%2C4%29+%3D-0.065%0D%0A' WHERE `id` = 2012 [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0360s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`qufen`,`quantity`,`is_pipeline`,`resultid`,`solt`,`shipid`) VALUES ('2.114','140','3.637','188','5.571','rongliang','1','1','166','1','84') [ RunTime:0.0220s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 176 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < '2.112' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > '2.112' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0180s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < 2.112 ORDER BY ullage desc LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > 2.112 ORDER BY ullage asc LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultlist` (`temperature`,`cabinweight`,`cabinid`,`ullage`,`sounding`,`time`,`resultid`,`solt`,`standardcapacity`,`volume`,`expand`,`correntkong`,`listcorrection`,`is_work`) VALUES ('189','1.921','176','2.112','3.637','1567645105','166','1','1.704','0.8819','1.006084','2.112','0','1') [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2013 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='60.835',`qiantotal`='-0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `weight`='0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+08%3A58%3A25------------------%0D%0Adensity%3A+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A%09VC%3D0.8819%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D1.921%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E8%A1%A8%EF%BC%8C%E9%94%99%E8%AF%AF%EF%BC%81%0D%0A%09TC%3D0%0D%0A+TC%3A0%2C+-Sounding%3A-3.459+then%3A%0D%0A%09NowTC%3D0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+0%3D2.112%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09cabin_first_result%3D1.921%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D1.921%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+1.704%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2860.835+%2A+%28+-+0.0011%29%2C4%29+%3D-0.067%0D%0A' WHERE `id` = 2013 [ RunTime:0.0680s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`qufen`,`quantity`,`is_pipeline`,`resultid`,`solt`,`shipid`) VALUES ('2.112','189','3.637','176','5.571','rongliang','1','1','166','1','84') [ RunTime:0.0510s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T08:58:37+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0130s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0130s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0130s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T08:58:42+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0120s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '166' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 166  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '166' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0150s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T08:59:40+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '166' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 166  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '166' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T09:12:39+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 165 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565228403t_1` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565228403t_1` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '165' AND `solt` = 1  [ RunTime:0.0030s ]
+SQL: SELECT `id`,`sounding`,`ullage`,`solt`,`temperature`,`cabinid`,`is_work`,`cabinweight` FROM `resultlist` WHERE `resultid` = 165 AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:16:30+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 165 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0110s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565228403t_1` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565228403t_1` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '165' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '165' AND `solt` = 2  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:16:38+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0090s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 150 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 81 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1547003795e_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1547003795e_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1547003795e_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1547003795e_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '150' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '150' AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:38:05+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:38:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '166' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '166' AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T09:39:18+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0310s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 164 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 96 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565229036a_2` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565229036a_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565229036a_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565229036a_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '164' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '164' AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T09:39:23+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0600s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0490s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0150s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 161 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '161' AND `solt` = 1  [ RunTime:0.0030s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '161' AND `solt` = 2  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:39:34+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 159 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrection805_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacity805_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrection805_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacity805_2` LIMIT 1   [ RunTime:0.0200s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '159' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '159' AND `solt` = 2  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T09:41:46+08:00 ] 192.168.1.102 /shipplatform2/app.php?c=Result&a=adjust_cabin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 220 AND `shipid` = 90 AND `resultid` = 165 LIMIT 1   [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 165 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 220 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565228403t_1` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565228403t_1` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T10:10:16+08:00 ] 192.168.1.102 /shipplatform2/app.php?c=Result&a=adjust_cabins
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [2] preg_match() expects parameter 2 to be string, array given D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 109 行.
+NOTIC: [2] preg_match() expects parameter 2 to be string, array given D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Common\function.php 第 109 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565228403t_1` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565228403t_1` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 220 AND `shipid` = 90 AND `resultid` = 165 LIMIT 1   [ RunTime:0.0140s ]
+SQL: UPDATE `resultrecord` SET `ullage`='4.441',`sounding`='1.57',`temperature`='15',`process`='nowtime%3A2019-08-30+11%3A19%3A05------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%28140%29%3DCaa%28%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%28140%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-1.886+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A
+ Data is adjusted.New data:
+  ullage:4.441, sounding:1.57, temperature:15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.441%2C+sounding%3A1.57%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.441%2C+sounding%3A1.57%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.441%2C+sounding%3A1.57%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.441%2C+sounding%3A1.57%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.441%2C+sounding%3A1.57%2C+temperature%3A15' WHERE `solt` = 1 AND `cabinid` = 220 AND `shipid` = 90 AND `resultid` = 165 [ RunTime:0.0100s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 221 AND `shipid` = 90 AND `resultid` = 165 LIMIT 1   [ RunTime:0.0130s ]
+SQL: UPDATE `resultrecord` SET `ullage`='4.55',`sounding`='1.472',`temperature`='15',`process`='nowtime%3A2019-08-30+14%3A11%3A21------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%28140%29%3DCaa%28%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%28140%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+-0.29999999999999%0D%0A+final_result%3D-0.29999999999999+%0D%0ATC%3D-0.3%0D%0A+TC%3A-0%2C+-Sounding%3A-5.015+then%3A%0D%0A%09+NowTC%3D-0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D1.007+-+-0%3D1.007%0D%0A
+ Data is adjusted.New data:
+  ullage:4.55, sounding:1.472, temperature:15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.55%2C+sounding%3A1.472%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.55%2C+sounding%3A1.472%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.55%2C+sounding%3A1.472%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.55%2C+sounding%3A1.472%2C+temperature%3A15%0D%0A+Data+is+adjusted.New+data%3A%0D%0A++ullage%3A4.55%2C+sounding%3A1.472%2C+temperature%3A15' WHERE `solt` = 1 AND `cabinid` = 221 AND `shipid` = 90 AND `resultid` = 165 [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 165 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565228403t_1` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '165' AND `solt` = 1  [ RunTime:0.0040s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '165' AND `solt` = 2  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:28:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 102 AND `personality` LIKE '%\"voyage\":\"航次122547\"%' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 102 AND `personality` LIKE '%\"voyage\":\"航次122547\"%' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0070s ]
+SQL: SELECT `name` FROM `personality`  [ RunTime:0.0000s ]
+SQL: INSERT INTO `result` (`uid`,`shipid`,`time`,`personality`) VALUES ('9','102','1567664936','{\"voyage\":\"航次122547\",\"locationname\":\"作业地点123\",\"start\":\"起运港1234\",\"objective\":\"目的港1234\",\"goodsname\":\"货名1234\",\"transport\":\"运单量1234\",\"number\":\"作业编号111\",\"thermometer\":\"温度计编号123124\",\"dipstick\":\"量油尺编号1123\"}') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `consumption` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE ( id='9' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE ( id='21' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname`,`balance`,`creditline`,`service`,`number` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `username` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `consumption` WHERE `number` = 'ogd201909051428571601j' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `consumption` (`number`,`resultid`,`firmid`,`firmname`,`servicemoney`,`contractnumber`,`balance`,`username`,`uid`,`time`) VALUES ('ogd201909051428571601j','167','21','携众测试检验公司','0','1','109999','携众','9','1567664937') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: UPDATE `firm` SET `balance`='109999' WHERE `id` = 21 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT `is_diliang`,`suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565233871t_2` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565233871t_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565233871t_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565233871t_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0060s ]
+SQL: SELECT `mooring` FROM `ship_historical_sum` WHERE `shipid` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship_historical_sum` SET `mooring`='起运港1234,目的港1234' WHERE `shipid` = 102 [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `firm_historical_sum` [ RunTime:0.0060s ]
+SQL: UPDATE `firm_historical_sum` SET `num`=num+1 WHERE `firmid` = 21 [ RunTime:0.0150s ]
+SQL: SHOW COLUMNS FROM `user_historical_sum` [ RunTime:0.0060s ]
+SQL: UPDATE `user_historical_sum` SET `num`=num+1 WHERE `userid` = 9 [ RunTime:0.0190s ]
+SQL: UPDATE `ship_historical_sum` SET `num`=num+1 WHERE `shipid` = 102 [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:29:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `forntrecord` (`forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`solt`,`resultid`) VALUES ('0','0','0','0','0.8','0.8','1','167') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 167 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='1.0442371351189',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-09-05+14%3A29%3A14------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density%3D%28density%2F0.9969%29%3D1.0410%2F0.9969%3D1.0442371351189%7Cnow_temperature+%3D+15%E2%84%83%0D%0A' WHERE `id` = 167 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 167 AND `is_work` = 1  [ RunTime:0.0160s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:30:59+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:31:04+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:35:21+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-09-05T14:42:52+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-09-05T14:45:03+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.114','3.637','224','188','3.397','167','1','102','rongliang','1','1') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.114',`sounding`='3.637',`temperature`='224',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 [ RunTime:0.0100s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\WorkController.class.php 第 2997 行.
+
+[ 2019-09-05T14:45:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0560s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0040s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 373 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T14:48:54+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0030s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 373 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T14:48:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.114','3.637','224','188','3.397','167','1','102','rongliang','1','1') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.114',`sounding`='3.637',`temperature`='224',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 [ RunTime:0.0120s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.112','3.637','189','225','6.022','167','1','102','rongliang','1','1') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.112',`sounding`='3.637',`temperature`='189',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 [ RunTime:0.0090s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:49:09+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 373 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T14:49:18+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '166' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 166  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0130s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '166' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0220s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 166 AND `solt` = 1 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0160s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:49:21+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 373 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T14:52:49+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.114','3.637','224','188','3.397','167','1','102','rongliang','1','1') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.114',`sounding`='3.637',`temperature`='224',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 [ RunTime:0.0120s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0030s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.112','3.637','189','225','6.022','167','1','102','rongliang','1','1') [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.112',`sounding`='3.637',`temperature`='189',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 [ RunTime:0.0100s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T14:52:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0030s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 373 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T15:06:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0140s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0130s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `resultrecord` SET `ullage`='2.114',`sounding`='3.637',`temperature`='224',`cabinid`='188',`altitudeheight`='3.397',`resultid`='167',`solt`='1',`shipid`='102',`qufen`='rongliang',`quantity`='1',`is_pipeline`='1' WHERE `resultid` = 167 AND `cabinid` = 188 AND `solt` = 1 [ RunTime:0.0110s ]
+SQL: INSERT INTO `resultlist` (`ullage`,`sounding`,`temperature`,`is_work`,`resultid`,`cabinid`,`solt`) VALUES ('2.114','3.637','224','1','167','188','1') [ RunTime:0.0010s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultrecord` SET `ullage`='2.112',`sounding`='3.637',`temperature`='189',`cabinid`='225',`altitudeheight`='6.022',`resultid`='167',`solt`='1',`shipid`='102',`qufen`='rongliang',`quantity`='1',`is_pipeline`='1' WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 [ RunTime:0.0110s ]
+SQL: INSERT INTO `resultlist` (`ullage`,`sounding`,`temperature`,`is_work`,`resultid`,`cabinid`,`solt`) VALUES ('2.112','3.637','189','1','167','225','1') [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T15:06:18+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001001s ]
+
+[ 2019-09-05T15:06:23+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0120s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 167  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '167' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2014  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `solt` = 1 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0150s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2015  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `solt` = 1 AND `cabinid` = 225 LIMIT 1   [ RunTime:0.0190s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T15:12:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0130s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_1` [ RunTime:0.0070s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.114 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` < '2.114' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` > '2.114' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1270 行.
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1271 行.
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_1` [ RunTime:0.0060s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.117 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1315 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0070s ]
+SQL: UPDATE `resultlist` SET `temperature`='140',`cabinweight`='64.431',`cabinid`='188',`ullage`='2.114',`sounding`='3.637',`resultid`='166',`solt`='1',`standardcapacity`='59.131',`volume`='0.9138',`expand`='1.00432',`correntkong`='2.117',`listcorrection`='-0.003',`is_work`='1' WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2012 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='60.835',`qiantotal`='-0.067' WHERE `id` = 166 [ RunTime:0.0050s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `weight`='0.067' WHERE `id` = 166 [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+15%3A12%3A27------------------%0D%0Adensity%3A+then%3A%0D%0A%0D%0A%09VC%3D0.9138%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D0.017%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09Ua%281.897%29%3ADa%28%29%3DCaa%28-3%29%0D%0A%09Ub%282.397%29%3ADa%28%3DCba%28-4%29%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+-3.434%0D%0A+final_result%3D-3.434+%0D%0ATC%3D-0.003%0D%0A+TC%3A-0.003%2C+-Sounding%3A-3.457+then%3A%0D%0A%09NowTC%3D-0.003%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.003%3D2.117%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09Received+capacity_table%3A%5Cr%5Cn%5CtU1%282.117%29-%3ECV1%2864.414%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414cabin_first_result%3D64.431%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D64.431%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+59.131%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2860.835+%2A+%28+-+0.0011%29%2C4%29+%3D-0.067%0D%0A' WHERE `id` = 2012 [ RunTime:0.0180s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`is_pipeline`,`quantity`) VALUES ('2.114','140','3.637','188','5.571','166','1','84','rongliang','1','1') [ RunTime:0.0110s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 176 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < '2.112' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > '2.112' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < 2.112 ORDER BY ullage desc LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > 2.112 ORDER BY ullage asc LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `temperature`='189',`cabinweight`='1.921',`cabinid`='176',`ullage`='2.112',`sounding`='3.637',`resultid`='166',`solt`='1',`standardcapacity`='1.704',`volume`='0.8819',`expand`='1.006084',`correntkong`='2.112',`listcorrection`='0',`is_work`='1' WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 [ RunTime:0.0110s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2013 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='60.835',`qiantotal`='-0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `weight`='0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+15%3A12%3A27------------------%0D%0Adensity%3A+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A%09VC%3D0.8819%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D1.921%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E8%A1%A8%EF%BC%8C%E9%94%99%E8%AF%AF%EF%BC%81%0D%0A%09TC%3D0%0D%0A+TC%3A0%2C+-Sounding%3A-3.459+then%3A%0D%0A%09NowTC%3D0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+0%3D2.112%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09cabin_first_result%3D1.921%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D1.921%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+1.704%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2860.835+%2A+%28+-+0.0011%29%2C4%29+%3D-0.067%0D%0A' WHERE `id` = 2013 [ RunTime:0.0220s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`is_pipeline`,`quantity`) VALUES ('2.112','189','3.637','176','5.571','166','1','84','rongliang','1','1') [ RunTime:0.0260s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T15:16:55+08:00 ] 192.168.1.102 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0040s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 159 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrection805_2` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `tankcapacity805_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrection805_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacity805_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '159' AND `solt` = 1  [ RunTime:0.0030s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '159' AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T15:21:36+08:00 ] 192.168.1.102 /shipplatform2/app.php?c=Result&a=batch_reckon
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 188 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_2` [ RunTime:0.0040s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1552963684j_1` [ RunTime:0.0040s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.114 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` < '2.114' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 188 AND `ullage` > '2.114' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1270 行.
+NOTIC: [8] Undefined offset: 0 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1271 行.
+SQL: SHOW COLUMNS FROM `tankcapacityzi1552963684j_1` [ RunTime:0.0050s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.117 AND `cabinid` = 188 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1315 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultlist` SET `temperature`='140',`cabinweight`='64.431',`cabinid`='188',`ullage`='2.114',`sounding`='3.637',`resultid`='166',`solt`='1',`standardcapacity`='59.131',`volume`='0.9138',`expand`='1.00432',`correntkong`='2.117',`listcorrection`='-0.003',`is_work`='1' WHERE `cabinid` = 188 AND `resultid` = 166 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2012  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2012 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='60.835',`qiantotal`='-0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `weight`='0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+15%3A21%3A36------------------%0D%0Adensity%3A+then%3A%0D%0A%0D%0A%09VC%3D0.9138%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D0.017%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09Ua%281.897%29%3ADa%28%29%3DCaa%28-3%29%0D%0A%09Ub%282.397%29%3ADa%28%3DCba%28-4%29%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+-3.434%0D%0A+final_result%3D-3.434+%0D%0ATC%3D-0.003%0D%0A+TC%3A-0.003%2C+-Sounding%3A-3.457+then%3A%0D%0A%09NowTC%3D-0.003%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.003%3D2.117%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09Received+capacity_table%3A%5Cr%5Cn%5CtU1%282.117%29-%3ECV1%2864.414%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414cabin_first_result%3D64.431%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D64.431%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+59.131%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2860.835+%2A+%28+-+0.0011%29%2C4%29+%3D-0.067%0D%0A' WHERE `id` = 2012 [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`is_pipeline`,`quantity`) VALUES ('2.114','140','3.637','188','5.571','166','1','84','rongliang','1','1') [ RunTime:0.0160s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `qianchi`,`houchi`,`qiantemperature`,`qiandensity`,`houtemperature`,`houdensity`,`qianweight` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 176 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1552963684j_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1552963684j_2` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1013 行.
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < '2.112' ORDER BY ullage desc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `trimvalue1`,`ullage` FROM `trimcorrectionzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > '2.112' ORDER BY ullage asc LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `ullage` = 2.112 AND `cabinid` = 176 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` < 2.112 ORDER BY ullage desc LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `ullage`,`capacity` FROM `tankcapacityzi1552963684j_1` WHERE `cabinid` = 176 AND `ullage` > 2.112 ORDER BY ullage asc LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined variable: res D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 829 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultlist` SET `temperature`='189',`cabinweight`='1.921',`cabinid`='176',`ullage`='2.112',`sounding`='3.637',`resultid`='166',`solt`='1',`standardcapacity`='1.704',`volume`='0.8819',`expand`='1.006084',`correntkong`='2.112',`listcorrection`='0',`is_work`='1' WHERE `cabinid` = 176 AND `resultid` = 166 AND `solt` = 1 [ RunTime:0.0090s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2013  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2013 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 166 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `qianweight`='60.835',`qiantotal`='-0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: SELECT `qiantotal`,`houtotal` FROM `result` WHERE `id` = 166 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `weight`='0.067' WHERE `id` = 166 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`='nowtime%3A2019-09-05+15%3A21%3A36------------------%0D%0Adensity%3A+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A%09VC%3D0.8819%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D64.414%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Atrue+then%3A%0D%0A%09pipeline_volume%3D1.921%0D%0Amethod%3AC+and+table_used%3Arongliang+then%0D%0A%09Search+trim_table%3A%0D%0A%09%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%88%B0%E8%A1%A8%EF%BC%8C%E9%94%99%E8%AF%AF%EF%BC%81%0D%0A%09TC%3D0%0D%0A+TC%3A0%2C+-Sounding%3A-3.459+then%3A%0D%0A%09NowTC%3D0%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+0%3D2.112%0D%0Aullage+%21%3D+altitudeheight+or+bilge_stock+%3D%3D+true+then%3A%0D%0A%09cabin_first_result%3D1.921%0D%0A%09Cabin_volume%3Dpipeline_volume%2Bcabin_first_result%3D1.921%0D%0A%09now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C3%29+%3D+1.704%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%2860.835+%2A+%28+-+0.0011%29%2C4%29+%3D-0.067%0D%0A' WHERE `id` = 2013 [ RunTime:0.0190s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `solt` = 1 AND `cabinid` = 0 AND `resultid` = 166 LIMIT 1   [ RunTime:0.0020s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`temperature`,`sounding`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`is_pipeline`,`quantity`) VALUES ('2.112','189','3.637','176','5.571','166','1','84','rongliang','1','1') [ RunTime:0.0100s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T15:53:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+NOTIC: [8] Undefined index: cabinid D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\WorkController.class.php 第 3095 行.
+
+[ 2019-09-05T15:55:16+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0170s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 222 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+
+[ 2019-09-05T15:55:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 222 AND `solt` = 1 LIMIT 1   [ RunTime:0.0200s ]
+
+[ 2019-09-05T15:55:59+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 222 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+
+[ 2019-09-05T15:56:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0260s ]
+
+[ 2019-09-05T15:56:38+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+
+[ 2019-09-05T15:56:56+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `resultrecord` (`ullage`,`sounding`,`temperature`,`cabinid`,`altitudeheight`,`resultid`,`solt`,`shipid`,`qufen`,`quantity`,`is_pipeline`) VALUES ('2.114','3.637','140','224','6.011','167','1','102','rongliang','1','1') [ RunTime:0.0000s ]
+SQL: INSERT INTO `resultlist` (`ullage`,`sounding`,`temperature`,`is_work`,`resultid`,`cabinid`,`solt`) VALUES ('2.114','3.637','140','1','167','224','1') [ RunTime:0.0000s ]
+SQL: SELECT `altitudeheight` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultrecord` SET `ullage`='2.112',`sounding`='3.637',`temperature`='189',`cabinid`='225',`altitudeheight`='6.022',`resultid`='167',`solt`='1',`shipid`='102',`qufen`='rongliang',`quantity`='1',`is_pipeline`='1' WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 [ RunTime:0.0110s ]
+SQL: UPDATE `resultlist` SET `ullage`='2.112',`sounding`='3.637',`temperature`='189',`is_work`='1' WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 [ RunTime:0.0110s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-09-05T15:57:00+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0270s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0070s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+15%3A57%3A00------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T15:57:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0140s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+15%3A57%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0140s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='225',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 1996 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.113',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+15%3A57%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0Anowtime%3A2019-09-05+15%3A57%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A%09VC%3D0.895%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.91+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+-0.001%3D2.113%0D%0A' WHERE `id` = 1996 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T16:13:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0140s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A13%3A24------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='225',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 1996 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.113',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A13%3A24------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0Anowtime%3A2019-09-05+16%3A13%3A24------------------%0D%0Adensity%3A1.0442+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A%09VC%3D0.895%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.91+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+-0.001%3D2.113%0D%0A' WHERE `id` = 1996 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T16:13:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0170s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0070s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A13%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='225',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 1996 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.113',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A13%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0Anowtime%3A2019-09-05+16%3A13%3A28------------------%0D%0Adensity%3A1.0442+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A%09VC%3D0.895%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.91+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+-0.001%3D2.113%0D%0A' WHERE `id` = 1996 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T16:14:26+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0410s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0070s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A14%3A26------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\WorkController.class.php 第 3110 行.
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0570s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='225',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 1996 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0090s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.113',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A14%3A26------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0Anowtime%3A2019-09-05+16%3A14%3A26------------------%0D%0Adensity%3A1.0442+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A%09VC%3D0.895%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.91+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+-0.001%3D2.113%0D%0A' WHERE `id` = 1996 [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\WorkController.class.php 第 3110 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T16:14:52+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0200s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0090s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0200s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0290s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='224',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 2001 [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0180s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0140s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.115',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A14%3A52------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0A' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0120s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0140s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0280s ]
+SQL: UPDATE `resultrecord` SET `cabinid`='225',`ullage1`='1.004',`ullage2`='1.014',`draft1`='3',`draft2`='4',`value1`='0',`value2`='-1',`value3`='-1',`value4`='-2',`resultid`='167',`solt`='1',`shipid`='102' WHERE `id` = 1996 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0120s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0070s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: quantity D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1693 行.
+NOTIC: [8] Undefined index: is_pipeline D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1700 行.
+NOTIC: [8] Undefined index: is_guanxian D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 1707 行.
+SQL: UPDATE `resultrecord` SET `correntkong`='2.113',`listcorrection`='-0.001',`process`='nowtime%3A2019-09-05+16%3A14%3A52------------------%0D%0Adensity%3A1.0442+then%3A%0D%0A%0D%0A%09VC%3D0.9236%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A140%E2%84%83+then%3A%0D%0A%0D%0A+%09EC%3D1.00432%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.897+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.114+-+-0.001%3D2.115%0D%0Anowtime%3A2019-09-05+16%3A14%3A52------------------%0D%0Adensity%3A1.0442+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A%09VC%3D0.895%0D%0Acoefficient+%3D+3%2C+Cabin_temperature%3A189%E2%84%83+then%3A%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1%0D%0A+%09EC%3D1.006084%0D%0Atable_contain_pipeline+%3D+false%2C+pipeline_stock%3Afalse+then%3A%0D%0A%09pipeline_volume%3D0%0D%0AReceived+trim_table%3A%0D%0A%09Ua%281.004%29%3ADa%283%29%3DCaa%280%0D%0A%09Ua%281.004%29%3ADb%284%29%3DCab%28-1%0D%0A%09Ub%281.014%29%3ADa%283%29%3DCba%28-1%0D%0A%09Ub%281.014%29%3ADb%284%29%3DCbb%28-2%0D%0A---------------------------------------%0D%0Acount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D-1TC%3D-1%0D%0A+TC%3A-0.001%2C+-Sounding%3A-3.91+then%3A%0D%0A%09+NowTC%3D-0.001%0D%0AC_ullage+%3D+ullage+-+NowTC+%3D2.112+-+-0.001%3D2.113%0D%0A' WHERE `id` = 1996 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T16:18:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_capacitydata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+NOTIC: [8] Undefined index: capacity1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\WorkController.class.php 第 3167 行.
+
+[ 2019-09-05T16:20:05+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_capacitydata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0190s ]
+SQL: UPDATE `resultrecord` SET `xiuullage1`='2',`xiuullage2`='3',`capacity1`='251',`capacity2`='122' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2217 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2220 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2226 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2255 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2264 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2284 行.
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `temperature`='140',`cabinweight`='251.075',`cabinid`='224',`ullage`='2.114',`sounding`='3.637',`time`='1567671605',`resultid`='167',`solt`='1',`standardcapacity`='232.8946',`volume`='0.9236',`expand`='1.00432',`correntkong`='',`listcorrection`='-0.001' WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2016  [ RunTime:0.0010s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2016 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='232.8946',`qiantotal`='242.9324' WHERE `id` = 167 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`=concat(process,"Received+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28122%29%0D%0A%09U2%282%29-%3ECV2%28251%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D251+cabin_volume%3D251.075now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+232.8946%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28232.8946+%2A+%281.0442+-+0.0011%29%2C4%29+%3D242.9324%0D%0A") WHERE `id` = 2016 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0160s ]
+SQL: UPDATE `resultrecord` SET `xiuullage1`='2',`xiuullage2`='3',`capacity1`='224',`capacity2`='101' WHERE `id` = 1996 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2217 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2220 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2226 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2255 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2264 行.
+NOTIC: [8] Undefined index: correntkong D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 2284 行.
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultlist` SET `temperature`='189',`cabinweight`='224.075',`cabinid`='225',`ullage`='2.112',`sounding`='3.637',`time`='1567671605',`resultid`='167',`solt`='1',`standardcapacity`='201.7673',`volume`='0.895',`expand`='1.006084',`correntkong`='',`listcorrection`='-0.001' WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2015  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2015 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='434.6619',`qiantotal`='453.3958' WHERE `id` = 167 [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `process`=concat(process,"Received+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28122%29%0D%0A%09U2%282%29-%3ECV2%28251%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D251+cabin_volume%3D251.075now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+232.8946%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28232.8946+%2A+%281.0442+-+0.0011%29%2C4%29+%3D242.9324%0D%0AReceived+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28101%29%0D%0A%09U2%282%29-%3ECV2%28224%29%0D%0A------------------------------------%0D%0AC_ullage%3A+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A1%2Ccount%28Draught%29%3A1+then%3A%0D%0Afinal_result%3D224+cabin_volume%3D224.075now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+201.7673%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28434.6619+%2A+%281.0442+-+0.0011%29%2C4%29+%3D453.3958%0D%0A") WHERE `id` = 2015 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-09-05T16:22:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=batch_capacitydata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 224 AND `solt` = 1 LIMIT 1   [ RunTime:0.0150s ]
+SQL: UPDATE `resultrecord` SET `xiuullage1`='2',`xiuullage2`='3',`capacity1`='251',`capacity2`='122' WHERE `id` = 2001 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 224 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultlist` SET `temperature`='140',`cabinweight`='236.24',`cabinid`='224',`ullage`='2.114',`sounding`='3.637',`time`='1567671747',`resultid`='167',`solt`='1',`standardcapacity`='219.1339',`volume`='0.9236',`expand`='1.00432',`correntkong`='2.115',`listcorrection`='-0.001' WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 224 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2016  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2016 [ RunTime:0.0010s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `qianweight`='420.9012',`qiantotal`='439.042' WHERE `id` = 167 [ RunTime:0.0000s ]
+SQL: UPDATE `resultlist` SET `process`=concat(process,"Received+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28122%29%0D%0A%09U2%282%29-%3ECV2%28251%29%0D%0A------------------------------------%0D%0AC_ullage%3A2.115+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+236.165%0D%0A+final_result%3D236.165+%0D%0A+cabin_volume%3D236.24now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+219.1339%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28420.9012+%2A+%281.0442+-+0.0011%29%2C4%29+%3D439.042%0D%0A") WHERE `id` = 2016 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 167 AND `cabinid` = 225 AND `solt` = 1 LIMIT 1   [ RunTime:0.0150s ]
+SQL: UPDATE `resultrecord` SET `xiuullage1`='2',`xiuullage2`='3',`capacity1`='224',`capacity2`='101' WHERE `id` = 1996 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity FROM ship s left join result r on r.shipid=s.id   WHERE s.id = '102' AND r.id = '167' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`pipe_line` FROM `cabin` WHERE `id` = 225 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `resultlist` WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `resultlist` SET `temperature`='189',`cabinweight`='210.176',`cabinid`='225',`ullage`='2.112',`sounding`='3.637',`time`='1567671747',`resultid`='167',`solt`='1',`standardcapacity`='189.252',`volume`='0.895',`expand`='1.006084',`correntkong`='2.113',`listcorrection`='-0.001' WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 [ RunTime:0.0100s ]
+SQL: SELECT `id` FROM `resultlist` WHERE `cabinid` = 225 AND `resultid` = 167 AND `solt` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 2015  [ RunTime:0.0000s ]
+SQL: DELETE FROM `resultlist_img` WHERE `resultlist_id` = 2015 [ RunTime:0.0000s ]
+SQL: SELECT sum(standardcapacity) as sums FROM `resultlist` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: UPDATE `result` SET `qianweight`='408.3859',`qiantotal`='425.9873' WHERE `id` = 167 [ RunTime:0.0010s ]
+SQL: UPDATE `resultlist` SET `process`=concat(process,"Received+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28122%29%0D%0A%09U2%282%29-%3ECV2%28251%29%0D%0A------------------------------------%0D%0AC_ullage%3A2.115+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+236.165%0D%0A+final_result%3D236.165+%0D%0A+cabin_volume%3D236.24now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+219.1339%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28420.9012+%2A+%281.0442+-+0.0011%29%2C4%29+%3D439.042%0D%0AReceived+capacity_table%3A%5Cr%5Cn%5CtU1%283%29-%3ECV1%28101%29%0D%0A%09U2%282%29-%3ECV2%28224%29%0D%0A------------------------------------%0D%0AC_ullage%3A2.113+then%3Abilge_stock%3Ature+or+altitudeheight+%21%3D+C_ullage+then%3A%5Cr%5Cncount%28ulist%29%3A2%2Ccount%28Draught%29%3A1+then%3A%0D%0A+%3D+210.101%0D%0A+final_result%3D210.101+%0D%0A+cabin_volume%3D210.176now_cabin_volume+%3D+round%28Cabin_volume%2AVC%2AEC%2C4%29+%3D+189.252%0D%0Anow_result_cargo_weight+%3D+round%28sum%28now_cabin_volume%29+%2A+%28density+-+AB%29%2C4%29+%3Dround%28408.3859+%2A+%281.0442+-+0.0011%29%2C4%29+%3D425.9873%0D%0A") WHERE `id` = 2015 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T16:22:37+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=adjust_cabin_list
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT `houdensity`,`qiandensity`,`houtotal`,`qiantotal`,`weight`,`shipid` FROM `result` WHERE `id` = 167 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 102 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1565233871t_2` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1565233871t_2` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1565233871t_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1565233871t_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '167' AND `solt` = 1  [ RunTime:0.0020s ]
+SQL: SELECT r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname FROM resultlist r left join cabin as c on c.id=r.cabinid  WHERE `resultid` = '167' AND `solt` = 2  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-09-05T16:52:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Work&a=get_capacity_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+ERR: Think\Model:get_capacity_data方法不存在！
+
+[ 2019-09-05T16:53:22+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=get_capacity_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+ERR: Think\Model:get_capacity_data方法不存在！
+
+[ 2019-09-05T16:53:31+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=get_capacity_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT `cabinid`,`solt`,`ullage`,`correntkong`,`altitudeheight`,xiuullage1 as ullage1,xiuullage2 as ullage2,`capacity1`,`capacity2` FROM `resultrecord` WHERE `resultid` = 2 AND `solt` = 1  [ RunTime:0.0080s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-09-05T16:54:12+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=get_capacity_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0090s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0130s ]
+SQL: SELECT `cabinid`,`solt`,`ullage`,`correntkong`,`altitudeheight`,xiuullage1 as ullage1,xiuullage2 as ullage2,`capacity1`,`capacity2` FROM `resultrecord` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0040s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.009000s ]
+
+[ 2019-09-05T16:54:34+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=get_book_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT `cabinid`,`solt`,`ullage`,`altitudeheight`,`ullage1`,`ullage2`,`draft1`,`draft2`,`value1`,`value2`,`value3`,`value4` FROM `resultrecord` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-09-05T16:55:47+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=get_capacity_datas
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller! 
+ 
+ 
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT `cabinid`,`solt`,`ullage`,`correntkong`,`altitudeheight`,xiuullage1 as ullage1,xiuullage2 as ullage2,`capacity1`,`capacity2` FROM `resultrecord` WHERE `resultid` = 167 AND `solt` = 1  [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

@@ -1,0 +1,70 @@
+<extend name="Public:base" />
+<block name="title">作业列表</block>
+<block name="crumbs"><a>作业</a>&nbsp;>&nbsp;<a>作业列表</a></block>   
+<block name="content">
+	<div style="height:40px;line-height: 40px;">
+        <a href="javascript:;" onclick="add()">
+            <div style="float:right;margin-right:40px;background-color: #3ca0fe;color:white;padding:0px 5px;margin:5px;width:80px;text-align:center">
+			新增作业
+		    </div>
+        </a>
+	</div>
+    <table class="biaoge">
+        <tr class="th">
+            <th>船名</th>
+            <th>航次</th>
+            <th>作业地点</th>
+            <th>货名</th>
+            <th>运单量</th>
+            <th>起运港</th>
+            <th>目的港</th>
+            <th>操作</th>
+        </tr>
+        <volist name="list" id="v">
+        <tr class="td">
+            <td>{$v['shipname']}</td>
+            <td>{$v['personality']['voyage']}</td>
+            <td>{$v['personality']['locationname']}</td>
+            <td>{$v['personality']['goodsname']}</td>
+            <td>{$v['personality']['transport']}</td>
+            <td>{$v['personality']['start']}</td>
+            <td>{$v['personality']['objective']}</td>
+            <td><a href="javascript:;" onclick="edit({$v['id']})" id="del">修改</a></td>
+        </tr>	
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=8 class="pages">{$page}</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        /*增加*/
+        function add(){
+            var url="__CONTROLLER__/add";
+            layer.open({
+                title: '新增作业',
+                type: 2,
+                area: ['840px', '650px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        /*编辑*/
+        function edit(id){
+            var url = "{:U('Result/edit/id/" + id + "')}";
+            layer.open({
+                title: '修改作业',
+                type: 2,
+                area: ['840px', '550px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: [url, 'yes'],
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+</block>

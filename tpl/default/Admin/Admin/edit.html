@@ -1,0 +1,59 @@
+<extend name="Public:base" />
+<block name="title">用户管理</block>
+<block name="navtitle">
+    <li class="active">
+        用户管理
+    </li>
+    <li class="active">
+        修改用户
+    </li>
+</block>
+<block name="active1">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="col-sm-12">
+            <div id="home4" class="tab-pane in active">
+                <form action="__ACTION__" method="post">
+                    <input type="hidden" name="id" id='uid' value="{$msg['id']}">
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+                        <tr>
+                            <td style="width:120px;">账 &nbsp;&nbsp;&nbsp;&nbsp;号</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" name="title" maxlength="15" readonly value="{$msg['title']}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>用&nbsp;户&nbsp;&nbsp;名</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-5" name="name" maxlength="15" value="{$msg['name']}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>联系电话</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-5" name="phone" maxlength="14" value="{$msg['phone']}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>用户角色</td>
+                            <td>
+                                <volist name="grouplist" id="v">
+                                    <label>
+                                        <input name="group_id[]" class="ace ace-checkbox-2" type="checkbox" value="{$v['id']}" 
+                                        <?php echo in_array($v[id],$accesslist) ? 'checked':'';?>/>
+                                        <span class="lbl"> {$v['title']}</span>
+                                    </label>
+                                </volist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=2 style="text-align: center;">
+                                <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>

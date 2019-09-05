@@ -1,0 +1,74 @@
+<extend name="Public:base" />
+<block name="title">用户组管理</block>
+<block name="navtitle">
+	<li class="active">
+        权限控制
+    </li>
+    <li class="active">
+        用户组管理
+    </li>
+    <li class="active">
+        权限分配
+    </li>
+</block>
+<block name="activeopen1">class="active open"</block>
+<block name="active3">class="active"</block>
+<block name="content">
+	<div class="page-container">
+        <h1>为<span style="color:red">{$group_data['title']}</span>分配权限</h1>
+        <form action="" method="post">
+            <input type="hidden" name="id" value="{$group_data['id']}">
+            <table class="table table-striped table-bordered table-hover table-condensed
+            ">
+                <foreach name="rule_data" item="v">
+                    <empty name="v['_data']">
+                        <tr class="b-group">
+                            <th width="10%" >
+                                <label>{$v['title']}
+                                    <input type="checkbox" name="rule_ids[]" value="{$v['id']}" <if condition="in_array($v['id'],$group_data['rules'])" > checked="checked"</if> onclick="checkAll(this)" ></label>
+                            </th>
+                            <td></td>
+                        </tr>
+                        <else/>
+                        <tr class="b-group">
+                            <th width="10%" style="vertical-align: middle;">
+                                <label>{$v['title']}
+                                    <input type="checkbox" name="rule_ids[]" value="{$v['id']}" <if condition="in_array($v['id'],$group_data['rules'])"> checked="checked"</if> onclick="checkAll(this)"></label>
+                            </th>
+                            <td>
+                                <foreach name="v['_data']" item="n">
+                                    <table class="table table-striped table-bordered table-hover table-condensed" style="margin-bottom:30px;">
+                                        <tr class="b-group">
+                                            <th width="13%" style="padding:10px">
+                                                <label>{$n['title']}
+                                                    <input type="checkbox" name="rule_ids[]" value="{$n['id']}" <if condition="in_array($n['id'],$group_data['rules'])"> checked="checked"</if> onclick="checkAll(this)"></label>
+                                            </th>
+                                            <td style="vertical-align: middle;">
+                                                <notempty name="n['_data']">
+                                                    <volist name="n['_data']" id="c">
+                                                        <label>&emsp;{$c['title']}
+                                                            <input type="checkbox" name="rule_ids[]" value="{$c['id']}" <if condition="in_array($c['id'],$group_data['rules'])"> checked="checked"</if> ></label>
+                                                    </volist>
+                                                </notempty>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </foreach>
+                            </td>
+                        </tr>
+                    </empty>
+                </foreach>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <input class="btn btn-primary radius" type="submit" value="提交">
+                    </td>
+                </tr>
+            </table>
+        </form>
+	</div>
+    <script>
+function checkAll(obj) {
+    $(obj).parents('.b-group').eq(0).find("input[type='checkbox']").prop('checked', $(obj).prop('checked'));
+}
+</script>
+</block>

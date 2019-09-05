@@ -1,0 +1,124 @@
+<extend name="Public:base" />
+<block name="title">查询列表</block>
+<block name="crumbs"><a>作业查询</a>&nbsp;>&nbsp;<a>查询列表</a></block>
+<block name="cha">
+    <css file="__HOME_CSS__/chaxun.css" />
+    <div class="waikuan">
+        <div style="display:inline-block;">
+            <form action="__ACTION__" method="post">
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;船名<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <select class="select1" name="shipid">
+                        <option value="">--全部--</option>
+                        <volist name="shiplist" id="v">
+                            <option value="{$v['id']}">{$v['shipname']}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;航次<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input type="text" name="voyage" class="input1">
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;作业地点<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input type="text" name="locationname" class="input1">
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;货名<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input type="text" name="goodsname" class="input1">
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;起运港<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input type="text" name="start" class="input1">
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;目的港<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input type="text" name="objective" class="input1">
+                </div>
+            </div>
+            <div class="xin1">
+                <div class="xinleft">
+                    &nbsp;时间段<span style="float: right">|</span>
+                </div>
+                <div class="xinright">
+                    <input class="input1" id="test1" name="time">
+                </div>
+            </div>
+            <div class="tijiao">
+                <a href="javascript:;" onclick="ti()">
+                    <div style="margin-right:40px;background-color: #3ca0fe;color:white;width:90px;vertical-align: middle;height:35px;line-height: 35px">
+                    提&nbsp;&nbsp;交
+                    </div>
+                </a>
+                <input type="submit" id='submit' value="提&nbsp;&nbsp;交" style="display: none;"/>
+            </div>
+            </form>
+        </div>
+        
+    </div>
+</block>   
+<block name="content">
+    <table class="biaoge">
+        <tr class="th">
+            <th>船名</th>
+            <th>航次</th>
+            <th>作业地点</th>
+            <th>货名</th>
+            <th>运单量</th>
+            <th>作业量</th>
+            <th>起运港</th>
+            <th>目的港</th>
+            <th>操作</th>
+        </tr>
+        <volist name="list" id="v">
+        <tr class="td" style="color:{$v['colors']}">
+            <td>{$v['shipname']}</td>
+            <td>{$v['personality']['voyage']}</td>
+            <td>{$v['personality']['locationname']}</td>
+            <td>{$v['personality']['goodsname']}</td>
+            <td>{$v['personality']['transport']}</td>
+            <td>{$v['weight']}</td>
+            <td>{$v['personality']['start']}</td>
+            <td>{$v['personality']['objective']}</td>
+            <td><a href="__CONTROLLER__/searchmsg/resultid/{$v['id']}" style="color:#3ca0fe">查看</a></td>
+        </tr>	
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=9  class="pages">{$page}</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+    laydate.render({
+        elem: '#test1' //指定元素
+        ,theme: 'grid' //主题
+        ,format: 'yyyy/MM/dd' //自定义格式
+        ,range: true
+    });
+    function ti(){
+        $('#submit').click();
+    }
+    </script>
+</block>

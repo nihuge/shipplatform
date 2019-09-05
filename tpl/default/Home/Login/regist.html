@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/regist.css" />
+    <script type="text/javascript" src="__HOME_JS__/jquery1.8.3.min.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="login-box">
+            <div class="login-title text-center">
+                <h1><small>注册</small></h1>
+            </div>
+            <div class="login-content ">
+                <div class="form">
+                    <form action="__ACTION__" method="post" onsubmit="return check()">
+                        <div style="height: 40px;line-height: 40px;vertical-align: middle;text-align: center;">
+                            公司信息
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">公司名称</span>
+                                    <input type="text" id="firmname" name="firmname" class="form-control" placeholder="公司名称" maxlength="30" required style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="firmnameGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="firmnameRed">
+                                    <!-- <img src="__PUBLIC__/question.png" class="isQuestion"> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">公司类型</span>
+                                    <!-- <input type="text" id="firmtype" name="firmtype" class="form-control" placeholder="公司类型"> -->
+                                    <select class="form-control" name='firmtype'  style='width: 340px;'>
+                                        <option value='1'>检验公司</option>
+                                        <option value='2'>船舶公司</option>
+                                    </select>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="firmnameGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="firmnameRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">联&nbsp;系&nbsp;人&nbsp;</span>
+                                    <input type="text" id="people" name="people" class="form-control" placeholder="联&nbsp;系&nbsp;人" maxlength='10' required style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="peopleGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="peopleRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">联系电话</span>
+                                    <input type="text" id="phone" name="phone" class="form-control" placeholder="联系电话" maxlength='16' required style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="phoneGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="phoneRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div style="height: 40px;line-height: 40px;vertical-align: middle;text-align: center;display: block;">
+                                    管理员信息
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">管理账号</span>
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="管理账号" required maxlength="15" style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="titleGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="titleRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">管理密码</span>
+                                    <input type="password" id="password" name="pwd" class="form-control" placeholder="管理密码" maxlength="16" required style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="passwordGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="passwordRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">确认密码</span>
+                                    <input type="password" id="repassword" name="repassword" class="form-control" placeholder="确认密码" maxlength="16" required style='width: 340px;'>
+                                    <img src="__HOME_IMG__/green.png" class="isGreen" id="repasswordGreen">
+                                    <img src="__HOME_IMG__/red.png" class="isRed"  id="repasswordRed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-actions">
+                            <div class="col-xs-4 col-xs-offset-4 " style='margin-top: 15px;'>
+                                <!-- <button type="submit" class="btn btn-sm btn-info">提&nbsp;交</button> -->
+                                <input name="submit" type="submit" id="submit" class="btn btn-sm btn-info" value="注册" >
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <br> -->
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div style="text-align: right;">
+                                <a href="__CONTROLLER__/login">已有账号?前往登陆</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style='height: 40px;line-height: 40px;vertical-align: middle;text-align: center;'>
+                <a href="http://www.xzitc.com" target="view_window" style="color: black;text-decoration: none;">技术支持：携众信息</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {  
+            //firmname验证    
+            $("#firmname").blur(function() {  
+                // var regtitle = /^[a-zA-Z][a-zA-Z0-9_]*$/; 
+                var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？\"]"); 
+                var uname = $("#firmname").val();    
+                if (uname.length <= 0 || pattern.test(uname)) {  
+                    $("#firmnameGreen").hide();  
+                    $("#firmnameRed").show();  
+                } else {  
+                    $("#firmnameGreen").show();  
+                    $("#firmnameRed").hide();  
+                }  
+            }); 
+
+            //people验证 
+            $("#people").blur(function() {  
+                var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？\"]"); 
+                var uname = $("#people").val();  
+                if (uname.length <= 0 || pattern.test(uname)) {  
+                    $("#peopleGreen").hide();  
+                    $("#peopleRed").show();  
+                } else {  
+                    $("#peopleGreen").show();  
+                    $("#peopleRed").hide();  
+                }  
+            });
+
+            //phone验证  
+            $("#phone").blur(function() {  
+                // var regphone = /^(13[0-9]|15[0-9]|18[0-9]|16[0-9])\d{8}$/;  
+                var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）|{}【】‘；：”“'。，、？\"]");
+                var uphone = $("#phone").val();   
+                if (uphone.length <= 0 || pattern.test(uphone)) {  
+                    $("#phoneGreen").hide();  
+                    $("#phoneRed").show();  
+                } else {  
+                    $("#phoneGreen").show();  
+                    $("#phoneRed").hide();  
+                }  
+            }); 
+
+            //title验证 
+            $("#title").blur(function() {  
+                var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？\"]"); 
+                var uname = $("#title").val();  
+                if (uname.length <= 0 || pattern.test(uname)) {  
+                    $("#titleGreen").hide();  
+                    $("#titleRed").show();  
+                } else {  
+                    $("#titleGreen").show();  
+                    $("#titleRed").hide();  
+                }  
+            });              
+
+            //password验证   
+            $("#password").blur(function(){  
+                var upassword = $("#password").val();   
+                if (upassword.length > 5 && upassword.length < 16) {  
+                    $("#passwordGreen").show();  
+                    $("#passwordRed").hide();  
+                } else {  
+                    $("#passwordGreen").hide();  
+                    $("#passwordRed").show();  
+                }  
+            });  
+            //password1验证  
+            $("#repassword").blur(function(){  
+                var upassword = $("#password").val();  
+                var upassword1 = $("#repassword").val();  
+
+                if (upassword1 != upassword || upassword.length < 5 ) {  
+                    $("#repasswordGreen").hide();  
+                    $("#repasswordRed").show();  
+                } else {  
+                    $("#repasswordGreen").show();  
+                    $("#repasswordRed").hide();  
+                }  
+            });   
+
+
+        });  
+        function check(){  
+            if($(".isGreen").css("display")!='none'){  
+                if(confirm("确认注册吗？")){  
+                    return true;  
+                }else{  
+                    return false;  
+                }  
+            }else{  
+                return false;  
+            }  
+        }  
+    </script>
+</body>
+
+</html>

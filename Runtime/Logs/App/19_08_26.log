@@ -1,0 +1,255 @@
+[ 2019-08-26T14:33:42+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Cabin&a=editcabin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0100s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `firmtype`,`operation_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SELECT `suanfa` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: bottom_volume_di D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\CabinController.class.php 第 313 行.
+NOTIC: [8] Undefined index: dialtitudeheight D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\CabinController.class.php 第 314 行.
+
+[ 2019-08-26T19:17:01+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.010001s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0160s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.069004s ]
+INFO: [ app_end ] --END-- [ RunTime:0.069004s ]
+
+[ 2019-08-26T19:18:38+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.005000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-08-26T20:17:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.014001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.014001s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 90 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 90 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship` SET `id`='90',`shipname`='携众001-998',`coefficient`='3',`cabinnum`='10',`suanfa`='b',`is_guanxian`='1',`is_diliang`='2',`expire_time`='1593360000' WHERE `id` = 90 [ RunTime:0.0220s ]
+
+[ 2019-08-26T20:18:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0100s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0050s ]
+SQL: INSERT INTO `ship_review` (`shipname`,`is_guanxian`,`expire_time`,`shipid`,`userid`,`create_time`) VALUES ('三通5003','2','1591113600','13','9','1566821904') [ RunTime:0.2370s ]
+
+[ 2019-08-26T20:22:33+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: review D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShipController.class.php 第 218 行.
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0050s ]
+SQL: INSERT INTO `ship_review` (`shipname`,`is_guanxian`,`expire_time`,`shipid`,`userid`,`create_time`) VALUES ('携众001-998','1','1593360000','13','9','1566822153') [ RunTime:0.0300s ]
+
+[ 2019-08-26T20:24:11+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: review D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShipController.class.php 第 218 行.
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0060s ]
+SQL: INSERT INTO `ship_review` (`shipname`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`shipid`,`userid`,`create_time`) VALUES ('携众001-998','1','1','c','1593360000','13','9','1566822251') [ RunTime:0.0340s ]
+
+[ 2019-08-26T20:47:49+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-08-26T20:48:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_review` WHERE `shipid` = 13 AND `status` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship_review` SET `shipname`='携众001-998',`coefficient`='',`is_guanxian`='1',`is_diliang`='1',`suanfa`='c',`expire_time`='1593360000',`shipid`='13',`userid`='9',`create_time`='1566823694' WHERE `shipid` = 13 AND `status` = 1 [ RunTime:0.1380s ]
+
+[ 2019-08-26T20:48:35+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_review` WHERE `shipid` = 13 AND `status` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship_review` SET `shipname`='携众001-998',`coefficient`='',`is_guanxian`='1',`is_diliang`='0',`suanfa`='',`expire_time`='1593360000',`shipid`='13',`userid`='9',`create_time`='1566823715' WHERE `shipid` = 13 AND `status` = 1 [ RunTime:0.0280s ]
+
+[ 2019-08-26T20:49:08+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0390s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_review` WHERE `shipid` = 13 AND `status` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship_review` SET `shipname`='携众001-998',`coefficient`=NULL,`is_guanxian`='1',`is_diliang`=NULL,`suanfa`=NULL,`expire_time`='1593360000',`shipid`='13',`userid`='9',`create_time`='1566823748' WHERE `shipid` = 13 AND `status` = 1 [ RunTime:0.0350s ]
+
+[ 2019-08-26T20:55:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `shipname` = '携众001-998' LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-08-26T20:55:43+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 13 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `shipname`,`coefficient`,`is_guanxian`,`is_diliang`,`suanfa`,`expire_time`,`review` FROM `ship` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `shipname` = '携众001-000' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship_review` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_review` WHERE `shipid` = 13 AND `status` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship_review` SET `shipname`='携众001-000',`coefficient`=NULL,`is_guanxian`='1',`is_diliang`=NULL,`suanfa`=NULL,`expire_time`='1593360000',`shipid`='13',`userid`='9',`create_time`='1566824143' WHERE `shipid` = 13 AND `status` = 1 [ RunTime:0.0400s ]
+

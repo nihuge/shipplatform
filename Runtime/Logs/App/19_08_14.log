@@ -1,0 +1,1014 @@
+[ 2019-08-14T09:28:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=NewResult&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0410s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0560s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+ERR: 1146:Table 'shipplatform2.new_result' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `new_result`
+ERR: 1146:Table 'shipplatform2.new_result' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `new_result`
+
+[ 2019-08-14T09:46:28+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=NewResult&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0660s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0260s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0370s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T09:53:19+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=NewResult&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T09:54:26+08:00 ] 192.168.1.195 /shipplatform2/app.php/NewResult/forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-08-14T09:54:55+08:00 ] 192.168.1.195 /shipplatform2/app.php/NewResult/forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T09:58:49+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=NewResult&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T10:56:20+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:04:51+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Work&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT f.forntleft,f.forntright,f.centerleft,f.centerright,f.afterleft,f.afterright,f.solt,r.houtemperature,r.houdensity,r.qiantemperature,r.qiandensity,f.resultid,r.id FROM result r left join forntrecord f on f.solt = r.solt  WHERE f.resultid = '2' AND r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 2 AND `solt` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:07:11+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T11:07:16+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T11:07:19+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:07:27+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 82 AND `personality` LIKE '%\"voyage\":\"航次1231\"%' LIMIT 1   [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.1150s ]
+SQL: SELECT `expire_time` FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 82 AND `personality` LIKE '%\"voyage\":\"航次1231\"%' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0340s ]
+SQL: SELECT `name` FROM `personality`  [ RunTime:0.0000s ]
+SQL: INSERT INTO `result` (`uid`,`shipid`,`time`,`personality`) VALUES ('9','82','1565752046','{\"voyage\":\"航次1231\",\"locationname\":\"作业地点123\",\"start\":\"起运港1234\",\"objective\":\"目的港1234\",\"goodsname\":\"货名1234\",\"transport\":\"运单量1234\",\"number\":\"作业编号111\",\"thermometer\":\"温度计编号123124\",\"dipstick\":\"量油尺编号1123\"}') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `consumption` [ RunTime:0.0340s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE ( id='9' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE ( id='21' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname`,`balance`,`creditline`,`service`,`number` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `username` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `consumption` WHERE `number` = 'cnc201908141107262645r' LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `consumption` (`number`,`resultid`,`firmid`,`firmname`,`servicemoney`,`contractnumber`,`balance`,`username`,`uid`,`time`) VALUES ('cnc201908141107262645r','163','21','携众测试检验公司','0','1','109999','携众','9','1565752046') [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: UPDATE `firm` SET `balance`='109999' WHERE `id` = 21 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `is_diliang`,`suanfa` FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1547020476s_2` [ RunTime:0.0510s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1547020476s_2` [ RunTime:0.0550s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1547020476s_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1547020476s_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0260s ]
+SQL: SELECT `mooring` FROM `ship_historical_sum` WHERE `shipid` = 82 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship_historical_sum` SET `mooring`='gt ,hjv,南京,重庆,温州,上海,太原,起运港1234,目的港1234' WHERE `shipid` = 82 [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `firm_historical_sum` [ RunTime:0.1540s ]
+SQL: UPDATE `firm_historical_sum` SET `num`=num+1 WHERE `firmid` = 21 [ RunTime:0.0190s ]
+SQL: SHOW COLUMNS FROM `user_historical_sum` [ RunTime:0.0320s ]
+SQL: UPDATE `user_historical_sum` SET `num`=num+1 WHERE `userid` = 9 [ RunTime:0.0220s ]
+SQL: UPDATE `ship_historical_sum` SET `num`=num+1 WHERE `shipid` = 82 [ RunTime:0.0190s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:09:08+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0180s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `forntrecord` (`forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`solt`,`resultid`) VALUES ('0','0','0','0','0.8','0.8','1','163') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A09%3A08------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0480s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T11:22:02+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='163' WHERE `solt` = 1 AND `resultid` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A22%3A02------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T11:22:17+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=work&a=result
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 非法操作:result
+
+[ 2019-08-14T11:22:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0240s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='163' WHERE `solt` = 1 AND `resultid` = 163 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A22%3A24------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:22:39+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:23:17+08:00 ] 192.168.1.195 /shipplatform2/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-08-14T11:23:46+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='163' WHERE `solt` = 1 AND `resultid` = 163 [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0000s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A23%3A46------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:24:03+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:24:11+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T11:24:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='163' WHERE `solt` = 1 AND `resultid` = 163 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A24%3A14------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T11:39:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 605 行.
+NOTIC: [8] Undefined index: temperature D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 609 行.
+NOTIC: [8] Undefined index: density D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\WorkModel.class.php 第 614 行.
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `forntrecord` WHERE `solt` = 1 AND `resultid` = 163 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `forntrecord` SET `forntleft`='0',`forntright`='0',`centerleft`='0',`centerright`='0',`afterleft`='0.8',`afterright`='0.8',`solt`='1',`resultid`='163' WHERE `solt` = 1 AND `resultid` = 163 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 163 AND `solt` = 1  [ RunTime:0.0010s ]
+SQL: UPDATE `result` SET `solt`='1',`qianchi`='0.8',`qiandensity`='0',`qiantemperature`='15℃',`qianprocess`='nowtime%3A2019-08-14+11%3A39%3A55------------------%0D%0Afornt%3D0%0D%0Aafter%3D0.8%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+Draught%3D0.8%0D%0A%09+temperature%3A+20%E2%84%83+then%3A+now_density+%3D+density+%7C+now_temperature%3D15%E2%84%83%0D%0A' WHERE `id` = 163 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultrecord` WHERE `solt` = 1 AND `resultid` = 163 AND `is_work` = 1  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T13:45:42+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.1070s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T13:48:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.012001s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0070s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0110s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0040s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T13:49:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0080s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0220s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T13:51:06+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T13:51:32+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0040s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0090s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T13:51:54+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0120s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0040s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T13:52:25+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+ERR: 这里是work
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T14:16:13+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: This process is transferred to the work controller!work controller!work controller
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0100s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0150s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T14:17:33+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: [ trans!!! ] This process is transferred to the work controller!work controller!work controller
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0070s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T14:18:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+DEBUG: \r\n \r\n [ trans!!! ] This process is transferred to the work controller!work controller!work controller \r\n \r\n
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0100s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0070s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0110s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T14:19:00+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller!work controller!work controller 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0130s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0050s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0040s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0040s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0030s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T14:19:22+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+DEBUG: 
+ 
+ [ trans!!! ] This process is transferred to the work controller!work controller!work controller 
+ 
+ 
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0070s ]
+SQL: SELECT `img`,`types`,`solt` FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `resultrecord` [ RunTime:0.0150s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE `resultid` = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0040s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 33 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 34 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 36 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 37 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 38 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 39 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultrecord` WHERE `resultid` = 160 AND `solt` = 1 AND `cabinid` = 40 LIMIT 1   [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-14T14:34:51+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT u.id,u.title,u.username,u.status,u.firmid,f.firmtype,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `imei`='456789456789456789456789' WHERE `id` = 9 [ RunTime:0.0290s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T14:38:40+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT u.id,u.title,u.username,u.status,u.firmid,f.firmtype,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `user` SET `imei`='456789456789456789456789' WHERE `id` = 9 [ RunTime:0.0820s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-14T14:39:32+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT u.id,u.title,u.username,u.status,u.firmid,f.firmtype,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `imei`='456789456789456789456789' WHERE `id` = 9 [ RunTime:0.0980s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

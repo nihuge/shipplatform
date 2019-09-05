@@ -1,0 +1,136 @@
+@charset "utf-8";
+/*中间*/
+
+.article {
+    width: 100%;
+    height: 160px;
+    background: url(../image/img9.png) repeat;
+    background-size: 60px 60px;
+}
+
+.article1 {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.article2 {
+    padding: 20px 30px;
+    text-align: center;
+}
+
+#marquee1 {
+    width: 100%;
+    overflow: hidden;
+}
+
+#marquee1 ul li {
+    float: left;
+    width: 380px;
+    list-style: none;
+    height: 65px;
+}
+
+#marquee1 ul li a {
+    color: red;
+}
+
+#marquee1 ul li img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+.kongbai {
+    margin: 0px 20px;
+    background-color: #fff;
+    height: 50px;
+    line-height: 50px;
+    padding: 5px;
+    box-shadow: 0px 3px 3px #d4d4d4;
+    text-align: left;
+}
+
+.kongbai span {
+    font-size: 14px;
+    color: #374d69;
+    width: 260px;
+    height: 40px;
+    line-height: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    overflow: hidden;
+}
+
+/*选择作业系统*/
+.result{
+    width: 100%;
+    height: 414px;
+    background: url(../image/img8.png) repeat;
+    background-size: 49px 54px;
+}
+.result1{
+    padding: 0px 68px;
+}
+.result1_1{
+    width: 400px;
+    height: 290px;
+    background: url(../image/home_yehuo.png) repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    margin: 30px 64px;
+}
+.result1_2{
+    width: 400px;
+    height: 290px;
+    background: url(../image/home_sanhuo.png) repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    margin: 30px 64px;
+}
+.imager{
+    margin: 45px 50px;
+    transition: all 0.6s;/*图片放大过程的时间*/
+}
+.imager:hover {
+    transform: scale(1.1);
+    /*鼠标经过图片放大的倍数*/
+}
+
+/*查询*/
+.search{
+    width: 100%;
+    height: 380px;
+    background: url(../image/img9.png) repeat;
+    background-size: 60px 60px;
+    margin-bottom: 30px;
+}
+#search1{
+    padding: 30px 125px;
+}
+#search1 ul li {
+    float: left;
+    width: 316px;
+    list-style: none;
+    text-align: center;
+}
+
+#search1 ul li a {
+    color: red;
+}
+
+#search1 ul li img {
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+}
+#search1 ul li p{
+    font-size: 18px;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #35a6e8;
+    margin: 16px 58px;
+    color: #ffffff;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window ciUVnUv" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __justepbasexid__="__baseID__" __cid="ciUVnUv" components="$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/labelEdit/labelEdit,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/select/radioGroup,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/select/select,$model/UI2/system/components/justep/messageDialog/messageDialog,$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/button/radio,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/input/input,">
+  <style>.draft-div-select-bg.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/s_bg_10.png); background-repeat: no-repeat; background-size: 100% 100%; height: 40px; -moz-background-size: 100% 100%; padding-top: 5px; padding-left: 10px} .draft-div-fornt-bg.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/violet_s_bg_08.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 155px; padding-top: 20px; padding-right: 20px; padding-left: 25px} .draft-div-after-bg.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/blue_s_bg_08.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 155px; padding-top: 20px; padding-right: 20px; padding-left: 25px} .draft-div-tem-denty-bg.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/rad_s_bg_08.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 140px; padding-top: 20px; padding-right: 20px; padding-left: 25px} .draft-div-qian-bg.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/violet_s_bg_08.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 155px; padding-top: 20px; padding-right: 20px; padding-left: 25px} .draft-div-itmes-style.ciUVnUv{background-image: url(@justepContextPath@/warehouse_capacity/img/b.png); background-repeat: no-repeat; background-size: 100% 100%; height: 40px; -moz-background-size: 100% 100%; padding-top: 5px; padding-left: 10px} .draft-div-text.ciUVnUv{font-size: 15px; border-right-style: solid; border-right-width: 1px; border-right-color: rgb(230, 230, 230); padding-right: 3px} .draft-div-text-input.ciUVnUv{height: 30px; margin-left: 3px; border-style: none none none none; background-color: transparent}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onActive:modelActive" __cid="ciUVnUv" class="ciUVnUv"></div>  
+  <span component="$model/UI2/system/components/justep/messageDialog/messageDialog" xid="messageDialog1" data-bind="component:{name:'$model/UI2/system/components/justep/messageDialog/messageDialog'}" data-events="onYes:messageDialog1Yes" data-config="{&#34;type&#34;:&#34;YesNo&#34;}" __cid="ciUVnUv" class="ciUVnUv">
+    <div class="x-modal-overlay ciUVnUv" __cid="ciUVnUv"></div>
+    <div class="x-modal ciUVnUv" __cid="ciUVnUv">
+      <div class="x-modal-inner ciUVnUv" __cid="ciUVnUv">
+        <div class="x-modal-title ciUVnUv" __cid="ciUVnUv"></div>
+        <div class="x-modal-text ciUVnUv" __cid="ciUVnUv"></div>
+        <input class="x-modal-prompt-input ciUVnUv" type="text" __cid="ciUVnUv">
+      </div>
+      <div class="x-modal-buttons ciUVnUv" __cid="ciUVnUv">
+        <a class="x-modal-button x-modal-button-bold OK ciUVnUv" value="ok" __cid="ciUVnUv">确定</a>
+        <a class="x-modal-button x-modal-button-bold Yes ciUVnUv" value="yes" __cid="ciUVnUv">是</a>
+        <a class="x-modal-button x-modal-button-bold No ciUVnUv" value="no" __cid="ciUVnUv">否</a>
+        <a class="x-modal-button x-modal-button-bold Cancel ciUVnUv" value="cancel" __cid="ciUVnUv">取消</a>
+      </div>
+    </div>
+  </span>
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar ciUVnUv" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="ciUVnUv"> 
+    <div class="x-panel-top ciUVnUv" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="ciUVnUv"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar ciUVnUv" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;录 入 水 尺&#34;}" __cid="ciUVnUv"> 
+        <div class="x-titlebar-left ciUVnUv" __cid="ciUVnUv"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon ciUVnUv" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},event:{click:$model._callModelFn.bind($model, 'backBtnClick')}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="ciUVnUv"> 
+            <i class="icon-chevron-left ciUVnUv" __cid="ciUVnUv"></i>  
+            <span __cid="ciUVnUv" class="ciUVnUv"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title ciUVnUv" __cid="ciUVnUv">录 入 水 尺</div>  
+        <div class="x-titlebar-right  ciUVnUv" __cid="ciUVnUv">
+          <div class="empty ciUVnUv" __cid="ciUVnUv"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content ciUVnUv" xid="content1" style="padding-top:20px;padding-right:10px;padding-left:10px;" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="ciUVnUv"> 
+      <div xid="div1" class="draft-div-select-bg ciUVnUv" style="text-align:center;" __cid="ciUVnUv"> 
+        <span component="$model/UI2/system/components/justep/select/radioGroup" class="x-radio-group ciUVnUv" xid="showRadioGroup" data-bind="component:{ref:data2.ref('fValue'),name:'$model/UI2/system/components/justep/select/radioGroup'},foreach:{data:data1.datas,afterRender:$model.comp($element)['_doUpdate'].bind($model.comp($element))}" __cid="ciUVnUv">
+          <span component="$model/UI2/system/components/justep/button/radio" class="x-radio ciUVnUv" data-config="{&#34;checked&#34;:false,&#34;disabled&#34;:false}" data-bind="component:{name:'$model/UI2/system/components/justep/button/radio',value:ref('fValue'),label:ref('fName')}" __cid="ciUVnUv">
+            <input type="radio" __cid="ciUVnUv" class="ciUVnUv">
+            <label __cid="ciUVnUv" class="ciUVnUv"></label>
+          </span>
+        </span>
+      </div>  
+      <div xid="div2" class="draft-div-fornt-bg ciUVnUv" style="margin-top:10px;" __cid="ciUVnUv"> 
+        <div xid="div5" __cid="ciUVnUv" class="ciUVnUv"> 
+          <span xid="span1" style="color:#808080;" __cid="ciUVnUv" class="ciUVnUv">必选填一项</span> 
+        </div>  
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput2" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label2" style="width: 70px;" __cid="ciUVnUv">前左水尺</label>  
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input_draft_forntleft" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入高度&#34;}" __cid="ciUVnUv">
+        </div>
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput3" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label3" style="width: 70px;" __cid="ciUVnUv">前右水尺</label>  
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input_draft_forntright" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入高度&#34;}" __cid="ciUVnUv">
+        </div>
+      </div>  
+      <div xid="div11" class="draft-div-after-bg ciUVnUv" style="margin-top:10px;" __cid="ciUVnUv"> 
+        <div xid="div10" __cid="ciUVnUv" class="ciUVnUv"> 
+          <span xid="span6" style="color:#808080;" __cid="ciUVnUv" class="ciUVnUv">必选填一项</span> 
+        </div>  
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput4" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label4" style="width: 70px;" __cid="ciUVnUv">后左水尺</label>  
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input_draft_afterleft" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入高度&#34;}" __cid="ciUVnUv">
+        </div>  
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput5" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label5" style="width: 70px;" __cid="ciUVnUv">后右水尺</label>  
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input_draft_afterright" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入高度&#34;}" __cid="ciUVnUv">
+        </div>
+      </div>  
+      <div xid="div12" class="draft-div-tem-denty-bg ciUVnUv" style="margin-top:10px;" __cid="ciUVnUv"> 
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput9" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label9" style="width: 70px;" __cid="ciUVnUv">货物密度</label>  
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input_draft_denty" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入密度&#34;}" __cid="ciUVnUv">
+        </div>
+        <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 draft-div-itmes-style ciUVnUv" xid="labelInput10" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="ciUVnUv"> 
+          <label class="x-label draft-div-text ciUVnUv" xid="label10" style="width: 70px;" __cid="ciUVnUv">标准温度</label>  
+          <select component="$model/UI2/system/components/justep/select/select" class="form-control pull-right x-edit  ciUVnUv" xid="demoSelect" style="height:29px;margin-right:5px;width:82%;" data-bind="component:{ref:itemTemDataModer.ref('temp'),name:'$model/UI2/system/components/justep/select/select'},options:itemTemData.datas,optionsValue:'temp',optionsCaption:'请选择温度...',optionsText:'temp',optionsAfterRender2:$model.__justep__.selectOptionsAfterRender.bind($model,$element),optionsBeforeRender:$model.__justep__.selectOptionsBeforeRender.bind($model,$element)" data-events="onChange:selectChange" __cid="ciUVnUv"></select>
+          <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit draft-div-text-input ciUVnUv" xid="input12" style="display: none;" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入高度&#34;}" __cid="ciUVnUv">
+        </div>
+      </div>  
+      <div xid="div18" style="margin-top:20px;padding-right:30px;padding-left:30px;" id="div_btn" __cid="ciUVnUv" class="ciUVnUv"> 
+        <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default ciUVnUv" xid="btn_next" style="width:100%;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:btn_nextClick" data-config="{&#34;label&#34;:&#34;下一步&#34;}" __cid="ciUVnUv"> 
+          <i xid="i9" __cid="ciUVnUv" class="ciUVnUv"></i>  
+          <span xid="span20" __cid="ciUVnUv" class="ciUVnUv">下一步</span> 
+        </a> 
+      </div> 
+    </div>  
+    <style __cid="ciUVnUv" class="ciUVnUv">.x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p94ec585ac8d34a608525d5b9aa523d5a-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

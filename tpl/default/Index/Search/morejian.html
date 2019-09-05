@@ -1,0 +1,52 @@
+<extend name="Public:base" />
+<block name='title'>查询系统</block>
+<block name='navhover3'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/search.css">
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    
+    <div class='dadiv'>
+    	<div style="padding: 15px 30px;">
+	        <div class='nav'>
+	            查询系统>检验公司>作业评价列表
+	        </div>
+	    </div>
+		<volist name="list" id="v">
+		<?php static $xu = 2;?>
+		<div class='xinx_1'>
+			<img src="{:empty($v['img']) ? '__INDEX_IMAGE__/no_photo_big.png' : $v['img']}" class="img">
+			<div class="divv1">
+				<div class='divv1_1'>
+					<p class="pp1">船名</p>
+					<p class="pp2">{$v['shipname']}</p>
+				</div>
+				<div class='divv1_1'>
+					<p class="pp1">类型</p>
+					<p class="pp2">{$v['type']}</p>
+				</div>
+				<div class='divv1_1'>
+					<p class="pp1">评价</p>
+					<div style="display: inline-block;">
+						<div class="evaluate1">  
+			                <div id="starts{$xu}" class='starts'></div> 
+			            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php $xu++;?>
+		</volist>
+	</div>
+	<div style="padding: 30px 10px;">{$page}</div>
+    <script>
+
+        <?php 
+            foreach($list as $v){
+               static $xu1 = 2;
+                echo '$("#starts'.$xu1.'").raty({ readOnly: true, number : 5,path : "__INDEX_IMAGE__",starOn : "star-on.png",starOff : "star-off.png",starHalf    : "star-half.png",precision: true,score:'.$v['grade2'].',});';
+                $xu1++;
+            }
+        ?>
+
+    </script>
+</block>

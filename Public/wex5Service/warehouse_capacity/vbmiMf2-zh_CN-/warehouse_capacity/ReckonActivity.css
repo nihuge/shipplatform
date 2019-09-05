@@ -1,0 +1,128 @@
+.reckon-div-select-bg {
+	background-image: url(./img/s_bg_10.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+}
+
+.reckon-span-style {
+	color: #228BF9;
+	font-size: 15px;
+}
+
+.reckon-div-line {
+	margin: 0 auto;
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+	border-bottom-color: #FFFFFF;
+	width: 40%;
+}
+
+
+.reckon-main-div-bg {
+	background-image: url(./img/b_bg_09.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 259px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+.reckon-div-itmes-style {
+	background-image: url(./img/b.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+
+.reckon-div-text {
+	font-size: 15px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+	padding-right: 3px;
+}
+
+.reckon-div-text-input {
+	height: 30px;
+	margin-left: 3px;
+	border-style: none none none none;
+	background-color: transparent
+}
+
+.hidden1 {
+	display: none;
+}
+
+
+.worked-div-select-bg {
+	background-image: url(./img/s_bg_11.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.worked-select-text-style {
+	color: #228bf9;
+	font-size: 15px;
+}
+
+.worked-list-item-cang-lefttext-style {
+	color: #000000;
+	font-size: 15px;
+	padding-left: 5px;
+	border-left-style: solid;
+	border-left-color: #228bf9;
+	border-left-width: 4px;
+}
+
+.worked-list-item-cang-righttext-style {
+	color: #000000;
+	font-size: 15px;
+	padding-right: 5px;
+	border-right-style: solid;
+	border-right-color: #228bf9;
+	border-right-width: 4px;
+}
+
+.worked-list-item-div-style {
+	background-image: url(./img/b_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	height: 140px;
+}
+
+.worked-list—item-leftdiv-style {
+	float: left;
+	height: 80px;
+	width: 50%;
+	margin-top: 5px;
+}
+
+.worked-list-item-rightdiv-style {
+	float: left;
+	height: 80px;
+	width: 50%;
+	border-left-style: dashed;
+	border-left-color: #808080;
+	padding-left: 10px;
+	margin-top: 5px;
+	border-left-width: 1px;
+}
+
+.worked-list-item-text-style {
+	color: #000000;
+	font-size: 15px;
+}

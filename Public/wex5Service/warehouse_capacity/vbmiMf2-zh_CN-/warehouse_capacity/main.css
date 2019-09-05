@@ -1,0 +1,17 @@
+.text {
+	border: solid 0px #ccc;
+	width: 400px;
+	height: 40px;
+	background: url(./img/calendar.png) no-repeat right 10px center;
+}
+
+.input {
+	float: left;
+	border: solid 2px #ccc;
+	background: none;
+	height: 40px;
+	line-height: 30px;
+	width: 100%;
+	text-indent: 32px;
+}
+

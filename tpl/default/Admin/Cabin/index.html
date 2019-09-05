@@ -1,0 +1,82 @@
+<extend name="Public:base" />
+<block name="title">船舱管理</block>
+<block name="navtitle">
+	<li class="active">
+        船舱管理
+    </li>
+    <li class="active">
+        船舱列表
+    </li>
+</block>
+<block name="active7">class="active"</block>
+<block name="content">
+	<div class="page-container">
+        <div>
+            <a href="{:U('Cabin/add')}" class="btn btn-primary">新增</a>
+        </div>
+        <h4></h4>
+        <div>
+            <form action="__ACTION__" method="get">
+            	<input type="hidden" name="tname" value="{$tname}">
+            	<input type="hidden" name="c" value="Cabin">
+            	<input type="hidden" name="a" value="index">
+            	船名：<select name="shipid">
+            		<option value="">--全部--</option>
+            		<volist name="shiplist" id="v">
+            			<option value="{$v['id']}">{$v['shipname']}</option>
+            		</volist>
+            	</select>
+            	<input type="submit"  value="筛选" style="height:28px;width:80px">
+            </form>
+        </div>
+        <h4></h4>
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>船名</th>
+				<th>舱名</th>
+				<th>基准高度</th>
+                <th>底量</th>
+				<!-- <th>底量</th> -->
+				<th>管线容量</th>
+				<th>操作</th>
+				<th>数据管理</th>
+			</tr>
+			</thead>
+			<volist name="data" id="v">
+				<tr align='center'>
+					<td>{$v['shipname']}</td>
+					<td>{$v['cabinname']}</td>
+					<td>{$v['altitudeheight']}</td>
+                    <td>{$v['bottom_volume']}</td>
+					<!-- <td>{$v['bottom_volume_di']}</td> -->
+					<td>{$v['pipe_line']}</td>
+					<td>
+                        <a href="{:U('Cabin/edit',array('id'=>$v['id']))}">修改</a>
+                    </td>
+                    <td>
+                    	<if condition="$v['tankcapacityshipid'] != null">
+                        	<a href="{:U('Tripbystern/zong',array('tname'=>$v['tankcapacityshipid'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量管理</a>
+                        </if>
+                        <if condition="$v['rongliang'] != null">
+                        	<a href="{:U('Rong/rong',array('tname'=>$v['rongliang'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量(容量)管理</a>&nbsp;/&nbsp;
+                        </if>
+
+                        <if condition="$v['zx'] != null">
+                        	<a href="{:U('Zongxiu/zx',array('tname'=>$v['zx'],'cabinid'=>$v['id'],'cabinname'=>$v['cabinname'],'shipid'=>$v['shipid']))}">纵修(容量)管理</a>
+                        </if>
+                        <if condition="$v['rongliang_1'] != null">
+                        	&nbsp;|&nbsp;<a href="{:U('Rong/rong',array('tname'=>$v['rongliang_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量(底量)管理</a>&nbsp;/&nbsp;
+                        </if>
+                        <if condition="$v['zx_1'] != null">
+                        	<a href="{:U('Zongxiu/zx',array('tname'=>$v['zx_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">纵修(底量)管理</a>
+                        </if>
+                    </td>
+				</tr>
+			</volist>
+			<tr>
+				<td colspan=7 class="pages">{$page}</td>
+			</tr>
+		</table>
+	</div>
+</block>

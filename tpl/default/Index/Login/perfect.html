@@ -1,0 +1,209 @@
+<extend name="Public:base" />
+<block name='title'>修改公司信息</block>
+<block name="center">
+	<link rel="stylesheet" href="__INDEX_CSS__/firm.css">
+    <div style="background: url(__INDEX_IMAGE__/img8.png) repeat;background-size: 60px 60px;padding: 20px 0px;">
+    	<div class='firm'>
+    		<form method="post" action="__ACTION__">
+                <table>
+                    <tr>
+                        <td colspan="2" style="text-align: left;font-weight: bold;font-size: 20px;">完善个人信息</td>
+                    </tr>
+                    <tr>
+                        <td>用&nbsp;户&nbsp;名</td>
+                        <td>
+                            <input type="text" name="username" required maxlength="45"  placeholder="请输入用户名"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>联系电话</td>
+                        <td>
+                            <input type="text" name="phone1" required maxlength="45"  placeholder="请输入联系电话"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: left;font-weight: bold;font-size: 20px;">完善公司信息</td>
+                    </tr>
+    	            <tr>
+    	                <td style="width: 120px;">公司logo</td>
+    	                <td>
+    	                    <img class="normalFace" src="__INDEX_IMAGE__/noimg.png" onclick="fileSelect();" style='width: 80px;height: 70px;'>
+    	                    <input type="file" name="photo" id="photo" value='' class="filepath" style="display:none;">
+    	                    <input type="text" name="logo" id="logo" value='' style="display:none;">
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>公司名称</td>
+    	                <td>
+    	                    <input type="text" name="firmname" required maxlength="30" value="{$data['firmname']}" placeholder="请输入公司名称" />
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>公司类型</td>
+    	                <td>
+    	                    <select name="firmtype">
+    	                        <option value="1" {$data['firmtype']=='1' ? 'selected' : ''}>检验公司</option>
+    	                        <option value="2" {$data['firmtype']=='2' ? 'selected' : ''}>船舶公司</option>
+    	                    </select>
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>公司地址</td>
+    	                <td>
+    	                    <input type="text" name="location" required maxlength="45"  placeholder="请输入公司地址"/>
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>公司简介</td>
+    	                <td>
+    	                    <input type="text" name="content" required maxlength="150" placeholder="请输入公司简介"/>
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>联&nbsp;系&nbsp;&nbsp;人</td>
+    	                <td>
+    	                    <input type="text" name="people" required maxlength="10" placeholder="请输入联系人"/>
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>联系电话</td>
+    	                <td>
+    	                    <input type="text" name="phone" required maxlength="16" placeholder="请输入联系电话"/>
+    	                </td>
+    	            </tr>
+    	            <tr>
+                    	<td>社会信用代码</td>
+    	                <td>
+    	                    <input type="text" name="shehuicode" required maxlength="50" placeholder="请输入社会信用代码"/>
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td>信用代码图片</td>
+    	                <td>
+    	                    <img class="normalFace" src="__INDEX_IMAGE__/noimg.png" onclick="fileSelect1();" style='width: 150px;height: 110px;'>
+    	                    <input type="file" name="photo1" id="photo1" value='' class="filepath1" style="display:none;">
+    	                    <input type="text" name="img" id="img" value='' style="display:none;">
+    	                </td>
+    	            </tr>
+    	            <tr>
+    	                <td colspan=2>
+    	                    <input type="submit" name="sub" value="提交" class="btn-primary" >
+    	                </td>
+    	            </tr>
+    			</table>
+    		</form>
+    	</div>
+    </div>
+	<script src="__ADMIN_STATIC__/ajaximg/jquery.min.js"></script>
+    <script src="__ADMIN_STATIC__/ajaximg/lrz.all.bundle.js"></script>
+    <script type="text/javascript">
+        function checkImg(img_id){
+            // var img_id=document.getElementById('movie_img').value; //根据id得到值
+            var index= img_id.indexOf("."); //得到"."在第几位
+            img_id=img_id.substring(index); //截断"."之前的，得到后缀
+            if(img_id!=".bmp"&&img_id!=".png"&&img_id!=".gif"&&img_id!=".jpg"&&img_id!=".jpeg"){  //根据后缀，判断是否符合图片格式
+                  // alert("不是指定图片格式,重新选择"); 
+                  return '2';
+                 // document.getElementById('movie_img').value="";  // 不符合，就清除，重新选择
+              }
+         }
+        //点击绑定
+        function fileSelect() {
+            document.getElementById("photo").click();
+        }
+        //图片生成并展示
+        $(function() {
+            $(document).on('change', '.filepath', function(e) {
+                var str = $(this).attr("name");
+                var str1 = $(this).val();
+                var res = checkImg(str1);
+                if (res == '2') {
+                    alert("不是指定图片格式,重新选择"); 
+                    return false;
+                }
+                lrz(this.files[0], { width: 640, quality: 0.92 })
+                    .then(function(rst) {
+                        $.ajax({
+                            url: "{:U('Login/upload_ajax')}",
+                            type: 'post',
+                            data: { image: rst.base64, zd: str },
+                            dataType: 'json',
+                            enctype: 'multipart/form-data',
+                            success: function(data) {
+                                var obj = eval("(" + data + ")");
+                                if (0 == obj.status) {
+                                    return false;
+                                } else {
+                                    $(".normalFace").css('padding-top', '0px');
+                                    var src = obj.url;
+                                    $("input[name=" + str + "]").parent().children("img").attr("src", src);
+                                    $("input[name='logo']").val(src);
+                                    // alert(src);
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) { //上传失败 
+                                alert(XMLHttpRequest.status);
+                                alert(XMLHttpRequest.readyState);
+                                alert(textStatus);
+                            }
+                        });
+                    })
+                    .catch(function(err) {
+
+                    })
+                    .always(function() {
+
+                    });
+            });
+        });
+        //点击绑定
+        function fileSelect1() {
+            document.getElementById("photo1").click();
+        }
+        //图片生成并展示
+        $(function() {
+            $(document).on('change', '.filepath1', function(e) {
+                var str = $(this).attr("name");
+                var str1 = $(this).val();
+                var res = checkImg(str1);
+                if (res == '2') {
+                    alert("不是指定图片格式,重新选择"); 
+                    return false;
+                }
+                lrz(this.files[0], { width: 640, quality: 0.92 })
+                    .then(function(rst) {
+                        $.ajax({
+                            url: "{:U('Login/upload_ajax')}",
+                            type: 'post',
+                            data: { image: rst.base64, zd: str },
+                            dataType: 'json',
+                            enctype: 'multipart/form-data',
+                            success: function(data) {
+                                var obj = eval("(" + data + ")");
+                                if (0 == obj.status) {
+                                    return false;
+                                } else {
+                                    $(".normalFace").css('padding-top', '0px');
+                                    var src = obj.url;
+                                    $("input[name=" + str + "]").parent().children("img").attr("src", src);
+                                    $("input[name='img']").val(src);
+                                    // alert(src);
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) { //上传失败 
+                                alert(XMLHttpRequest.status);
+                                alert(XMLHttpRequest.readyState);
+                                alert(textStatus);
+                            }
+                        });
+                    })
+                    .catch(function(err) {
+
+                    })
+                    .always(function() {
+
+                    });
+            });
+        });
+    </script>
+</block>

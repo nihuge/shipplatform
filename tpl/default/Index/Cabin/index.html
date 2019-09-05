@@ -1,0 +1,139 @@
+<extend name="Public:base" />
+<block name='navhover5'>dropbtnhover</block>
+<block name='title'>船舶管理</block>
+<block name="center">
+	<link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+	<link rel="stylesheet" href="__INDEX_CSS__/ship.css">
+	<div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            管理员设置>船舶管理>船舱管理
+        </div>
+    </div>
+    <div class='xia'>
+        <table id="customers">
+            <tr>
+                <th>船名</th>
+	            <th>舱名</th>
+	            <th>容量表基准高度</th>
+	            <th>容量表底量</th>
+	            <th>管线容量</th>
+	            <th>操作</th>
+            </tr>
+            <volist name="data" id="v">
+            <tr style="color:{$v['colors']}">
+                <td>{$v['shipname']}</td>
+	            <td>{$v['cabinname']}</td>
+	            <td>{$v['altitudeheight']}</td>
+	            <td>{$v['bottom_volume']}</td>
+	            <td>{$v['pipe_line']}</td>
+	            <td><a href="javascript:;" onclick="edit({$v['id']})" class="aa1">修改</a></td>
+            </tr>	
+        	</volist>
+            <tr style="background-color: #fff">
+            	<td colspan="6" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+    <!-- 修改船舱 -->
+    <div class="editMask7">
+        <div class="editBox1" id='editBox1'>
+            
+        
+            
+        </div>
+        <script>
+
+           $('.editMask7').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask7') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function edit(id){
+                // 判断作业是否已开始
+                $.ajax({
+                    url: "{:U('Cabin/cabinmsg')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            $("#editBox1").html(data.content);
+                            event.preventDefault();
+                            $('.editMask7').addClass('is-visible3');
+                            $('.editMask7').find(".tip_info i").remove()                  
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+
+            }
+
+            function addc() {
+                var id = $('#cabinid').val();
+                var shipid = $('#shipiddd').val();
+                var cabinname = $('#cabinname').val();
+                var pipe_line = $('#pipe_line').val();
+                var altitudeheight = $('#altitudeheight').val();
+                var bottom_volume = $('#bottom_volume').val();
+                var dialtitudeheight = $('#dialtitudeheight').val();
+                var bottom_volume_di = $('#bottom_volume_di').val();
+                 
+                // console.log(id);
+                // console.log(shipid);
+                // console.log(cabinname);
+                // console.log(pipe_line);
+                // console.log(altitudeheight);
+                // console.log(bottom_volume);
+                // console.log(dialtitudeheight);
+                // console.log(bottom_volume_di);
+                $.ajax({
+                    url: "{:U('Cabin/edit')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                        'shipid': shipid,
+                        'cabinname': cabinname,
+                        'pipe_line': pipe_line,
+                        'altitudeheight': altitudeheight,
+                        'bottom_volume': bottom_volume,
+                        'dialtitudeheight': dialtitudeheight,
+                        'bottom_volume_di': bottom_volume_di,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+    <script>
+        $('body').on('click' , '#shipiddd' , function(){ 
+            var h = $("#hiden");
+            $.ajax({
+                url:"{:U('Cabin/ajax_diliang')}",
+                data:'shipid='+$(this).val(),
+                type:'post',
+                async:false,
+                dataType:'json',
+                success:function(res){
+                    if (res == '1') {
+                        h.show();
+                    }else{
+                        h.hide();
+                    }
+                }
+            });
+        });
+    </script>
+</block>

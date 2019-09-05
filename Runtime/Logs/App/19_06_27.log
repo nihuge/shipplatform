@@ -1,0 +1,593 @@
+[ 2019-06-27T10:19:03+08:00 ] 127.0.0.1 /app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0580s ]
+SQL: SELECT `id`,`title`,`username`,`status`,`firmid` FROM `user` WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0350s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `imei`='12345678123456781234567812345678' WHERE `id` = 9 [ RunTime:0.0230s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T10:22:25+08:00 ] 127.0.0.1 /app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-27T10:23:20+08:00 ] 127.0.0.1 /app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T10:38:41+08:00 ] 127.0.0.1 /app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-06-27T12:16:50+08:00 ] 127.0.0.1 /app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T12:25:50+08:00 ] 127.0.0.1 /app.php?c=Ship&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T12:26:46+08:00 ] 127.0.0.1 /app.php?c=Ship&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT f.firm_jur,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `shipname` = '携众001-998' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `operation_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `ship` (`firmid`,`shipname`,`coefficient`,`cabinnum`,`suanfa`,`is_guanxian`,`is_diliang`,`expire_time`) VALUES ('25','携众001-998','3','10','a','1','2','0') [ RunTime:0.0010s ]
+SQL: CREATE TABLE `tankcapacityzi1561609606e` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(6,3) DEFAULT NULL COMMENT '实高',
+  `ullage` float(6,3) DEFAULT NULL COMMENT '空高',
+    
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='携众001-998纵倾表'; [ RunTime:0.0810s ]
+SQL: UPDATE `ship` SET `tankcapacityshipid`='tankcapacityzi1561609606e',`tripbystern`='' WHERE `id` = 90 [ RunTime:0.0170s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_historical_sum` WHERE `shipid` = 90 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `ship_historical_sum` (`shipid`) VALUES ('90') [ RunTime:0.0130s ]
+SQL: SELECT `limit` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname`,`operation_jur`,`search_jur`,`firm_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `firm` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90',`search_jur`='6,7,8,9,10,11,12,13,14,15,16,75,86,87,88,89,90' WHERE `id` = 21 [ RunTime:0.0150s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90',`search_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90' WHERE `id` = 9 [ RunTime:0.0130s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T12:26:50+08:00 ] 127.0.0.1 /app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-06-27T13:40:24+08:00 ] 127.0.0.1 /app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T13:41:50+08:00 ] 127.0.0.1 /app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: UPDATE `ship` SET `id`='25',`shipname`='携众001-998',`coefficient`='3',`cabinnum`='10',`suanfa`='b',`is_guanxian`='1',`is_diliang`='2',`expire_time`='0' WHERE `id` = 25 [ RunTime:0.0000s ]
+
+[ 2019-06-27T13:42:43+08:00 ] 127.0.0.1 /app.php?c=Ship&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT f.firm_jur,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `shipname` = '携众001-997' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `operation_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `ship` (`firmid`,`shipname`,`coefficient`,`cabinnum`,`suanfa`,`is_guanxian`,`is_diliang`,`expire_time`) VALUES ('25','携众001-997','3','10','a','1','2','0') [ RunTime:0.0010s ]
+SQL: CREATE TABLE `tankcapacityzi1561614163l` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(6,3) DEFAULT NULL COMMENT '实高',
+  `ullage` float(6,3) DEFAULT NULL COMMENT '空高',
+    
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='携众001-997纵倾表'; [ RunTime:0.0840s ]
+SQL: UPDATE `ship` SET `tankcapacityshipid`='tankcapacityzi1561614163l',`tripbystern`='' WHERE `id` = 91 [ RunTime:0.0140s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_historical_sum` WHERE `shipid` = 91 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `ship_historical_sum` (`shipid`) VALUES ('91') [ RunTime:0.0210s ]
+SQL: SELECT `limit` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname`,`operation_jur`,`search_jur`,`firm_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `firm` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90,91',`search_jur`='6,7,8,9,10,11,12,13,14,15,16,75,86,87,88,89,90,91' WHERE `id` = 21 [ RunTime:0.0110s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,91',`search_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90,91' WHERE `id` = 9 [ RunTime:0.0140s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T15:31:30+08:00 ] 127.0.0.1 /app.php?c=Ship&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: UPDATE `ship` SET `id`='25',`shipname`='携众001-998',`coefficient`='3',`cabinnum`='10',`suanfa`='b',`is_guanxian`='1',`is_diliang`='2',`expire_time`='1593360000' WHERE `id` = 25 [ RunTime:0.0000s ]
+
+[ 2019-06-27T15:31:54+08:00 ] 127.0.0.1 /app.php?c=Ship&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT f.firm_jur,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `shipname` = '携众001-996' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `operation_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `ship` (`firmid`,`shipname`,`coefficient`,`cabinnum`,`suanfa`,`is_guanxian`,`is_diliang`,`expire_time`) VALUES ('25','携众001-996','3','10','a','1','2','1593187200') [ RunTime:0.0000s ]
+SQL: CREATE TABLE `tankcapacityzi1561620714y` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(6,3) DEFAULT NULL COMMENT '实高',
+  `ullage` float(6,3) DEFAULT NULL COMMENT '空高',
+    
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='携众001-996纵倾表'; [ RunTime:0.0860s ]
+SQL: UPDATE `ship` SET `tankcapacityshipid`='tankcapacityzi1561620714y',`tripbystern`='' WHERE `id` = 92 [ RunTime:0.0230s ]
+SQL: SHOW COLUMNS FROM `ship_historical_sum` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship_historical_sum` WHERE `shipid` = 92 LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `ship_historical_sum` (`shipid`) VALUES ('92') [ RunTime:0.0190s ]
+SQL: SELECT `limit` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname`,`operation_jur`,`search_jur`,`firm_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `firm` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90,91,92',`search_jur`='6,7,8,9,10,11,12,13,14,15,16,75,86,87,88,89,90,91,92' WHERE `id` = 21 [ RunTime:0.0120s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,91,92',`search_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88,89,90,91,92' WHERE `id` = 9 [ RunTime:0.0160s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T16:05:38+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-06-27T16:06:59+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:08:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%%' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%%' ORDER BY id desc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:09:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%兴航%' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%兴航%' ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T17:09:30+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%航%' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%航%' ORDER BY id desc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:09:45+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%通%' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%通%' ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T17:10:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 26 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 26 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T17:10:43+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 8 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 8 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:11:01+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T17:19:22+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`title`,`username`,`status`,`firmid` FROM `user` WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `imei`='12345678123456781234567812345678' WHERE `id` = 9 [ RunTime:0.0390s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:21:42+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.title,u.username,u.status,u.firmid,f.firmtype FROM user u left join firm f on f.id = u.firmid  WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `user` SET `imei`='12345678123456781234567812345678' WHERE `id` = 9 [ RunTime:0.0280s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-27T17:22:25+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=User&a=login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.title,u.username,u.status,u.firmid,f.firmtype FROM user u left join firm f on f.id = u.firmid  WHERE `title` = 'xie01' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `user` SET `imei`='12345678123456781234567812345678' WHERE `id` = 9 [ RunTime:0.0240s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:23:42+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%通%' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `shipname` LIKE '%通%' ORDER BY id desc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:24:04+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-27T17:24:27+08:00 ] 192.168.1.107 /shipplatform2/app.php?c=Ship&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 AND `shipname` LIKE '%5%' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname`,`coefficient`,`cabinnum`,`number`,`is_guanxian`,`is_diliang`,`suanfa`,`goodsname`,`firmid`,`expire_time`,`img` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88','89','90','91','92') AND `firmid` = 6 AND `shipname` LIKE '%5%' ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

@@ -1,0 +1,56 @@
+<extend name="Public:base" />
+<block name="title">权限管理</block>
+<block name="navtitle">
+    <li class="active">
+        权限控制
+    </li>
+    <li class="active">
+        权限管理
+    </li>
+    <li class="active">
+        新增权限
+    </li>
+</block>
+<block name="activeopen1">class="active open"</block>
+<block name="active2">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="col-sm-12">
+            <div id="home4" class="tab-pane in active">
+                <form action="__ACTION__" method="post">
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+                        <tr>
+                            <td>父&nbsp;&nbsp;节&nbsp;&nbsp;点</td>
+                            <td>
+                                <select class=" col-xs-10 col-sm-8" id="form-field-select-1" name="pid" required>
+                                    <option value="0">顶级权限</option>
+                                    <volist name="data" id="vo">
+                                        <option value="{$vo['id']}">
+                                        {$vo['_name']}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>权限中文名称</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-15 col-sm-8" name="title" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>权限英文名称</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-8" name="name" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=2 style="text-align: center;">
+                                <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>

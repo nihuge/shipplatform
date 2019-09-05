@@ -1,0 +1,72 @@
+<extend name="Public:base" />
+<block name="title">资讯管理</block>
+<block name="navtitle">
+    <li class="active">
+        资讯管理
+    </li>
+    <li class="active">
+        新增资讯
+    </li>
+</block>
+<block name="active13">class="active"</block>
+<block name="content">
+    <style>
+        .kedu{
+            width: 50px;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        #tname1{
+            display: none;
+        }
+        .wid{width: 250px;}
+    </style>
+    <div class="page-container">
+        <form action="__ACTION__" method="post">
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:900px;margin:auto auto;text-align: center;'>
+            <tr>
+                <td style="width:150px;">标题</td>
+                <td>
+                    <input class="col-xs-10 col-sm-5" type="text" required name="title" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">发布人</td>
+                <td>
+                    <input class="col-xs-10 col-sm-5" type="text" required name="author"  maxlength="15"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">资讯内容</td>
+                <td>
+                    <script id="container" name="content" type="text/plain"></script>
+                    <script src="__ADMIN_STATIC__/ueditor1_4_3/ueditor.config.js"></script>
+                    <script src="__ADMIN_STATIC__/ueditor1_4_3/ueditor.all.js"></script>
+                    <script>
+                        var ue = UE.getEditor('container',{initialFrameHeight:600,initialFrameWidth:800 });
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">是否显示</td>
+                <td style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>
+                        <input name="is_show" type="radio" class="ace" value="1" checked/>
+                        <span class="lbl"> 是 </span>
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                        <input name="is_show" type="radio" class="ace" value="0"/>
+                        <span class="lbl"> 否 </span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2 style="text-align: center;">
+                    <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</block>

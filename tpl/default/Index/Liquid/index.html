@@ -1,0 +1,249 @@
+<extend name="Public:base" />
+<block name='title'>液货舱系统</block>
+<block name='navhover2'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <script src="__INDEX_STATIC__/laydate/laydate.js"></script>
+    <div class='shang'>
+        <div class='nav'>
+            作业系统>液货船系统
+        </div>
+        <div class='nav1'>
+            <img src="__INDEX_IMAGE__/img1.png">
+            <p>作业数据查询</p>
+        </div>
+        <div>
+            <form action="__ACTION__" method="post">
+            <div class='xuan'>
+                <p>船&nbsp;名</p>
+                <select name="shipid" class=''>
+                    <option value="">请选择船名</option>
+                    <volist name="shiplist" id="v">
+                        <option value="{$v['id']}">{$v['shipname']}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class='xuan'>
+                <p>航&nbsp;次</p>
+                <input type="text" placeholder="请输入航次" name='voyage'>
+            </div>
+            <div class='xuan'>
+                <p>货&nbsp;名</p>
+                <input type="text" placeholder="请输入货名" name='goodsname'>
+            </div>
+            <div class='xuan'>
+                <p>作业地点</p>
+                <input type="text" placeholder="请输入作业地点" name='locationname'>
+            </div>
+            <div class='xuan'>
+                <p>起运港</p>
+                <input type="text" placeholder="请输入起运港" name='start'>
+            </div>
+            <div class='xuan'>
+                <p>目的港</p>
+                <input type="text" placeholder="请输入目的港" name='objective'>
+            </div>
+            <div class='xuan'>
+                <p>时间段</p>
+                <input type="text" placeholder="请输入时间段" id="test1" name="time">
+            </div>
+            <div class='xuan'>
+                <p>&nbsp;</p>
+                <input type="submit" value='筛&nbsp;选' class='subt'>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class='xia'>
+        <div class='nav1'>
+            <img src="__INDEX_IMAGE__/img2.png">
+            <p>作业列表</p>
+        </div>
+        <button class="xiabutton">新建作业</button>
+        <table id="customers">
+            <tr>
+                <th>船名</th>
+                <th>航次</th>
+                <th>作业地点</th>
+                <th>运单量</th>
+            	<th>作业量</th>
+                <th>起运港</th>
+                <th>目的港</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list" id="v">
+            <tr>
+                <td>{$v['shipname']}</td>
+	            <td>{$v['personality']['voyage']}</td>
+	            <td>{$v['personality']['locationname']}</td>
+	            <td>{$v['personality']['transport']}</td>
+	            <td>{$v['weight']}</td>
+	            <td>{$v['personality']['start']}</td>
+	            <td>{$v['personality']['objective']}</td>
+	            <td>
+                    <if condition="$v['is_edit'] == 1">
+	            	<a href="javascript:;" onclick="editresult({$v['id']})" class='aa1'>修改</a>&nbsp;&nbsp;
+                    </if>
+                    <if condition="$v['is_coun'] == 'Y'">
+	            	  <a href="__CONTROLLER__/evaluate/resultid/{$v['id']}" class='aa3'>评价</a>&nbsp;&nbsp;
+                    </if>
+	            	<a href="__CONTROLLER__/msg/resultid/{$v['id']}" class='aa2'>详情</a>
+                </td>
+            </tr>	
+        	</volist>
+            <tr style="background-color: #fff;">
+            	<td colspan="8" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+    <!-- 新建作业 -->
+    <div class="editMask2">
+        <div class="editBox">
+            <div class="bar">新建作业</div>
+            <ul class="pass">
+                <li>
+                    <label>船名：</label>
+                    <p>
+                        <select name="shipid" id='shipid' class=''>
+                            <option value="">请选择船名</option>
+                            <volist name="listship" id="v">
+                                <option value="{$v['id']}">{$v['shipname']}</option>
+                            </volist>
+                        </select>
+                    </p>
+                </li>
+                <foreach name="personalitylist" item="v">
+                    <li>
+                        <label>{$v.title}：</label>
+                        <p><input type="text" name="{$v.name}" placeholder="请输入{$v.title}" class="i-box" id="{$v.name}"></p>
+                    </li>                   
+                </foreach>
+
+            </ul>
+            <div class="bar">
+                <input type="submit" value="取&nbsp;消" class="mmqx passbtn">
+                <input type="submit" onclick="addr()"  value="提&nbsp;交" class="mmqd passbtn"> 
+            </div>
+        </div>
+        <script>
+            $(document).on("click",".xiabutton",function(){
+                event.preventDefault();
+                $('.editMask2').addClass('is-visible3');
+                $('.editMask2').find(".tip_info i").remove()
+            })
+            $('.editMask2').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask2') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function addr() {
+                var shipid = $('#shipid').val();
+                $.ajax({
+                    url: "{:U('Liquid/addresult')}",
+                    type: "POST",
+                    data: {
+                        'shipid': shipid,
+                        <?php
+                        foreach ($personalitylist as $v)
+                        {
+                            echo "'".$v['name']."': $('#".$v['name']. "').val(),";
+                        }
+                        ?>
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+    <!-- 修改作业作业 -->
+    <div class="editMask3">
+        <div class="editBox">
+            <div class="bar">修改作业</div>
+            <ul class="pass" id='pass'>
+
+            </ul>
+            <div class="bar">
+                <input type="submit" value="取&nbsp;消" class="mmqx passbtn">
+                <input type="submit" onclick="editr()"  value="提&nbsp;交" class="mmqd passbtn"> 
+            </div>
+        </div>
+        <script>
+            $('.editMask3').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask3') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function editresult(resultid){
+                // 判断作业是否已开始
+                $.ajax({
+                    url: "{:U('Liquid/is_start')}",
+                    type: "POST",
+                    data: {
+                        'resultid': resultid,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            $("#pass").html(data.content);
+                            event.preventDefault();
+                            $('.editMask3').addClass('is-visible3');
+                            $('.editMask3').find(".tip_info i").remove()                  
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+
+            }
+
+            function editr() {
+                var shipid = $('#shipid1').val();
+                var resultid = $('#id1').val();
+                $.ajax({
+                    url: "{:U('Liquid/editresult')}",
+                    type: "POST",
+                    data: {
+                        'shipid': shipid,
+                        'id': resultid,
+                        <?php
+                        foreach ($personalitylist as $v)
+                        {
+                            echo "'".$v['name']."': $('#".$v['name']. "1').val(),";
+                        }
+                        ?>
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+    <script type="text/javascript">
+        // 时间段
+        laydate.render({
+            elem: '#test1' //指定元素
+            ,theme: 'grid' //主题
+            ,format: 'yyyy/MM/dd' //自定义格式
+            ,range: true
+        });
+    </script>
+</block>

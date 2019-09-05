@@ -1,0 +1,1423 @@
+[ 2019-07-17T09:43:31+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0140s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: PWD D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 467 行.
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0160s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='10.39',`forntright`='10.41',`centerleft`='10.4',`centerright`='10.26',`afterleft`='10.31',`afterright`='10.4',`fornt`='10.4',`center`='10.33',`after`='10.355',`fc`='0.00084',`ac`='0.00171',`mc`='0.00011',`fm`='10.40084',`am`='10.35329',`mm`='10.33011',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.04755',`qian_d_m`='10.34185',`qian_pwd`='1.0185',`qian_fwater_weight`='90.7',`qian_sewage_weight`='0',`qian_fuel_weight`='10',`qian_other_weight`='1.1',`qianprocess`='nowtime%3A2019-07-17+09%3A43%3A31------------------%0D%0Aforntleft%3D10.39%2Cforntright%3D10.41%2C%0D%0A+afterleft%3D10.31%2Cafterright%3D10.4%2C%0D%0A+centerleft%3D10.4%2Ccenterright%3D10.26%2C%0D%0Ap%3D0%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%2810.39+%2B+10.41%29+%2F+2%2C+5%29%3D10.4%2CAps%3Dround%28%2810.31+%2B+10.4%29+%2F+2%2C+5%29%3D10.355%2CMps%3Dround%28%2810.4+%2B+10.26%29+%2F+2%2C+5%29%3D10.33%2C%0D%0AT%3D10.355+-+10.4%3D-0.045+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00084%2CAc%3Dround%28abs%286.9+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00171%2CMc%3Dround%28abs%280.46+%2A+-0.045+%2F+181.7%29%2C+5%29%3D0.00011%2C%0D%0AFm%3Dround%2810.4+%2B+pow%28-1%2C+0%29+%2A+0.00084%2C+5%29%3D10.40084%2CAm%3Dround%2810.355+%2B+pow%28-1%2C+1%29+%2A+0.00171%2C+5%29%3D10.35329%2CMm%3Dround%2810.33+%2B+pow%28-1%2C+0%29+%2A+0.00011%2C+5%29%3D10.33011%2C%0D%0ATC+%3D+round%2810.35329+-+10.40084%2C+5%29%3D-0.04755%2CD_M%3Dround%28%2810.40084+%2B+10.35329+%2B+%286+%2A+10.33011%29%29+%2F+8%2C+5%29%3D10.34185%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.04755%2CD_M%3D10.34185%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T10:26:33+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0110s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: PWD D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 467 行.
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='2.82',`forntright`='2.78',`centerleft`='2.78',`centerright`='2.74',`afterleft`='2.78',`afterright`='2.78',`fornt`='2.8',`center`='2.76',`after`='2.78',`fc`='0.00037',`ac`='0.00076',`mc`='5.0E-5',`fm`='2.80037',`am`='2.77924',`mm`='2.76005',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.02113',`qian_d_m`='2.76749',`qian_pwd`='0.997',`qian_fwater_weight`='103.4',`qian_sewage_weight`='0',`qian_fuel_weight`='142.5',`qian_other_weight`='0',`qianprocess`='nowtime%3A2019-07-17+10%3A26%3A33------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.74%2C%0D%0Ap%3D0%2CLBP%3D192%2C%0D%0A+Df%3D3.4%2CDa%3D6.9%2CDm%3D0.46%2C%0D%0APf%3D1%2CPa%3D0%2CPm%3D1%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.74%29+%2F+2%2C+5%29%3D2.76%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D0%2CAflag%3D1%2CMflag%3D0%2C%0D%0ALBM%3Dround%28192+%2B+pow%28-1%2C+1%29+%2A+3.4+-+pow%28-1%2C+0%29+%2A+6.9%2C+5%29%3D181.7%2C%0D%0AFc%3Dround%28abs%283.4+%2A+-0.02+%2F+181.7%29%2C+5%29%3D0.00037%2CAc%3Dround%28abs%286.9+%2A+-0.02+%2F+181.7%29%2C+5%29%3D0.00076%2CMc%3Dround%28abs%280.46+%2A+-0.02+%2F+181.7%29%2C+5%29%3D5.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+0%29+%2A+0.00037%2C+5%29%3D2.80037%2CAm%3Dround%282.78+%2B+pow%28-1%2C+1%29+%2A+0.00076%2C+5%29%3D2.77924%2CMm%3Dround%282.76+%2B+pow%28-1%2C+0%29+%2A+5.0E-5%2C+5%29%3D2.76005%2C%0D%0ATC+%3D+round%282.77924+-+2.80037%2C+5%29%3D-0.02113%2CD_M%3Dround%28%282.80037+%2B+2.77924+%2B+%286+%2A+2.76005%29%29+%2F+8%2C+5%29%3D2.76749%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.02113%2CD_M%3D2.76749%0D%0A' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T10:31:07+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+ERR: 1054:Unknown column 'resultid' in 'where clause'
+ [ SQL语句 ] : SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE `resultid` = '1' LIMIT 1  
+ERR: 1054:Unknown column 'resultid' in 'where clause'
+ [ SQL语句 ] : SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE `resultid` = '1' LIMIT 1  
+
+[ 2019-07-17T10:31:58+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+ERR: 1052:Column 'id' in where clause is ambiguous
+ [ SQL语句 ] : SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE `id` = '1' LIMIT 1  
+ERR: 1052:Column 'id' in where clause is ambiguous
+ [ SQL语句 ] : SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE `id` = '1' LIMIT 1  
+
+[ 2019-07-17T10:33:49+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultrecord` (`resultid`,`shipid`,`solt`,`d_up`,`d_down`,`tpc_up`,`tpc_down`,`ds_up`,`ds_down`,`xf_up`,`xf_down`,`mtc_up`,`mtc_down`,`ptwd`,`tpc`,`ds`,`xf`,`dmdz`,`dc1`,`dc2`,`dc`,`dsc`,`dpc`,`process`) VALUES ('1','3','1','2.774','2.764','24.576','24.1','6364.4','6339.824','-0.792','-0.791','22.1','21','1.025','24.26612','6348.40102','-0.79135','1.1','0.21133','0.00013','0.21146','6348.61248','-173.42551','Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.266124%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.401024%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791349%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02113+%2A+-0.79135+%2A+24.26612+%2F+192.0000+%3D+0.21133Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02113%2C+2%29+%2F+192.0000+%3D+0.00013Dc+%3D+0.21133+%2B+0.00013+%3D+0.21146Dsc+%3D+6348.40102+%2B+0.21146+%3D+6348.61248Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.61248+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42551Dspc+%3D+6348.61248+%2B+-173.42551+%3D+6175.18697') [ RunTime:0.0020s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.18697' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T10:38:59+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.26612',`ds`='6348.40102',`xf`='-0.79165',`dmdz`='1.1',`dc1`='0.21141',`dc2`='0.00013',`dc`='0.21154',`dsc`='6348.61256',`dpc`='-173.42551',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.791%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.792%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.266124%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.401024%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791651%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02113+%2A+-0.79165+%2A+24.26612+%2F+192.0000+%3D+0.21141Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02113%2C+2%29+%2F+192.0000+%3D+0.00013Dc+%3D+0.21141+%2B+0.00013+%3D+0.21154Dsc+%3D+6348.40102+%2B+0.21154+%3D+6348.61256Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.61256+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42551Dspc+%3D+6348.61256+%2B+-173.42551+%3D+6175.18705' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.18705' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T10:41:24+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0110s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.26612',`ds`='6348.40102',`xf`='-0.79165',`dmdz`='1.1',`dc1`='0.21141',`dc2`='0.00013',`dc`='0.21154',`dsc`='6348.61256',`dpc`='-173.42551',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.791%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.792%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.266124%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.401024%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791651%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02113+%2A+-0.79165+%2A+24.26612+%2F+192.0000+%3D+0.21141Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02113%2C+2%29+%2F+192.0000+%3D+0.00013Dc+%3D+0.21141+%2B+0.00013+%3D+0.21154Dsc+%3D+6348.40102+%2B+0.21154+%3D+6348.61256Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.61256+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42551Dspc+%3D+6348.61256+%2B+-173.42551+%3D+6175.18705' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.18705' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T10:45:16+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱11','17.447','0.999','2','1','3','1','17.42955') [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱112','10.004','0.997','2','1','3','1','9.97399') [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱113','10.115','0.997','1.447','1','3','1','10.08466') [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight` FROM `sh_result` LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: total_weight D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 1309 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T11:16:01+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0360s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱11','17.447','0.999','2','1','3','1','17.42955') [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱112','10.004','0.997','2','1','3','1','9.97399') [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱113','10.115','0.997','1.447','1','3','1','10.08466') [ RunTime:0.0010s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0070s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5816.82241' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T11:17:01+08:00 ] 192.168.1.195 /shipplatform2/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Index
+
+[ 2019-07-17T11:17:50+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱11','17.447','0.999','2','1','3','1','17.42955') [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱112','10.004','0.997','2','1','3','1','9.97399') [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 3 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0010s ]
+SQL: INSERT INTO `sh_resultlist` (`cabinname`,`volume`,`density`,`sounding`,`solt`,`shipid`,`resultid`,`weight`) VALUES ('舱113','10.115','0.997','1.447','1','3','1','10.08466') [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0070s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5854.31061' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T11:23:43+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.115',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08466' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79881' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T11:24:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.115',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08466' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0020s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79881' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T11:24:16+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.115',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08466' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0010s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79881' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T11:24:32+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.118',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08765' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0010s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79582' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T11:24:35+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.118',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08765' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79582' WHERE `id` = 1 [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T11:33:35+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: where D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShShipController.class.php 第 65 行.
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T11:35:00+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.118',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08765' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79582' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T11:43:01+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.118',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08765' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79582' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T13:01:02+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=measure
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' LIMIT 1   [ RunTime:0.0020s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱11',`volume`='17.447',`density`='0.999',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='17.42955' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱11' [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱112',`volume`='10.004',`density`='0.997',`sounding`='2',`solt`='1',`shipid`='3',`resultid`='1',`weight`='9.97399' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱112' [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultlist` SET `cabinname`='舱113',`volume`='10.118',`density`='0.997',`sounding`='1.447',`solt`='1',`shipid`='3',`resultid`='1',`weight`='10.08765' WHERE `resultid` = 1 AND `solt` = 1 AND `cabinname` = '舱113' [ RunTime:0.0020s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0080s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.79582' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T13:19:49+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=Result&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.020001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 and r.uid ='9'  and r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,86,87,88,89,90,91,92,93,94,84,85) ) LIMIT 1   [ RunTime:0.0310s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ResultController.class.php 第 130 行.
+SQL: SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,s.is_guanxian,s.is_diliang,s.suanfa,f.firmtype,r.grade1,r.grade2 FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 and r.uid ='9'  and r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,86,87,88,89,90,91,92,93,94,84,85) ) ORDER BY r.id desc LIMIT 0,5   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `cabinid` FROM `resultlist` WHERE `resultid` = 158  [ RunTime:0.1570s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 83 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1547024698h` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1547024698j` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1547024698h` LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1547024698j` LIMIT 1   [ RunTime:0.0150s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 158 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `cabinid` FROM `resultlist` WHERE `resultid` = 141  [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 79 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1542247945m_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1542247945m_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1542247945m_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1542247945m_2` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 141 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `cabinid` FROM `resultlist` WHERE `resultid` = 120  [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 76 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1537421365i_2` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1537421365i_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1537421365i_2` LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1537421365i_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 120 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `cabinid` FROM `resultlist` WHERE `resultid` = 94  [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 81 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1547003795e_2` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1547003795e_2` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1547003795e_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1547003795e_2` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 94 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `cabinid` FROM `resultlist` WHERE `resultid` = 93  [ RunTime:0.0010s ]
+SQL: SELECT `tankcapacityshipid`,`zx`,`rongliang`,`zx_1`,`rongliang_1`,`suanfa` FROM `ship` WHERE `id` = 78 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `trimcorrectionzi1540951578i` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `tankcapacityzi1540951578p` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `trimcorrectionzi1540951578i` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tankcapacityzi1540951578p` LIMIT 1   [ RunTime:0.0150s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 93 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T13:20:04+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 136 行.
+ERR: 1052:Column 'weight' in field list is ambiguous
+ [ SQL语句 ] : SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,`hou_d_m`,`qian_dspc`,`hou_dspc`,`qian_constant`,`hou_constant`,`weight` FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) ORDER BY r.id desc LIMIT 0,5  
+ERR: 1052:Column 'weight' in field list is ambiguous
+ [ SQL语句 ] : SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,`hou_d_m`,`qian_dspc`,`hou_dspc`,`qian_constant`,`hou_constant`,`weight` FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) ORDER BY r.id desc LIMIT 0,5  
+
+[ 2019-07-17T13:20:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 136 行.
+SQL: SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,r.hou_d_m,r.qian_dspc,r.hou_dspc,r.qian_constant,r.hou_constant FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) ORDER BY r.id desc LIMIT 0,5   [ RunTime:0.0000s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T13:30:06+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 136 行.
+SQL: SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,r.hou_d_m,r.qian_dspc,r.hou_dspc,r.qian_constant,r.hou_constant FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) ORDER BY r.id desc LIMIT 0,5   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T13:36:13+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T13:38:10+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=addresult
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-07-17T13:53:20+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0140s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T13:53:58+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T14:33:50+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShShip&a=editship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: firmid D:\phpStudy\PHPTutorial\WWW\shipplatform2\ThinkPHP\Library\Think\Model.class.php 第 1219 行.
+SQL: UPDATE `sh_ship` SET `id`='3',`shipname`='携众001-993',`df`='1.744',`da`='-0.445',`dm`='0.6',`lbp`='199',`expire_time`='1593187200',`cabinnum`='4' WHERE `id` = 3 [ RunTime:0.0140s ]
+
+[ 2019-07-17T15:04:41+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: where D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShShipController.class.php 第 65 行.
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T15:04:49+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` WHERE `firmid` = 6 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T15:13:35+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` WHERE `firmid` = 6 ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T15:13:42+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: where D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShShipController.class.php 第 65 行.
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T15:15:30+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShShip&a=index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `firmtype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: where D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShShipController.class.php 第 65 行.
+SQL: SELECT `id`,`shipname`,`cabinnum`,`number`,`goodsname`,`DF`,`DA`,`DM`,`LBP`,`firmid`,`expire_time`,`img` FROM `sh_ship` ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:01:08+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-07-17T16:01:26+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+ERR: 1054:Unknown column 's.shipname' in 'field list'
+ [ SQL语句 ] : SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1  
+ERR: 1054:Unknown column 's.shipname' in 'field list'
+ [ SQL语句 ] : SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1  
+
+[ 2019-07-17T16:02:30+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+ERR: 1054:Unknown column 's.shipname' in 'field list'
+ [ SQL语句 ] : SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join user s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1  
+ERR: 1054:Unknown column 's.shipname' in 'field list'
+ [ SQL语句 ] : SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join user s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1  
+
+[ 2019-07-17T16:02:56+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+ERR: 1054:Unknown column 're.solt' in 'order clause'
+ [ SQL语句 ] : SELECT * FROM `resultlist` WHERE `resultid` = 2 ORDER BY re.solt asc 
+ERR: 1054:Unknown column 're.solt' in 'order clause'
+ [ SQL语句 ] : SELECT * FROM `resultlist` WHERE `resultid` = 2 ORDER BY re.solt asc 
+
+[ 2019-07-17T16:03:13+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 2 ORDER BY solt asc  [ RunTime:0.0020s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:03:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 2 ORDER BY solt asc  [ RunTime:0.0000s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ResultModel.class.php 第 356 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:06:35+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = null ORDER BY solt asc  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 360 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:06:40+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:09:15+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:09:39+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:13:20+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:13:51+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0110s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:13:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0570s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:14:48+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0090s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T16:15:03+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:15:54+08:00 ] 192.168.1.111 /shipplatform2/app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.*,s.shipname,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T16:57:03+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT `shipid`,`` FROM `sh_result` WHERE `id` = 1 LIMIT 1  
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT `shipid`,`` FROM `sh_result` WHERE `id` = 1 LIMIT 1  
+
+[ 2019-07-17T16:58:30+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0070s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='2.82',`forntright`='2.78',`centerleft`='2.78',`centerright`='2.74',`afterleft`='2.78',`afterright`='2.78',`fornt`='2.8',`center`='2.76',`after`='2.78',`fc`='0.00017',`ac`='4.0E-5',`mc`='6.0E-5',`fm`='2.79983',`am`='2.78004',`mm`='2.75994',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0160s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.01979',`qian_d_m`='2.76744',`qian_pwd`='0.997',`qian_fwater_weight`='103.4',`qian_sewage_weight`='0',`qian_fuel_weight`='142.5',`qian_other_weight`='0',`qianprocess`='nowtime%3A2019-07-17+16%3A58%3A30------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.74%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.74%29+%2F+2%2C+5%29%3D2.76%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.76+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.75994%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.75994%29%29+%2F+8%2C+5%29%3D2.76744%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.76744%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+SQL: SELECT qian_dspc as dspc,qian_constant as constant FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultrecord` SET `id`='1',`resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.3999',`ds_down`='6339.82422',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.26374',`ds`='6348.27836',`xf`='-0.79166',`dmdz`='1.1',`dc1`='0.19102',`dc2`='0.00011',`dc`='0.19113',`dsc`='6348.46949',`dpc`='-173.42161',`process`='nowtime%3A2019-07-17+16%3A58%3A30------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.74%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.74%29+%2F+2%2C+5%29%3D2.76%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.76+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.75994%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.75994%29%29+%2F+8%2C+5%29%3D2.76744%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.76744%0D%0AReceived+table%3A%0D%0A%09Dup%3D2.77400%2C+TPCup%3D24.57600%2CDSup%3D6364.39990%2CXfup%3D-0.79100%0D%0A%09Ddown%3D2.76400%2C+TPCdown%3D24.10000%2CDSdown%3D6339.82422%2CXfdown%3D-0.79200%0D%0A%09MTCup%3D22.10000%2CMTCdown%3D21.00000%0D%0A---------------------------------------%0D%0A+pt%3D1.02500%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.263744%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.278364%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791656%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.01979+%2A+-0.79166+%2A+24.26374+%2F+199.0000+%3D+0.19102Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.01979%2C+2%29+%2F+199.0000+%3D+0.00011Dc+%3D+0.19102+%2B+0.00011+%3D+0.19113Dsc+%3D+6348.27836+%2B+0.19113+%3D+6348.46949Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.46949+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42161Dspc+%3D+6348.46949+%2B+-173.42161+%3D+6175.04788' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0020s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.04788' WHERE `id` = 1 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.65666' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:00:26+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='2.82',`forntright`='2.78',`centerleft`='2.78',`centerright`='2.75',`afterleft`='2.78',`afterright`='2.78',`fornt`='2.8',`center`='2.765',`after`='2.78',`fc`='0.00017',`ac`='4.0E-5',`mc`='6.0E-5',`fm`='2.79983',`am`='2.78004',`mm`='2.76494',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.01979',`qian_d_m`='2.77119',`qian_pwd`='0.997',`qian_fwater_weight`='103.4',`qian_sewage_weight`='0',`qian_fuel_weight`='142.5',`qian_other_weight`='0',`qianprocess`='nowtime%3A2019-07-17+17%3A00%3A26------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.75%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.75%29+%2F+2%2C+5%29%3D2.765%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.765+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.76494%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.76494%29%29+%2F+8%2C+5%29%3D2.77119%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.77119%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+SQL: SELECT qian_dspc as dspc,qian_constant as constant FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultrecord` SET `id`='1',`resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.3999',`ds_down`='6339.82422',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.44224',`ds`='6357.49436',`xf`='-0.79128',`dmdz`='1.1',`dc1`='0.19234',`dc2`='0.00011',`dc`='0.19245',`dsc`='6357.68681',`dpc`='-173.6734',`process`='nowtime%3A2019-07-17+17%3A00%3A26------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.75%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.75%29+%2F+2%2C+5%29%3D2.765%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.765+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.76494%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.76494%29%29+%2F+8%2C+5%29%3D2.77119%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.77119%0D%0AReceived+table%3A%0D%0A%09Dup%3D2.77400%2C+TPCup%3D24.57600%2CDSup%3D6364.39990%2CXfup%3D-0.79100%0D%0A%09Ddown%3D2.76400%2C+TPCdown%3D24.10000%2CDSdown%3D6339.82422%2CXfdown%3D-0.79200%0D%0A%09MTCup%3D22.10000%2CMTCdown%3D21.00000%0D%0A---------------------------------------%0D%0A+pt%3D1.02500%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.442244%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6357.494364%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791281%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.01979+%2A+-0.79128+%2A+24.44224+%2F+199.0000+%3D+0.19234Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.01979%2C+2%29+%2F+199.0000+%3D+0.00011Dc+%3D+0.19234+%2B+0.00011+%3D+0.19245Dsc+%3D+6357.49436+%2B+0.19245+%3D+6357.68681Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6357.68681+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.6734Dspc+%3D+6357.68681+%2B+-173.6734+%3D+6184.01341' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6184.01341' WHERE `id` = 1 [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5900.62199' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:12:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='2.82',`forntright`='2.78',`centerleft`='2.78',`centerright`='2.75',`afterleft`='2.78',`afterright`='2.78',`fornt`='2.8',`center`='2.765',`after`='2.78',`fc`='0.00017',`ac`='4.0E-5',`mc`='6.0E-5',`fm`='2.79983',`am`='2.78004',`mm`='2.76494',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.01979',`qian_d_m`='2.77119',`qian_pwd`='0.997',`qian_fwater_weight`='103.4',`qian_sewage_weight`='0',`qian_fuel_weight`='142.5',`qian_other_weight`='0',`qianprocess`='nowtime%3A2019-07-17+17%3A12%3A52------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.75%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.75%29+%2F+2%2C+5%29%3D2.765%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.765+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.76494%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.76494%29%29+%2F+8%2C+5%29%3D2.77119%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.77119%0D%0A' WHERE `id` = 1 [ RunTime:0.0000s ]
+SQL: SELECT qian_dspc as dspc,qian_constant as constant FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `id`='1',`resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.3999',`ds_down`='6339.82422',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.44224',`ds`='6357.49436',`xf`='-0.79128',`dmdz`='1.1',`dc1`='0.19234',`dc2`='0.00011',`dc`='0.19245',`dsc`='6357.68681',`dpc`='-173.6734',`process`='nowtime%3A2019-07-17+17%3A12%3A52------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.75%2C%0D%0Ap%3D0.997%2CLBP%3D199%2C%0D%0A+Df%3D1.744%2CDa%3D0.445%2CDm%3D0.6%2C%0D%0APf%3D0%2CPa%3D1%2CPm%3D0%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.75%29+%2F+2%2C+5%29%3D2.765%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D1%2CAflag%3D0%2CMflag%3D1%2C%0D%0ALBM%3Dround%28199+%2B+pow%28-1%2C+0%29+%2A+1.744+-+pow%28-1%2C+1%29+%2A+0.445%2C+5%29%3D201.189%2C%0D%0AFc%3Dround%28abs%281.744+%2A+-0.02+%2F+201.189%29%2C+5%29%3D0.00017%2CAc%3Dround%28abs%280.445+%2A+-0.02+%2F+201.189%29%2C+5%29%3D4.0E-5%2CMc%3Dround%28abs%280.6+%2A+-0.02+%2F+201.189%29%2C+5%29%3D6.0E-5%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+1%29+%2A+0.00017%2C+5%29%3D2.79983%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+4.0E-5%2C+5%29%3D2.78004%2CMm%3Dround%282.765+%2B+pow%28-1%2C+1%29+%2A+6.0E-5%2C+5%29%3D2.76494%2C%0D%0ATC+%3D+round%282.78004+-+2.79983%2C+5%29%3D-0.01979%2CD_M%3Dround%28%282.79983+%2B+2.78004+%2B+%286+%2A+2.76494%29%29+%2F+8%2C+5%29%3D2.77119%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.01979%2CD_M%3D2.77119%0D%0AReceived+table%3A%0D%0A%09Dup%3D2.77400%2C+TPCup%3D24.57600%2CDSup%3D6364.39990%2CXfup%3D-0.79100%0D%0A%09Ddown%3D2.76400%2C+TPCdown%3D24.10000%2CDSdown%3D6339.82422%2CXfdown%3D-0.79200%0D%0A%09MTCup%3D22.10000%2CMTCdown%3D21.00000%0D%0A---------------------------------------%0D%0A+pt%3D1.02500%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.442244%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6357.494364%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.791281%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.01979+%2A+-0.79128+%2A+24.44224+%2F+199.0000+%3D+0.19234Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.01979%2C+2%29+%2F+199.0000+%3D+0.00011Dc+%3D+0.19234+%2B+0.00011+%3D+0.19245Dsc+%3D+6357.49436+%2B+0.19245+%3D+6357.68681Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6357.68681+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.6734Dspc+%3D+6357.68681+%2B+-173.6734+%3D+6184.01341' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6184.01341' WHERE `id` = 1 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5900.62199' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:14:19+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:15:38+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShShip&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0070s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:16:06+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShShip&a=addship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT f.firm_jur,u.pid FROM user u left join firm f on f.id = u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_ship` WHERE `shipname` = '携众测试001-993' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `sh_ship` (`firmid`,`shipname`,`cabinnum`,`df`,`da`,`dm`,`lbp`,`expire_time`) VALUES ('25','携众测试001-993','4','0','0','0','138.6','1593187200') [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:16:55+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=fornt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0050s ]
+SQL: SELECT `shipid` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `lbp`,`df`,`da`,`dm` FROM `sh_ship` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_forntrecord` WHERE `solt` = 1 AND `resultid` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_forntrecord` SET `forntleft`='2.82',`forntright`='2.78',`centerleft`='2.78',`centerright`='2.74',`afterleft`='2.78',`afterright`='2.78',`fornt`='2.8',`center`='2.76',`after`='2.78',`fc`='0',`ac`='0',`mc`='0',`fm`='2.8',`am`='2.78',`mm`='2.76',`solt`='1',`resultid`='1' WHERE `solt` = 1 AND `resultid` = 1 [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `solt`='1',`qian_tc`='-0.02',`qian_d_m`='2.7675',`qian_pwd`='0.997',`qian_fwater_weight`='103.4',`qian_sewage_weight`='0',`qian_fuel_weight`='142.5',`qian_other_weight`='0',`qianprocess`='nowtime%3A2019-07-17+17%3A16%3A55------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.74%2C%0D%0Ap%3D0.997%2CLBP%3D138.6%2C%0D%0A+Df%3D0%2CDa%3D0%2CDm%3D0%2C%0D%0APf%3D1%2CPa%3D1%2CPm%3D1%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.74%29+%2F+2%2C+5%29%3D2.76%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D0%2CAflag%3D0%2CMflag%3D0%2C%0D%0ALBM%3Dround%28138.6+%2B+pow%28-1%2C+1%29+%2A+0+-+pow%28-1%2C+1%29+%2A+0%2C+5%29%3D138.6%2C%0D%0AFc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2CAc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2CMc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.8%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.78%2CMm%3Dround%282.76+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.76%2C%0D%0ATC+%3D+round%282.78+-+2.8%2C+5%29%3D-0.02%2CD_M%3Dround%28%282.8+%2B+2.78+%2B+%286+%2A+2.76%29%29+%2F+8%2C+5%29%3D2.7675%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.02%2CD_M%3D2.7675%0D%0A' WHERE `id` = 1 [ RunTime:0.0010s ]
+SQL: SELECT qian_dspc as dspc,qian_constant as constant FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `id`='1',`resultid`='1',`shipid`='3',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.3999',`ds_down`='6339.82422',`xf_up`='-0.791',`xf_down`='-0.792',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.42582',`xf`='-0.79165',`dmdz`='1.1',`dc1`='0.27721',`dc2`='0.00016',`dc`='0.27737',`dsc`='6348.70319',`dpc`='-173.42799',`process`='nowtime%3A2019-07-17+17%3A16%3A55------------------%0D%0Aforntleft%3D2.82%2Cforntright%3D2.78%2C%0D%0A+afterleft%3D2.78%2Cafterright%3D2.78%2C%0D%0A+centerleft%3D2.78%2Ccenterright%3D2.74%2C%0D%0Ap%3D0.997%2CLBP%3D138.6%2C%0D%0A+Df%3D0%2CDa%3D0%2CDm%3D0%2C%0D%0APf%3D1%2CPa%3D1%2CPm%3D1%2C%0D%0AFPS%3Dround%28%282.82+%2B+2.78%29+%2F+2%2C+5%29%3D2.8%2CAps%3Dround%28%282.78+%2B+2.78%29+%2F+2%2C+5%29%3D2.78%2CMps%3Dround%28%282.78+%2B+2.74%29+%2F+2%2C+5%29%3D2.76%2C%0D%0AT%3D2.78+-+2.8%3D-0.02+then+Tf%3D1%2CFflag%3D0%2CAflag%3D0%2CMflag%3D0%2C%0D%0ALBM%3Dround%28138.6+%2B+pow%28-1%2C+1%29+%2A+0+-+pow%28-1%2C+1%29+%2A+0%2C+5%29%3D138.6%2C%0D%0AFc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2CAc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2CMc%3Dround%28abs%280+%2A+-0.02+%2F+138.6%29%2C+5%29%3D0%2C%0D%0AFm%3Dround%282.8+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.8%2CAm%3Dround%282.78+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.78%2CMm%3Dround%282.76+%2B+pow%28-1%2C+0%29+%2A+0%2C+5%29%3D2.76%2C%0D%0ATC+%3D+round%282.78+-+2.8%2C+5%29%3D-0.02%2CD_M%3Dround%28%282.8+%2B+2.78+%2B+%286+%2A+2.76%29%29+%2F+8%2C+5%29%3D2.7675%0D%0AsoltType%3D%E4%BD%9C%E4%B8%9A%E5%89%8D+then%3A%0D%0A%09+TC%3D-0.02%2CD_M%3D2.7675%0D%0AReceived+table%3A%0D%0A%09Dup%3D2.77400%2C+TPCup%3D24.57600%2CDSup%3D6364.39990%2CXfup%3D-0.79100%0D%0A%09Ddown%3D2.76400%2C+TPCdown%3D24.10000%2CDSdown%3D6339.82422%2CXfdown%3D-0.79200%0D%0A%09MTCup%3D22.10000%2CMTCdown%3D21.00000%0D%0A---------------------------------------%0D%0A+pt%3D1.02500%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.42582%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79165%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79165+%2A+24.2666+%2F+138.6000+%3D+0.27721Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.27721+%2B+0.00016+%3D+0.27737Dsc+%3D+6348.42582+%2B+0.27737+%3D+6348.70319Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70319+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42799Dspc+%3D+6348.70319+%2B+-173.42799+%3D+6175.2752' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.2752' WHERE `id` = 1 [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0070s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `qian_dspc`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_constant`,`hou_constant` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_constant`='5891.8842' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-07-17T17:24:57+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T17:25:09+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T17:26:06+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001001s ]
+
+[ 2019-07-17T17:26:34+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0020s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-07-17T17:27:11+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0010s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T17:29:53+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-07-17T17:34:25+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=bookdata
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp FROM sh_result r left join sh_ship s on s.id=r.shipid  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `sh_resultrecord` SET `resultid`='1',`shipid`='4',`solt`='1',`d_up`='2.774',`d_down`='2.764',`tpc_up`='24.576',`tpc_down`='24.1',`ds_up`='6364.4',`ds_down`='6339.824',`xf_up`='-0.792',`xf_down`='-0.791',`mtc_up`='22.1',`mtc_down`='21',`ptwd`='1.025',`tpc`='24.2666',`ds`='6348.4256',`xf`='-0.79135',`dmdz`='1.1',`dc1`='0.2771',`dc2`='0.00016',`dc`='0.27726',`dsc`='6348.70286',`dpc`='-173.42798',`process`='Received+table%3A%0D%0A%09Dup%3D2.774%2C+TPCup%3D24.576%2CDSup%3D6364.4%2CXfup%3D-0.792%0D%0A%09Ddown%3D2.764%2C+TPCdown%3D24.1%2CDSdown%3D6339.824%2CXfdown%3D-0.791%0D%0A%09MTCup%3D22.1%2CMTCdown%3D21%0D%0A---------------------------------------%0D%0A+pt%3D1.025%0D%0A+Dup%3C++D_M++%3EDdown%3A+then+%0D%0ATPC%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D24.2666%5Cr%5CnDS%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D6348.4256%5Cr%5CnXf%3Dround%28%28%24Cbig+-+%28%24Csmall%29%29%2C+3%29+%2F+%28%24Xbig+-+%28%24Xsmall%29%29+%2A+%28%24X+-+%28%24Xsmall%29%29+%2B+%24Csmall+%3D-0.79135%5Cr%5Cndmdz+%3D+22.1+-+21+%3D+1.1Dc1+%3D+100+%2A+TC+%2A+Xf+%2A+TPC+%2F+LBP+%3D+100+%2A+-0.02000+%2A+-0.79135+%2A+24.2666+%2F+138.6000+%3D+0.2771Dc2+%3D+50+%2A+dmdz+%2A+pow%28TC%2C+2%29+%2F+LBP+%3D+50+%2A+1.1+%2A+pow%28-0.02000%2C+2%29+%2F+138.6000+%3D+0.00016Dc+%3D+0.2771+%2B+0.00016+%3D+0.27726Dsc+%3D+6348.4256+%2B+0.27726+%3D+6348.70286Dpc+%3D++Dsc+%2A+%28p+-+pt%29+%2F+pt+%3D+6348.70286+%2A+%280.99700+-+1.025%29+%2F+1.025+%3D+-173.42798Dspc+%3D+6348.70286+%2B+-173.42798+%3D+6175.27488' WHERE `resultid` = 1 AND `solt` = 1 [ RunTime:0.0000s ]
+SQL: UPDATE `sh_result` SET `qian_dspc`='6175.27488' WHERE `id` = 1 [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001001s ]
+

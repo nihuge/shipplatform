@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cVJ73Yz" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __justepbasexid__="__baseID__" __cid="cVJ73Yz" components="$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/labelEdit/labelEdit,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/select/select,$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/data/data,$model/UI2/system/components/justep/button/button,$model/UI2/system/components/justep/input/input,">
+  <style>.instruction-main-div-bg.cVJ73Yz{border-style: solid solid solid solid; border-width: 1px 1px 1px 1px; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(229, 229, 229) rgb(229, 229, 229)} .instruction-main-div.cVJ73Yz{width: 100%; padding-top: 20px; padding-right: 20px; padding-left: 25px} .instruction-div-itmes-style.cVJ73Yz{background-image: url(@justepContextPath@/warehouse_capacity/img/b.png); background-repeat: no-repeat; background-size: 100% 100%; height: 40px; -moz-background-size: 100% 100%; padding-top: 5px; padding-left: 10px} .instruction-div-text.cVJ73Yz{font-size: 15px; border-right-style: solid; border-right-width: 1px; border-right-color: rgb(230, 230, 230); padding-right: 3px} .instruction-div-text-input.cVJ73Yz{height: 30px; margin-left: 3px; border-style: none none none none; background-color: transparent} .hidden1.cVJ73Yz{display: none}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onActive:modelActive" __cid="cVJ73Yz" class="cVJ73Yz"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full p1d92f04adc9a45229643c9276388a8ca-iosstatusbar cVJ73Yz" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cVJ73Yz"> 
+    <div class="x-panel-top cVJ73Yz" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cVJ73Yz"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cVJ73Yz" xid="titleBar1" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;标题&#34;}" __cid="cVJ73Yz"> 
+        <div class="x-titlebar-left cVJ73Yz" __cid="cVJ73Yz"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cVJ73Yz" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},event:{click:$model._callModelFn.bind($model, 'backBtnClick')}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cVJ73Yz"> 
+            <i class="icon-chevron-left cVJ73Yz" __cid="cVJ73Yz"></i>  
+            <span __cid="cVJ73Yz" class="cVJ73Yz"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cVJ73Yz" __cid="cVJ73Yz">标题</div>  
+        <div class="x-titlebar-right  cVJ73Yz" __cid="cVJ73Yz">
+          <div class="empty cVJ73Yz" __cid="cVJ73Yz"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="x-panel-content cVJ73Yz" xid="content1" style="padding-left:10px;padding-right:10px;padding-top:30px;" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cVJ73Yz"> 
+      <div xid="div1" class="instruction-main-div-bg cVJ73Yz" id="maiDiv" __cid="cVJ73Yz"> 
+        <div xid="div6" class="instruction-main-div cVJ73Yz" __cid="cVJ73Yz">
+          <div xid="div4" id="ship_name_spanner" __cid="cVJ73Yz" class="cVJ73Yz">
+            <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput1" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+              <label class="x-label instruction-div-text cVJ73Yz" xid="label1" style="width:40px;" __cid="cVJ73Yz">船 名</label>  
+              <select component="$model/UI2/system/components/justep/select/select" class="form-control pull-right x-edit  cVJ73Yz" xid="demoSelect" style="width:87%;height:29px;margin-right:5px;" data-bind="component:{ref:shipDataModer.ref('id'),name:'$model/UI2/system/components/justep/select/select'},options:shipData.datas,optionsValue:'id',optionsCaption:'请选择船舶...',optionsText:'shipname',optionsAfterRender2:$model.__justep__.selectOptionsAfterRender.bind($model,$element),optionsBeforeRender:$model.__justep__.selectOptionsBeforeRender.bind($model,$element)" data-events="onChange:selectChange" __cid="cVJ73Yz"></select>
+              <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit cVJ73Yz" xid="input1" style="display: none;" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" __cid="cVJ73Yz">
+            </div>
+          </div>
+          <div xid="div3" id="ship_name_input" __cid="cVJ73Yz" class="cVJ73Yz">
+            <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput2" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+              <label class="x-label instruction-div-text cVJ73Yz" xid="label2" style="width:70px;" __cid="cVJ73Yz">船 名</label>  
+              <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_ship_name" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入船名&#34;}" __cid="cVJ73Yz">
+            </div>
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput3" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label3" style="width:70px;" __cid="cVJ73Yz">航 次</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_vovy" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入航次&#34;}" __cid="cVJ73Yz">
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput4" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label4" style="width:70px;" __cid="cVJ73Yz">作业地点</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_location" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入作业地点&#34;}" __cid="cVJ73Yz">
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput5" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label5" style="width:70px;" __cid="cVJ73Yz">货 名</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_cago_name" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入货物名称&#34;}" __cid="cVJ73Yz">
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput6" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label6" style="width:70px;" __cid="cVJ73Yz">运单量</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_yundan" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入运单量&#34;}" __cid="cVJ73Yz">
+          </div>
+          <div xid="div2" id="div_cago_weight" __cid="cVJ73Yz" class="cVJ73Yz">
+            <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput7" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+              <label class="x-label instruction-div-text cVJ73Yz" xid="label7" style="width:70px;" __cid="cVJ73Yz">货 重</label>  
+              <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_cago_weight" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;disabled&#34;:true,&#34;placeHolder&#34;:&#34;请输入货物重量&#34;}" __cid="cVJ73Yz">
+            </div>
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput8" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label8" style="width:70px;" __cid="cVJ73Yz">起运港</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_begin_location" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入起运港&#34;}" __cid="cVJ73Yz">
+          </div>
+          <div component="$model/UI2/system/components/justep/labelEdit/labelEdit" class="x-label-edit x-label30 instruction-div-itmes-style  cVJ73Yz" xid="labelInput9" style="margin-top:10px;" data-bind="component:{name:'$model/UI2/system/components/justep/labelEdit/labelEdit'}" __cid="cVJ73Yz"> 
+            <label class="x-label instruction-div-text cVJ73Yz" xid="label9" style="width:70px;" __cid="cVJ73Yz">目的港</label>  
+            <input component="$model/UI2/system/components/justep/input/input" class="form-control x-edit instruction-div-text-input cVJ73Yz" xid="input_end_location" data-bind="component:{name:'$model/UI2/system/components/justep/input/input'}" data-config="{&#34;placeHolder&#34;:&#34;请输入目的港&#34;}" __cid="cVJ73Yz">
+          </div>
+        </div>  
+        <div xid="div7" style="text-align:right;margin-top:1px;" __cid="cVJ73Yz" class="cVJ73Yz">
+          <img src="@justepContextPath@/warehouse_capacity/img/blue.png" alt="" xid="image9" style="width:15px;" __cid="cVJ73Yz" class="cVJ73Yz">
+        </div>
+      </div>  
+      <div xid="div18" style="margin-top:20px;padding-right:30px;padding-left:30px;" id="div_btn_instruction" __cid="cVJ73Yz" class="cVJ73Yz"> 
+        <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default cVJ73Yz" xid="btn_updata_or_add" style="width:100%;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:btn_updata_or_addClick" data-config="{&#34;label&#34;:&#34;修 改&#34;}" __cid="cVJ73Yz"> 
+          <i xid="i9" __cid="cVJ73Yz" class="cVJ73Yz"></i>  
+          <span xid="span20" __cid="cVJ73Yz" class="cVJ73Yz">修 改</span> 
+        </a> 
+      </div> 
+    </div>  
+    <style __cid="cVJ73Yz" class="cVJ73Yz">.x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p1d92f04adc9a45229643c9276388a8ca-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

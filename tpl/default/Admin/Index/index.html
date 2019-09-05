@@ -1,0 +1,67 @@
+<extend name="Public:base" />
+<block name='title'>后台首页</block>
+<block name="navtitle">
+	<li class="active">
+        控制面板
+    </li>
+</block>
+<block name="active">class="active"</block>
+<block name="activeopen"></block>
+
+<block name="content">
+	<div class="alert alert-block alert-success">
+		<i class="icon-ok green"></i>
+		欢迎使用
+		<strong class="green">
+			油船计量后台管理系统
+		</strong>	
+	</div>
+
+    <div class="page-container">
+		<table class="table table-border table-bordered table-bg mt-20">
+			<thead>
+				<tr>
+					<th colspan="2" scope="col">服务器信息</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th width="30%">服务器计算机名</th>
+					<td><span id="lbServerName">http://127.0.0.1/</span></td>
+				</tr>
+				<tr>
+					<td>操作系统：</td>
+					<td>{$info['system']}</td>
+				</tr>
+				<tr>
+					<td>运行环境：</td>
+					<td>{$info['server_software']}</td>
+				</tr>
+				<tr>
+					<td>PHP运行方式：</td>
+					<td>{$info['sapi']}</td>
+				</tr>
+				<tr>
+					<td>上传附件限制：</td>
+					<td>{$info['upload_max_filesize']}</td>
+				</tr>
+				<tr>
+					<td>执行时间限制：</td>
+					<td>{$info['max_execution_time']}</td>
+				</tr>
+				<tr>
+					<td>服务器域名/IP：</td>
+					<td>{$info['domain']}</td>
+				</tr>
+				<tr>
+					<td>磁盘剩余空间：</td>
+					<td>{$info['disk']}</td>
+				</tr>
+				<tr>
+					<td>服务器时间：</td>
+					<td>{$info['server_time']}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</block>

@@ -1,0 +1,221 @@
+[ 2019-08-20T10:06:20+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0470s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-20T10:06:26+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0880s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0680s ]
+SQL: SELECT COUNT(*) AS tp_count FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) LIMIT 1   [ RunTime:0.0320s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\App\Controller\ShResultController.class.php 第 136 行.
+SQL: SELECT r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,r.hou_d_m,r.qian_dspc,r.hou_dspc,r.qian_constant,r.hou_constant FROM sh_result r left join sh_ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on f.id = u.firmid  WHERE ( 1 ) ORDER BY r.id desc LIMIT 0,5   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `sh_ship` [ RunTime:0.0060s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 5  [ RunTime:0.0000s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 4  [ RunTime:0.0000s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 3  [ RunTime:0.0000s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 2  [ RunTime:0.0000s ]
+SQL: SELECT `cabinname` FROM `sh_resultlist` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-08-20T11:13:57+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T11:14:07+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,0 + CAST(s.lbp AS CHAR) as lbp,0 + CAST(s.df AS CHAR) as df,0 + CAST(s.da AS CHAR) as da,0 + CAST(s.dm AS CHAR) as dm,0 + CAST(s.weight AS CHAR) as ship_weight,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '2' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0540s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 2  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 2 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 2 AND `solt` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0300s ]
+SQL: SELECT `forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`fornt`,`center`,`after`,`solt` FROM `sh_forntrecord` WHERE `resultid` = 2  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 2 ORDER BY solt asc  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 413 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T11:38:13+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=editRemark
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.012001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: UPDATE `sh_result` SET `remark`='测试备注，备注成功' WHERE `id` = 2 [ RunTime:0.0210s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T14:59:56+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0110s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0190s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT r.*,s.shipname,0 + CAST(s.lbp AS CHAR) as lbp,0 + CAST(s.df AS CHAR) as df,0 + CAST(s.da AS CHAR) as da,0 + CAST(s.dm AS CHAR) as dm,0 + CAST(s.weight AS CHAR) as ship_weight,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '4' LIMIT 1   [ RunTime:0.0150s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 4  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 4 AND `solt` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 4 AND `solt` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0080s ]
+SQL: SELECT `forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`fornt`,`center`,`after`,`solt` FROM `sh_forntrecord` WHERE `resultid` = 4  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 4 ORDER BY solt asc  [ RunTime:0.0000s ]
+NOTIC: [2] Invalid argument supplied for foreach() D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ShResultModel.class.php 第 413 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-20T15:00:01+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=resultsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0090s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.*,s.shipname,0 + CAST(s.lbp AS CHAR) as lbp,0 + CAST(s.df AS CHAR) as df,0 + CAST(s.da AS CHAR) as da,0 + CAST(s.dm AS CHAR) as dm,0 + CAST(s.weight AS CHAR) as ship_weight,u.username,f.firmtype as ffirmtype FROM sh_result r left join sh_ship s on s.id=r.shipid left join user u on r.uid = u.id left join firm f on u.firmid = f.id  WHERE r.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT sum(weight) as t_weight FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT `forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`fornt`,`center`,`after`,`solt` FROM `sh_forntrecord` WHERE `resultid` = 1  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0280s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 ORDER BY solt asc  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T15:14:07+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=cabinlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0070s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 2 AND `solt` = 1  [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T15:14:14+08:00 ] 127.0.0.1 /app.php?c=ShResult&a=cabinlist
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultlist` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `sh_resultlist` WHERE `resultid` = 1 AND `solt` = 1  [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-20T15:21:02+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=forntsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `sh_result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `sh_forntrecord` [ RunTime:0.0050s ]
+SQL: SELECT `forntleft`,`forntright`,`centerleft`,`centerright`,`afterleft`,`afterright`,`fornt`,`center`,`after`,`solt` FROM `sh_forntrecord` WHERE `resultid` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `hou_fwater_weight`,`hou_sewage_weight`,`hou_fuel_weight`,`hou_other_weight`,`qian_fwater_weight`,`qian_sewage_weight`,`qian_fuel_weight`,`qian_other_weight`,`qian_pwd`,`hou_pwd` FROM `sh_result` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-20T15:25:14+08:00 ] 192.168.1.195 /shipplatform2/app.php?c=ShResult&a=gettable
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `status`,`imei`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `sh_resultrecord` [ RunTime:0.0070s ]
+SQL: SELECT `d_up`,`d_down`,`tpc_up`,`tpc_down`,`ds_up`,`ds_down`,`xf_up`,`xf_down`,`mtc_up`,`mtc_down`,`ptwd`,`solt`,`shipid`,`resultid` FROM `sh_resultrecord` WHERE `resultid` = 1 AND `solt` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

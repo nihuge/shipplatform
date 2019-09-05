@@ -1,0 +1,24 @@
+.select-list-itmes-bg {
+	background-image: url(./img/rad_bg_04.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	width: 100%;
+	height: 225px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+
+.select-list-itmes-div-bg {
+	padding-top: 10px;
+	padding-left: 10px;
+	text-align: left;
+	height: 40px;
+	background-color: #d1e7ff;
+}
+
+.select-list-itmes-div-text {
+	font-size: 15px;
+}

@@ -1,0 +1,329 @@
+<extend name="Public:base" />
+<block name='navhover5'>dropbtnhover</block>
+<block name='title'>人员管理</block>
+<block name="center">
+	<link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+	<link rel="stylesheet" href="__INDEX_CSS__/ship.css">
+	<link rel="stylesheet" href="__INDEX_CSS__/checkbox.css">
+
+	<div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            管理员设置>人员管理
+        </div>
+    </div>
+    <div class='xia'>
+        <hr style="width: 870px" class='hr'>
+        <button class="addbut1" id='addbut1'>新建人员</button>
+        <hr style="width: 60px" class='hr'>
+        <table id="customers">
+            <tr>
+                <th>账号</th>
+                <th>用户名</th>
+                <th>联系电话</th>
+                <th>所属公司</th>
+                <th>重置密码</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id="v">
+            <tr>
+                <td>{$v['title']}</td>
+                <td>{$v['username']}</td>
+                <td>{$v['phone']}</td>
+                <td>{$v['firmname']}</td>
+                <td><a href="javascript:;" onclick="resetpwd('{$v['id']}')" style="color:red;">重置密码</a></td>
+                <if condition="$v['status'] == 2">
+                    <td><a href="javascript:;" onclick="changestatus('{$v['id']}','1')" style="color:red">解除冻结</a></td>
+                    <else/>
+                    <td><a href="javascript:;" onclick="changestatus('{$v['id']}','2')" style="color:black">冻结用户</a></td>
+                </if>
+                <td>
+                    <a href="javascript:;" class='aa1' onclick="edit('{$v['id']}','{$v['firmid']}')">修改</a>&nbsp;&nbsp;
+                    <a href="javascript:;" class='aa2' onclick="configSearch('{$v['id']}')">分配查询权限</a>
+                </td>
+            </tr>	
+        	</volist>
+            <tr style="background-color: #fff">
+            	<td colspan="7" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 新建人员 -->
+    <div class='editMask5'>
+        <div class='editBox1'>
+            <div class='bar'>新建人员</div>
+            <div class='bar1'>基本信息</div>
+            <ul class='pass'>
+                <input type="hidden" name='pid' id='pid' value="{$_SESSION['user_info']['id']}">
+                <li>
+                    <label>账号</label>
+                    <p><input type='text' name='title' placeholder='请输入账号' class='i-box' id='title' maxlength='15'></p>
+                </li>
+                <li>
+                    <label>用&nbsp;户&nbsp;名</label>
+                    <p>
+                    	<input type='text' name='username' placeholder='请输入用户名' class='i-box' id='nameuser' maxlength='15'>
+                    </p>
+                </li> 
+                <li>
+                    <label>联系电话</label>
+                    <p><input type='text' name='phone' placeholder='请输入联系电话' class='i-box' id='phones' maxlength='15'></p>
+                </li>
+            </ul>
+            <div class='bar1'>操作权限</div>
+            <ul class='pass1'>
+                <volist name="shiplist" id="v">
+            	<li>
+                    <p>
+                    	<label><input type='checkbox' name='operation_jur' value="{$v['id']}" class='regular-checkbox'>&nbsp;&nbsp;{$v['shipname']}</label>
+                    </p>
+                </li>  
+                </volist>
+            </ul>
+            <div class='bar'>
+                <input type='submit' value='取&nbsp;消' class='mmqx passbtn'>
+                <input type='submit' onclick='addr()'  value='提&nbsp;交' class='mmqd passbtn'> 
+            </div>
+        </div>
+        <script>
+            $(document).on("click","#addbut1",function(){
+                event.preventDefault();
+                $('.editMask5').addClass('is-visible3');
+                $('.editMask5').find(".tip_info i").remove()
+            })
+            $('.editMask5').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask5') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function addr() {
+                var pid = $('#pid').val();
+                var title = $('#title').val();
+                var username = $('#nameuser').val();
+                var phone = $('#phones').val(); 
+                var operation_jur = [];
+              
+                var chk_value =[]; 
+                $('input[name="operation_jur"]:checked').each(function(){ 
+                    chk_value.push($(this).val()); 
+                }); 
+
+                $.ajax({
+                    url: "{:U('User/add')}",
+                    type: "POST",
+                    data: {
+                        'pid': pid,
+                        'title': title,
+                        'username': username,
+                        'phone': phone,
+                        'operation_jur': chk_value,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <!-- 修改人员 -->
+    <div class="editMask6">
+        <div class="editBox1" id='editBox1'>
+            
+        </div>
+        <script>
+            $('.editMask6').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask6') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function edit(id){
+                $.ajax({
+                    url: "{:U('User/usermsg')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                    	console.log(data);
+                        if (data.state == 1) {
+                            $("#editBox1").html(data.content);
+                            event.preventDefault();
+                            $('.editMask6').addClass('is-visible3');
+                            $('.editMask6').find(".tip_info i").remove()                  
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+
+            }
+            function editr() {
+                var id = $('#userid').val();
+                var username = $('#nameuser1').val();
+                var phone = $('#phones1').val(); 
+                var operation_jur = [];
+              
+                var chk_value =[]; 
+                $('input[name="operation_jur1"]:checked').each(function(){ 
+                    chk_value.push($(this).val()); 
+                }); 
+                $.ajax({
+                    url: "{:U('User/edit')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                        'username': username,
+                        'phone': phone,
+                        'operation_jur': chk_value,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <!-- 分配查询权限 -->
+    <div class="editMask7">
+        <div class="editBox1">
+            <div class="bar">分配查询权限</div>
+            <div class='bar2' id='bar2'>
+                                
+            </div>
+            <div class="bar">
+                <input type="submit" value="取&nbsp;消" class="mmqx passbtn">
+                <input type="submit" onclick="adds()"  value="提&nbsp;交" class="mmqd passbtn"> 
+            </div>
+        </div>
+        <script>
+            $('.editMask7').on('click', function(event){
+                if($(event.target).is('.mmqx') || $(event.target).is('.editMask7') ) {
+                    event.preventDefault();
+                    $(this).removeClass('is-visible3');
+                }
+            });
+
+            function configSearch(id){
+                $.ajax({
+                    url: "{:U('User/configSearch')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        console.log(data);
+                        if (data.state == 1) {
+                            $("#bar2").html(data.content);
+                            event.preventDefault();
+                            $('.editMask7').addClass('is-visible3');
+                            $('.editMask7').find(".tip_info i").remove()                  
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+
+            function adds() {
+                var id = $('#iduser').val();
+              
+                var search_jur =[]; 
+                $('input[name="search_jur"]:checked').each(function(){ 
+                    search_jur.push($(this).val()); 
+                }); 
+                $.ajax({
+                    url: "{:U('User/searchconfig')}",
+                    type: "POST",
+                    data: {
+                        'id': id,
+                        'search_jur': search_jur,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.message, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.message, {icon: 5});
+                        }
+                    }
+                });
+            }
+        </script>
+    </div>
+    <script type="text/javascript">
+    	//重置密码
+        function resetpwd(id) {
+            layer.confirm('您确定要重置密码吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function() {
+                $.ajax({
+                    url: "__CONTROLLER__/resetpwd",
+                    type: "POST",
+                    data: {
+                        "id": id
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.msg, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.msg, {
+                                icon: 5
+                            });
+                        }
+                    }
+                });
+            })
+        }
+
+        //修改状态
+        function changestatus(id, status) {
+            layer.confirm('您确定要修改状态吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function() {
+                $.ajax({
+                    url: "__CONTROLLER__/changestatus",
+                    type: "POST",
+                    data: {
+                        "id": id,
+                        "status": status
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.state == 1) {
+                            layer.msg(data.msg, {icon: 1});
+                            setTimeout(function() { location.reload(); }, 2000);
+                        } else {
+                            layer.msg(data.msg, {
+                                icon: 5
+                            });
+                        }
+                    }
+                });
+            })
+        }
+	</script>
+</block>

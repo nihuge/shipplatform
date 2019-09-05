@@ -1,0 +1,1194 @@
+[ 2019-06-21T08:34:10+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0450s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0010s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0160s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 93 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 113 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 117 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.042002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:34:11+08:00 ] 127.0.0.1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:24+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Controller\IndexBaseController.class.php 第 31 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:25+08:00 ] 127.0.0.1 /index.php?s=/Login/login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:30+08:00 ] 127.0.0.1 /index.php?s=/Login/login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.1060s ]
+SQL: SELECT u.id,u.username,u.imei,u.firmid,u.pid,u.status,u.phone,f.firmname,f.logo FROM user u left join firm f on f.id = u.firmid  WHERE u.title = 'xie01' AND u.pwd = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0340s ]
+SQL: SELECT `status`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `expire_time`,`creditline`,`balance`,`membertype` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0330s ]
+SQL: SELECT r.id,r.time,r.grade1,r.grade2,r.uid,r.shipid FROM electronic_visa e left join result r on r.id = e.resultid  WHERE (  (  r.grade1 = 0 ) OR (  r.grade2 = 0 ) )  [ RunTime:0.0460s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:32+08:00 ] 127.0.0.1 /index.php?s=/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0050s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.034002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:32+08:00 ] 127.0.0.1 /index.php?s=/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0010s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0050s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.031002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T08:52:32+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:52:34+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) ) LIMIT 1   [ RunTime:0.0210s ]
+SQL: SELECT r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid FROM result r left join ship s on s.id=r.shipid left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) ) ORDER BY r.id desc LIMIT 0,20   [ RunTime:0.0220s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 158 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 150 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 149 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 144 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 142 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 141 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','82','83','84','85','86','87','88') ORDER BY shipname asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0440s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.051003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.051003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T08:52:34+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:53:25+08:00 ] 127.0.0.1 /index.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0040s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0040s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 93 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 113 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 117 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.029002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.030002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:55:39+08:00 ] 127.0.0.1 /index.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.063003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.065003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T08:55:39+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T09:22:54+08:00 ] 192.168.1.121 /shipplatform2/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0010s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0050s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 93 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 113 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 117 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.029002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.030002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T09:55:51+08:00 ] 127.0.0.1 /index.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.053003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.053003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T09:55:51+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+
+[ 2019-06-21T09:55:53+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 87 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:55:56+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 86 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-06-21T09:55:58+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 85 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:56:00+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:56:02+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 85 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:56:05+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-06-21T09:56:54+08:00 ] 127.0.0.1 /index.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','15','16','82','83','84','85','86','87','88') ORDER BY id desc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.053003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T09:56:54+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T09:56:56+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-06-21T09:56:58+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0040s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2019-06-21T09:57:00+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:57:05+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 82 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:57:07+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 81 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:59:09+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:59:11+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 77 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:59:13+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 15 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:59:16+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0070s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 83 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T09:59:17+08:00 ] 127.0.0.1 /index.php?s=/Ship/shipmsg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT u.id,u.imei,u.firmid,f.firmtype FROM user u left join firm f on f.id=u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `ship` WHERE `id` = 84 LIMIT 1   [ RunTime:0.0000s ]
+
+[ 2019-06-21T11:18:03+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0010s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0080s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.033001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T11:18:03+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T11:25:44+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0400s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0050s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T11:25:44+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:49:34+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid FROM result r left join ship s on s.id=r.shipid left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) ) ORDER BY r.id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 158 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 150 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 149 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 144 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 142 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 141 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','82','83','84','85','86','87','88') ORDER BY shipname asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.057003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.058003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-06-21T13:49:35+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:49:42+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.shipid=9 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid FROM result r left join ship s on s.id=r.shipid left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.shipid=9 ) ORDER BY r.id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','82','83','84','85','86','87','88') ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.056004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.056004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:49:43+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:49:57+08:00 ] 127.0.0.1 /index.php?s=/Liquid/msg/resultid/160
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT r.*,s.shipname,u.username,s.goodsname goodname,f.firmtype as ffirmtype,e.img as eimg FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'voyage' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'start' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'objective' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'shipper' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'feedershipname' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'number' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'wharf' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'inspection' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `title` FROM `personality` WHERE `name` = 'volume' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `cabin` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`cabinname` FROM `cabin` WHERE `shipid` = 9 ORDER BY order_number asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 33  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `resultlist_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1976  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 34  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1977  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 35  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1978  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 36  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1979  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 37  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1980  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 38  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1981  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 39  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1982  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `resultlist` WHERE `resultid` = 160 AND `cabinid` = 40  [ RunTime:0.0010s ]
+SQL: SELECT * FROM `resultlist_img` WHERE `resultlist_id` = 1983  [ RunTime:0.0000s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE re.resultid = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0030s ]
+SQL: SHOW COLUMNS FROM `forntrecord` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `forntrecord` WHERE `resultid` = 160  [ RunTime:0.0360s ]
+SQL: SHOW COLUMNS FROM `fornt_img` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `fornt_img` WHERE `result_id` = 160  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001001s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8] Undefined index: hou D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\25eede387d8c1b3381825bdf9d77b0f2.php 第 322 行.
+NOTIC: [8] Undefined index: hou D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\25eede387d8c1b3381825bdf9d77b0f2.php 第 329 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.078004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.079004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2019-06-21T13:49:58+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:50:06+08:00 ] 127.0.0.1 /index.php?s=/Liquid/baobiao/resultid/160
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT r.*,s.shipname,u.username,r.qianchi,r.houchi,s.goodsname goodname,f.firmtype as ffirmtype,e.img as eimg,s.number as ship_number FROM result r left join ship s on r.shipid=s.id left join user u on r.uid = u.id left join firm f on u.firmid = f.id left join electronic_visa e on e.resultid = r.id  WHERE r.id = '160' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT f.firmtype FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: msg D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Index\Controller\LiquidController.class.php 第 601 行.
+SQL: SHOW COLUMNS FROM `resultlist` [ RunTime:0.0050s ]
+SQL: SELECT re.*,c.cabinname FROM resultlist re left join cabin c on c.id = re.cabinid  WHERE re.resultid = '160' ORDER BY re.solt asc,re.cabinid asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT u.firmid,f.firmname,f.pdf FROM user u left join firm f on f.id = u.firmid  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `electronic_visa` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `electronic_visa` WHERE `resultid` = 160 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 312 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 314 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 316 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 382 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 383 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 384 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 385 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 386 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 387 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 388 行.
+NOTIC: [8] Undefined offset: 1 D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 389 行.
+NOTIC: [8] Undefined index: thermometer D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 444 行.
+NOTIC: [8] Undefined index: dipstick D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 446 行.
+NOTIC: [8] Undefined index: thermometer D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 455 行.
+NOTIC: [8] Undefined index: dipstick D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\1c8dbce5b8564ae3e9be3a99b1e3bafd.php 第 457 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.075004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.075004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:50:06+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:50:42+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.time >= 1559318400 and r.time <= 1561737600 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid FROM result r left join ship s on s.id=r.shipid left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.time >= 1559318400 and r.time <= 1561737600 ) ORDER BY r.id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','82','83','84','85','86','87','88') ORDER BY shipname asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0040s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.058003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.058003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:50:43+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-06-21T13:50:58+08:00 ] 127.0.0.1 /index.php?s=/Liquid/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`operation_jur`,`search_jur`,`look_other`,`firmid` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.shipid=9 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid FROM result r left join ship s on s.id=r.shipid left join user u on u.id=r.uid left join firm f on f.id = u.firmid  WHERE (  r.shipid in (6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,84,85,86,87,88) and r.shipid=9 ) ORDER BY r.id desc LIMIT 0,20   [ RunTime:0.0010s ]
+SQL: SELECT f.firmtype,f.id FROM user u left join firm f on u.firmid = f.id  WHERE u.id = '9' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `id` IN ('6','7','8','9','10','11','12','13','14','75','76','77','78','79','81','82','83','84','85','86','87','88') ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 2 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 3 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 5 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 13 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`name`,`title` FROM `personality` WHERE `id` = 14 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 321 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\ce40b93892307c896270bd2617f9479c.php 第 322 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.058003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.058003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-06-21T13:50:58+08:00 ] 127.0.0.1 /shipPlatform/Upload/firm/2019-01-30/5c51002695569.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+

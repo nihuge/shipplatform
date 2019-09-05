@@ -1,0 +1,53 @@
+[ 2019-08-28T14:47:45+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::editData() should be compatible with Common\Model\BaseModel::editData($map, $data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+NOTIC: [2048] Declaration of Common\Model\ArticleModel::deleteData() should be compatible with Common\Model\BaseModel::deleteData($map) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticleModel.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `article` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `article` WHERE `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `article` WHERE `is_show` = 1 ORDER BY addtime desc LIMIT 0,9   [ RunTime:0.0000s ]
+NOTIC: [2048] Declaration of Common\Model\ArticlePicModel::addData() should be compatible with Common\Model\BaseModel::addData($data) D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Common\Model\ArticlePicModel.class.php 第 45 行.
+SQL: SHOW COLUMNS FROM `article_pic` [ RunTime:0.0060s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 2 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 4 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `path` FROM `article_pic` WHERE `aid` = 3 ORDER BY ap_id asc LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 93 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 113 行.
+NOTIC: [8] Undefined index: user_info D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Index\00f10dc46754799bb45e9739e17464f3.php 第 117 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.091005s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.091005s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.009001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.009001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-28T14:47:46+08:00 ] 127.0.0.1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-28T17:29:08+08:00 ] 127.0.0.1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-28T18:58:40+08:00 ] 127.0.0.1 /undefinedcss/modules/laydate/default/laydate.css?v=5.0.9
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载控制器:Undefinedcss
+

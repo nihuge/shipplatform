@@ -1,0 +1,142 @@
+<extend name="Public:base" />
+<block name="title">人员管理</block>
+<block name="crumbs"><a>人员管理</a>&nbsp;>&nbsp;<a>人员列表</a></block>
+<block name="content">
+    <div style="height:40px;line-height: 40px;">
+        <a href="javascript:;" onclick="add('{$data[0]['firmid']}')">
+            <div style="float:right;margin-right:40px;background-color: #3ca0fe;color:white;padding:0px 5px;margin:5px;width:80px;text-align:center">
+                新增人员
+            </div>
+        </a>
+    </div>
+    <table class="biaoge">
+        <tr class="th">
+            <th>账号</th>
+            <th>用户名</th>
+            <th>联系电话</th>
+            <th>所属公司</th>
+            <th>重置密码</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        <volist name="data" id="v">
+            <tr class="td">
+                <td>{$v['title']}</td>
+                <td>{$v['username']}</td>
+                <td>{$v['phone']}</td>
+                <td>{$v['firmname']}</td>
+                <td><a href="javascript:;" onclick="resetpwd('{$v['id']}')" style="color:red;">重置密码</a></td>
+                <if condition="$v['status'] == 2">
+                    <td><a href="javascript:;" onclick="changestatus('{$v['id']}','1')" style="color:red">解除冻结</a></td>
+                    <else/>
+                    <td><a href="javascript:;" onclick="changestatus('{$v['id']}','2')" style="color:black">冻结用户</a></td>
+                </if>
+                <td>
+                    <a href="javascript:;" id="del" onclick="edit('{$v['id']}','{$v['firmid']}')">修改</a>
+                    <a href="javascript:;" id="edit"  onclick="configSearch('{$v['id']}')">分配查询权限</a>
+                </td>
+            </tr>
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=7 class="pages">{$page}</td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+    /*增加*/
+    function add(firmid) {
+        var url = "__CONTROLLER__/add/firmid/"+firmid;
+        layer.open({
+            title: '新增人员',
+            type: 2,
+            area: ['840px', '650px'],
+            skin: 'layui-layer-rim', //加上边框
+            content: [url, 'yes'],
+            end: function() {
+                location.reload();
+            }
+        });
+    }
+
+    /*编辑*/
+    function edit(id,firmid) {
+        var url = "{:U('User/edit/id/" + id + "/firmid/"+firmid+"')}";
+        layer.open({
+            title: '修改人员',
+            type: 2,
+            area: ['840px', '550px'],
+            skin: 'layui-layer-rim', //加上边框
+            content: [url, 'yes'],
+            end: function() {
+                location.reload();
+            }
+        });
+    }
+
+    /*分配查询权限*/
+    function configSearch(id) {
+        var url = "{:U('User/configSearch/id/" + id + "')}";
+        layer.open({
+            title: '分配查询权限',
+            type: 2,
+            area: ['840px', '550px'],
+            skin: 'layui-layer-rim', //加上边框
+            content: [url, 'yes'],
+            end: function() {
+                location.reload();
+            }
+        });
+    }
+    //重置密码
+    function resetpwd(id) {
+        layer.confirm('您确定要重置密码吗？', {
+            btn: ['确定', '取消'] //按钮
+        }, function() {
+            $.ajax({
+                url: "__CONTROLLER__/resetpwd",
+                type: "POST",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.state == 1) {
+                        //刷新
+                        location.reload();
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5
+                        });
+                    }
+                }
+            });
+        })
+    }
+
+    //修改状态
+    function changestatus(id, status) {
+        layer.confirm('您确定要修改状态吗？', {
+            btn: ['确定', '取消'] //按钮
+        }, function() {
+            $.ajax({
+                url: "__CONTROLLER__/changestatus",
+                type: "POST",
+                data: {
+                    "id": id,
+                    "status": status
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.state == 1) {
+                        //刷新
+                        location.reload();
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5
+                        });
+                    }
+                }
+            });
+        })
+    }
+    </script>
+</block>

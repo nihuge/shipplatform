@@ -1,0 +1,38 @@
+<extend name="Public:base" />
+<block name="title">用户组管理</block>
+<block name="navtitle">
+	<li class="active">
+        权限控制
+    </li>
+    <li class="active">
+        用户组管理
+    </li>
+    <li class="active">
+        角色用户列表
+    </li>
+</block>
+<block name="activeopen1">class="active open"</block>
+<block name="active3">class="active"</block>
+<block name="content">
+	<div class="page-container">
+        <h4></h4>
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+			<thead>
+			<tr>
+                <th>ID</th>
+                <th>账号</th>
+                <th>用户名</th>
+				<th>电话</th>
+			</tr>
+			</thead>
+			<volist name="data" id="v" empty='没有数据'>
+				<tr>
+                    <td>{$v['id']}</td>
+                    <td>{$v['title']}</td>
+                    <td>{$v['name']}</td>
+					<td>{$v['phone']}</td>
+				</tr>
+			</volist>
+		</table>
+	</div>
+</block>

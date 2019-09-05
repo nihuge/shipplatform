@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #999;
+}
+
+.cen {
+    margin: 50px auto;
+    width: 710px;
+    background-color: white;
+}
+
+.kuan {
+    border: 0px solid red;
+    padding: 30px 36px;
+    /*height: 470px;*/
+    margin: auto auto;
+}
+
+.xin {
+    border: 1px solid #999;
+    width: 290px;
+    height: 45px;
+    display: inline-block;
+    float: left;
+    margin: 7px 12px;
+    line-height: 40px;
+    background-color: #f8fbff;
+    vertical-align: middle;
+}
+
+.changepwd {
+    border: 1px solid #999;
+    width: 275px;
+    height: 45px;
+    display: inline-block;
+    /*float: left;*/
+    margin: 7px auto;
+    line-height: 40px;
+    background-color: #f8fbff
+}
+
+.tijiao {
+    text-align: center;
+    height: 40px;
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    font-family: "方正兰亭黑简";
+    clear: both;
+    position: relative;
+    top: 20px;
+}
+
+.input2 {
+    background-color: #3ca0fe;
+    height: 40px;
+    line-height: 40px;
+    width: 120px;
+}
+
+.xinleft {
+    width: 112px;
+    text-align: left;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.xinright {
+    display: inline-block;
+    height: 99.9%;
+    /*vertical-align: middle;*/
+    line-height: 99.9%;
+}
+
+.input1 {
+    border: 0px;
+    background-color: #f8fbff;
+    height: 90%;
+    width: 154px;
+}
+
+.select1 {
+    background-color: #f8fbff;
+    height: 99%;
+    width: 154px;
+    font-size: 15px;
+    margin: auto auto;
+    border: 0px;
+}
+
+.wen {
+    display: inline-block;
+    vertical-align: middle;
+    vertical-align: middle;
+}
+
+.wenimg {
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+}
+
+.div1 {
+    margin-right: 40px;
+    background-color: #3ca0fe;
+    color: white;
+    width: 90px;
+    vertical-align: middle;
+    height: 35px;
+    line-height: 35px;
+    margin: 0px auto；
+}

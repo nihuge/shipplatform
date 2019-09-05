@@ -1,0 +1,39 @@
+<extend name="Public:base" />
+<block name='navhover5'>dropbtnhover</block>
+<block name='title'>液货舱系统</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <div  style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            管理员设置>消费记录
+        </div>
+    </div>
+    <div class='xia'>
+        <table id="customers">
+            <tr>
+                <th>单号</th>
+                <th>操作人</th>
+                <th>操作时间</th>
+                <th>船名</th>
+                <th>作业航次</th>
+                <th>扣费金额</th>
+                <th>公司余额</th>
+            </tr>
+            <volist name="data" id="v">
+            <tr style="color:{$v['colors']}">
+                <td>{$v['number']}</td>
+                <td>{$v['username']}</td>
+                <td>{$v['time']|date="Y-m-d",###}</td>
+                <td>{$v['shipname']}</td>
+                <td>{$v['voyage']}</td>
+                <td>{$v['servicemoney']}</td>
+                <td>{$v['balance']}</td>
+            </tr>   
+            </volist>
+            <tr style="background-color: #fff;">
+                <td colspan="7" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+
+</block>

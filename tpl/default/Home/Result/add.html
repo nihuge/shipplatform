@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit.css" />
+    <script type="text/javascript" src="__ADMIN_JS__/jquery-1.9.1.min.js"></script>
+ 	<script src="__PUBLIC__/layer/layer.js"></script>
+</head>
+
+<body>
+    <div id="wrap" >
+		<div class="cen">
+			<div class="kuan">
+				<form action="__ACTION__" method="post" id='form'>
+					<div class="xin">
+						<div class="xinleft">
+							&nbsp;船&nbsp;&nbsp;名<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<select class="select1" name="shipid" required>
+								<option value="">---选择船舶---</option>
+								<volist name="shiplist" id="v">
+									<option value="{$v['id']}">{$v['shipname']}</option>
+								</volist>
+							</select>
+						</div>
+					</div>
+					<foreach name="personalitylist" item="v">
+					<div class="xin">
+						<div class="xinleft">
+							&nbsp;{$v.title}<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="{$v.name}" class="input1" required maxlength="20">
+						</div>
+					</div>						
+					</foreach>
+
+					<div class="tijiao">
+						<!-- <a href="javascript:;" onclick="ti()">
+		                    <div class="div1">
+		                    提&nbsp;&nbsp;交
+		                   </div>
+		                </a> -->
+		                <input type="submit" class="div1" id="submit" value="提&nbsp;&nbsp;交" style="border:none;display:block;background-color:#DDDDDD" disabled="disabled"/>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+    $("select[name=shipid]").change(function () {
+        var id = $("select[name=shipid]").val();
+ 		var r;
+		var msg;
+ 		$.ajax({
+            url:"{:U('Result/judge_time')}",
+            data:'shipid='+id,
+            type:'post',
+            async:false,
+            dataType:'json',
+            success:function(res){
+            	console.log(res.code);
+                if (res.code == '1') {
+                	$('#submit').attr("disabled",false);
+                	var sub = $('#submit')
+                	$('#submit').css('background-color','#3ca0fe');
+                }else{
+                	msg = res.msg;
+                	layer.msg(msg, {icon: 5});
+                	$('#submit').attr("disabled",true);
+                	$('#submit').css('background-color','#DDDDDD');
+                	$("select[name=shipid]").val("")
+                }
+            }
+        });
+	});
+</script>
+</html>

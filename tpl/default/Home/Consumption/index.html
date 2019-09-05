@@ -1,0 +1,32 @@
+<extend name="Public:base" />
+<block name="title">消费记录</block>
+<block name="crumbs"><a>消费记录</a>&nbsp;>&nbsp;<a>记录列表</a></block>   
+<block name="content">
+    <table class="biaoge">
+        <tr class="th">
+            <th>单号</th>
+            <th>所属公司</th>
+            <th>操作人</th>
+            <th>操作时间</th>
+            <th>合同编号</th>
+            <th>扣除金额</th>
+            <th>余额</th>
+            <th>作业航次</th>
+        </tr>
+        <volist name="data" id="v">
+            <tr  class="td">
+                <td>{$v['number']}</td>
+                <td>{$v['firmname']}</td>
+                <td>{$v['username']}</td>
+                <td>{$v['time']|date="Y-m-d",###}</td>
+                <td>{$v['contractnumber']}</td>
+                <td>{$v['servicemoney']}</td>
+                <td>{$v['balance']}</td>
+                <td>{$v['voyage']}</td>
+            </tr>
+        </volist>
+        <tr style="height:50px;">
+            <td colspan=8  class="pages">{$page}</td>
+        </tr>
+    </table>
+</block>

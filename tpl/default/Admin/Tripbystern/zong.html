@@ -1,0 +1,52 @@
+<extend name="Public:base" />
+<block name="title">纵倾表管理</block>
+<block name="navtitle">
+	<li class="active">
+        纵倾表管理
+    </li>
+    <li class="active">
+        {$name}
+    </li>
+    <li class="active">
+        {$cname}
+    </li>
+</block>
+<block name="active7">class="active"</block>
+<block name="content">
+	<div class="page-container">
+        <h4></h4>
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>实高</th>
+				<th>空高</th>
+				<volist name="r" id="v">
+					<th>纵倾值{$v}/m</th>
+				</volist>
+				<th>舱名</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<volist name="data" id="v">
+				<tr align='center'>
+					<td>{$v['sounding']}</td>
+					<td>{$v['ullage']}</td>
+					<td>{$v['tripbystern1']}</td>
+					<td>{$v['tripbystern2']}</td>
+					<td>{$v['tripbystern3']}</td>
+					<td>{$v['tripbystern4']}</td>
+					<td>{$v['tripbystern5']}</td>
+					<td>{$v['tripbystern6']}</td>
+					<td>{$v['tripbystern7']}</td>
+					<td>{$v['cabinname']}</td>
+					<td>
+                        <a href="{:U('Tripbystern/edit',array('id'=>$v['id'],'tname'=>$tname))}">修改</a>
+                    </td>
+				</tr>
+			</volist>
+			<tr>
+				<td colspan=11 class="pages">{$page}</td>
+			</tr>
+		</table>
+	</div>
+</block>

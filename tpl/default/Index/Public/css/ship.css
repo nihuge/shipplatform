@@ -1,0 +1,402 @@
+@charset "utf-8";
+hr{
+	border: 1px solid #bdede4;
+	display: inline-block;
+}
+
+.hr{
+    border: 1px solid #6889ff;
+    display: inline-block;
+}
+
+.addbut{
+	width: 160px;
+	height: 40px;
+	background-color: #00c09d;
+	color: #ffffff;
+	cursor: pointer;
+	margin: 10px 10px;
+}
+
+/*人员新增按钮*/
+.addbut1{
+    width: 160px;
+    height: 40px;
+    background-color: #6889ff;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 10px 10px;
+}
+
+/*新增*/
+.editMask5 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+
+.editMask5 .editBox1 {
+    position: absolute;
+    width: 630px;
+    height: 600px;
+    background: #FFF;
+    left: 45%;
+    top: 35%;
+    margin-left: -225px;
+    margin-top: -165px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    overflow: hidden;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -ms-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.editMask5.is-visible3 {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    filter: alpha(opacity=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=1);
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.editMask5.is-visible3 .editBox1 {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+
+/*修改*/
+.editMask6 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+
+.editMask6 .editBox1 {
+    position: absolute;
+    width: 630px;
+    height: 600px;
+    background: #FFF;
+    left: 45%;
+    top: 35%;
+    margin-left: -225px;
+    margin-top: -165px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    overflow: hidden;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -ms-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.editMask6.is-visible3 {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    filter: alpha(opacity=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=1);
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.editMask6.is-visible3 .editBox1 {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+
+/*弹窗表单样式*/
+.editBox1 .bar{
+	float: left;
+    width: 100%;
+    color: #333333;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+}
+.bar1{
+	height: 40px;
+    line-height: 40px;
+	width: 590px;
+	float: left;
+	background-color: #6889ff;
+	text-align: center;
+	margin: 0px 20px;
+	font-size: 16px;
+	color: #ffffff;
+}
+.editBox1 ul.pass {
+    float: left;
+    width: 590px;
+    margin: 10px 20px;
+    /*height: 325px;*/
+    overflow-y:auto
+}
+
+.editBox1 ul.pass li {
+    float: left;
+    width: 275px;
+    margin: 0px 10px;
+    list-style: none;
+}
+
+.editBox1 ul.pass li label {
+    /*float: left;*/
+    height: 40px;
+    line-height: 40px;
+    width: 100px;
+    text-align: right;
+    /*padding-right: 5px;*/
+}
+
+.editBox1 ul.pass li p {
+    /*float: left;*/
+    width: 275px;
+}
+
+.editBox1 ul.pass li input.i-box {
+    float: left;
+    width: 210px;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #f2f9ff;
+    padding:0px 10px;
+}
+.editBox1 ul.pass li img{
+    float: left;	
+    height: 25px;
+    margin: 8.5px 10px;
+}
+.editBox1 ul.pass li .radios {
+    float: left;
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #f2f9ff;
+}
+
+.editBox1 ul.pass li p select{
+	float: left;	
+    width: 230px;
+    height: 40px;
+    padding:5px;
+    /* 清除默认的箭头样式 */
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /* 右侧添加小箭头的背景图 */
+    background: url('../image/select_arrow.png') 210px center no-repeat;
+    background-color: #f2f9ff;
+    background-size: 12px;
+}
+
+/*人员新增---权限选择*/
+
+.editBox1 ul.pass1 {
+    float: left;
+    width: 590px;
+    margin: 10px 20px;
+    height: 150px;
+    overflow-y:auto
+}
+.editBox1 ul.pass1 li {
+    float: left;
+    width: 170px;
+    margin: 5px 10px;
+    list-style: none;
+}
+.editBox1 ul.pass1 li p {
+    width: 170px;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #f2f9ff;
+}
+
+/*新建舱*/
+.editMask7 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+
+.editMask7 .editBox1 {
+    position: absolute;
+    width: 630px;
+    height: 650px;
+    background: #FFF;
+    left: 45%;
+    top: 25%;
+    margin-left: -225px;
+    margin-top: -165px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    overflow: hidden;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -ms-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.editMask7.is-visible3 {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    filter: alpha(opacity=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=1);
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.editMask7.is-visible3 .editBox1 {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+
+/*分配查询权限*/
+.bar2{
+    width: 627px;
+    float: left;
+    height: 500px;
+    overflow-y:auto
+}
+.editBox1 ul.pass22 {
+    float: left;
+    width: 590px;
+    margin: 10px 20px;
+    /*height: 150px;*/
+}
+.editBox1 ul.pass22 li {
+    float: left;
+    width: 170px;
+    margin: 5px 10px;
+    list-style: none;
+}
+.editBox1 ul.pass22 li p {
+    width: 170px;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #f2f9ff;
+}

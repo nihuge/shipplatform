@@ -1,0 +1,61 @@
+.waikuan{border:1px solid black;margin:5px 5px 20px;background-color: #f5faff;height:100px;}
+.xin1 {
+    border: 1px solid #999;
+    width: 185px;
+    height: 35px;
+    display: inline-block;
+    float: left;
+    margin: 7px 13px;
+    line-height: 35px;
+    background-color: #f8fbff
+}
+
+.tijiao {
+    text-align: center;
+    height: 40px;
+    width: 90px;
+    color: #fff;
+    font-size: 16px;
+    font-family: "方正兰亭黑简";
+    display:inline-block;
+    float: left;
+    margin: 7px 16px;
+}
+
+.input2 {
+    background-color: #3ca0fe;
+    height: 35px;
+    line-height: 35px;
+    width: 90px;
+}
+
+.xinleft {
+    width: 75px;
+    text-align: left;
+    height: 100%;
+    display: inline-block;
+    font-size: 13px
+}
+
+.xinright {
+    display: inline-block;
+    height: 99%;
+    line-height: 99%;
+
+}
+
+.input1 {
+    border: 0px;
+    background-color: #f8fbff;
+    height: 90%;
+    width: 100px;
+}
+
+.select1 {
+    background-color: #f8fbff;
+    height: 35px;
+    width: 100px;
+    font-size: 14px;
+    margin: auto auto;
+    /*border: 0px;*/
+}

@@ -1,0 +1,1375 @@
+[ 2019-08-19T10:10:31+08:00 ] 127.0.0.1 /admin.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:10:32+08:00 ] 127.0.0.1 /admin.php?s=/Login/login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.066004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.066004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:10:32+08:00 ] 127.0.0.1 /admin.php?s=/Login/show_verify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:10:38+08:00 ] 127.0.0.1 /admin.php?s=/Login/login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0170s ]
+SQL: SELECT `id`,`status` FROM `admin` WHERE `title` = 'admin' AND `pwd` = 'efc54d7173925bd1c25f053511c18cb8' LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:10:40+08:00 ] 127.0.0.1 /admin.php?s=/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0070s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.045002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.045002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:10:43+08:00 ] 127.0.0.1 /admin.php?s=/Search/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM result r left join ship s on s.id = r.shipid left join consumption c on r.id = c.resultid  WHERE ( 1 and r . del_sign < 2 ) LIMIT 1   [ RunTime:0.0370s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\SearchController.class.php 第 60 行.
+SQL: SELECT r.id,r.personality,r.weight,r.del_sign,s.shipname,f.firmname FROM result r left join ship s on s.id = r.shipid left join consumption c on r.id = c.resultid left join firm f on f.id = c.firmid  WHERE ( 1 and r . del_sign < 2 ) ORDER BY r.id desc LIMIT 0,30   [ RunTime:0.0150s ]
+SQL: SELECT `id`,`shipname` FROM `ship` ORDER BY shipname asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` ORDER BY id asc  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+NOTIC: [8] Undefined index: locationname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 445 行.
+NOTIC: [8] Undefined index: goodsname D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 446 行.
+NOTIC: [8] Undefined index: transport D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\83a3223de170cb42b16d1a8d13d233e1.php 第 447 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.046002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.046002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:10:48+08:00 ] 127.0.0.1 /admin.php?s=/User/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 23 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001001s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.053003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.053003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:10:51+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.072004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.072004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:10:52+08:00 ] 127.0.0.1 /admin.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0060s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0060s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = 1 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = 1 ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.075004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.075004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.008001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.008001s ]
+
+[ 2019-08-19T10:10:56+08:00 ] 127.0.0.1 /admin.php?s=/Ship/del_ship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0040s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 102 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship` SET `del_sign`='2' WHERE `id` = 102 AND `del_sign` = 1 [ RunTime:0.0350s ]
+
+[ 2019-08-19T10:10:56+08:00 ] 127.0.0.1 /admin.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = 1 ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.063004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.063004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:11:14+08:00 ] 127.0.0.1 /admin.php?s=/Ship/del_ship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 101 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `ship` SET `del_sign`='2' WHERE `id` = 101 AND `del_sign` = 1 [ RunTime:0.0240s ]
+
+[ 2019-08-19T10:11:14+08:00 ] 127.0.0.1 /admin.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = 1 ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.063003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.063003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:11:31+08:00 ] 127.0.0.1 /admin.php?s=/Ship/del_ship
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `result` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `result` WHERE `shipid` = 94 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship` SET `del_sign`='2' WHERE `id` = 94 AND `del_sign` = 1 [ RunTime:0.0250s ]
+
+[ 2019-08-19T10:11:31+08:00 ] 127.0.0.1 /admin.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0060s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = 1 ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.063004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.063004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:12:29+08:00 ] 127.0.0.1 /admin.php?c=Ship&a=index&firmid=&shipname=&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = '2' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = '2' ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.042003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.043003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:12:32+08:00 ] 127.0.0.1 /admin.php?s=/Ship/recoverShip
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmid` FROM `ship` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `id` = 6 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship` SET `del_sign`='1' WHERE `id` = 102 AND `del_sign` = 2 [ RunTime:0.0340s ]
+
+[ 2019-08-19T10:12:32+08:00 ] 127.0.0.1 /admin.php?c=Ship&a=index&firmid=&shipname=&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0060s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0060s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = '2' LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = '2' ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0080s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.050003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.051003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:12:34+08:00 ] 127.0.0.1 /admin.php?s=/Ship/recoverShip
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `ship` LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `id` = 6 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship` SET `del_sign`='1' WHERE `id` = 101 AND `del_sign` = 2 [ RunTime:0.0300s ]
+
+[ 2019-08-19T10:12:34+08:00 ] 127.0.0.1 /admin.php?c=Ship&a=index&firmid=&shipname=&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = '2' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = '2' ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.040002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:12:36+08:00 ] 127.0.0.1 /admin.php?s=/Ship/recoverShip
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `firmid` FROM `ship` LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `id` = 6 AND `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `ship` SET `del_sign`='1' WHERE `id` = 94 AND `del_sign` = 2 [ RunTime:0.0250s ]
+
+[ 2019-08-19T10:12:36+08:00 ] 127.0.0.1 /admin.php?c=Ship&a=index&firmid=&shipname=&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = '2' LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = '2' ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.039002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:12:42+08:00 ] 127.0.0.1 /admin.php?s=/User/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 23 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.053003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.053003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:12:55+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.054003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.054003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:04+08:00 ] 127.0.0.1 /admin.php?s=/Firm/configOperator/id/21/firmtype/1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0060s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0060s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2 AND `del_sign` = 1 ORDER BY id asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 6 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 20 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 22 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 23 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 24 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 25 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 26 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 27 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname`,`operation_jur`,`search_jur`,`firm_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.042002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:12+08:00 ] 127.0.0.1 /admin.php?s=/Firm/configOperator
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `limit`,`search_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `firm` SET `id`='21',`firm_jur`='6,20,22,23,24,25,26,27',`operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,84,85' WHERE `id` = 21 [ RunTime:0.0300s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT `id` FROM `user` WHERE `firmid` = '21' AND `pid` = 0 LIMIT 1   [ RunTime:0.0010s ]
+SQL: UPDATE `user` SET `operation_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,84,85' WHERE `id` = 9 [ RunTime:0.0160s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:13+08:00 ] 127.0.0.1 /admin.php?s=/User/index/firmid/21
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) AND `firmid` = '21' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) AND `firmid` = '21' ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.041002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:13+08:00 ] 127.0.0.1 /admin.php?s=/User/index/firmid/21
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) AND `firmid` = '21' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) AND `firmid` = '21' ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.041003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:18+08:00 ] 127.0.0.1 /admin.php?s=/User/configSearch/id/9
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0040s ]
+SQL: SELECT `id`,`search_jur`,`look_other` FROM `user` WHERE `id` = 9 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` ORDER BY id asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 6  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 7  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 20  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 21  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 22  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 23  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 24  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 25  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 26  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 27  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 28  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: value D:\phpStudy\PHPTutorial\WWW\shipplatform2\Runtime\Cache\Admin\e63ebb79c154daeece0f5f456da7abde.php 第 431 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.054003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:27+08:00 ] 127.0.0.1 /admin.php?s=/User/configSearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: UPDATE `user` SET `look_other`='2',`search_jur`='6,7,8,9,10,11,12,13,14,75,76,77,78,79,81,15,16,82,83,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,84,85' WHERE `id` = 9 [ RunTime:0.0280s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:13:28+08:00 ] 127.0.0.1 /admin.php?s=/User/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 23 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.057003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.057003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:31+08:00 ] 127.0.0.1 /admin.php?s=/User/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0060s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0060s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `user` WHERE (  1 ) LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\UserController.class.php 第 27 行.
+SQL: SELECT * FROM `user` WHERE (  1 ) ORDER BY id is null,id LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 7 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 20 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 23 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `firmname` FROM `firm` WHERE `id` = 24 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001001s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.067004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.068004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:33+08:00 ] 127.0.0.1 /admin.php?s=/Ship/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM ship s WHERE (  1 ) AND s.del_sign = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\ShipController.class.php 第 44 行.
+SQL: SELECT s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign FROM ship s left join firm f on f.id=s.firmid  WHERE (  1 ) AND s.del_sign = 1 ORDER BY s.id desc,f.firmname desc LIMIT 0,30   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.070004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.070004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:13:36+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.054003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.054003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:39+08:00 ] 127.0.0.1 /admin.php?s=/Firm/addpersonality/id/21
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `personality` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `personality`  [ RunTime:0.0010s ]
+SQL: SELECT `personality` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.056003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.057003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002001s ]
+
+[ 2019-08-19T10:13:41+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.055003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:13:45+08:00 ] 127.0.0.1 /admin.php?s=/Firm/edit/id/21
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.103006s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.104006s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:13:47+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.056003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.056003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:13:49+08:00 ] 127.0.0.1 /admin.php?s=/Firm/configOperator/id/21/firmtype/1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SHOW COLUMNS FROM `ship` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`firmname` FROM `firm` WHERE `firmtype` = 2 AND `del_sign` = 1 ORDER BY id asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 6 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 20 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 22 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 23 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 24 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 25 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 26 AND `del_sign` = 1  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`shipname` FROM `ship` WHERE `firmid` = 27 AND `del_sign` = 1  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`firmname`,`operation_jur`,`search_jur`,`firm_jur` FROM `firm` WHERE `id` = 21 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.035002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.035002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:13:51+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0070s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.057003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.057003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:14:01+08:00 ] 127.0.0.1 /admin.php?c=Firm&a=index&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0060s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 2 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 2 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.046003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.046003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2019-08-19T10:14:03+08:00 ] 127.0.0.1 /admin.php?s=/Firm/recoverFirm
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0040s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0040s ]
+SQL: UPDATE `firm` SET `del_sign`='1' WHERE `id` = 28 AND `del_sign` = 2 [ RunTime:0.0230s ]
+
+[ 2019-08-19T10:14:03+08:00 ] 127.0.0.1 /admin.php?c=Firm&a=index&del_sign=2
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0040s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 2 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 2 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.038002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.038002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2019-08-19T10:14:05+08:00 ] 127.0.0.1 /admin.php?s=/Firm/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `auth_group_access` [ RunTime:0.0050s ]
+SQL: SELECT `uid`,`group_id`,`title`,`rules` FROM auth_group_access a INNER JOIN auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' )  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `auth_rule` [ RunTime:0.0050s ]
+SQL: SELECT `condition`,`name` FROM `auth_rule` WHERE `id` IN ('1','7','8','9','10','24','17','18','19','20','21','22','25','26','27','28','29','30','31','81','32','34','33','35','36','37','38','93','94','95','39','40','41','42','43','44','45','82','46','47','48','49','80','90','91','92','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','87','88','89','74','75','76','77','78','79') AND `type` = 1 AND `status` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `admin` [ RunTime:0.0050s ]
+SQL: SELECT a.name,a.id,g.group_id FROM admin a left join auth_group_access as g on a.id=g.uid  WHERE a.id = '1' LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `firm` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `firm` WHERE `del_sign` = 1 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: p D:\phpStudy\PHPTutorial\WWW\shipplatform2\Ship\Admin\Controller\FirmController.class.php 第 32 行.
+SQL: SELECT * FROM `firm` WHERE `del_sign` = 1 ORDER BY id asc LIMIT 0,30   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.056003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.056003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

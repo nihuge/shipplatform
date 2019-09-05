@@ -1,0 +1,75 @@
+<extend name="Public:base" />
+<block name="title">船舱管理</block>
+<block name="navtitle">
+	<li class="active">
+        船舱管理
+    </li>
+    <li class="active">
+        船舱修改
+    </li>
+</block>
+<block name="active7">class="active"</block>
+<block name="content">
+	<div class="page-container">
+		<table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+            <form action="__ACTION__" method="post">
+            <input type="hidden" name="id" value="{$msg['id']}">
+            <tr>
+                <td>所属船</td>
+                <td>
+                    <select class=" col-xs-10 col-sm-5" id="form-field-select-1" name="shipid" required>
+                        <volist name="shiplist" id="v">
+                            <option value="{$v['id']}" 
+                            <if condition="$msg['shipid'] == $v['id']">
+                                selected
+                            </if>
+                             >{$v['shipname']}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">舱名</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['cabinname']}" name="cabinname" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">容量表基准高度(H)</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['altitudeheight']}" name="altitudeheight" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">底量表基准高度(H)</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" value="{$msg['dialtitudeheight']}" name="dialtitudeheight" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">容量表底量(D)</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['bottom_volume']}" name="bottom_volume" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">底量表底量(D)</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" value="{$msg['bottom_volume_di']}" name="bottom_volume_di" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">管线容量</td>
+                <td>
+                    <input type="text" id="form-field-1" class="col-xs-15 col-sm-5" required value="{$msg['pipe_line']}" name="pipe_line" maxlength="5"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2 style="text-align: center;">
+                    <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                </td>
+            </tr>
+            </form>
+		</table>
+	</div>
+</block>

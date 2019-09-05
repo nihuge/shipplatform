@@ -1,0 +1,83 @@
+@charset "utf-8";
+/*面包屑*/
+
+.shang{
+    padding: 6px 30px;
+}
+
+.nav{
+    margin-top: 14px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    color: #666666;
+}
+/*完善公司信息*/
+.firm{
+	width: 500px;
+    height: 100%;
+    margin: 25px 350px 40px;
+}
+
+table{
+	width:500px;
+	margin:auto auto;
+	text-align: center;
+	cellspacing:0;font-size: 16px;
+	cellpadding:0;
+}
+table tr{
+	height: 60px;
+	line-height: 60px;
+}
+
+table td{
+	font-size: 16px;
+    color: #666666;
+}
+
+table input{
+	float: left;
+    width: 376px;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 0 10px;
+    background-color: #f2f9ff;
+    /*border: 1px solid #666666;*/
+}
+table textarea{
+    color: #666;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 0 10px;
+    background-color: #f2f9ff;
+    border: 0;
+    line-height: 40px;
+    resize:none
+}
+table select{
+    width: 396px;
+    height: 44px;
+    padding: 0px 10px;
+    /* 清除默认的箭头样式 */
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /* 右侧添加小箭头的背景图 */
+    background: url('../image/select_arrow.png') 340px center no-repeat;
+    background-color: #f2f9ff;
+    background-size: 12px;
+}
+
+table .btn-primary{
+	width: 160px;
+	height: 40px;
+	background-color: #3f7fda;
+	color: #ffffff;
+	cursor: pointer;
+	margin: auto 169px;
+}

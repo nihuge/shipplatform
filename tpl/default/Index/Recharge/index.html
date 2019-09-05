@@ -1,0 +1,50 @@
+<extend name="Public:base" />
+<block name='navhover5'>dropbtnhover</block>
+<block name='title'>液货舱系统</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <div  style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            管理员设置>充值记录
+        </div>
+    </div>
+    <div class='xia'>
+        <table id="customers">
+            <tr>
+                <th>充值单号</th>
+                <!-- <th>所属公司</th> -->
+                <th>操作时间</th>
+                <th>充值金额</th>
+                <th>充值前余额</th>
+                <th>充值方式</th>
+                <th>充值状态</th>
+                <th>操作人</th>
+                <th>备注</th>
+            </tr>
+            <volist name="data" id="v">
+            <tr style="color:{$v['colors']}">
+                 <td>{$v['number']}</td>
+                <td>{$v['time']|date="Y-m-d",###}</td>
+                <td>{$v['money']}</td>
+                <td>{$v['balance']}</td>
+                <td>{$v['channel']}</td>
+                <td>
+                <if condition="$v['status'] == '1'">
+                    成功
+                <elseif condition="$v['status'] == '2'"/>
+                    失败
+                <elseif condition="$v['status'] == '3'"/>
+                    未支付
+                </if>
+                </td>
+                <td>{$v['username']}</td>
+                <td>{$v['remark']}</td>
+            </tr>   
+            </volist>
+            <tr style="background-color: #fff;">
+                <td colspan="9" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+
+</block>

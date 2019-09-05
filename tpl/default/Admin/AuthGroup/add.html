@@ -1,0 +1,38 @@
+<extend name="Public:base" />
+<block name="title">用户组管理</block>
+<block name="navtitle">
+    <li class="active">
+        权限控制
+    </li>
+    <li class="active">
+        用户组管理
+    </li>
+    <li class="active">
+        新增用户组
+    </li>
+</block>
+<block name="activeopen1">class="active open"</block>
+<block name="active3">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="col-sm-12">
+            <div id="home4" class="tab-pane in active">
+                <form action="__ACTION__" method="post">
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover" style='width:500px;margin:auto auto;text-align: center;'>
+                        <tr>
+                            <td>用户组名称</td>
+                            <td>
+                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-8" name="title" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=2 style="text-align: center;">
+                                <input type="submit" name="sub" value="提交" class="btn btn-primary" >
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>

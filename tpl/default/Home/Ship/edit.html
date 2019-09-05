@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- <css file="__HOME_CSS__/addedit.css" /> -->
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home_page.css">
+    <css file="__HOME_CSS__/addedit1.css" />
+    <script type="text/javascript" src="__ADMIN_JS__/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+
+</head>
+
+<body>
+    <div id="wrap" >
+		<div class="cen">
+			<div class="kuan">
+				<form action="__ACTION__" method="post">
+					<input type="hidden" name="id" value="{$shipmsg['id']}">
+					<div style="height: 30px;line-height: 30px;text-align: center;">船舶信息</div>
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;船公司<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<select class="select1" name="firmid">
+								<volist name="list" id="v">
+									<option value="{$v['id']}"  {:($v['id']==$shipmsg['firmid']) ? 'selected' : ''}>{$v['firmname']}</option>
+								</volist>
+							</select>
+							
+						</div>
+						
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/nothing.png" class="wenimg">
+					</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;船&nbsp;&nbsp;名<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="shipname" class="input1" required value="{$shipmsg['shipname']}" maxlength="12">
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/nothing.png" class="wenimg">
+					</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;膨胀倍数<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="coefficient" class="input1"  value="{$shipmsg['coefficient']}" maxlength="3">
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/question.png" class="wenimg" onclick="b()">
+					</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;舱&nbsp;总&nbsp;数&nbsp;<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<input type="text" name="cabinnum" class="input1" required value="{$shipmsg['cabinnum']}" maxlength="2">
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/question.png" class="wenimg" onclick="a('船舶总共有多少舱')">
+					</div> 
+					<div style="height: 30px;line-height: 30px;text-align: center;">舱容表信息</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;管线容量<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<!-- <input type="text" name="transport" class="input1" required> -->
+							<label><input type="radio" name="is_guanxian" value='1'  {:('1'==$shipmsg['is_guanxian']) ? 'checked' : ''}>包含</label>
+							<label><input type="radio" name="is_guanxian" value='2'  {:('2'==$shipmsg['is_guanxian']) ? 'checked' : ''}>未包含</label>
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/question.png" class="wenimg" onclick="a('舱容表所列容积值是否包含管线容量')">
+					</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;底量测量孔<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<label><input type="radio" name="is_diliang" value='1' {:('1'==$shipmsg['is_diliang']) ? 'checked' : ''}>有</label>
+							<label><input type="radio" name="is_diliang" value='2' {:('2'==$shipmsg['is_diliang']) ? 'checked' : ''}>无</label>
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/question.png" class="wenimg" onclick="a('部分船舶每个舱有底量和装货容量两个测量孔，相应地有两本舱容表')">
+					</div> 
+					<div class="changepwd">
+						<div class="xinleft">
+							&nbsp;纵横倾修正表<span style="float: right">|</span>
+						</div>
+						<div class="xinright">
+							<select class="select1" name="suanfa">
+								<option value="a" {:('a'==$shipmsg['suanfa']) ? 'selected' : ''}>无</option>
+								<option value="b" {:('b'==$shipmsg['suanfa']) ? 'selected' : ''}>有</option>
+							</select>
+						</div>
+					</div>
+					<div class="wen">
+						<img src="__PUBLIC__/question.png" class="wenimg" onclick="a('请查阅检定证书目录确认是否有纵倾、横倾修正表')">
+					</div> 			
+					<div class="tijiao">
+						<a href="javascript:;" onclick="ti()">
+		                    <div class="div1">
+		                    提&nbsp;&nbsp;交
+		                   </div>
+		                </a>
+						<input type="submit" id="submit" value="提&nbsp;&nbsp;交" style="display: none;"/>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+    </div>
+    <div id="tong" hidden ><img src="__HOME_IMG__/tong.png" style="width: 450px;height:290px;"></div> 
+</body>
+<script type="text/javascript">
+	function a(msgs){
+		layer.msg(msgs);
+	}
+
+	function b(){
+		layer.open({
+		    type: 1,
+		    title: false,
+		    closeBtn: 0,
+		    area: '450px 300px',
+		    skin: 'layui-layer-nobg', //没有背景色
+		    shadeClose: true,
+		    content: $('#tong')
+		});
+	}
+
+	function ti(){
+        $('#submit').click();
+    }
+</script>
+</html>	

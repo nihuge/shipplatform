@@ -1,0 +1,177 @@
+<extend name="Public:base" />
+<block name='title'>查询系统</block>
+<block name='navhover3'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/search.css">
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    <div class="biaotis">
+            公司基本信息
+    </div>
+    <div class='divmsg'>
+		<div style="display: inline-block;">
+			<img src="{:($content['image'] == '') ? '__INDEX_IMAGE__/no_photo_big.png' : $content['image']}" class='img'>
+			<div class="xuanfu">
+				<img src="__INDEX_IMAGE__/erima.png" class='erweima'>
+				<p class='pp'>扫描二维码，将公司推荐给更多人!</p>
+			</div>
+		</div>
+		<div class="ziliao">
+			<p class='title'>{$content['firmname']}</p>
+			<div style="text-align: center;margin-top: 11px;">
+				<div class="evaluate1">  
+	                <div id="starts1" class='starts'></div> 
+	            </div>
+			</div>
+			
+			<div class='contents'>
+				{$content['content']}
+			</div>
+		</div>
+		<div class='xinx'>
+			<p class='pp1'>
+				公司地址
+			</p>
+			<p class='pp2'>
+				{$content['location']}
+			</p>
+		</div>
+		<div class='xinx'>
+			<p class='pp1'>
+				联系人
+			</p>
+			<p class='pp2'>
+				{$content['people']}
+			</p>
+		</div>
+		<div class='xinx'>
+			<p class='pp1'>
+				联系电话
+			</p>
+			<p class='pp2'>
+				{$content['phone']}
+			</p>
+		</div>
+		<div class='xinx'>
+			<p class='pp1'>
+				社会信用代码
+			</p>
+			<p class='pp2'>
+				{$content['shehuicode']}	<img src="__INDEX_IMAGE__/img4.png" style="vertical-align: middle;cursor: pointer;margin-left: 10px;"  onclick="getStepFile({$content['id']})">
+			</p>
+
+			<!-- 焦点相册存放位置 -->
+	        <div id='layer-photos' >
+	            
+	        </div>
+		</div>
+    </div>
+    <div class='dadiv'>
+	    <div class="biaotis">
+	        历史作业评价
+	        <p class="mor"><a href="__CONTROLLER__/morejian/firmid/{$content['id']}" class='mor1'>更多数据</a></p>
+	    </div>
+		<volist name="list" id="v">
+		<?php static $xu = 2;?>
+		<div class='xinx_1'>
+			<img src="{:empty($v['img']) ? '__INDEX_IMAGE__/no_photo_big.png' : $v['img']}" class="img">
+			<div class="divv1">
+				<div class='divv1_1'>
+					<p class="pp1">船名</p>
+					<p class="pp2">{$v['shipname']}</p>
+				</div>
+				<div class='divv1_1'>
+					<p class="pp1">类型</p>
+					<p class="pp2">{$v['type']}</p>
+				</div>
+				<div class='divv1_1'>
+					<p class="pp1">评价</p>
+					<div style="display: inline-block;">
+						<div class="evaluate1">  
+			                <div id="starts{$xu}" class='starts'></div> 
+			            </div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="divv2">
+				<p class="pp3">作业评价</p>
+				<div style="display: inline-block;padding:6px">
+					<div class="evaluate1">  
+		                <div id="starts{$xu}" class='starts'></div> 
+		            </div>
+				</div>
+			</div> -->
+		</div>
+		<?php $xu++;?>
+		</volist>
+		<div class="biaotis">
+	        历史汇总数据
+	    </div>
+	    <div class="xinx_2">
+	    	<p class="pp1">总作业次数</p>
+			<p class="pp2">{$content['num']}</p>
+	    </div>
+	    <div class="xinx_2">
+	    	<p class="pp1">总作业吨位</p>
+			<p class="pp2">{$content['weight']}</p>
+	    </div>
+	</div>
+    <!-- <div class="xinx_2">
+    	<p class="pp1">船名</p>
+		<p class="pp2"></p>
+    </div> -->
+    <script>
+    	$("#starts1").raty({ 
+    		readOnly: true, 
+    		number : 5,
+    		path : "__INDEX_IMAGE__",
+    		starOn : "star-on.png",
+    		starOff : "star-off.png",
+    		starHalf    : "star-half.png",
+    		precision: true,
+    		score:<?php echo $content['pin'];?>,
+    	});
+        <?php 
+            foreach($list as $v){
+               static $xu1 = 2;
+                echo '$("#starts'.$xu1.'").raty({ readOnly: true, number : 5,path : "__INDEX_IMAGE__",starOn : "star-on.png",starOff : "star-off.png",starHalf    : "star-half.png",precision: true,score:'.$v['grade2'].',});';
+                $xu1++;
+            }
+        ?>
+
+        // 弹出照片
+        function getStepFile(){
+            var authors= [];
+            authors.push("{$content['img']}");
+            str = '<span style="display:none">（';
+            for (var i=0;i<authors.length;i++)
+            {
+                str += '<a layer-href="'+authors[i]+'" alt="社会信用代码图片" class="" rel="gallery">';
+                if (i == 0) {
+                    str += '<span class="showphoto">照片</span>';
+                }
+                str += '</a>';
+            }
+
+            str += '）</span>';
+
+            $("#layer-photos").html(str);
+            var obj = $("#layer-photos").find('a');
+            var src = "";
+            obj.each(function(e){
+                $layer_href = $(this).attr('layer-href');
+                $alt = $(this).attr('alt');
+                // $pid = $(this).attr('pid');
+                src += '{"alt":"'+$alt+'","pid":"","src":"'+$layer_href+'","thumb":"'+$layer_href+'"}';
+                if((e+1) != obj.length){
+                    src += ',';
+                }
+            });
+            var json = '{"title":"","id":"","start":0,"data":['+src+']}';
+            json =  eval('(' + json + ')');
+            layer.photos({
+                photos: json
+               // ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            });
+        }
+    </script>
+</block>

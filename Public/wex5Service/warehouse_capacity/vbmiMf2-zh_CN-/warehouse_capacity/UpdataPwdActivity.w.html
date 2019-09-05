@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<div component="$model/UI2/system/components/justep/window/window" design="device:m;" xid="window" class="window cZRNBFb" data-bind="component:{name:'$model/UI2/system/components/justep/window/window'}" __justepbasexid__="__baseID__" __cid="cZRNBFb" components="$model/UI2/system/components/justep/loadingBar/loadingBar,$model/UI2/system/components/justep/panel/panel,$model/UI2/system/components/justep/panel/child,$model/UI2/system/components/justep/model/model,$model/UI2/system/components/justep/window/window,$model/UI2/system/components/justep/titleBar/titleBar,$model/UI2/system/components/justep/button/button,">
+  <style>.login-contents-bg.cZRNBFb{background-image: url(@justepContextPath@/warehouse_capacity/img/bg.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; width: 100%; height: 100%} .login-content-set.cZRNBFb{text-align: center; padding: 40px 20px 20px 20px} .login-div-main-bg.cZRNBFb{height: 240px; background-image: url(@justepContextPath@/warehouse_capacity/img/white_login.png); background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%; padding: 20px 0px 0px 0px; width: 100%} .login-div-input.cZRNBFb{width: 250px; height: 40px; padding: 5px 0px 0px 0px; margin: auto auto; border-style: solid solid solid solid; border-width: 1px 1px 1px 1px; border-color: rgb(230, 230, 230) rgb(230, 230, 230) rgb(230, 230, 230) rgb(230, 230, 230)} .login-div-text.cZRNBFb{font-size: 15px; border-right-style: solid; border-right-width: 1px; border-right-color: rgb(230, 230, 230); padding-right: 3px; color: rgb(34, 138, 249)} .login-div-text-input.cZRNBFb{height: 25px; margin-left: 3px; border-style: none none none none; background-color: transparent}</style>  
+  <div component="$model/UI2/system/components/justep/model/model" xid="model" style="display:none" data-bind="component:{name:'$model/UI2/system/components/justep/model/model'}" data-events="onActive:modelActive" __cid="cZRNBFb" class="cZRNBFb"></div>  
+  <div component="$model/UI2/system/components/justep/panel/panel" class="x-panel x-full login-contents-bg p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar cZRNBFb" xid="panel1" data-bind="component:{name:'$model/UI2/system/components/justep/panel/panel'}" __cid="cZRNBFb"> 
+    <div class="x-panel-top cZRNBFb" xid="top1" component="$model/UI2/system/components/justep/panel/child" data-bind="component:{name:'$model/UI2/system/components/justep/panel/child'}" __cid="cZRNBFb"> 
+      <div component="$model/UI2/system/components/justep/titleBar/titleBar" class="x-titlebar cZRNBFb" style="background-color:#d3e6fa;" data-bind="component:{name:'$model/UI2/system/components/justep/titleBar/titleBar'}" data-config="{&#34;title&#34;:&#34;修改密码&#34;}" __cid="cZRNBFb"> 
+        <div class="x-titlebar-left cZRNBFb" __cid="cZRNBFb"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-link btn-only-icon cZRNBFb" xid="backBtn" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'},event:{click:$model._callModelFn.bind($model, 'backBtnClick')}" data-events="onClick:{operation:'window.close'}" data-config="{&#34;icon&#34;:&#34;icon-chevron-left&#34;,&#34;label&#34;:&#34;&#34;}" __cid="cZRNBFb"> 
+            <i class="icon-chevron-left cZRNBFb" __cid="cZRNBFb"></i>  
+            <span __cid="cZRNBFb" class="cZRNBFb"></span> 
+          </a> 
+        </div>  
+        <div class="x-titlebar-title cZRNBFb" __cid="cZRNBFb">修改密码</div>  
+        <div class="x-titlebar-right  cZRNBFb" __cid="cZRNBFb">
+          <div class="empty cZRNBFb" __cid="cZRNBFb"></div>
+        </div> 
+      </div> 
+    </div>  
+    <div class="login-content-set cZRNBFb" xid="content1" __cid="cZRNBFb">
+      <div xid="div1" class="login-div-main-bg cZRNBFb" style="margin-top:30px;" __cid="cZRNBFb"> 
+        <div xid="div2" class="login-div-input cZRNBFb" __cid="cZRNBFb"> 
+          <label xid="label2" class="login-div-text cZRNBFb" __cid="cZRNBFb">旧 密 码</label>  
+          <input type="password" value="" xid="userPwd" placeHolder="请输入密码" class="login-div-text-input cZRNBFb" __cid="cZRNBFb">
+        </div>  
+        <div xid="div4" class="login-div-input cZRNBFb" style="margin-top:10px;" __cid="cZRNBFb"> 
+          <label xid="label1" class="login-div-text cZRNBFb" __cid="cZRNBFb">新 密 码</label>  
+          <input type="password" value="" xid="password1" placeHolder="请输入密码" class="login-div-text-input cZRNBFb" __cid="cZRNBFb">
+        </div>
+        <div xid="div5" class="login-div-input cZRNBFb" style="margin-top:10px;" __cid="cZRNBFb"> 
+          <label xid="label3" class="login-div-text cZRNBFb" __cid="cZRNBFb">确认密码</label>  
+          <input type="password" value="" xid="password2" placeHolder="请输入密码" class="login-div-text-input cZRNBFb" __cid="cZRNBFb">
+        </div>
+        <div xid="div3" style="margin-top:30px;" __cid="cZRNBFb" class="cZRNBFb"> 
+          <a component="$model/UI2/system/components/justep/button/button" class="btn btn-default cZRNBFb" xid="updata_pwd" style="width: 250px;height:35px;" data-bind="component:{name:'$model/UI2/system/components/justep/button/button'}" data-events="onClick:updata_pwdClick" data-config="{&#34;label&#34;:&#34;修改密码&#34;}" __cid="cZRNBFb"> 
+            <i xid="i1" __cid="cZRNBFb" class="cZRNBFb"></i>  
+            <span xid="span1" __cid="cZRNBFb" class="cZRNBFb">修改密码</span>
+          </a> 
+        </div> 
+      </div>
+    </div>  
+    <style __cid="cZRNBFb" class="cZRNBFb">.x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-top {height: 48px;}.x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-content { top: 48px;bottom: nullpx;}.x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-bottom {height: nullpx;}.iosstatusbar .x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-top {height: 68px;}.iosstatusbar .x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-content { top: 68px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-top {height: 48px;}.iosstatusbar .x-panel .x-panel-content .x-panel.p87f0d01fa31047669b7c5dcbe7702ed9-iosstatusbar >.x-panel-content {top: 48px;}</style>
+  </div> 
+</div>

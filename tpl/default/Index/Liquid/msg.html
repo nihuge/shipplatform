@@ -1,0 +1,368 @@
+<extend name="Public:base" />
+<block name='navhover2'>dropbtnhover</block>
+<block name='title'>作业详情</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+
+    <script src="__INDEX_JS__/showphoto.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $(".divcabin .panel:first").next().show();
+        $(".panel .look").click(function() {
+            var images=['<img src="__INDEX_IMAGE__/w-d.png">','<img src="__INDEX_IMAGE__/w-u.png">'];
+            var display =$(this).parent().next().css('display');
+            if(display == 'block'){
+                // 设置显示
+                $(this).html(images[0]); 
+            }else{
+                $(this).html(images[1]); 
+            }
+            $(this).parent().next().toggle(300);
+        })
+    })
+    </script>
+	<div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            作业系统>液货船系统>作业数据详情
+        </div>
+    </div>
+    <div class='rmsg'>
+    	<div class='msgs'>
+    		<p class='pp1'>船名</p>
+    		<p class='pp2'>{$content['shipname']}</p>
+    	</div>
+    	<div class='msgs'>
+    		<p class='pp1'>操作人</p>
+    		<p class='pp2'>{$content['username']}</p>
+    	</div>
+    	<div class='msgs'>
+    		<p class='pp1'>货重(吨)</p>
+    		<p class='pp2'>{$content['weight']}</p>
+    	</div>
+    	<foreach name="personality" item="vo" key="k" >
+		<div class='msgs'>
+    		<p class='pp1'>{$vo['title']}</p>
+    		<p class='pp2'>{$vo['value']}</p>
+    	</div>
+    	</foreach>
+    </div>
+    <div style='height: 10px;width: 100%;'></div>
+    <div class='cabinmsg'>
+    	<div class='chi'>
+    		<div class='shui'>
+    			<p class='pp'>装卸前数据</p>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>艏吃水</p>
+    				<p class='pp2'>{$content['qian']['forntleft']}
+                    <?php
+                    echo '<span>';
+                    foreach($content['firstfiles1'] as $key => $v){
+                        echo '<a layer-href="'.$v.'" rel="gallery"><span class="showphoto">';
+                        if ($key == 0) {
+                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                        }
+                        echo '</span></a>';
+                    }
+                    echo '</span>';
+                    ?>
+                    </p>
+    			</div>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>艉吃水</p>
+    				<p class='pp2'>{$content['qian']['afterleft']}
+                    <?php
+                        $n = count($content['tailfiles1']);
+                        echo '<span>';
+                        for($i=0;$i<$n;$i++)
+                        {
+                            echo '<a layer-href="'.$content['tailfiles1'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                            if ($i == 0) {
+                                echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                            }
+                            echo '</span></a>';
+                        }
+                        echo '</span>';
+                        ?>
+                    </p>
+    			</div>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>实验室密度</p>
+    				<p class='pp2'>{$content['qiandensity']}</p>
+    			</div>
+    			<div class='chishuimsg'></div>
+    		</div>
+    		<div class='shui'>
+    			<p class='pp'>装卸后数据</p>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>艏吃水</p>
+    				<p class='pp2'>{$content['hou']['forntleft']}
+                    <?php
+                        $n = count($content['firstfiles2']);
+                        echo '<span>';
+                        for($i=0;$i<$n;$i++)
+                        {
+                            echo '<a layer-href="'.$content['firstfiles2'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                            if ($i == 0) {
+                                echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                            }
+                            echo '</span></a>';
+                        }
+                        echo '</span>';
+                        ?>
+                    </p>
+    			</div>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>艉吃水</p>
+    				<p class='pp2'>{$content['hou']['afterleft']}
+                    <?php
+                        $n = count($content['tailfiles2']);
+                        echo '<span>';
+                        for($i=0;$i<$n;$i++)
+                        {
+                            echo '<a layer-href="'.$content['tailfiles2'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                            if ($i == 0) {
+                                echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                            }
+                            echo '</span></a>';
+                        }
+                        echo '</span>';
+                        ?>
+                    </p>
+    			</div>
+    			<div class='chishuimsg'>
+    				<p class='ppp1'>实验室密度</p>
+    				<p class='pp2'>{$content['houdensity']}</p>
+    			</div>
+    			<div class='chishuimsg'></div>
+    		</div>
+    	</div>
+    	<div class='cabindiv'>
+	    	<div class='divcabin'>
+	    		<volist name="qian" id="vo" >
+                <?php $i=0;?>
+                <div class="panel">
+                    <div class="head1">
+                        舱名：{$vo['cabinname']}
+                        <span class='look'>
+                            <img src="__INDEX_IMAGE__/w-d.png">
+                        </span>
+                    </div>
+                    <div class="contentss">
+                        <table border="1" cellspacing="0" cellpadding="0" class="table">
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>空高</p>
+    								<p class='pp2'>{$vo['ullage']}
+                                    <?php
+                                    $n = count($vo['ullageimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['ullageimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>实高</p>
+    								<p class='pp2'>{$vo['sounding']}
+                                    <?php
+                                    $n = count($vo['soundingimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['soundingimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>温度</p>
+    								<p class='pp2'>{$vo['temperature']}
+                                    <?php
+                                    $n = count($vo['temperatureimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['temperatureimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>纵倾修正值</p>
+    								<p class='pp2'>{$vo['listcorrection']}</p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>修正后空距</p>
+    								<p class='pp2'>{$vo['correntkong']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>容量</p>
+    								<p class='pp2'>{$vo['standardcapacity']}</p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>体积修正系数</p>
+    								<p class='pp2'>{$vo['volume']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>膨胀修正系数</p>
+    								<p class='pp2'>{$vo['expand']}</p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>标准容量</p>
+    								<p class='pp2'>{$vo['cabinweight']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'></p>
+    								<p class='pp2'></p>
+                        		</td>
+                        	</tr>
+                        </table>
+                    </div>
+                </div>
+                <?php $i++;?>
+                </volist>
+	    	</div>
+	    	<div class='divcabin'>
+	    		<volist name="hou" id="vo" >
+                <?php $i=0;?>
+                <div class="panel">
+                    <div class="head1">
+                        舱名：{$vo['cabinname']}
+                        <span class='look'>
+                            <img src="__INDEX_IMAGE__/w-d.png">
+                        </span>
+                    </div>
+                    <div class="contentss">
+                        <table border="1" cellspacing="0" cellpadding="0"  class="table">
+                        	<td>
+                                    <p class='pp1'>空高</p>
+                                    <p class='pp2'>{$vo['ullage']}
+                                    <?php
+                                    $n = count($vo['ullageimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['ullageimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class='pp1'>实高</p>
+                                    <p class='pp2'>{$vo['sounding']}
+                                    <?php
+                                    $n = count($vo['soundingimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['soundingimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class='pp1'>温度</p>
+                                    <p class='pp2'>{$vo['temperature']}
+                                    <?php
+                                    $n = count($vo['temperatureimg']);
+                                    echo '<span>';
+                                    for($i=0;$i<$n;$i++)
+                                    {
+                                        echo '<a layer-href="'.$vo['temperatureimg'][$i].'" class="" rel="gallery"><span class="showphoto">';
+                                        if ($i == 0) {
+                                            echo '<img src="__INDEX_IMAGE__/check.png" style="vertical-align: middle;margin-left:7px;">';
+                                        }
+                                        echo '</span></a>';
+                                    }
+                                    echo '</span>';
+                                    ?>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class='pp1'>纵倾修正值</p>
+                                    <p class='pp2'>{$vo['listcorrection']}</p>
+                                </td>
+                            </tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>修正后空距</p>
+    								<p class='pp2'>{$vo['correntkong']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>容量</p>
+    								<p class='pp2'>{$vo['standardcapacity']}</p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>体积修正系数</p>
+    								<p class='pp2'>{$vo['volume']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'>膨胀修正系数</p>
+    								<p class='pp2'>{$vo['expand']}</p>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>
+                        			<p class='pp1'>标准容量</p>
+    								<p class='pp2'>{$vo['cabinweight']}</p>
+                        		</td>
+                        		<td>
+                        			<p class='pp1'></p>
+    								<p class='pp2'></p>
+                        		</td>
+                        	</tr>
+                        </table>
+                    </div>
+                </div>
+                <?php $i++;?>
+                </volist>
+	    	</div>
+	    </div>
+	    <div class='remarks'>
+	    	<p class='pp3'>备注</p>
+	    	<p class='pp4'>{$content['remark']}</p>
+	    </div>
+	    <div class='baobiao'>	
+			<a href="__CONTROLLER__/baobiao/resultid/{$content['id']}" class="butt1">预览打印报表</a>
+	    </div>
+    </div>
+</block>

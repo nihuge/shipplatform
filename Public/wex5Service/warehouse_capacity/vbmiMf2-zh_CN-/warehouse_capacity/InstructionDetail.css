@@ -1,0 +1,42 @@
+.instruction-main-div-bg {
+	border-style: solid solid solid solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #e5e5e5 #e5e5e5 #e5e5e5 #e5e5e5;
+}
+.instruction-main-div {
+	width: 100%;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 25px;
+}
+
+
+
+.instruction-div-itmes-style {
+	background-image: url(./img/b.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 40px;
+	-moz-background-size: 100% 100%;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.instruction-div-text {
+	font-size: 15px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #e6e6e6;
+	padding-right: 3px;
+}
+
+.instruction-div-text-input {
+	height: 30px;
+	margin-left: 3px;
+	border-style: none none none none;
+	background-color: transparent
+}
+
+.hidden1 {
+	display: none;
+}
