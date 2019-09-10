@@ -24,11 +24,11 @@
 <!--                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                 <label style="color: #858585;">船名：<input style="border:1px solid #D5D5D5;height: 30px;"
                                                          id="form-field-input-1" name="shipname"></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核状态：<select name="del_sign"
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核状态：<select name="review"
                                                                        style='width:130px;text-align: center'>
                 <option value="">--选择审核状态--</option>
-                <option value="1">未审核</option>
-                <option value="2">已审核</option>
+                <option value="2">未审核</option>
+                <option value="3">已审核</option>
             </select>
                 <button class="btn btn-sm btn-primary">查询</button>
             </form>
@@ -55,7 +55,7 @@
                     <td>{$v['number']}</td>
                     <td>{$v['cabinnum']}</td>
                     <td>
-                        <a href="{:U('Review/edit',array('id'=>$v['id']))}">查看</a>
+                        <a href="{:U('Review/create_ship',array('shipid'=>$v['id']))}">查看</a>
                     </td>
                 </tr>
             </volist>

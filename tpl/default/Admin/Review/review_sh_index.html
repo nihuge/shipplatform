@@ -15,7 +15,7 @@
         <div>
             <form action="__ACTION__" method="get">
                 <input type="hidden" name="c" value="Review">
-                <input type="hidden" name="a" value="create_ship_index">
+                <input type="hidden" name="a" value="reviewe_sh_index">
                 <!--                <select class=" col-xs-10 col-sm-2" id="form-field-select-1" name="firmid">-->
                 <!--                    <option value="">选择所属公司</option>-->
                 <!--                    <volist name="firmlist" id="v">-->
@@ -24,7 +24,7 @@
                 <!--                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                 <label style="color: #858585;">船名：<input style="border:1px solid #D5D5D5;height: 30px;"
                                                          id="form-field-input-1" name="shipname"></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核状态：<select name="del_sign"
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核状态：<select name="review"
                                                                        style='width:130px;text-align: center'>
                 <option value="">--选择审核状态--</option>
                 <option value="1">未审核</option>
@@ -55,7 +55,7 @@
                     <td>{$v['name']}</td>
                     <td>{$v['create_time']}</td>
                     <td>
-                        <a href="{:U('Review/edit',array('id'=>$v['id']))}">查看</a>
+                        <a href="{:U('Review/review_sh',array('shipid'=>$v['shipid'],'reviewid'=>$v['id']))}">查看</a>
                     </td>
                 </tr>
             </volist>

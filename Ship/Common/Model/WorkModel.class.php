@@ -1587,7 +1587,7 @@ class WorkModel extends BaseModel
     /**
      * 计算器计算容量
      * */
-    public function reckon1($data,$type='l')
+    public function reckon1($data, $type = 'l')
     {
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -1611,7 +1611,7 @@ class WorkModel extends BaseModel
                 //     );
                 // } else {
 
-                if($type=='l'){
+                if ($type == 'l') {
                     M()->startTrans();    //开启事物
                 }
 
@@ -1926,7 +1926,7 @@ class WorkModel extends BaseModel
                                             ->where(array('id' => $data['resultid']))
                                             ->save(array('weight' => $weight));
                                         if ($res1 !== false) {
-                                            if($type=='l'){
+                                            if ($type == 'l') {
                                                 M()->commit();
                                             }
                                             $res = array(
@@ -1984,7 +1984,7 @@ class WorkModel extends BaseModel
                                             ->where(array('id' => $data['resultid']))
                                             ->save(array('weight' => $weight));
                                         if ($res1 !== false) {
-                                            if($type=='l'){
+                                            if ($type == 'l') {
                                                 M()->commit();
                                             }
                                             $res = array(
@@ -2053,7 +2053,7 @@ class WorkModel extends BaseModel
                                 ->where(array('id' => $r['id']))
                                 ->save($d);
                             if ($a !== false) {
-                                if($type == 'l') {
+                                if ($type == 'l') {
                                     M()->commit();
                                 }
                                 $res = array(
@@ -2106,7 +2106,7 @@ class WorkModel extends BaseModel
     /**
      * 录入书本容量数据
      * */
-    public function capacityreckon($data,$type='l')
+    public function capacityreckon($data, $type = 'l')
     {
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -2130,7 +2130,7 @@ class WorkModel extends BaseModel
                     'capacity2' => $data['capacity2']
                 );
                 $trans = M();
-                if($type == 'l'){
+                if ($type == 'l') {
                     $trans->startTrans();   // 开启事务
                 }
                 $re = $resultrecord
@@ -2351,7 +2351,7 @@ class WorkModel extends BaseModel
                                 ->where(array('id' => $data['resultid']))
                                 ->save($g);
                             if ($e !== false) {
-                                if($type == 'l') {
+                                if ($type == 'l') {
                                     $trans->commit();
                                 }
                                 $res = array(
@@ -2400,7 +2400,7 @@ class WorkModel extends BaseModel
                                     ->where(array('id' => $data['resultid']))
                                     ->save(array('weight' => $weight));
                                 if ($res1 !== false) {
-                                    if($type == 'l') {
+                                    if ($type == 'l') {
                                         $trans->commit();
                                     }
                                     $res = array(
@@ -2808,28 +2808,29 @@ class WorkModel extends BaseModel
         $list_qian_where['solt'] = 1;
         $list_qian_data = $resultlist
             ->alias('r')
-            ->field('r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname')
+            ->field('r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.standardcapacity as cargo_weight,c.cabinname')
             ->join('left join cabin as c on c.id=r.cabinid')
             ->where($list_qian_where)
             ->select();
-        foreach ($list_qian_data as $qian_key => $qian_data) {
+/*        foreach ($list_qian_data as $qian_key => $qian_data) {
             //实际重量需要注意空气浮力 0.0011的影响，保留3位小数
-            $list_qian_data[$qian_key]['cargo_weight'] = round($list_qian_data[$qian_key]['cabinweight'] * ($msg['qiandensity'] - 0.0011), 3);
-        }
+            $list_qian_data[$qian_key]['cargo_weight'] = round($list_qian_data[$qian_key]['standardcapacity'] * ($msg['qiandensity'] - 0.0011), 3);
+        }*/
 
         $list_hou_where = $list_qian_where;
         //统计作业后的数据
         $list_hou_where['solt'] = 2;
         $list_hou_data = $resultlist
             ->alias('r')
-            ->field('r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.cabinweight,c.cabinname')
+            ->field('r.id,r.sounding,r.ullage,r.solt,r.temperature,r.cabinid,r.is_work,r.standardcapacity as cargo_weight,c.cabinname')
             ->join('left join cabin as c on c.id=r.cabinid')
             ->where($list_hou_where)
             ->select();
-        foreach ($list_hou_data as $hou_key => $hou_data) {
+       /* foreach ($list_hou_data as $hou_key => $hou_data) {
             //实际重量需要注意空气浮力 0.0011的影响，保留3位小数
-            $list_hou_data[$hou_key]['cargo_weight'] = round($list_hou_data[$hou_key]['cabinweight'] * ($msg['houdensity'] - 0.0011), 3);
-        }
+            $list_hou_data[$hou_key]['cargo_weight'] = round($list_hou_data[$hou_key]['standardcapacity'] * ($msg['houdensity'] - 0.0011), 3);
+
+        }*/
 
         $res = array(
             'cabin_info' => array(
@@ -2840,7 +2841,7 @@ class WorkModel extends BaseModel
             'shipid' => $msg['shipid'],
             'houtotal' => $msg['houtotal'],
             'total' => $msg['weight'],
-            'is_have_data'=>$is_have_data
+            'is_have_data' => $is_have_data
         );
         return $res;
     }
@@ -2963,27 +2964,57 @@ class WorkModel extends BaseModel
         }
         return $res;
     }
+
     //"capacityreckon"
 
 
-    public function get_book_data($resultid,$solt){
+    public function get_book_data($resultid, $solt)
+    {
         $result_record = M('resultrecord');
         $where = array(
-            'resultid'=>$resultid,
-            'solt'=>$solt,
+            'r.resultid' => $resultid,
+            'r.solt' => $solt,
+            'r.is_work' => 1,
         );
-        $res = $result_record->field('cabinid,solt,ullage,altitudeheight,ullage1,ullage2,draft1,draft2,value1,value2,value3,value4')->where($where)->select();
+        $res = $result_record
+            ->alias('r')
+            ->field('r.cabinid,c.cabinname,r.solt,r.ullage,r.altitudeheight,r.ullage1,r.ullage2,r.draft1,r.draft2,r.value1,r.value2,r.value3,r.value4')
+            ->join('left join cabin as c on c.id=r.cabinid')
+            ->where($where)
+            ->select();
+        foreach ($res as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($value1 === null) {
+                    $res[$key][$key1] = "";
+                }
+            }
+        }
         return $res;
     }
 
-    public function get_capacity_data($resultid,$solt){
-        $result_record =M('resultrecord');
+    public function get_capacity_data($resultid, $solt)
+    {
+        $result_record = M('resultrecord');
         $where = array(
-            'resultid'=>$resultid,
-            'solt'=>$solt,
+            'r.resultid' => $resultid,
+            'r.solt' => $solt,
+            'r.is_work' => 1,
         );
 
-        $res = $result_record->field('cabinid,solt,ullage,correntkong,altitudeheight,xiuullage1 as ullage1,xiuullage2 as ullage2,capacity1,capacity2')->where($where)->select();
+        $res = $result_record
+            ->alias('r')
+            ->field('c.id as cabinid,c.cabinname,r.solt,r.ullage,r.correntkong,r.altitudeheight,r.xiuullage1 as ullage1,r.xiuullage2 as ullage2,r.capacity1,r.capacity2')
+            ->join('left join cabin as c on c.id=r.cabinid')
+            ->where($where)
+            ->select();
+        foreach ($res as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($value1 === null) {
+                    $res[$key][$key1] = "";
+                }
+            }
+        }
         return $res;
     }
 }
+

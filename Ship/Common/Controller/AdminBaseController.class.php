@@ -89,7 +89,7 @@ class AdminBaseController extends BaseController
          * 获取符合条件的油船新建审核数量
          */
         $ship_where = array(
-            'review' => 2
+            's.review' => 2
         );
 
         /**
@@ -97,14 +97,24 @@ class AdminBaseController extends BaseController
          *
          * 生成sql：(select id from ship where review = 1)
          **/
-        $sub_sql = $ship->field('id')->where($ship_where)->buildSql();
+        $sub_sql = $ship
+            ->alias("s")
+            ->field('s.id')
+            ->join('left join cabin as c on c.shipid=s.id')
+            ->where($ship_where)
+            ->group('s.id')
+            ->having('count(c.id)>0')
+            ->buildSql();
         /*
          * 结合子查询查询作业次数小于2的待审核船
          *
          * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
          */
-        $ship_count = $work->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
-
+        try {
+            $ship_count = $work->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
+        } catch (\Exception $e) {
+            $ship_count = array();
+        }
         //我count我自己
         $ship_count = count($ship_count);
 
@@ -126,8 +136,11 @@ class AdminBaseController extends BaseController
          *
          * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
          */
-        $sh_ship_count = $sh_result->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
-
+        try {
+            $sh_ship_count = $sh_result->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
+        } catch (\Exception $e) {
+            $sh_ship_count = array();
+        }
         //我count我自己
         $sh_ship_count = count($sh_ship_count);
 

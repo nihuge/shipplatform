@@ -1232,7 +1232,8 @@ class WorkController extends AppBaseController
                         $map = array(
                             'solt' => I('post.solt'),
                             'cabinid' => I('post.cabinid'),
-                            'resultid' => I('post.resultid')
+                            'resultid' => I('post.resultid'),
+                            'is_work'=>I('post.is_work')
                         );
 
                         $num = M('resultrecord')->where($map)->count();
@@ -2610,6 +2611,7 @@ class WorkController extends AppBaseController
                     $data['is_fugai'] = I('post.is_fugai');
                     $data['is_pipeline'] = I('post.is_pipeline');
                     $data['quantity'] = I('post.quantity');
+                    $data['is_work'] = 1;
 
                     //检查参数是否缺失
                     if (empty($data['ullage']) or !$data['ullage']
@@ -2635,9 +2637,9 @@ class WorkController extends AppBaseController
 
                     //根据作业状态、作业ID、舱id判断作业是否重复
                     $where3 = array(
-                        'solt' => I('post.solt'),
-                        'cabinid' => I('post.cabinid'),
-                        'resultid' => I('post.resultid'),
+                        'solt' => $data['solt'],
+                        'cabinid' => $data['cabinid'],
+                        'resultid' => $data['resultid'],
                     );
                     $r = $resultlist
                         ->where($where3)
@@ -2655,8 +2657,8 @@ class WorkController extends AppBaseController
                             //如果是舱作业后数据，判断该舱是否有作业前数据
                             $where = array(
                                 'solt' => '1',
-                                'cabinid' => I('post.cabinid'),
-                                'resultid' => I('post.resultid')
+                                'cabinid' => $data['cabinid'],
+                                'resultid' => $data['resultid']
                             );
                             $arr = $resultlist
                                 ->where($where)
@@ -2670,7 +2672,7 @@ class WorkController extends AppBaseController
                                 exit(jsonreturn($res));
                             } else {
                                 //判断空高是否在基准高度与0之内
-                                if (I('post.ullage') >= 0 and I('post.ullage') <= $data['altitudeheight']) {
+                                if ($data['ullage'] >= 0 and $data['ullage'] <= $data['altitudeheight']) {
                                     $res = $result->reckon($data);
                                 } else {
                                     //空高有误 2009
@@ -2683,7 +2685,7 @@ class WorkController extends AppBaseController
                             }
                         } else {
                             //判断空高是否在基准高度与0之内
-                            if (I('post.ullage') >= 0 and I('post.ullage') <= $data['altitudeheight']) {
+                            if ($data['ullage'] >= 0 and $data['ullage'] <= $data['altitudeheight']) {
                                 $res = $result->reckon($data);
                             } else {
                                 //空高有误 2009
@@ -2697,13 +2699,12 @@ class WorkController extends AppBaseController
 
                         // 计算成功记录数据
                         if ($res['code'] == '1') {
-                            // 判断本次是否作业，不作业时获取作业前的数据照片
-
                             //判断数据是否已记录
                             $map = array(
-                                'solt' => I('post.solt'),
-                                'cabinid' => I('post.cabinid'),
-                                'resultid' => I('post.resultid')
+                                'solt' => $data['solt'],
+                                'cabinid' => $data['cabinid'],
+                                'resultid' => $data['resultid'],
+                                'is_work' => 1,
                             );
 
                             $num = M('resultrecord')->where($map)->count();
@@ -2786,6 +2787,7 @@ class WorkController extends AppBaseController
                     $data['quantity'] = I('post.quantity');
                     $data['is_pipeline'] = I('post.is_pipeline');
                     $data['is_fugai'] = I('post.is_fugai');
+                    $data['is_work'] = 1;
 
                     //检查参数是否缺失
                     if (empty($data['ullage']) or !$data['ullage']
@@ -2862,8 +2864,8 @@ class WorkController extends AppBaseController
                             //如果是舱作业后数据，判断该舱是否有作业前数据
                             $where = array(
                                 'solt' => '1',
-                                'cabinid' => I('post.cabinid'),
-                                'resultid' => I('post.resultid')
+                                'cabinid' => $data['cabinid'],
+                                'resultid' => $data['resultid']
                             );
 
                             $arr = $resultlist
@@ -2896,11 +2898,11 @@ class WorkController extends AppBaseController
 
                                     if ($rlist > 0) {
                                         $resultr = $resultlist->editData($where, $resultdata);
-                                    }else{
+                                    } else {
 
-                                        $resultdata['resultid']=$data['resultid'];
-                                        $resultdata['cabinid']=$data['cabinid'];
-                                        $resultdata['solt']=$data['solt'];
+                                        $resultdata['resultid'] = $data['resultid'];
+                                        $resultdata['cabinid'] = $data['cabinid'];
+                                        $resultdata['solt'] = $data['solt'];
 
                                         $resultr = $resultlist->addData($resultdata);
                                     }
@@ -2944,11 +2946,11 @@ class WorkController extends AppBaseController
 
                                 if ($rlist > 0) {
                                     $resultr = $resultlist->editData($where, $resultdata);
-                                }else{
+                                } else {
 
-                                    $resultdata['resultid']=$data['resultid'];
-                                    $resultdata['cabinid']=$data['cabinid'];
-                                    $resultdata['solt']=$data['solt'];
+                                    $resultdata['resultid'] = $data['resultid'];
+                                    $resultdata['cabinid'] = $data['cabinid'];
+                                    $resultdata['solt'] = $data['solt'];
 
                                     $resultr = $resultlist->addData($resultdata);
                                 }
@@ -2993,11 +2995,11 @@ class WorkController extends AppBaseController
 
                             if ($rlist > 0) {
                                 $resultr = $resultlist->editData($where, $resultdata);
-                            }else{
+                            } else {
 
-                                $resultdata['resultid']=$data['resultid'];
-                                $resultdata['cabinid']=$data['cabinid'];
-                                $resultdata['solt']=$data['solt'];
+                                $resultdata['resultid'] = $data['resultid'];
+                                $resultdata['cabinid'] = $data['cabinid'];
+                                $resultdata['solt'] = $data['solt'];
 
                                 $resultr = $resultlist->addData($resultdata);
                             }
@@ -3106,8 +3108,8 @@ class WorkController extends AppBaseController
                     if ($res['code'] != 1) {
                         M()->rollback();
                         exit(jsonreturn($res));
-                    }else{
-                        $correntKong[] = array('cabinid'=>$data['cabinid'],'correntkong'=>$res['correntkong']);
+                    } else {
+                        $correntKong[] = array('cabinid' => $data['cabinid'], 'correntkong' => $res['correntkong']);
                     }
 
                 } else {
@@ -3122,9 +3124,9 @@ class WorkController extends AppBaseController
 
             M()->commit();
             $res = array(
-                'correntkong'=>$correntKong,
-                'code'=>$this->ERROR_CODE_COMMON['SUCCESS'],
-                'suanfa'=>$res['suanfa'],
+                'correntkong' => $correntKong,
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'suanfa' => $res['suanfa'],
             );
         } else {
             //参数不正确，参数缺失    4
@@ -3209,7 +3211,9 @@ class WorkController extends AppBaseController
             $work = new \Common\Model\WorkModel();
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
             if ($msg1['code'] == '1') {
-                $res = $work->get_book_data(I('post.resultid'),I('post.solt'));
+                $res = array();
+                $res['msg'] = $work->get_book_data(I('post.resultid'), I('post.solt'));
+                $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
             } else {
                 //未到期/状态禁止/标识错误
                 $res = $msg1;
@@ -3235,7 +3239,10 @@ class WorkController extends AppBaseController
             $work = new \Common\Model\WorkModel();
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
             if ($msg1['code'] == '1') {
-                $res = $work->get_capacity_data(I('post.resultid'),I('post.solt'));
+                $res = array();
+                $res['msg'] = $work->get_capacity_data(I('post.resultid'), I('post.solt'));
+                $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+
             } else {
                 //未到期/状态禁止/标识错误
                 $res = $msg1;

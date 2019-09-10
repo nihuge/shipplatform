@@ -65,6 +65,51 @@ class ShShipController extends AppBaseController
                         ->where($where)
                         ->order('id desc')
                         ->select();
+
+
+                    //获取正在审核状态和拒绝状态的船
+                    $ship_review = M("sh_review");
+
+                    $where_review = array(
+                        '_string' => '(status=1 or status=3)  AND picture=2'
+                    );
+
+                    $review_list = $ship_review
+                        ->field('shipid,status,remark')
+                        ->where($where_review)
+                        ->select();
+
+                    //匹配船
+//                    foreach ($review_list as $key1 => $value1) {
+//                        foreach ($list as $key2 => $value2) {
+//                            if ($value2['id'] == $value1['shipid'] && $value1['shipid'] != "") {
+//
+//                            }
+//                        }
+//                    }
+
+                    //匹配船使用优化写法
+                    $keyArr = array();
+                    $valArr = array();
+                    foreach ($review_list as $k => $v) {
+                        array_push($keyArr, $v['shipid']);
+                        array_push($valArr, array('status' => $v['status'], 'remark' => $v['remark']));
+                    }
+
+                    $newArr = array_combine($keyArr, $valArr); //将两个数组合并为一个，1参数为健，2参数为值，两个数组长度必须相等
+                    foreach ($list as $k1 => $v1) {
+                        if (array_key_exists($v1['id'], $newArr)) {
+                            $list[$k1]['status'] = $newArr[$v1['id']]['status'];
+                            if ($newArr[$v1['id']]['status'] == 3) {
+                                $list[$k1]['remark'] = $newArr[$v1['id']]['remark'];
+                            }
+                        } else {
+                            $list[$k1]['status'] = "";
+                        }
+                    }
+
+
+
                     if ($firmmsg['firmtype'] == '1') {
                         // 检验公司获取所有的船公司
                         $firmlist = $firm->field('id,firmname')->where(array('firmtype' => '2'))->select();

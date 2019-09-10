@@ -1,4 +1,9 @@
 <?php
-$a1 = array('aaa'=>'aaa');
-$a2 = array('aaa'=>'aaa','aab'=>'aab','aac'=>'aac','aad'=>'aad');
-print_r(array_diff_assoc($a1,$a2));
+$a1 = array('aaa');
+$a2 = array(
+    array(
+        'status'=>1,
+        'remark'=>'aaa'
+    )
+    );
+print_r(array_combine($a1,$a2));
