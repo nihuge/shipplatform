@@ -69,9 +69,9 @@ class ShShipController extends AppBaseController
 
                     //获取正在审核状态和拒绝状态的船
                     $ship_review = M("sh_review");
-
+                    //取最新状态
                     $where_review = array(
-                        '_string' => '(status=1 or status=3)  AND picture=2'
+                        '_string' => '(status=1 or status=3) AND picture=2 AND id in(SELECT max( id ) FROM sh_review GROUP BY shipid)'
                     );
 
                     $review_list = $ship_review

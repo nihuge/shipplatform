@@ -78,7 +78,7 @@ class ShipController extends AppBaseController
                     $ship_review = M("ship_review");
 
                     $where_review = array(
-                        '_string' => '(status=1 or status=3) AND ((data_status = 1 and picture=2) or (data_status=2 AND picture=2 and cabin_picture=2) or (data_status=3 AND cabin_picture=2))'
+                        '_string' => '(status=1 or status=3) AND ((data_status = 1 and picture=2) or (data_status=2 AND picture=2 and cabin_picture=2) or (data_status=3 AND cabin_picture=2)) AND id in(SELECT max( id ) FROM ship_review GROUP BY shipid)'
                     );
 
                     $review_list = $ship_review
@@ -335,12 +335,12 @@ class ShipController extends AppBaseController
                                     $result = $ship_review->where($review_map)->save($review_data);
                                     //修改时获取主键ID
                                     if ($result !== false) {
-                                        $id = $ship_review->field('id,data_status')->where($review_map)->find();
+                                        $id = $ship_review->field('id,data_status,cabin_picture,picture')->where($review_map)->find();
                                         $result = (int)$id['id'];
-                                        if ($id['data_status'] == 3) {
-                                            //如果状态是没有上传船信息则改为已上传
+                                        if ($id['data_status'] == 3 and $id['cabin_picture'] == 1) {
+                                            //如果状态是上传舱信息但没有舱照片则改为只上传了船信息
                                             $status_data = array(
-                                                'data_status' => 2
+                                                'data_status' => 1
                                             );
                                             $status_result = $ship_review->where($review_map)->save($status_data);
                                             if ($status_result === false) {

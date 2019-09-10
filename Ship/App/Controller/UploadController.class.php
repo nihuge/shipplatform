@@ -65,9 +65,9 @@ class UploadController extends AppBaseController
                         'shipid' => $shipid,
                         'status' => 1
                     );
-                    $review_count = $review->where($review_where)->count();
+                    $review_count = $review->field('id,data_status,cabin_picture,picture')->where($review_where)->find();
                     //判断此id是否在审核中
-                    if ($review_count > 0) {
+                    if (count($review_count) > 0) {
                         $res = $Upload->uploadFile($file_info[0], './Upload/review');
                         if ($res['mes'] == "上传成功") {
                             //将上传的图片路径放入数据库
@@ -81,10 +81,17 @@ class UploadController extends AppBaseController
                                 'img' => $path
                             );
 
-                            $review_data = array(
-                                'picture' => 2
-                            );
-
+                            if ($review_count['data_status'] == 3 and $review_count['cabin_picture'] == 2) {
+                                //如果状态为只上传了舱信息并且有舱照片，则改为都上传了信息
+                                $review_data = array(
+                                    'picture' => 2,
+                                    'data_status' => 2
+                                );
+                            } else {
+                                $review_data = array(
+                                    'picture' => 2
+                                );
+                            }
                             M()->startTrans();
                             if (!$review_img->create($data) or !$review->create($review_data)) {
                                 // 如果创建失败 表示验证没有通过 输出错误提示信息
@@ -180,9 +187,9 @@ class UploadController extends AppBaseController
                         'shipid' => $shipid,
                         'status' => 1
                     );
-                    $review_count = $review->where($review_where)->count();
+                    $review_count = $review->field('id,data_status,cabin_picture,picture')->where($review_where)->find();
                     //判断此id是否在审核中
-                    if ($review_count > 0) {
+                    if (count($review_count) > 0) {
                         $res = $Upload->uploadFile($file_info[0], './Upload/review');
                         if ($res['mes'] == "上传成功") {
                             //将上传的图片路径放入数据库
@@ -195,9 +202,17 @@ class UploadController extends AppBaseController
                                 'ship_id' => $shipid,
                                 'img' => $path
                             );
-                            $review_data = array(
-                                'cabin_picture' => 2
-                            );
+
+                            if ($review_count['data_status'] == 1 and $review_count['picture'] == 2) {
+                                $review_data = array(
+                                    'cabin_picture' => 2,
+                                    'data_status' => 2,
+                                );
+                            }else{
+                                $review_data = array(
+                                    'cabin_picture' => 2
+                                );
+                            }
 
                             M()->startTrans();
                             if (!$review_img->create($data) and !$review->create($review_data)) {

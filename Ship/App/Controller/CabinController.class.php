@@ -367,22 +367,22 @@ class CabinController extends AppBaseController
                          * 判断是否有船审核记录
                          */
                         $ship_review = M('ship_review');
-                        $ship_review_count = $ship_review->where($ship_review_map)->count();
+                        $ship_review_count = $ship_review->field('id,data_status,cabin_picture,picture')->where($ship_review_map)->find();
 
                         /**
                          * 建立一个新的船审核记录或获得主键ID
                          */
 
-                        if ($ship_review_count >= 1) {
-                            //更改审核数据状态,2为上传了船审核和舱审核
-                            $ship_review_data['data_status'] = 2;
-                            $result = $ship_review->where($ship_review_map)->save($ship_review_data);
-                            if ($result !== false) {
-                                //获取审核id
-                                $id = $ship_review->field('id')->where($ship_review_map)->find();
-                                if ((int)$id > 0) {
-                                    $result = (int)$id['id'];
+                        if (count($ship_review_count) >= 1) {
+                            if ($ship_review_count['data_status'] == 1 and $ship_review_count['picture'] == 1) {
+                                //如果状态为已上传船信息没有上传舱新信息，且没有上传船修改照片，则改为只上传了舱信息
+                                $ship_review_data['data_status'] = 3;
+                                $result = $ship_review->where($ship_review_map)->save($ship_review_data);
+                                if ($result !== false) {
+                                    $result = $ship_review_count['id'];
                                 }
+                            } else {
+                                $result = $ship_review_count['id'];
                             }
                         } else {
                             //新建,3为上传了舱审核没有船审核
