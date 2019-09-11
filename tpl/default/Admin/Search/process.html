@@ -1,0 +1,40 @@
+<extend name="Public:base" />
+<block name="title">作业查询</block>
+<block name="navtitle">
+    <li class="active">
+        作业查询
+    </li>
+    <li class="active">
+        计算过程
+    </li>
+</block>
+<block name="activeopen31">class="active open"</block>
+<block name="active12">class="active"</block>
+<block name="content">
+	<style>
+        .table_01,.ju { font-size:14px; color:#333; font-family:"方正兰亭黑简";margin:auto 5px;font-weight: bold}
+        .table_02 { font-size:14px; font-family:"方正兰亭黑简"; color:#333;margin:auto 5px;}
+        .box02 { height:41px; margin:20px auto; line-height:50px; text-align:center; font-size:14px; color:#fff; font-family:"方正兰亭黑简";}
+        input { background-color:#3ca0fe; border:none; margin-left:7px; height:30px; color:#fff; font-size:14px; cursor:pointer;}
+        .ju03 {height:35px; width:200px;}
+        tr{text-align: center;}
+        .div1{display: inline-block;}
+    </style>
+<!--	<h2 align="center">计算过程</h2>-->
+	<br>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业前</span>
+    </div>
+
+    <pre>
+        {$qianprocess}
+    </pre>
+    <br/>
+    <hr>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业后</span>
+    </div>
+    <pre>
+        {$houprocess}
+    </pre>
+</block>

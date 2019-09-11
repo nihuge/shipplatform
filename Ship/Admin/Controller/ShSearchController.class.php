@@ -4,20 +4,20 @@ namespace Admin\Controller;
 
 use Common\Controller\AdminBaseController;
 
-class SearchController extends AdminBaseController
+class ShSearchController extends AdminBaseController
 {
     /**
-     * 查询
+     * 查看计算过程
      */
 
     public function index()
     {
-        $result = new \Common\Model\ResultModel();
-        $ship = new \Common\Model\ShipModel();
+        $result = new \Common\Model\ShResultModel();
+        $ship = new \Common\Model\ShShipModel();
         $where = '1';
         if (I('get.firmid')) {
             $firmid = trimall(I('get.firmid'));
-            $where .= " and c.firmid=$firmid";
+            $where .= " and f.firmid=$firmid";
         }
         if (I('get.shipname')) {
             $shipname = trimall(I('get.shipname'));
@@ -47,12 +47,11 @@ class SearchController extends AdminBaseController
             $where .= " and r.del_sign=" . $del_sign;
         } else {
             $where .= " and r . del_sign < 2";
-
         }
         $count = $result
             ->alias('r')
             ->join('left join ship s on s.id = r.shipid')
-            ->join('left join consumption c on r.id = c.resultid')
+//            ->join('left join consumption c on r.id = c.resultid')
             ->where($where)
             ->count();
         // p($count);die;
@@ -68,9 +67,9 @@ class SearchController extends AdminBaseController
         $data = $result
             ->alias('r')
             ->field('r.id,r.personality,r.weight,r.del_sign,s.shipname,f.firmname')
-            ->join('left join ship s on s.id = r.shipid')
-            ->join('left join consumption c on r.id = c.resultid')
-            ->join('left join firm f on f.id = c.firmid')
+            ->join('left join sh_ship s on s.id = r.shipid')
+//            ->join('left join consumption c on r.id = c.resultid')
+            ->join('left join firm f on f.id = s.firmid')
             ->where($where)
             ->limit($begin, $per)
             ->order('r.id desc')
@@ -107,7 +106,7 @@ class SearchController extends AdminBaseController
      */
     public function msg()
     {
-        $res = new \Common\Model\ResultModel();
+        $res = new \Common\Model\ShResultModel();
         $user = new \Common\Model\UserModel();
         //获取水尺数据
         $where = array(
@@ -166,11 +165,101 @@ class SearchController extends AdminBaseController
     }
 
     /**
+     * 详情
+     */
+    public function process($resultid)
+    {
+        $res = new \Common\Model\ShResultModel();
+        $res_list = new \Common\Model\ShResultlistModel();
+        $res_record = M('sh_resultrecord');
+//        $user = new \Common\Model\UserModel();
+        //获取水尺数据
+        $where = array(
+            'id' => $resultid
+        );
+        //查询作业列表
+        $list = $res
+            ->field('qianprocess,houprocess')
+            ->where($where)
+            ->find();
+        $qianprocess = urldecode($list['qianprocess']);
+        $houprocess = urldecode($list['houprocess']);
+        if ($list !== false) {
+
+            /**
+             * 获取舱压载水的计算过程
+             */
+            $where1 = array(
+                'resultid' => $resultid,
+                'solt' => 1
+            );
+
+            //获取作业前排水表计算过程
+            $record_qian_process = $res_record
+                ->field('process')
+                ->where($where1)
+                ->find();
+
+            $where1['solt'] = 2;
+
+            //获取作业后排水表计算过程
+            $record_hou_process = $res_record
+                ->field('process')
+                ->where($where1)
+                ->find();
+
+            /**
+             * url反转义过程
+             */
+            $record_qian_process = str_replace(array("Dc1 =","Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =","\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_qian_process['process'])));
+
+            $record_hou_process = str_replace(array("Dc1 =","Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =","\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_hou_process['process'])));
+
+            $qianprocess .= "\r\n ---------------------TABLE---------------------- \r\n" . $record_qian_process;
+
+            $houprocess .= "\r\n ---------------------TABLE---------------------- \r\n" . $record_hou_process;
+
+            // p($resultmsg);die;
+            //以舱区分数据（）
+            /*            foreach ($resultmsg as $k => $v) {
+                            $result[$v['cabinid']][] = $v;
+                        }
+                        // 个性化信息
+                        $personality = json_decode($list['personality'], true);
+                        if (!empty($resultmsg)) {
+                            //取出舱详情最后一个元素时间
+                            $start = end($resultmsg);
+                            $starttime = date("Y-m-d H:i", $start['time']);
+                            //取出舱详情第一个元素时间
+                            $end = reset($resultmsg);
+                            $endtime = date("Y-m-d H:i", $end['time']);
+                        } else {
+                            $starttime = '';
+                            $endtime = '';
+                        }*/
+
+            // 成功	1
+            $assign = array(
+                'qianprocess' => $qianprocess,
+                'houprocess' => $houprocess,
+            );
+
+            // p($assign);exit;
+            $this->assign($assign);
+            $this->display();
+
+        } else {
+            $this->error('数据库连接错误');
+        }
+    }
+
+
+    /**
      * ajax获取公司可操作的船列表
      */
     public function getFirmShip()
     {
-        $ship = new \Common\Model\ShipModel();
+        $ship = new \Common\Model\ShShipModel();
         $arr = $ship
             ->field('id,shipname')
             ->where("firmid='" . $_POST['firmid'] . "'")
@@ -192,7 +281,7 @@ class SearchController extends AdminBaseController
     {
         if (IS_AJAX) {
             $resultid = trimall(I('post.resultid'));
-            $work = new \Common\Model\WorkModel();
+            $work = new \Common\Model\ShResultModel();
             $where = array(
                 'id' => $resultid,
                 'del_sign' => 1
@@ -227,8 +316,8 @@ class SearchController extends AdminBaseController
     {
         if (IS_AJAX) {
             $resultid = trimall(I('post.resultid'));
-            $work = new \Common\Model\WorkModel();
-            $ship = new \Common\Model\ShipModel();
+            $work = new \Common\Model\ShResultModel();
+            $ship = new \Common\Model\ShShipModel();
             $shipid = $work->field('shipid')->where(array('id' => $resultid))->find();
 
             $shipcount = $ship->where(array('id' => $shipid['shipid'], 'del_sign' => 1))->count();
@@ -270,7 +359,7 @@ class SearchController extends AdminBaseController
     {
         if (IS_AJAX) {
             $resultid = trimall(I('post.resultid'));
-            $work = new \Common\Model\WorkModel();
+            $work = new \Common\Model\ShResultModel();
             $where = array(
                 'id' => $resultid,
                 'del_sign' => 2
@@ -279,186 +368,21 @@ class SearchController extends AdminBaseController
             if ($resultCount > 0) {
                 //如果该作业状态为已删除
 
-                $resultlist = new \Common\Model\ResultlistModel();
-                $forntrecord = M("forntrecord");
-                $resultrecord = M("resultrecord");
-                $forntImg = M("fornt_img");
-
-                $where1 = array(
-                    'resultid' => $resultid
-                );
-
-                $where2 = array(
-                    'result_id' => $resultid
-                );
 
                 //删除作业总表信息
                 $result1 = $work
                     ->where($where)
                     ->delete();
 
-                //删除作业舱测量数据和图片数据信息
-                $result_msg = $resultlist
-                    ->field("id")
-                    ->where($where1)
-                    ->select();
 
-                if (count($result_msg) > 0) {
-                    $listids = "in(";
-                    foreach ($result_msg as $key => $value) {
-                        $listids .= $value['id'] . ",";
-                    }
-                    $listids = substr($listids, 0, strlen($listids) - 1);
-                    $listids .= ")";
-
-                    $result2 = $resultlist->where("id " . $listids)->delete();
-                    $result6 = M("resultlist_img")->where("resultlist_id " . $listids)->delete();
-                } else {
-                    $result2 = 1;
-                    $result6 = 1;
-                }
-
-                //删除作业计量数据信息
-                $result3 = $resultrecord
-                    ->where($where1)
-                    ->delete();
-
-                //删除作业水尺测量数据信息
-                $result4 = $forntrecord
-                    ->where($where1)
-                    ->delete();
-
-                //删除作业水尺测量图片数据信息
-                $result5 = $forntImg
-                    ->where($where2)
-                    ->delete();
-
-                if ($result6 !== false and $result5 !== false and $result4 !== false and $result3 !== false
-                    and $result2 !== false and $result1 !== false) {
+                if ($result1 !== false) {
                     $this->ajaxReturn(array('code' => 1, 'msg' => '彻底删除成功'));
                 } else {
-                    $this->ajaxReturn(array('code' => 2, 'msg' => '彻底删除作业时有部分数据删除失败，请联系技术', 'result1' => $result1, 'result2' => $result2,
-                        'result3' => $result3, 'result4' => $result4, 'result5' => $result5, 'result6' => $result6));
+                    $this->ajaxReturn(array('code' => 2, 'msg' => '彻底删除作业时有部分数据删除失败，请联系技术', 'result1' => $result1));
                 }
             } else {
                 $this->ajaxReturn(array('code' => 11, 'msg' => '该数据未找到或者不是删除状态，请确认后重试'));
             }
-        }
-    }
-
-
-    /**
-     * 获取计算过程
-     */
-    public function process($resultid)
-    {
-        $res = new \Common\Model\ResultModel();
-        $res_list = new \Common\Model\ResultlistModel();
-        $res_record = M('resultrecord');
-//        $user = new \Common\Model\UserModel();
-
-        //获取水尺数据
-        $where = array(
-            'id' => $resultid
-        );
-
-        //查询作业列表
-        $list = $res
-            ->field('qianprocess,houprocess')
-            ->where($where)
-            ->find();
-
-        $qianprocess = urldecode($list['qianprocess']);
-        $houprocess = urldecode($list['houprocess']);
-        if ($list !== false) {
-
-            /**
-             * 获取舱压载水的计算过程
-             */
-            $where1 = array(
-                'resultid' => $resultid,
-                'solt' => 1
-            );
-
-
-            $list_qian_process = $res_list
-                ->field('process')
-                ->where($where1)
-                ->select();
-
-            //获取作业前排水表计算过程
-            $record_qian_process = $res_record
-                ->field('process')
-                ->where($where1)
-                ->find();
-
-            $where1['solt'] = 2;
-
-            $list_hou_process = $res_list
-                ->field('process')
-                ->where($where1)
-                ->select();
-
-            //获取作业后排水表计算过程
-            $record_hou_process = $res_record
-                ->field('process')
-                ->where($where1)
-                ->find();
-
-            /**
-             * url反转义过程
-             */
-
-            $list_qian = "";
-            $list_hou = "";
-
-            foreach ($list_qian_process as $key => $value) {
-                $list_qian .= "\r\n ----------list---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
-            }
-
-            foreach ($list_hou_process as $key => $value) {
-                $list_hou .= "\r\n ----------list---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
-            }
-
-            $record_qian_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_qian_process['process'])));
-
-            $record_hou_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_hou_process['process'])));
-
-            $qianprocess .= $list_qian . "\r\n ---------------------record---------------------- \r\n" . $record_qian_process;
-
-            $houprocess .= $list_hou . "\r\n ---------------------record---------------------- \r\n" . $record_hou_process;
-
-            // p($resultmsg);die;
-            //以舱区分数据（）
-            /*            foreach ($resultmsg as $k => $v) {
-                            $result[$v['cabinid']][] = $v;
-                        }
-                        // 个性化信息
-                        $personality = json_decode($list['personality'], true);
-                        if (!empty($resultmsg)) {
-                            //取出舱详情最后一个元素时间
-                            $start = end($resultmsg);
-                            $starttime = date("Y-m-d H:i", $start['time']);
-                            //取出舱详情第一个元素时间
-                            $end = reset($resultmsg);
-                            $endtime = date("Y-m-d H:i", $end['time']);
-                        } else {
-                            $starttime = '';
-                            $endtime = '';
-                        }*/
-
-            // 成功	1
-            $assign = array(
-                'qianprocess' => $qianprocess,
-                'houprocess' => $houprocess,
-            );
-
-            // p($assign);exit;
-            $this->assign($assign);
-            $this->display();
-
-        } else {
-            $this->error('数据库连接错误');
         }
     }
 }

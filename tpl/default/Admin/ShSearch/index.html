@@ -9,12 +9,12 @@
     </li>
 </block>
 <block name="activeopen31">class="active open"</block>
-<block name="active12">class="active"</block>
+<block name="active54">class="active"</block>
 <block name="content">
     <div class="page-container">
         <div>
             <form action="__ACTION__" method="get">
-                <input type="hidden" name="c" value="Search">
+                <input type="hidden" name="c" value="ShSearch">
                 <input type="hidden" name="a" value="index">
                 公司：<select id="form-field-select-1" name="firmid" style='width:160px;'>
                 <option value="">--选择公司--</option>
@@ -66,17 +66,16 @@
                     <td>{$v['weight']}</td>
                     <td>{$v['personality']['start']}</td>
                     <td>{$v['personality']['objective']}</td>
-                    <td><a href="__CONTROLLER__/msg/resultid/{$v['id']}" style="color:#3ca0fe">详情</a>&nbsp;/&nbsp;
-                        <a href="__CONTROLLER__/process/resultid/{$v['id']}" style="color:#3ca0fe">过程</a>&nbsp;/&nbsp;
+                    <td><a href="__CONTROLLER__/process/resultid/{$v['id']}" style="color:#3ca0fe">查看</a>&nbsp;/&nbsp;
                         <if condition="$v['del_sign'] eq 1">
                             <a href="javascript:;" onclick="delWork({$v['id']})" style="color:#3ca0fe">删除</a>
-                            <else/>
-                            <a href="javascript:;" onclick="recoverWork({$v['id']})" style="color:#3ca0fe">恢复</a>
-                            <if condition="$adminmsg['group_id'] eq 1">
-                                &nbsp;/&nbsp;<a href="javascript:;" onclick="relDelWork({$v['id']})"
-                                                style="color:#3ca0fe">彻底删除</a>
-                            </if>
-                        </if>
+                    <else/>
+                    <a href="javascript:;" onclick="recoverWork({$v['id']})" style="color:#3ca0fe">恢复</a>
+                    <if condition="$adminmsg['group_id'] eq 1">
+                        &nbsp;/&nbsp;<a href="javascript:;" onclick="relDelWork({$v['id']})"
+                                        style="color:#3ca0fe">彻底删除</a>
+                    </if>
+                    </if>
                     </td>
             </volist>
             <tr>
@@ -88,22 +87,16 @@
         $("#shipid").bigAutocomplete({
             width: 163,
             data: [
-            < ? php
-                foreach($shiplist as $l)
-        {
-            echo
-            '{title:"'.$l['shipname'].
-            '",show:"'.$l['shipname'].
-            '"},';
-        }
-            ?
-        >
+            <?php
+                foreach($shiplist as $l){
+                    echo '{title:"'.$l['shipname'].'",show:"'.$l['shipname'].'"},';
+                }
+            ?>
         ],
         callback:function (data) {
             //alert(data.title);
         }
-        })
-        ;
+        });
 
         //下拉获取公司船列表
         $("select[name=firmid]").change(function () {
@@ -116,7 +109,7 @@
                 location.reload();
             } else {
                 $.ajax({
-                    url: "{:U('Search/getFirmShip')}",
+                    url: "{:U('ShSearch/getFirmShip')}",
                     data: 'firmid=' + id,
                     type: 'post',
                     async: false,
@@ -135,7 +128,7 @@
                 btn: ['确定', '取消'] //按钮
             }, function () {
                 $.ajax({
-                    url: "{:U('Search/del_work')}",
+                    url: "{:U('ShSearch/del_work')}",
                     type: "POST",
                     data: {
                         resultid: resultid
@@ -161,7 +154,7 @@
                 btn: ['确定', '取消'] //按钮
             }, function () {
                 $.ajax({
-                    url: "{:U('Search/recoverWork')}",
+                    url: "{:U('ShSearch/recoverWork')}",
                     type: "POST",
                     data: {
                         resultid: resultid
@@ -189,7 +182,7 @@
                     btn: ['确定', '取消'] //按钮
                 }, function () {
                     $.ajax({
-                        url: "{:U('Search/relDelWork')}",
+                        url: "{:U('ShSearch/relDelWork')}",
                         type: "POST",
                         data: {
                             resultid: resultid

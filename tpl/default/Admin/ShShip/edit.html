@@ -1,0 +1,245 @@
+<extend name="Public:base"/>
+<block name="title">船管理</block>
+<block name="navtitle">
+    <li class="active">
+        船舶管理
+    </li>
+    <li class="active">
+        散货船管理
+    </li>
+</block>
+<block name="activeopen21">class="active open"</block>
+<block name="active106">class="active"</block>
+<block name="content">
+    <style>
+        .wid {
+            width: 250px;
+        }
+
+        .kedu {
+            width: 50px;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+    </style>
+    <div class="page-container">
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover"
+               style='width:900px;margin:auto auto;text-align: center;'>
+            <form action="__ACTION__" method="post">
+                <tr>
+                    <td>船舶图片</td>
+                    <td>
+                        <img class="normalFace"
+                             src="{:($shipmsg['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $shipmsg['img']}"
+                             onclick="fileSelect1();" style='width: 150px;height: 110px;'>
+                        <input type="file" name="photo1" id="photo1"
+                               value="{:($shipmsg['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $shipmsg['img']}"
+                               class="filepath1" style="display:none;">
+                        <input type="text" name="img" id="img"
+                               value="{:($shipmsg['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $shipmsg['img']}"
+                               style="display:none;">
+                    </td>
+                </tr>
+                <input type="hidden" name="id" value="{$shipmsg['id']}">
+                <tr>
+                    <td style="width:150px;">船名</td>
+                    <td>
+                        <input type="text" class="wid" required name="shipname" maxlength="15"
+                               value="{$shipmsg['shipname']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>所属公司</td>
+                    <td>
+                        <select class="wid" name="firmid" required>
+                            <volist name="firmlist" id="v">
+                                <option value="{$v['id']}" {$v[
+                                'id'] == $shipmsg['firmid'] ? 'selected' : ''}>{$v['firmname']}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>舱总数</td>
+                    <td>
+                        <input type="text" class="wid" required name="cabinnum" maxlength="2"
+                               value="{$shipmsg['cabinnum']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>编号</td>
+                    <td>
+                        <input type="text" class="wid" name="number" maxlength="50"
+                               value="{$shipmsg['number']}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>舱容到期时间</td>
+                    <td>
+                        <input class="wid" id="test1" name="expire_time" required
+                               value="{$shipmsg['expire_time']|date='Y-m-d',###}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>货名</td>
+                    <td>
+                        <input type="text" class="wid" name="goodsname" value="{$shipmsg['goodsname']}"
+                               maxlength="15"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>识别号</td>
+                    <td>
+                        <input type="text" class="wid" name="shibie_num" value="{$shipmsg['shibie_num']}"
+                               maxlength="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>制造单位</td>
+                    <td>
+                        <input type="text" class="wid" name="make" value="{$shipmsg['make']}" maxlength="25"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:120px;">垂线间距</td>
+                    <td>
+                        <input class="wid" type="text" name="lbp" value="{$shipmsg['lbp']}" required maxlength="8"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:120px;">艏水尺距艏垂线距离</td>
+                    <td>
+                        <input class="wid" type="text" name="df" value="{$shipmsg['df']}" required maxlength="8"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:120px;">舯水尺距舯垂线距离</td>
+                    <td>
+                        <input class="wid" type="text" name="dm" value="{$shipmsg['dm']}" required maxlength="8"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:120px;">艉水尺距艉垂线距离</td>
+                    <td>
+                        <input class="wid" type="text" name="da" value="{$shipmsg['da']}" required maxlength="8"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:120px;">压载水表制表水密度</td>
+                    <td>
+                        <input class="wid" type="text" name="ptwd" value="{$shipmsg['ptwd']}" required maxlength="8"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>吨位</td>
+                    <td>
+                        <input type="text" class="wid" name="weight" value="{$shipmsg['weight']}" required maxlength="8"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=2 style="text-align: center;">
+                        <input type="submit" name="sub" value="提交" class="btn btn-primary">
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <script src="__ADMIN_STATIC__/ajaximg/jquery.min.js"></script>
+    <script src="__ADMIN_STATIC__/ajaximg/lrz.all.bundle.js"></script>
+    <script type="text/javascript">
+        laydate.render({
+            elem: '#test1' //指定元素
+            , theme: 'grid' //主题
+            , format: 'yyyy-MM-dd' //自定义格式
+            , min: 0
+        });
+        //下拉获取cang,单选获取表
+        $("select[name=suanfa]").change(function () {
+            if ($(this).children().is(':selected')) {
+                var id = $(this).val();
+                // var tname = $("#tname");
+                var tname1 = $("#tname1");
+                if (id == 'c') {
+
+                    string = '<td style="width:120px;">底量表纵倾刻度值</td><td><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /></td>';
+                    tname1.html(string);
+                    $("#tname1").show()
+                } else {
+                    $("#tname1").css('display', 'none');
+                }
+            } else {
+                tname.css('display', 'none');
+            }
+        });
+
+        function checkImg(img_id) {
+            // var img_id=document.getElementById('movie_img').value; //根据id得到值
+            var index = img_id.indexOf("."); //得到"."在第几位
+            img_id = img_id.substring(index); //截断"."之前的，得到后缀
+            if (img_id != ".bmp" && img_id != ".png" && img_id != ".gif" && img_id != ".jpg" && img_id != ".jpeg") {  //根据后缀，判断是否符合图片格式
+                // alert("不是指定图片格式,重新选择");
+                return '2';
+                // document.getElementById('movie_img').value="";  // 不符合，就清除，重新选择
+            }
+        }
+
+        //点击绑定
+        function fileSelect1() {
+            document.getElementById("photo1").click();
+        }
+
+        //图片生成并展示
+        $(function () {
+            $(document).on('change', '.filepath1', function (e) {
+                var str = $(this).attr("name");
+                var str1 = $(this).val();
+                var res = checkImg(str1);
+                if (res == '2') {
+                    alert("不是指定图片格式,重新选择");
+                    return false;
+                }
+                lrz(this.files[0], {width: 640, quality: 0.92})
+                    .then(function (rst) {
+                        $.ajax({
+                            url: "{:U('Firm/upload_ajax')}",
+                            type: 'post',
+                            data: {image: rst.base64, zd: str},
+                            dataType: 'json',
+                            enctype: 'multipart/form-data',
+                            success: function (data) {
+                                var obj = eval("(" + data + ")");
+                                if (0 == obj.status) {
+                                    return false;
+                                } else {
+                                    $(".normalFace").css('padding-top', '0px');
+                                    var src = obj.url;
+                                    $("input[name=" + str + "]").parent().children("img").attr("src", src);
+                                    $("input[name='img']").val(src);
+                                    // alert(src);
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) { //上传失败
+                                alert(XMLHttpRequest.status);
+                                alert(XMLHttpRequest.readyState);
+                                alert(textStatus);
+                            }
+                        });
+                    })
+                    .catch(function (err) {
+
+                    })
+                    .always(function () {
+
+                    });
+            });
+        });
+    </script>
+</block>
