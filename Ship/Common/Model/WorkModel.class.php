@@ -759,9 +759,9 @@ class WorkModel extends BaseModel
             self::$function_process .= "count(ulist):2,count(Draught):2 then:\r\n";
             //【2】纵倾（吃水差）查出2条，空高查出2条
             $hou = suanfa5002((float)$ulist[1][$keys[1]], (float)$ulist[0][$keys[1]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-            self::$function_process .= " = " . $hou . "\r\n first_result=" . $hou . " \r\n";
+            self::$function_process .= "\t interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall = " . $hou . "\r\n first_result=" . $hou . " \r\n";
             $qian = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-            self::$function_process .= " = " . $qian . "\r\n second_result=" . $qian . " \r\n";
+            self::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall= " . $qian . "\r\n second_result=" . $qian . " \r\n";
 
             $res = suanfa5002($hou, $qian, $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
             self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
@@ -770,7 +770,7 @@ class WorkModel extends BaseModel
             //【3】纵倾（吃水差）查出1条，空高查出2条
             $res = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
             self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
-
+//            interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall
         } elseif (count($qiu) == '2' and count($ulist) == '1') {
             self::$function_process .= "count(ulist):1,count(Draught):2 then:\r\n";
             //【4】纵倾（吃水差）查出2条，空高查出1条
@@ -2172,6 +2172,7 @@ class WorkModel extends BaseModel
                     $volume = corrent($midu, $r['temperature']);
                     // 膨胀修正
                     $expand = expand($shipmsg['coefficient'], $r['temperature']);
+
                     //判断船是否加管线,管线容量
                     $cabin = new \Common\Model\CabinModel();
                     $guan = $cabin
@@ -2284,6 +2285,7 @@ class WorkModel extends BaseModel
                         'correntkong' => $data['correntkong'],        //修正空距
                         'listcorrection' => $r['listcorrection'],        //纵倾修正
                     );
+
                     // 判断是否已存在数据，已存在就修改，不存在就新增
                     $wheres = array(
                         'cabinid' => $data['cabinid'],

@@ -1280,8 +1280,8 @@ class WorkController extends AppBaseController
     {
         if (I('post.uid') and I('post.imei') and I('post.resultid')
             and I('post.solt') and I('post.shipid') and I('post.cabinid')
-            and I('post.sounding') !== null and I('post.ullage') !== null
-            and I('post.temperature') !== null and I('post.altitudeheight') !== null
+            and I('post.sounding') !== '' and I('post.ullage') !== ''
+            and I('post.temperature') !== '' and I('post.altitudeheight') !== ''
             and I('post.qufen') and I('post.quantity') and I('post.is_pipeline')
             and I('is_work')) {
             $user = new \Common\Model\UserModel();
@@ -1891,7 +1891,7 @@ class WorkController extends AppBaseController
      * */
     public function bookdata()
     {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== null and I('post.ullage2') !== null and I('post.draft1') !== null and I('post.draft2') !== null and I('post.value1') !== null and I('post.value2') !== null and I('post.value3') !== null and I('post.value4') !== null) {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.ullage2') !== '' and I('post.draft1') !== '' and I('post.draft2') !== '' and I('post.value1') !== '' and I('post.value2') !== '' and I('post.value3') !== '' and I('post.value4') !== '') {
             $result = new \Common\Model\WorkModel();
             $res = $result->reckon1(I('post.'));
         } else {
@@ -1920,7 +1920,8 @@ class WorkController extends AppBaseController
      * */
     public function capacitydata()
     {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== null and I('post.ullage2') !== null and I('post.capacity1') !== null and I('post.capacity2') !== null) {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.ullage2') !== '' and I('post.capacity1') !== '' and I('post.capacity2') !== '') {
+
             $result = new \Common\Model\WorkModel();
             $res = $result->capacityreckon(I('post.'));
         } else {
@@ -3096,7 +3097,7 @@ class WorkController extends AppBaseController
             //初始化修正后空高
             $correntKong = array();
             foreach ($datas as $key => $data) {
-                if ($data['cabinid'] and $data['ullage1'] !== null and $data['ullage2'] !== null and $data['draft1'] !== null and $data['draft2'] !== null and $data['value1'] !== null and $data['value2'] !== null and $data['value3'] !== null and $data['value4'] !== null) {
+                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['draft1'] !== '' and $data['draft2'] !== '' and $data['value1'] !== '' and $data['value2'] !== '' and $data['value3'] !== '' and $data['value4'] !== '') {
 
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
@@ -3166,7 +3167,7 @@ class WorkController extends AppBaseController
             M()->startTrans();
 
             foreach ($datas as $key => $data) {
-                if ($data['cabinid'] and $data['ullage1'] !== null and $data['ullage2'] !== null and $data['capacity1'] !== null and $data['capacity2'] !== null) {
+                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['capacity1'] !== '' and $data['capacity2'] !== '') {
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
                     $data['imei'] = $imei;

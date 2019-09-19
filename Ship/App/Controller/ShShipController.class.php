@@ -61,7 +61,7 @@ class ShShipController extends AppBaseController
                     }
 
                     $list = $this->db
-                        ->field('id,shipname,cabinnum,number,weight,goodsname,DF,DA,DM,LBP,firmid,expire_time,img,ptwd')
+                        ->field('id,shipname,cabinnum,number,weight,goodsname,DF,DA,DM,0 + CAST(lbp as char) as lbp,firmid,expire_time,img,ptwd')
                         ->where($where)
                         ->order('id desc')
                         ->select();

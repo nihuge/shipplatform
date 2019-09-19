@@ -248,14 +248,14 @@ function getpao($arr)
 function corrent($midu, $wendu)
 {
     //初始化模型静态变量
-    \Common\Model\ResultModel::$function_process = '';
+    \Common\Model\WorkModel::$function_process = '';
     //设 M=15摄氏度时的实验室密度，T=舱壁温度，Vc=体积修正系数
     if ($midu >= 0.99) {
         $vc = 1.0094684142 - 6.33413410744 * 0.0001 * $wendu + 1.45710416212 * 0.0000001 * ($wendu * $wendu);
-        \Common\Model\ResultModel::$function_process .= '\t VC= ROUND(1.0094684142 - 6.33413410744 * 0.0001 * Cabin_termperature + 1.45710416212 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
+        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0094684142 - 6.33413410744 * 0.0001 * Cabin_termperature + 1.45710416212 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
     } else {
         $vc = 1.0108020095 - 7.2343515319 * 0.0001 * $wendu + 2.1996598346 * 0.0000001 * ($wendu * $wendu);
-        \Common\Model\ResultModel::$function_process .= '\t VC= ROUND(1.0108020095 - 7.2343515319 * 0.0001 *  Cabin_termperature + 2.1996598346 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
+        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0108020095 - 7.2343515319 * 0.0001 *  Cabin_termperature + 2.1996598346 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
     }
     return round($vc, 4);
     // $a = '1';
@@ -270,9 +270,9 @@ function corrent($midu, $wendu)
  */
 function expand($a, $b)
 {
-    \Common\Model\ResultModel::$function_process = '';
+    \Common\Model\WorkModel::$function_process = '';
     $a = round((1 + 0.000012 * ($a) * (($b) - 20)), 6);
-    \Common\Model\ResultModel::$function_process .= '\t EC= round((1 + 0.000012 * (coefficient) * ((Cabin_temperature) - 20)), 6)=' . $a;
+    \Common\Model\WorkModel::$function_process .= '\t EC= round((1 + 0.000012 * (coefficient) * ((Cabin_temperature) - 20)), 6)=' . $a;
     return eval("return $a;");
 }
 
@@ -283,7 +283,7 @@ function suanfa5002($a, $b, $c, $d, $e)
 {
 
     $suanfa = "round(($a-($b)),3)/($c-($d))*($e-($d))+$b";
-    \Common\Model\ResultModel::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall=" . $suanfa;
+    \Common\Model\WorkModel::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall=" . $suanfa;
     return eval("return $suanfa;");
     // return $a.'~~~~'.$b.'~~~~'.$c.'~~~~'.$d.'~~~~'.$e;  
 }
@@ -373,7 +373,6 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
         return;
     }
 
-
     //删除创建时间超过5天的文件
     $delnum = read_all_dir($delDir);
     //写出日志，删除了多少个文件
@@ -448,43 +447,25 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
  */
 function curldo($url, $type = 0, $data = "")
 {
+    // 1. 初始化
+    $ch = curl_init();
+    //设置获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     if ($type === 0) {
-
-        //get提交：1. 初始化
-        $ch = curl_init();
         // 2. 设置选项，包括URL
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
 
         //从证书中检查SSL加密算法
 //        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        // 3. 获取内容
-        $output = curl_exec($ch);
-        if ($output === FALSE) {
-
-            $res = array(
-                'code' => 2,
-                'error' => curl_error($ch),
-            );
-        } else {
-            $res = array(
-                'code' => 1,
-                'content' => $output
-            );
-        }
-        // 4. 释放curl句柄
-        curl_close($ch);
     } else {
-        // 1. 初始化
-        $ch = curl_init();
+
         //设置抓取的url
         curl_setopt($ch, CURLOPT_URL, $url);
         //设置头文件的信息作为数据流输出
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        //设置获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
 
         //设置post方式提交
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -493,24 +474,23 @@ function curldo($url, $type = 0, $data = "")
 
         //从证书中检查SSL加密算法
 //        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
-
-        //执行命令
-        $output = curl_exec($ch);
-        if ($output === FALSE) {
-            $res = array(
-                'code' => 2,
-                'error' => curl_error($ch),
-            );
-        } else {
-            $res = array(
-                'code' => 1,
-                'content' => $output
-            );
-        }
-        // 4. 释放curl句柄
-        curl_close($ch);
     }
+
+    //执行命令
+    $output = curl_exec($ch);
+    if ($output === FALSE) {
+        $res = array(
+            'code' => 2,
+            'error' => curl_error($ch),
+        );
+    } else {
+        $res = array(
+            'code' => 1,
+            'content' => $output
+        );
+    }
+    // 4. 释放curl句柄
+    curl_close($ch);
     return $res;
 }
 
