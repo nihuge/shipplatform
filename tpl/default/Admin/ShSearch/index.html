@@ -66,7 +66,8 @@
                     <td>{$v['weight']}</td>
                     <td>{$v['personality']['start']}</td>
                     <td>{$v['personality']['objective']}</td>
-                    <td><a href="__CONTROLLER__/process/resultid/{$v['id']}" style="color:#3ca0fe">查看</a>&nbsp;/&nbsp;
+                    <td><a href="__CONTROLLER__/msg/resultid/{$v['id']}" style="color:#3ca0fe">查看</a>&nbsp;/&nbsp;
+                        <a href="__CONTROLLER__/process/resultid/{$v['id']}" style="color:#3ca0fe">过程</a>&nbsp;/&nbsp;
                         <if condition="$v['del_sign'] eq 1">
                             <a href="javascript:;" onclick="delWork({$v['id']})" style="color:#3ca0fe">删除</a>
                     <else/>

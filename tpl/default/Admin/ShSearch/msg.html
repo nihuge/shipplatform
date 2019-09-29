@@ -2,182 +2,392 @@
 <block name="title">作业查询</block>
 <block name="navtitle">
     <li class="active">
-        作业查询
+        水尺作业查询
     </li>
     <li class="active">
-        作业详情
+        水尺作业详情
     </li>
 </block>
 <block name="activeopen31">class="active open"</block>
 <block name="active54">class="active"</block>
 <block name="content">
-	<style>
-        .table_01,.ju { font-size:14px; color:#333; font-family:"方正兰亭黑简";margin:auto 5px;font-weight: bold}
-        .table_02 { font-size:14px; font-family:"方正兰亭黑简"; color:#333;margin:auto 5px;}
-        .box02 { height:41px; margin:20px auto; line-height:50px; text-align:center; font-size:14px; color:#fff; font-family:"方正兰亭黑简";}
-        input { background-color:#3ca0fe; border:none; margin-left:7px; height:30px; color:#fff; font-size:14px; cursor:pointer;}
-        .ju03 {height:35px; width:200px;}
-        tr{text-align: center;}
-        .div1{display: inline-block;}
-    </style>
-	<h2 align="center">{$content['goodname']}计重记录单</h2>
-	<br>
-    <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
-        <div class="div1" style="text-align: left;width:45px;height:40px;line-height: 40px;">船名：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:135px;text-align: center;">{$content['shipname']}</div>
-        <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">航次号：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">{$personality['voyage']}</div>
-        <div class="div1" style="text-align: center;width:75px;height:40px;line-height: 40px;">作业地点：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['locationname']}</div>
-        <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">运单量：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:95px;text-align: center;">{$personality['transport']}</div>
-        <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">货名：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">{$personality['goodsname']}</div>
-        <div class="div1" style="text-align: center;width:45px;height:40px;line-height: 40px;">编号：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['number']}</div>
-    </div>
-    <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
-        <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">起运港：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:125px;text-align: center;">{$personality['start']}</div>
-        <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">目的港：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['objective']}</div>
-        <div class="div1" style="text-align: left;width:115px;height:40px;line-height: 40px;">作业起止时间：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$endtime}</div>
-        <div class="div1" style="text-align: left;width:25px;height:40px;line-height: 40px;">到</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$starttime}</div>
-    </div>
-    <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
-        <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">&nbsp;</div>
-        <div class="div1" style="text-align: left;width:130px;height:40px;line-height: 40px;">首次</div>
-        <div class="div1" style="text-align: left;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['qianchi']}</div>
-        <div class="div1" style="text-align: left;width:70px;height:40px;line-height: 40px;">&nbsp;</div>
-        <div class="div1" style="text-align: center;width:130px;height:40px;line-height: 40px;">末次</div>
-        <div class="div1" style="text-align: center;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['houchi']}</div>
-    </div>
-    <table border="1" cellspacing="0" cellpadding="0" align="center" width="1077px" class="table_02">
+    <table style="text-align: center;width: 95%;border-bottom: 3px double;margin:0 auto;">
+        <tbody>
         <tr>
-            <th>油舱名</th>
-            <th>温度</th>
-            <th>空距
-                <br>(米)</th>
-            <th>纵倾修正<br>值(米)</th>
-            <th>修正后空<br>距(米)</th>
-            <th>容量
-                <br>(米 <sup>3</sup> )</th>
-            <th>体积修正<br>系数</th>
-            <th>膨胀修正<br>系数</th>
-            <th>标准容量</th>
-            <th width="2px"></th>
-            <th>温度</th>
-            <th>空距
-                <br>(米)</th>
-            <th>纵倾修正<br>值(米)</th>
-            <th>修正后空<br>距(米)</th>
-            <th>容量
-                <br>(米 <sup>3</sup> )</th>
-            <th>体积修正<br>系数</th>
-            <th>膨胀修正<br>系数</th>
-            <th>标准容量</th>
-        </tr>
-        <volist name="result" id="v">
-            <tr>
-                <td style='height:20px'>{$v[0]['cabinname']}</td>
-                <td>{$v[0]['temperature']}</td>
-                <td>{$v[0]['ullage']}</td>
-                <td>{$v[0]['listcorrection']}</td>
-                <td>{$v[0]['correntkong']}</td>
-                <td>{$v[0]['cabinweight']}</td>
-                <td>{$v[0]['volume']}</td>
-                <td>{$v[0]['expand']}</td>
-                <td>{$v[0]['standardcapacity']}</td>
-                <td></td>
-                <td>{$v[1]['temperature']}</td>
-                <td>{$v[1]['ullage']}</td>
-                <td>{$v[1]['listcorrection']}</td>
-                <td>{$v[1]['correntkong']}</td>
-                <td>{$v[1]['cabinweight']}</td>
-                <td>{$v[1]['volume']}</td>
-                <td>{$v[1]['expand']}</td>
-                <td>{$v[1]['standardcapacity']}</td>
-                
-            </tr>
-        </volist>
-        <tr>
-            <td style="height:20px"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td style="font-size:xx-large" colspan="2">
+                南&nbsp;京&nbsp;中&nbsp;理&nbsp;外&nbsp;轮&nbsp;理&nbsp;货&nbsp;有&nbsp;限&nbsp;公&nbsp;司
+            </td>
         </tr>
         <tr>
-            <td style="height:20px" class="ju01">总容量</td>
-            <td colspan="6"></td>
-            <td colspan="2">{$content['qianweight']}</td>
-            <td></td>
-            <td colspan="6"></td>
-            <td colspan="2">{$content['houweight']}</td>
+            <td style="width: 30%;text-align: right;" rowspan="2">
+                <img src="Public/home/img/aaa.png">
+            </td>
+            <td style="text-align: left">
+                <span style="text-align: left">
+                CHINA&nbsp;&nbsp;OCEAN&nbsp;&nbsp;SHIPPING&nbsp;&nbsp;TALLY&nbsp;&nbsp;CO.,&nbsp;LTD.&nbsp;&nbsp;NANJING</span>
+            </td>
         </tr>
         <tr>
-            <td colspan="7" align="left" style="height:20px" class="ju01">&nbsp;实验室密度15℃(克/厘米<sup>3</sup>)</td>
-            <td colspan="2">{$content['qiandensity']}</td>
-            <td></td>
-            <td colspan="6"></td>
-            <td colspan="2">{$content['houdensity']}</td>
+            <td style="text-align: left">
+                <span style="margin-left: 40px;">Add:68#Beizushian,Guolou&nbsp;District,Nanjing,China</span>
+            </td>
         </tr>
         <tr>
-            <td colspan="7" align="left" style="height:20px" class="ju01">&nbsp;重量(吨)</td>
-            <td colspan="2">{$content['qiantotal']}</td>
             <td></td>
-            <td colspan="6"></td>
-            <td colspan="2">{$content['houtotal']}</td>
+            <td style="text-align: left">
+                <span style="margin-left: 10px;">Tel:86-25-58582066&nbsp;&nbsp;&nbsp;Fax:86-25-58752747&nbsp;&nbsp;Postcode:210015</span>
+            </td>
         </tr>
-        <tr>
-            <td colspan="16" align="left" style="height:20px" class="ju01">&nbsp;货重(吨)</td>
-            <td colspan="2">{$content['weight']}</td>
-        </tr>
+        </tbody>
     </table>
-    <h3></h3>
-    <table border="0" cellspacing="0" cellpadding="0" width="900px" class="ju">
-        <tr>
-            <th colspan=4>&nbsp;</th>
+
+
+    <div style="margin-top: 30px;text-align: center;font-size:x-large;">
+        <strong>水尺计重记录单</strong>
+    </div>
+    <div style="text-align: center;font-size:large;">
+        <strong>海伦船型</strong>
+    </div>
+    <table style="width: 95%;margin: 0 auto;text-align: center;border-collapse: collapse;">
+        <tbody>
+        <tr style="height: 10px">
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 12%"></td>
         </tr>
         <tr>
-            <th width="50px" align="left" class="ju02">备注：</th>
-            <th colspan='3' style="border-bottom:solid 1px black;text-align:left">&nbsp;&nbsp;{$content['remark']}</th>
+            <td><strong>船名</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["content"]["shipname"]}</td>
+            <td><strong>航次</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["voyage"]}</td>
+            <td><strong>货名</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["cargoname"]}</td>
         </tr>
         <tr>
-            <th colspan="4" style="border-bottom:solid 1px black;height:30px;">&nbsp;</th>
-        </tr>
-        
-        <tr>
-            <th colspan=4>&nbsp;</th>
-        </tr>
-        <tr>
-            <th colspan=4>&nbsp;</th>
+            <td><strong>装货港</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["start"]}</td>
+            <td><strong>卸货港</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["objective"]}</td>
+            <td><strong>检验地点</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["locationname"]}</td>
         </tr>
         <tr>
-            <th colspan=4>&nbsp;</th>
+            <td><strong>开工时间</strong></td>
+            <td colspan="3" style="border-bottom: 1px solid;">{$arr["content"]["time"]}</td>
+            <td><strong>完工时间</strong></td>
+            <td colspan="4" style="border-bottom: 1px solid;">{$nowTime}</td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td style="height: 20px"></td>
+            <td colspan="3" style="height: 20px"><strong>空载吃水</strong></td>
+            <td style="height: 20px"></td>
+            <td style="height: 20px"></td>
+            <td style="height: 20px" colspan="3"><strong>重载吃水</strong></td>
         </tr>
         <tr>
-            <th width="50px" align="left" class="ju02">计量员：</th>
-            <th width="185px" style="border-bottom:solid 1px black"></th>
-            <th width="285px" align="right" class="ju02">船舶签章：</th>
-            <th width="175px" style="border-bottom:solid 1px black"></th>
+            <td></td>
+            <td style="border: 1px solid;">艏</td>
+            <td style="border: 1px solid;">艉</td>
+            <td style="border: 1px solid;">舯</td>
+            <td></td>
+            <td></td>
+            <td style="border: 1px solid;">艏</td>
+            <td style="border: 1px solid;">艉</td>
+            <td style="border: 1px solid;">舯</td>
         </tr>
+        <tr>
+            <td>左舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["forntleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["afterleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["centerleft"]}</td>
+            <td></td>
+            <td>左舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["forntleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["afterleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["centerleft"]}</td>
+        </tr>
+        <tr>
+            <td>右舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["forntright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["afterright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["centerright"]}</td>
+            <td></td>
+            <td>右舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["forntright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["afterright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["centerright"]}</td>
+        </tr>
+        <tr>
+            <td>平均值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fornt"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["after"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["center"]}</td>
+            <td></td>
+            <td>平均值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fornt"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["after"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["center"]}</td>
+        </tr>
+        <tr>
+            <td>修正值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fc"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["ac"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["mc"]}</td>
+            <td></td>
+            <td>修正值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fc"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["ac"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["mc"]}</td>
+        </tr>
+        <tr>
+            <td>龙骨修正</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td></td>
+            <td>龙骨修正</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+        </tr>
+        <tr>
+            <td>修正后</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fm"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["am"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["mm"]}</td>
+            <td></td>
+            <td>修正后</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fm"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["am"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["mm"]}</td>
+        </tr>
+        <tr>
+            <td colspan="9" style="height: 20px;"></td>
+        </tr>
+        <tr>
+            <td><strong>平均吃水</strong></td>
+            <td><strong>{$arr["content"]["qian_d_m"]}</strong></td>
+            <td><strong>m</strong></td>
+            <td colspan="2"></td>
+            <td><strong>平均吃水</strong></td>
+            <td><strong>{$arr["content"]["hou_d_m"]}</strong></td>
+            <td><strong>m</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>排水量</td>
+            <td>{$arr["record"]["q"]["dsc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>排水量</td>
+            <td>{$arr["record"]["h"]["dsc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>纵倾修正</td>
+            <td>{$arr["record"]["q"]["dc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>纵倾修正</td>
+            <td>{$arr["record"]["h"]["dc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>港水修正</td>
+            <td>{$arr["record"]["q"]["dpc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>港水修正</td>
+            <td>{$arr["record"]["h"]["dpc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>修正后</td>
+            <td>{$arr["content"]["qian_dspc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>修正后</td>
+            <td>{$arr["content"]["hou_dspc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="9" style="height: 10px;"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>空载相关数据</strong></td>
+            <td colspan="2"></td>
+            <td colspan="3"><strong>重载相关数据</strong></td>
+            <td>
+        </tr>
+        <tr>
+            <td>空 船</td>
+            <td>{$arr["content"]["ship_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>空 船</td>
+            <td>{$arr["content"]["ship_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>轻 油</td>
+            <td>{$arr["content"]["qian_fuel_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>轻 油</td>
+            <td>{$arr["content"]["hou_fuel_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>重 油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>重 油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>润滑油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>润滑油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>淡 水</td>
+            <td>{$arr["content"]["qian_fwater_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>淡 水</td>
+            <td>{$arr["content"]["hou_fwater_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>常 数</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>常 数</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>压载水</td>
+            <td>{$arr["content"]["qian_bw"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>压载水</td>
+            <td>{$arr["content"]["hou_bw"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>其它货物</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>其它货物</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>其 它</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>其 它</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>合 计</td>
+            <td>{$qian_total}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>合 计</td>
+            <td>{$hou_total}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>排水量</td>
+            <td>{$arr["content"]["qian_dspc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>排水量</td>
+            <td>{$arr["content"]["hou_dspc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td>排水量差值</td>
+            <td>{$hou_qian_dspc}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td>水油差值</td>
+            <td>{$hou_qian_total}</td>
+            <td>MT</td>
+            <td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td><strong>总计货重</strong></td>
+            <td><strong>{$arr["content"]["weight"]}</strong></td>
+            <td><strong>MT</strong></td>
+            <td>
+        </tr>
+        <tr style="height: 20px;">
+            <td colspan="9"></td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid;"><strong>备注：</strong></td>
+            <td colspan="8" style="border-bottom: 1px solid;text-align: left;">{$arr["content"]["remark"]}</td>
+        </tr>
+        <tr style="height: 25px;">
+            <td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+        </tr>
+        <tr style="height: 25px;">
+            <td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+        </tr>
+        <tr style="height: 40px;">
+            <td></td>
+            <td colspan="3" style="border-bottom: 1px solid;height: 40px;"></td>
+            <td colspan="2"></td>
+            <td colspan="2" style="border-bottom: 1px solid;height: 40px;"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="3" align="center" style="text-align: center"><strong>检验员</strong></td>
+            <td colspan="2"></td>
+            <td colspan="2" align="center" style="text-align: center"><strong>大副</strong></td>
+            <td></td>
+        </tr>
+        </tbody>
     </table>
 </block>

@@ -299,7 +299,7 @@ class ShResultModel extends BaseModel
             $forntrecord = M("sh_forntrecord");
 
             $msg = $forntrecord
-                ->field('forntleft,forntright,centerleft,centerright,afterleft,afterright,fornt,center,after,solt')
+                ->field('*')
                 ->where($where)
                 ->select();
 
@@ -453,7 +453,7 @@ class ShResultModel extends BaseModel
         $forntrecord = M("sh_forntrecord");
 
         $msg = $forntrecord
-            ->field('forntleft,forntright,centerleft,centerright,afterleft,afterright,fornt,center,after,solt')
+            ->field('forntleft,forntright,centerleft,centerright,afterleft,afterright,fornt,center,after,solt,')
             ->where($where)
             ->select();
 
@@ -3522,8 +3522,6 @@ class ShResultModel extends BaseModel
     }
 
 
-
-
     /**
      * 重新计算常数和货物重量
      * @param $resultid
@@ -4360,8 +4358,7 @@ class ShResultModel extends BaseModel
     /**
      * 修改总量
      */
-    public
-    function historical_sum($historical, $name, $id, $dataweight)
+    public function historical_sum($historical, $name, $id, $dataweight)
     {
         $historical_sum = M($historical);
         $map[$name] = $id;
@@ -4377,6 +4374,592 @@ class ShResultModel extends BaseModel
     }
 
     /**
-     * 新计算接口
+     * 打印pdf
      */
+    public function pdf($arr, $resultid, $uid)
+    {
+        //判断文件是否存在
+        $file = $_SERVER['DOCUMENT_ROOT'] . '/Public/pdf/ShMiniProgram/' . $uid . "/" . $resultid . ".pdf";
+
+        $fileDir = $_SERVER['DOCUMENT_ROOT'] . '/Public/pdf/ShMiniProgram/' . $uid . "/";
+
+        $delDir = $_SERVER['DOCUMENT_ROOT'] . '/Public/pdf/ShMiniProgram';
+
+        //echo $_SERVER['DOCUMENT_ROOT'];
+        //检测文件夹是否存在,不存在创建
+        if (mkdirs($fileDir) == false) {
+            return;
+        }
+
+        //删除创建时间超过5天的文件
+        $delnum = read_all_dir($delDir);
+
+        //检测文件是否存在，存在则删除
+        if (is_file($file)) {
+            if(!unlink($file)) return "";
+        }
+
+        vendor('mpdf.mpdf');
+        $pdf = new \mPDF('zh-cn', 'A4', 0, '宋体', 0, 0);
+        // 设置打印模式
+
+        // 设置是否自动分页  距离底部多少距离时分页
+        $pdf->SetAutoPageBreak(TRUE, '1');
+
+        //新增一个页面
+//        $pdf->AddPage('R', 'A4');
+
+        // 获取打印的模板
+        $html1 = $this->getPDFHtmlCode($arr);
+
+        //内容写入PDF
+        $pdf->WriteHTML($html1);
+        //输出
+        $pdf->Output($file, 'F');
+        return '/Public/pdf/ShMiniProgram/' . $uid . "/" . $resultid . ".pdf";
+//        $pdf->Output();
+    }
+
+    public function getPDFHtmlCode($arr)
+    {
+        $html_tpl = <<<html_tpl
+<table style="text-align: center;width: 95%;border-bottom: 3px double;margin:0 auto;">
+	<tbody>
+		<tr>
+			<td style="font-size:xx-large" colspan="2">
+				南&nbsp;京&nbsp;中&nbsp;理&nbsp;外&nbsp;轮&nbsp;理&nbsp;货&nbsp;有&nbsp;限&nbsp;公&nbsp;司
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 30%;text-align: right;" rowspan="2">
+				<img src="Public/home/img/aaa.png">
+			</td>
+			<td style="text-align: left">
+				<span style="text-align: left">
+				CHINA&nbsp;&nbsp;OCEAN&nbsp;&nbsp;SHIPPING&nbsp;&nbsp;TALLY&nbsp;&nbsp;CO.,&nbsp;LTD.&nbsp;&nbsp;NANJING</span>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left">
+				<span style="margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add:68#Beizushian,Guolou&nbsp;District,Nanjing,China</span>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="text-align: left">
+				<span style="margin-left: 10px;">&nbsp;&nbsp;Tel:86-25-58582066&nbsp;&nbsp;&nbsp;Fax:86-25-58752747&nbsp;&nbsp;Postcode:210015</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<div style="margin-top: 30px;text-align: center;font-size:x-large;">
+	<strong>水尺计重记录单</strong>
+</div>
+<div style="text-align: center;font-size:large;">
+	<strong>海伦船型</strong>
+</div>
+<table style="width: 95%;margin: 0 auto;text-align: center;border-collapse: collapse;">
+	<tbody>
+		<tr style="height: 10px">
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 11%"></td>
+			<td style="width: 12%"></td>
+		</tr>
+		<tr>
+			<td><strong>船名</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{content.shipname}}</td>
+			<td><strong>航次</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{personality.voyage}}</td>
+			<td><strong>货名</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{personality.cargoname}}</td>
+		</tr>
+		<tr>
+			<td><strong>装货港</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{personality.start}}</td>
+			<td><strong>卸货港</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{personality.objective}}</td>
+			<td><strong>检验地点</strong></td>
+			<td colspan="2" style="border-bottom: 1px solid;">{{personality.locationname}}</td>
+		</tr>
+		<tr>
+			<td><strong>开工时间</strong></td>
+			<td colspan="3" style="border-bottom: 1px solid;">{{content.time}}</td>
+			<td><strong>完工时间</strong></td>
+			<td colspan="4" style="border-bottom: 1px solid;">{{nowTime}}</td>
+		</tr>
+		<tr></tr>
+		<tr>
+			<td style="height: 20px"></td>
+			<td colspan="3" style="height: 20px"><strong>空载吃水</strong></td>
+			<td style="height: 20px"></td>
+			<td style="height: 20px"></td>
+			<td style="height: 20px" colspan="3"><strong>重载吃水</strong></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="border: 1px solid;">艏</td>
+			<td style="border: 1px solid;">艉</td>
+			<td style="border: 1px solid;">舯</td>
+			<td></td>
+			<td></td>
+			<td style="border: 1px solid;">艏</td>
+			<td style="border: 1px solid;">艉</td>
+			<td style="border: 1px solid;">舯</td>
+		</tr>
+		<tr>
+			<td>左舷</td>
+			<td style="border: 1px solid;">{{fornt.q.forntleft}}</td>
+			<td style="border: 1px solid;">{{fornt.q.afterleft}}</td>
+			<td style="border: 1px solid;">{{fornt.q.centerleft}}</td>
+			<td></td>
+			<td>左舷</td>
+			<td style="border: 1px solid;">{{fornt.h.forntleft}}</td>
+			<td style="border: 1px solid;">{{fornt.h.afterleft}}</td>
+			<td style="border: 1px solid;">{{fornt.h.centerleft}}</td>
+		</tr>
+		<tr>
+			<td>右舷</td>
+			<td style="border: 1px solid;">{{fornt.q.forntright}}</td>
+			<td style="border: 1px solid;">{{fornt.q.afterright}}</td>
+			<td style="border: 1px solid;">{{fornt.q.centerright}}</td>
+			<td></td>
+			<td>右舷</td>
+			<td style="border: 1px solid;">{{fornt.h.forntright}}</td>
+			<td style="border: 1px solid;">{{fornt.h.afterright}}</td>
+			<td style="border: 1px solid;">{{fornt.h.centerright}}</td>
+		</tr>
+		<tr>
+			<td>平均值</td>
+			<td style="border: 1px solid;">{{fornt.q.fornt}}</td>
+			<td style="border: 1px solid;">{{fornt.q.after}}</td>
+			<td style="border: 1px solid;">{{fornt.q.center}}</td>
+			<td></td>
+			<td>平均值</td>
+			<td style="border: 1px solid;">{{fornt.h.fornt}}</td>
+			<td style="border: 1px solid;">{{fornt.h.after}}</td>
+			<td style="border: 1px solid;">{{fornt.h.center}}</td>
+		</tr>
+		<tr>
+			<td>修正值</td>
+			<td style="border: 1px solid;">{{fornt.q.fc}}</td>
+			<td style="border: 1px solid;">{{fornt.q.ac}}</td>
+			<td style="border: 1px solid;">{{fornt.q.mc}}</td>
+			<td></td>
+			<td>修正值</td>
+			<td style="border: 1px solid;">{{fornt.h.fc}}</td>
+			<td style="border: 1px solid;">{{fornt.h.ac}}</td>
+			<td style="border: 1px solid;">{{fornt.h.mc}}</td>
+		</tr>
+		<tr>
+			<td>龙骨修正</td>
+			<td style="border: 1px solid;">0</td>
+			<td style="border: 1px solid;">0</td>
+			<td style="border: 1px solid;">0</td>
+			<td></td>
+			<td>龙骨修正</td>
+			<td style="border: 1px solid;">0</td>
+			<td style="border: 1px solid;">0</td>
+			<td style="border: 1px solid;">0</td>
+		</tr>
+		<tr>
+			<td>修正后</td>
+			<td style="border: 1px solid;">{{fornt.q.fm}}</td>
+			<td style="border: 1px solid;">{{fornt.q.am}}</td>
+			<td style="border: 1px solid;">{{fornt.q.mm}}</td>
+			<td></td>
+			<td>修正后</td>
+			<td style="border: 1px solid;">{{fornt.h.fm}}</td>
+			<td style="border: 1px solid;">{{fornt.h.am}}</td>
+			<td style="border: 1px solid;">{{fornt.h.mm}}</td>
+		</tr>
+		<tr>
+			<td colspan="9" style="height: 20px;"></td>
+		</tr>
+		<tr>
+			<td><strong>平均吃水</strong></td>
+			<td><strong>{{content.qian_d_m}}</strong></td>
+			<td><strong>m</strong></td>
+			<td colspan="2"></td>
+			<td><strong>平均吃水</strong></td>
+			<td><strong>{{content.hou_d_m}}</strong></td>
+			<td><strong>m</strong></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>排水量</td>
+			<td>{{record.q.dsc}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>排水量</td>
+			<td>{{record.h.dsc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>纵倾修正</td>
+			<td>{{record.q.dc}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>纵倾修正</td>
+			<td>{{record.h.dc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>港水修正</td>
+			<td>{{record.q.dpc}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>港水修正</td>
+			<td>{{record.h.dpc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>修正后</td>
+			<td>{{content.qian_dspc}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>修正后</td>
+			<td>{{content.hou_dspc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="9" style="height: 10px;"></td>
+		</tr>
+		<tr>
+			<td colspan="3"><strong>空载相关数据</strong></td>
+			<td colspan="2"></td>
+			<td colspan="3"><strong>重载相关数据</strong></td>
+			<td>
+		</tr>
+		<tr>
+			<td>空 船</td>
+			<td>{{content.ship_weight}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>空 船</td>
+			<td>{{content.ship_weight}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>轻 油</td>
+			<td>{{content.qian_fuel_weight}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>轻 油</td>
+			<td>{{content.hou_fuel_weight}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>重 油</td>
+			<td>0</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>重 油</td>
+			<td>0</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>润滑油</td>
+			<td>0</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>润滑油</td>
+			<td>0</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>淡 水</td>
+			<td>{{content.qian_fwater_weight}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>淡 水</td>
+			<td>{{content.hou_fwater_weight}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>常 数</td>
+			<td>0</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>常 数</td>
+			<td>0</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>压载水</td>
+			<td>{{content.qian_bw}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>压载水</td>
+			<td>{{content.hou_bw}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>其它货物</td>
+			<td>0</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>其它货物</td>
+			<td>0</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>其 它</td>
+			<td>0</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>其 它</td>
+			<td>0</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>合 计</td>
+			<td>{{qian_total}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>合 计</td>
+			<td>{{hou_total}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>排水量</td>
+			<td>{{content.qian_dspc}}</td>
+			<td>MT</td>
+			<td colspan="2"></td>
+			<td>排水量</td>
+			<td>{{content.hou_dspc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="5"></td>
+			<td>排水量差值</td>
+			<td>{{hou-qian_dspc}}</td>
+			<td>MT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="5"></td>
+			<td>水油差值</td>
+			<td>{{hou-qian_total}}</td>
+			<td>MT</td>
+			<td>
+		</tr>
+		<tr>
+			<td colspan="5"></td>
+			<td><strong>总计货重</strong></td>
+			<td><strong>{{content.weight}}</strong></td>
+			<td><strong>MT</strong></td>
+			<td>
+		</tr>
+		<tr style="height: 20px;">
+			<td colspan="9"></td>
+		</tr>
+		<tr>
+			<td style="border-bottom: 1px solid;"><strong>备注：</strong></td>
+				<td colspan="8" style="border-bottom: 1px solid;text-align: left;">{{content.remark}}</td>
+		</tr>
+		<tr style="height: 25px;">
+				<td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+		</tr>
+		<tr style="height: 25px;">
+				<td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+		</tr>
+		<tr style="height: 40px;">
+			<td></td>
+			<td colspan="3" style="border-bottom: 1px solid;height: 40px;"></td>
+			<td colspan="2"></td>
+			<td colspan="2" style="border-bottom: 1px solid;height: 40px;"></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan="3" align="center" style="text-align: center"><strong>检验员</strong></td>
+			<td colspan="2"></td>
+			<td colspan="2" align="center" style="text-align: center"><strong>大副</strong></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+html_tpl;
+
+        $tpl_var = array(
+            "{{content.shipname}}",
+            "{{personality.voyage}}",
+            "{{personality.cargoname}}",
+            "{{personality.start}}",
+            "{{personality.objective}}",
+            "{{personality.locationname}}",
+            "{{content.time}}",
+            "{{nowTime}}",
+            "{{fornt.q.forntleft}}",
+            "{{fornt.q.afterleft}}",
+            "{{fornt.q.centerleft}}",
+            "{{fornt.h.forntleft}}",
+            "{{fornt.h.afterleft}}",
+            "{{fornt.h.centerleft}}",
+            "{{fornt.q.forntright}}",
+            "{{fornt.q.afterright}}",
+            "{{fornt.q.centerright}}",
+            "{{fornt.h.forntright}}",
+            "{{fornt.h.afterright}}",
+            "{{fornt.h.centerright}}",
+            "{{fornt.q.fornt}}",
+            "{{fornt.q.after}}",
+            "{{fornt.q.center}}",
+            "{{fornt.h.fornt}}",
+            "{{fornt.h.after}}",
+            "{{fornt.h.center}}",
+            "{{fornt.q.fc}}",
+            "{{fornt.q.ac}}",
+            "{{fornt.q.mc}}",
+            "{{fornt.h.fc}}",
+            "{{fornt.h.ac}}",
+            "{{fornt.h.mc}}",
+            "{{fornt.q.fm}}",
+            "{{fornt.q.am}}",
+            "{{fornt.q.mm}}",
+            "{{fornt.h.fm}}",
+            "{{fornt.h.am}}",
+            "{{fornt.h.mm}}",
+            "{{content.qian_d_m}}",
+            "{{content.hou_d_m}}",
+            "{{record.q.dsc}}",
+            "{{record.h.dsc}}",
+            "{{record.q.dc}}",
+            "{{record.h.dc}}",
+            "{{record.q.dpc}}",
+            "{{record.h.dpc}}",
+            "{{content.qian_dspc}}",
+            "{{content.hou_dspc}}",
+            "{{content.ship_weight}}",
+            "{{content.ship_weight}}",
+            "{{content.qian_fuel_weight}}",
+            "{{content.hou_fuel_weight}}",
+            "{{content.qian_fwater_weight}}",
+            "{{content.hou_fwater_weight}}",
+            "{{content.qian_bw}}",
+            "{{content.hou_bw}}",
+            "{{qian_total}}",
+            "{{hou_total}}",
+            "{{content.qian_dspc}}",
+            "{{content.hou_dspc}}",
+            "{{hou-qian_dspc}}",
+            "{{hou-qian_total}}",
+            "{{content.weight}}",
+            "{{content.remark}}"
+        );
+
+        $qian_total = $arr['content']['ship_weight'] + $arr['content']['qian_fuel_weight'] + $arr['content']['qian_fwater_weight'] + $arr['content']['qian_bw'];
+        $hou_total = $arr['content']['ship_weight'] + $arr['content']['hou_fuel_weight'] + $arr['content']['hou_fwater_weight'] + $arr['content']['hou_bw'];
+
+        $arr['record'] = array();
+        $arr['record']['q'] = array();
+        $arr['record']['h'] = array();
+
+        foreach ($arr['ds'] as $key => $value) {
+            if ($value['solt'] == 1) {
+                $arr['record']['q']['dsc'] = $value['dsc'];
+                $arr['record']['q']['dc'] = $value['dc'];
+                $arr['record']['q']['dpc'] = $value['dpc'];
+            }else{
+                $arr['record']['h']['dsc'] = $value['dsc'];
+                $arr['record']['h']['dc'] = $value['dc'];
+                $arr['record']['h']['dpc'] = $value['dpc'];
+            }
+        }
+
+
+        $tpl_value = array(
+            $arr['content']['shipname'],
+            $arr['personality']['voyage'],
+            $arr['personality']['cargoname'],
+            $arr['personality']['start'],
+            $arr['personality']['objective'],
+            $arr['personality']['locationname'],
+            date('Y-m-d H:i:s', $arr['content']['time']),
+            date('Y-m-d H:i:s', time()),
+            $arr['fornt']['q']['forntleft'],
+            $arr['fornt']['q']['afterleft'],
+            $arr['fornt']['q']['centerleft'],
+            $arr['fornt']['h']['forntleft'],
+            $arr['fornt']['h']['afterleft'],
+            $arr['fornt']['h']['centerleft'],
+            $arr['fornt']['q']['forntright'],
+            $arr['fornt']['q']['afterright'],
+            $arr['fornt']['q']['centerright'],
+            $arr['fornt']['h']['forntright'],
+            $arr['fornt']['h']['afterright'],
+            $arr['fornt']['h']['centerright'],
+            $arr['fornt']['q']['fornt'],
+            $arr['fornt']['q']['after'],
+            $arr['fornt']['q']['center'],
+            $arr['fornt']['h']['fornt'],
+            $arr['fornt']['h']['after'],
+            $arr['fornt']['h']['center'],
+            $arr['fornt']['q']['fc'],
+            $arr['fornt']['q']['ac'],
+            $arr['fornt']['q']['mc'],
+            $arr['fornt']['h']['fc'],
+            $arr['fornt']['h']['ac'],
+            $arr['fornt']['h']['mc'],
+            $arr['fornt']['q']['fm'],
+            $arr['fornt']['q']['am'],
+            $arr['fornt']['q']['mm'],
+            $arr['fornt']['h']['fm'],
+            $arr['fornt']['h']['am'],
+            $arr['fornt']['h']['mm'],
+            $arr['content']['qian_d_m'],
+            $arr['content']['qian_d_m'],
+            $arr['record']['q']['dsc'],
+            $arr['record']['h']['dsc'],
+            $arr['record']['q']['dc'],
+            $arr['record']['h']['dc'],
+            $arr['record']['q']['dpc'],
+            $arr['record']['h']['dpc'],
+            $arr['content']['qian_dspc'],
+            $arr['content']['hou_dspc'],
+            $arr['content']['ship_weight'],
+            $arr['content']['ship_weight'],
+            $arr['content']['qian_fuel_weight'],
+            $arr['content']['hou_fuel_weight'],
+            $arr['content']['qian_fwater_weight'],
+            $arr['content']['hou_fwater_weight'],
+            $arr['content']['qian_bw'],
+            $arr['content']['hou_bw'],
+            $qian_total,
+            $hou_total,
+            $arr['content']['qian_dspc'],
+            $arr['content']['hou_dspc'],
+            $arr['content']['hou_dspc'] - $arr['content']['qian_dspc'],
+            $hou_total - $qian_total,
+            $arr['content']['weight'],
+            $arr['content']['remark']
+        );
+
+        $html = str_replace($tpl_var, $tpl_value, $html_tpl);
+
+        return $html;
+    }
 }

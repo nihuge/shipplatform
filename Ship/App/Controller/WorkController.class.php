@@ -1233,7 +1233,7 @@ class WorkController extends AppBaseController
                             'solt' => I('post.solt'),
                             'cabinid' => I('post.cabinid'),
                             'resultid' => I('post.resultid'),
-                            'is_work'=>I('post.is_work')
+                            'is_work' => I('post.is_work')
                         );
 
                         $num = M('resultrecord')->where($map)->count();
@@ -2490,9 +2490,9 @@ class WorkController extends AppBaseController
                             $value['resultid'] = $other['resultid'];
                             $value['solt'] = $other['solt'];
                             $value['shipid'] = $other['shipid'];
-                            if (isset($value['cabinid']) and $value['cabinid']
-                                and isset($value['ullage']) and $value['ullage']
-                                and isset($value['temperature']) and $value['temperature']) {
+                            if (isset($value['cabinid']) and $value['cabinid'] !== ''
+                                and isset($value['ullage']) and $value['ullage'] !== ''
+                                and isset($value['temperature']) and $value['temperature']!== '') {
 
 
 //                            exit(jsonreturn($value));
@@ -2514,8 +2514,10 @@ class WorkController extends AppBaseController
                                 exit(jsonreturn($res));
                             }
                         }
+
                         //提交事务
                         M()->commit();
+
                         //成功 1
                         $res = $work->get_cabins_weight(trimall(I('post.resultid')));
                         $res['code'] = 1;
@@ -2615,11 +2617,11 @@ class WorkController extends AppBaseController
                     $data['is_work'] = 1;
 
                     //检查参数是否缺失
-                    if (empty($data['ullage']) or !$data['ullage']
-                        or empty($data['cabinid']) or !$data['cabinid']
-                        or empty($data['altitudeheight']) or !$data['altitudeheight']
-                        or empty($data['temperature']) or !$data['temperature']
-                        or empty($data['sounding']) or !$data['sounding']
+                    if (!isset($data['ullage']) or $data['ullage']===''
+                        or !isset($data['cabinid']) or $data['cabinid']===''
+                        or !isset($data['altitudeheight']) or $data['altitudeheight']===''
+                        or !isset($data['temperature']) or $data['temperature']===''
+                        or !isset($data['sounding']) or $data['sounding']===''
                     ) {
 
                         M()->rollback();
@@ -2755,6 +2757,7 @@ class WorkController extends AppBaseController
         if (I('post.uid') and I('post.imei') and I('post.resultid')
             and I('post.solt') and I('post.shipid') and I('post.qufen')
             and I('post.quantity') and I('post.is_pipeline') and I('post.is_fugai')) {
+
             $user = new \Common\Model\UserModel();
             $uid = I('post.uid');
             // 判断用户状态、是否到期、标识比对
@@ -2791,11 +2794,11 @@ class WorkController extends AppBaseController
                     $data['is_work'] = 1;
 
                     //检查参数是否缺失
-                    if (empty($data['ullage']) or !$data['ullage']
-                        or empty($data['cabinid']) or !$data['cabinid']
-                        or empty($data['altitudeheight']) or !$data['altitudeheight']
-                        or empty($data['temperature']) or !$data['temperature']
-                        or empty($data['sounding']) or !$data['sounding']
+                    if (!isset($data['ullage']) or $data['ullage'] === ""
+                        or !isset($data['cabinid']) or $data['cabinid'] === ""
+                        or !isset($data['altitudeheight']) or $data['altitudeheight'] === ""
+                        or !isset($data['temperature']) or $data['temperature'] === ""
+                        or !isset($data['sounding']) or $data['sounding'] === ""
                     ) {
                         M()->rollback();
                         exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'])));
@@ -3053,6 +3056,8 @@ class WorkController extends AppBaseController
                 $res = $msg1;
             }
         } else {
+//            \Think\Log::record(json_encode(I("post."),true), "DEBUG", true);
+
             //参数不正确，参数缺失	4
             $res = array(
                 'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
@@ -3215,6 +3220,8 @@ class WorkController extends AppBaseController
                 $res = array();
                 $res['msg'] = $work->get_book_data(I('post.resultid'), I('post.solt'));
                 $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+                $res['chishui'] = $res['msg']['chishui'];
+                unset($res['msg']['chishui']);
             } else {
                 //未到期/状态禁止/标识错误
                 $res = $msg1;
@@ -3243,7 +3250,6 @@ class WorkController extends AppBaseController
                 $res = array();
                 $res['msg'] = $work->get_capacity_data(I('post.resultid'), I('post.solt'));
                 $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
-
             } else {
                 //未到期/状态禁止/标识错误
                 $res = $msg1;

@@ -585,24 +585,41 @@ class ShResultController extends AppBaseController
      * @return @param code 返回码
      * @return @param filename 文件名
      */
-    #todo PDF生成功能
-    /*public function pdf()
+    public function pdf()
     {
         if (I('post.resultid') and I('post.uid') and I('post.imei')) {
             //获取数据
-            $result = new \Common\Model\ResultModel();
+            $result = new \Common\Model\ShResultModel();
             $arr = $result->resultsearch(I('post.resultid'), I('post.uid'), I('post.imei'));
             if ($arr['code'] == '1') {
-                // 获取公司pdf方法名
-                $firm = new \Common\Model\FirmModel();
-                $firmmsg = $firm
-                    ->alias('f')
-                    ->field('f.pdf,f.personality')
-                    ->join('left join user u on u.firmid = f.id')
-                    ->where(array('u.id' => I('post.uid')))
-                    ->find();
-                if ($firmmsg !== false and !empty($firmmsg['pdf'])) {
-                    $filename = pdf($arr, $firmmsg);//生成PDF文件
+//                // 获取公司pdf方法名
+//                $firm = new \Common\Model\FirmModel();
+//                $firmmsg = $firm
+//                    ->alias('f')
+//                    ->field('f.pdf,f.personality')
+//                    ->join('left join user u on u.firmid = f.id')
+//                    ->where(array('u.id' => I('post.uid')))
+//                    ->find();
+//                if ($firmmsg !== false and !empty($firmmsg['pdf'])) {
+//
+//                    //引入了https，做https协议的适配
+//                    $is_https = I('post.minipost');
+//                    if ($is_https) {
+//                        $uid = I('post.uid');
+//                        $resultid = I('post.resultid');
+//                        $filepath = "miniprogram/" . $uid . "/";
+//                        $PDFname = $resultid . ".pdf";
+//                        //如果是https，则返回全部的
+                        $filename = $result->pdf($arr,I('post.resultid'),I('post.uid'));//生成PDF文件
+//
+//                        if ($filename != '') {
+//                            $filename = '/Public/pdf/' . $filepath . $PDFname;
+//                        }
+//
+//                    } else {
+//                        $filename = pdf($arr, $firmmsg);//生成PDF文件
+//                    }
+//
                     if ($filename != '') {
                         $res = array(
                             'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
@@ -614,12 +631,13 @@ class ShResultController extends AppBaseController
                             'code' => $this->ERROR_CODE_RESULT['NOT_FILE']
                         );
                     }
-                } else {
-                    //该作业所属公司没有pdf文件模板  2006
-                    $res = array(
-                        'code' => $this->ERROR_CODE_RESULT['FIRM_NOT_PDF']
-                    );
-                }
+//                } else {
+//                    //该作业所属公司没有pdf文件模板  2006
+//                    $res = array(
+//                        'code' => $this->ERROR_CODE_RESULT['FIRM_NOT_PDF']
+//                    );
+//                }
+
             } else {
                 $res = $arr;
             }
@@ -630,7 +648,7 @@ class ShResultController extends AppBaseController
             );
         }
         echo jsonreturn($res);
-    }*/
+    }
 
     /**
      * 获取用户可以操作的船列表
@@ -1638,6 +1656,8 @@ class ShResultController extends AppBaseController
         }
         echo jsonreturn($res);
     }
+
+
 
     /**
      * 电子签证

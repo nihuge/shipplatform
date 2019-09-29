@@ -548,9 +548,12 @@ sql;
                 'trimcorrection1' => $trimcorrection1,
             );
         }
+
+
         $map = array(
             'id' => $shipid
         );
+
         $this->editData($map, $datas);
 
 

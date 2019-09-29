@@ -376,34 +376,42 @@ class SearchController extends AdminBaseController
              * 获取舱压载水的计算过程
              */
             $where1 = array(
-                'resultid' => $resultid,
-                'solt' => 1
+                'r.resultid' => $resultid,
+                'r.solt' => 1
             );
 
 
             $list_qian_process = $res_list
-                ->field('process')
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
                 ->where($where1)
                 ->select();
 
             //获取作业前排水表计算过程
             $record_qian_process = $res_record
-                ->field('process')
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
                 ->where($where1)
-                ->find();
+                ->select();
 
-            $where1['solt'] = 2;
+            $where1['r.solt'] = 2;
 
             $list_hou_process = $res_list
-                ->field('process')
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
                 ->where($where1)
                 ->select();
 
             //获取作业后排水表计算过程
             $record_hou_process = $res_record
-                ->field('process')
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
                 ->where($where1)
-                ->find();
+                ->select();
 
             /**
              * url反转义过程
@@ -413,20 +421,33 @@ class SearchController extends AdminBaseController
             $list_hou = "";
 
             foreach ($list_qian_process as $key => $value) {
-                $list_qian .= "\r\n ----------list---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
+                if ($value['process'] != "") {
+                    $list_qian .= "\r\n\r\n ----------<strong>" . $value['cabinname'] . "</strong>---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
+                }
             }
 
             foreach ($list_hou_process as $key => $value) {
-                $list_hou .= "\r\n ----------list---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
+                if ($value['process'] != "") {
+                    $list_hou .= "\r\n\r\n ----------<strong>" . $value['cabinname'] . "</strong>---------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value['process']));
+                }
             }
 
-            $record_qian_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_qian_process['process'])));
+            $qian_record = "";
+            $hou_record = "";
+            foreach ($record_qian_process as $key1 => $value1) {
+                if ($value1['process'] != "") {
+                    $qian_record .= "\r\n\r\n ---------------------<strong>" . $value1['cabinname'] . "</strong>---------------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value1['process']));
+                }
+            }
+            foreach ($record_hou_process as $key1 => $value1) {
+                if ($value1['process'] != "") {
+                    $hou_record .= "\r\n\r\n ---------------------<strong>" . $value1['cabinname'] . "</strong>---------------------- \r\n" . str_replace(array('\r\n', '\t'), array("\r\n", "\t"), urldecode($value1['process']));
+                }
+            }
 
-            $record_hou_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_hou_process['process'])));
+            $qianprocess .= $list_qian . $qian_record;
 
-            $qianprocess .= $list_qian . "\r\n ---------------------record---------------------- \r\n" . $record_qian_process;
-
-            $houprocess .= $list_hou . "\r\n ---------------------record---------------------- \r\n" . $record_hou_process;
+            $houprocess .= $list_hou . $hou_record;
 
             // p($resultmsg);die;
             //以舱区分数据（）

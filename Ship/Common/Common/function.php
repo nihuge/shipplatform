@@ -216,6 +216,7 @@ function delDirAndFile($dirName)
         }
         closedir($handle);
         rmdir($dirName);
+        unset($handle);
     }
 }
 
@@ -336,7 +337,7 @@ function read_all_dir($dir)
                 if (is_dir($cur_path)) {//判断是否为目录，递归读取文件
                     $num += read_all_dir($cur_path);
                 } else {
-                    if (time() - filemtime($cur_path) > 432000) {//如果此文件创建时间超过了5天则删除432000
+                    if (time() - filemtime($cur_path) > 432000) {//如果此文件创建时间超过了5天则删除，432000
                         @unlink($cur_path);
                         $num++;
                     }
@@ -348,6 +349,7 @@ function read_all_dir($dir)
             }
         }
         closedir($handle);
+        unset($handle);
     }
     return $num;
 }
@@ -361,7 +363,7 @@ function read_all_dir($dir)
 function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDFfileDir = "", $PDFfilename = "print.pdf")
 {
     //判断文件是否存在
-    $file = $_SERVER['DOCUMENT_ROOT'] . $miniAppPath . '/Public/pdf/' . $PDFfileDir . $PDFfilename;
+    $file = $_SERVER['DOCUMENT_ROOT'] .'/Public/pdf/' . $PDFfileDir . $PDFfilename;
 
     $fileDir = $_SERVER['DOCUMENT_ROOT'] . $miniAppPath . '/Public/pdf/' . $PDFfileDir;
 

@@ -7546,6 +7546,7 @@ class TCPDF {
 	 * @see Close()
 	 */
 	public function Output($name='doc.pdf', $dest='I') {
+        ob_clean();
 		//Output PDF to some destination
 		//Finish document if necessary
 		if ($this->state < 3) {

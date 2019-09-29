@@ -88,22 +88,16 @@
         $("#shipid").bigAutocomplete({
             width: 163,
             data: [
-            < ? php
-                foreach($shiplist as $l)
-        {
-            echo
-            '{title:"'.$l['shipname'].
-            '",show:"'.$l['shipname'].
-            '"},';
-        }
-            ?
-        >
-        ],
+            <?php
+                foreach($shiplist as $l){
+                    echo '{title:"'.$l['shipname'].'",show:"'.$l['shipname'].'"},';
+                }
+            ?>
+            ],
         callback:function (data) {
             //alert(data.title);
         }
-        })
-        ;
+        });
 
         //下拉获取公司船列表
         $("select[name=firmid]").change(function () {

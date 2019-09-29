@@ -104,64 +104,143 @@ class ShSearchController extends AdminBaseController
     /**
      * 详情
      */
-    public function msg()
+    public function msg($resultid)
     {
-        $res = new \Common\Model\ShResultModel();
-        $user = new \Common\Model\UserModel();
+        $work = new \Common\Model\ShResultModel();
         //获取水尺数据
         $where = array(
-            'r.id' => I('get.resultid')
+            'r.id' => $resultid
         );
+
+
+        #todo 每一位数据自动去除没用的0
         //查询作业列表
-        $list = $res
+        $list = $work
             ->alias('r')
-            ->field('r.*,s.shipname,u.username,r.qianchi,r.houchi,s.goodsname goodname')
-            ->join('left join ship s on r.shipid=s.id')
+            ->field('r.*,s.shipname,0 + CAST(s.lbp AS CHAR) as lbp,0 + CAST(s.df AS CHAR) as df , 0 + CAST(s.da AS CHAR) as da, 0 + CAST(s.dm AS CHAR) as dm, 0 + CAST(s.weight AS CHAR) as ship_weight, u.username,f.firmtype as ffirmtype')
+            ->join('left join sh_ship s on s.id=r.shipid')
             ->join('left join user u on r.uid = u.id')
+            ->join('left join firm f on u.firmid = f.id')
             ->where($where)
             ->find();
-        if ($msg !== false) {
-            $where1 = array('re.resultid' => $list['id']);
-            $resultlist = new \Common\Model\ResultlistModel();
-            $resultmsg = $resultlist
-                ->alias('re')
-                ->field('re.*,c.cabinname')
-                ->join('left join cabin c on c.id = re.cabinid')
-                ->where($where1)
-                ->order('re.solt asc,re.cabinid asc')
-                ->select();
-            // p($resultmsg);die;
-            //以舱区分数据（）
-            foreach ($resultmsg as $k => $v) {
-                $result[$v['cabinid']][] = $v;
-            }
-            // 个性化信息
-            $personality = json_decode($list['personality'], true);
-            if (!empty($resultmsg)) {
-                //取出舱详情最后一个元素时间
-                $start = end($resultmsg);
-                $starttime = date("Y-m-d H:i", $start['time']);
-                //取出舱详情第一个元素时间
-                $end = reset($resultmsg);
-                $endtime = date("Y-m-d H:i", $end['time']);
-            } else {
-                $starttime = '';
-                $endtime = '';
-            }
-            // 成功	1
-            $assign = array(
-                'content' => $list,
-                'result' => $result,
-                'starttime' => $starttime,
-                'endtime' => $endtime,
-                'personality' => $personality
-            );
-            // p($assign);exit;
-            $this->assign($assign);
-            $this->display();
-        } else {
-            $this->error('数据库连接错误');
+        unset($list['qianprocess']);
+        unset($list['houprocess']);
+
+        $record = M("sh_resultrecord");
+
+        $where_ds = array(
+            'resultid' => $resultid
+        );
+        $ds = $record->where($where_ds)->select();
+        foreach ($ds as $keyds => $valueds) {
+            unset($ds[$keyds]['process']);
         }
+
+        $wherelist_qian = array(
+            'resultid' => $resultid,
+            'solt' => 1,
+        );
+
+        $wherelist_hou = array(
+            'resultid' => $resultid,
+            'solt' => 2,
+        );
+
+        $resultlist = new \Common\Model\ShResultlistModel();
+        $total_weight_qian = $resultlist->field('sum(weight) as t_weight')->where($wherelist_qian)->find();
+        $total_weight_hou = $resultlist->field('sum(weight) as t_weight')->where($wherelist_hou)->find();
+
+        $list['qian_bw'] = $total_weight_qian['t_weight'];
+        $list['hou_bw'] = $total_weight_hou['t_weight'];
+
+        //获取水尺数据
+        $where = array(
+            'resultid' => $resultid,
+        );
+        $forntrecord = M("sh_forntrecord");
+
+        $msg = $forntrecord
+            ->field('*')
+            ->where($where)
+            ->select();
+
+
+        $forntData = array();
+        foreach ($msg as $k => $v) {
+            if ($v['solt'] == '1') {
+                $forntData['q'] = $v;
+            } else {
+                $forntData['h'] = $v;
+            }
+        }
+
+        // 个性化组装
+        $personality = json_decode($list['personality'], true);
+        $personality['num'] = count($personality);
+        unset($list['personality']);
+
+        if ($list !== false) {
+            $where1 = array('resultid' => $list['id']);
+
+            $resultmsg = $resultlist
+                ->where($where1)
+                ->order('solt asc')
+                ->select();
+            // 以舱区分数据
+            $result = '';
+            foreach ($resultmsg as $k => $v) {
+                $result[$v['id']][] = $v;
+            }
+
+            $a = array();
+            foreach ($result as $key => $value) {
+                $a[] = $value;
+            }
+            //成功	1
+            $arr = array(
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'content' => $list,
+                'ds' => $ds,
+                'fornt' => $forntData,
+                'personality' => $personality,
+                'resultmsg' => $a,
+            );
+        } else {
+            $this->error("数据库连接错误");
+        }
+
+        $qian_total = $arr['content']['ship_weight'] + $arr['content']['qian_fuel_weight'] + $arr['content']['qian_fwater_weight'] + $arr['content']['qian_bw'];
+        $hou_total = $arr['content']['ship_weight'] + $arr['content']['hou_fuel_weight'] + $arr['content']['hou_fwater_weight'] + $arr['content']['hou_bw'];
+
+        $arr['record'] = array();
+        $arr['record']['q'] = array();
+        $arr['record']['h'] = array();
+
+        foreach ($arr['ds'] as $key => $value) {
+            if ($value['solt'] == 1) {
+                $arr['record']['q']['dsc'] = $value['dsc'];
+                $arr['record']['q']['dc'] = $value['dc'];
+                $arr['record']['q']['dpc'] = $value['dpc'];
+            } else {
+                $arr['record']['h']['dsc'] = $value['dsc'];
+                $arr['record']['h']['dc'] = $value['dc'];
+                $arr['record']['h']['dpc'] = $value['dpc'];
+            }
+        }
+        $arr['content']['time'] = date('Y-m-d H:i:s', $arr['content']['time']);
+        $NowTime = date('Y-m-d H:i:s', time());
+
+
+
+        $this->assign("arr", $arr);
+        $this->assign("qian_total", $qian_total);
+        $this->assign("hou_total", $hou_total);
+//        $this->assign("hou_total", $hou_total);
+        $this->assign("hou_qian_dspc", (float)$arr['content']['hou_dspc'] - (float)$arr['content']['qian_dspc']);
+        $this->assign("hou_qian_total", (float)$hou_total - (float)$qian_total);
+        $this->assign("nowTime", $NowTime);
+
+        $this->display();
     }
 
     /**
@@ -211,9 +290,9 @@ class ShSearchController extends AdminBaseController
             /**
              * url反转义过程
              */
-            $record_qian_process = str_replace(array("Dc1 =","Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =","\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_qian_process['process'])));
+            $record_qian_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace(array('\r\n','\t'), array("\r\n","\t"), urldecode($record_qian_process['process'])));
 
-            $record_hou_process = str_replace(array("Dc1 =","Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =","\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace('\r\n', "\r\n", urldecode($record_hou_process['process'])));
+            $record_hou_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace(array('\r\n','\t'), array("\r\n","\t"), urldecode($record_hou_process['process'])));
 
             $qianprocess .= "\r\n ---------------------TABLE---------------------- \r\n" . $record_qian_process;
 

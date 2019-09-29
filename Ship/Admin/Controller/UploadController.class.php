@@ -31,7 +31,6 @@ class UploadController extends AdminBaseController
 					while ($data = fgetcsv($file))
 					{ //每次读取CSV里面的一行内容
 						$array[] = $data;
-						
 					}
 					$array=array_values($array);
 					$array = eval('return '.iconv('gbk','utf-8',var_export($array,true)).';');
@@ -200,7 +199,7 @@ class UploadController extends AdminBaseController
 			}
 			//容量--容量 
 			if (!empty($msg['rongliang'])) {
-				$tname .= "容量书：&nbsp;<input type='radio' name='tname' value='".$msg['rongliang']."a' id='rl'><label for='rl'>容量表</label>";
+				$tname .= "V书(容量书)：&nbsp;<input type='radio' name='tname' value='".$msg['rongliang']."a' id='rl'><label for='rl'>容量表</label>";
 				$table = $msg['rongliang'];
 				$presence .= '<tr><td>容量书容量表</td>' . $this->is_like($table,$cabinlist);
 			}
@@ -212,7 +211,7 @@ class UploadController extends AdminBaseController
 			}
 			//底量--容量
 			if (!empty($msg['rongliang_1'])) {
-				$tname .= "底量书：&nbsp;<input type='radio' name='tname' value='".$msg['rongliang_1']."a' id='rl_1'><label for='rl_1'>容量表</label>";
+				$tname .= "B书(底量书)：&nbsp;<input type='radio' name='tname' value='".$msg['rongliang_1']."a' id='rl_1'><label for='rl_1'>容量表</label>";
 				$table = $msg['rongliang_1'];
 				$presence .= '<tr><td>底量书容量表</td>' . $this->is_like($table,$cabinlist);
 			}

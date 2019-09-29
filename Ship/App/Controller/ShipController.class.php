@@ -17,7 +17,7 @@ class ShipController extends AppBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->db = new \Common\Model\ShipModel();
+        $this->db = new \Common\Model\ShipFormModel();
     }
 
     /**
@@ -174,10 +174,13 @@ class ShipController extends AppBaseController
                         'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL'],
                     );
                 } else {
-                    // 判断是否有底量测量空，有底量测量孔就算法字段为:c
-                    if ($data['is_diliang'] == '1') {
+                    // 判断是否有底量测量孔，有底量测量孔并且有纵倾修正表的话，算法为:c
+                    if ($data['is_diliang'] == '1' and $data['suanfa'] == 'b') {
                         $data['suanfa'] = 'c';
+                    } elseif ($data['is_diliang'] == '1' and $data['suanfa'] == 'a') {
+                        $data['suanfa'] = 'd';
                     }
+
                     $data['expire_time'] = strtotime(I('post.expire_time'));
                     $res_s = $this->db->addship($data, 'APP');
                     if ($res_s['code'] == 1) {
@@ -240,8 +243,12 @@ class ShipController extends AppBaseController
                             );
 //                        echo ajaxReturn(array("state" => 2, 'message' => $this->db->getError()));
                         } else {
-                            if ($data['is_diliang'] == '1') {
+
+                            // 判断是否有底量测量孔，有底量测量孔并且有纵倾修正表的话，算法为:c,没有的话算法为：d
+                            if ($data['is_diliang'] == '1' and $data['suanfa'] == 'b') {
                                 $data['suanfa'] = 'c';
+                            } elseif ($data['is_diliang'] == '1' and $data['suanfa'] == 'a') {
+                                $data['suanfa'] = 'd';
                             }
 
                             /**

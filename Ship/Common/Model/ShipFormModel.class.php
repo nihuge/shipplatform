@@ -29,7 +29,7 @@ class ShipFormModel extends BaseModel
         array('firmid', '/^[1-9]\d*$/', '公司id必须为自然数', 2, 'regex'),//值不为空即验证 必须为自然数
         array('cabinnum', '/^[1-9]\d*$/', '舱总数必须为自然数', 0, 'regex'),//值不为空即验证 必须为自然数
         array('coefficient', '/^[1-9]\d*$/', '膨胀倍数必须为自然数', 0, 'regex'),//值不为空即验证 必须为自然数
-        array('suanfa', array('a', 'b', 'c'), '算法的范围不正确！', 0, 'in'), // 存在即验证 判断是否在一个范围内
+        array('suanfa', array('a', 'b', 'c','d'), '算法的范围不正确！', 0, 'in'), // 存在即验证 判断是否在一个范围内
         array('number', '1,50', '编号长度不能超过50个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
         // 在一个范围之内
         array('is_guanxian', array('1', '2'), '是否包含管线的范围不正确！', 0, 'in'),
@@ -60,10 +60,19 @@ class ShipFormModel extends BaseModel
                 ->find();
             if ($usermsg !== false and !empty($usermsg['operation_jur'])) {
                 $list = $this
-                    ->field('id,shipname,goodsname')
+                    ->field('id,shipname,goodsname,expire_time')
                     ->where(array('id' => array('IN', $usermsg['operation_jur']), "del_sign" => 1))
                     ->select();
                 if ($list !== false) {
+                    foreach ($list as $key => $value) {
+                        $list[$key]['expire_time'] = date('Y年m月d日', $value['expire_time']);
+                        if($value['expire_time'] > time()){
+                            $list[$key]['expired'] = false;
+                        }else{
+                            $list[$key]['expired'] = true;
+                        }
+                    }
+
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
                         'content' => $list
@@ -552,7 +561,83 @@ sql;
                 'trimcorrection' => $trimcorrection,
                 'trimcorrection1' => $trimcorrection1,
             );
+        }else if ($suanfa == 'd') {
+            // 确定刻度
+            $cou = 1;
+            $str = '';
+            $trimcorrection = array();
+            foreach ($kedu as $key => $value) {
+                $str .= "`trimvalue" . $cou . "` int(11) DEFAULT NULL COMMENT '纵倾值" . $value . "/m',";
+                $trimcorrection['trimvalue' . $cou] = $value;
+                $cou++;
+            }
+
+            //如果没有底量纵倾刻度就复制容量的
+            if (empty($kedu1)) {
+                $kedu1 = $kedu;
+            }
+
+            $cou = 1;
+            $str1 = '';
+            $trimcorrection1 = array();
+            foreach ($kedu1 as $key1 => $value1) {
+                $str1 .= "`trimvalue" . $cou . "` int(11) DEFAULT NULL COMMENT '纵倾值" . $value1 . "/m',";
+                $trimcorrection1['trimvalue' . $cou] = $value1;
+                $cou++;
+            }
+
+            $time = time() . chr(rand(97, 122));
+            $zxname = 'trimcorrectionzi' . $time . '_1';
+            // 创建一个纵倾修正容量表
+            $sql2 = <<<sql
+CREATE TABLE `${zxname}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
+  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
+  ${str}
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
+sql;
+            M()->execute($sql2);
+            $zxname1 = 'trimcorrectionzi' . $time . '_2';
+            // 创建一个纵倾容量表
+            $sql4 = <<<sql
+CREATE TABLE `${zxname1}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
+  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
+  ${str1}
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
+sql;
+            M()->execute($sql4);
+
+            if (!empty($trimcorrection)) {
+                $trimcorrection = json_encode($trimcorrection, JSON_UNESCAPED_UNICODE);
+            } else {
+                $trimcorrection = '';
+            }
+
+            if (!empty($trimcorrection1)) {
+                $trimcorrection1 = json_encode($trimcorrection1, JSON_UNESCAPED_UNICODE);
+            } else {
+                $trimcorrection1 = '';
+            }
+
+
+            $datas = array(
+                'zx' => $zxname,
+                'zx_1' => $zxname1,
+                'trimcorrection' => $trimcorrection,
+                'trimcorrection1' => $trimcorrection1,
+            );
         }
+
+
+
+
         $map = array(
             'id' => $shipid
         );

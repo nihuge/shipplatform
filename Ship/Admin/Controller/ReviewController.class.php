@@ -530,6 +530,7 @@ class ReviewController extends AdminBaseController
                         'shipid' => $shipid
                     );
 
+
                     //遍历需要更改的舱信息
                     $cabin_review_data = $cabin_review
                         ->field('cabinid,shipid,cabinname,altitudeheight,dialtitudeheight,bottom_volume,bottom_volume_di,pipe_line')
@@ -565,23 +566,34 @@ class ReviewController extends AdminBaseController
                         }
 
                         //如果该审核没有需要修改的数据，则跳过,防止数据错误
-                        if (count($data) > 0) {
-                            $cabin_review_result = $cabin->editData($cabin_review_result_map, $cabin_data);
+                        if (count($cabin_data) > 0) {
+                            try {
+                                $cabin_review_result = $cabin->editData($cabin_review_result_map, $cabin_data);
+                            } catch (\Exception $e) {
+                                M()->rollback();
+                                $edit_result = false;
+                                $this->ajaxReturn(array('code' => 4, 'msg' => "舱修改失败"));
+                            }
                         } else {
                             $cabin_review_result = true;
                         }
 
-                        if ($cabin_review_result === false) {
+                        if (!$cabin_review_result !== false) {
                             M()->rollback();
                             $edit_result = false;
-                            $this->ajaxReturn(array('code' => 4, 'msg' => "舱修改失败"));
+                            $this->ajaxReturn(array('code' => 4, 'msg' => "舱修改失败" . $cabin->error));
                         }
                     }
+
+                    $review_edit_where = array(
+                        'id' => $review_id,
+                        'shipid' => $shipid
+                    );
 
                     //开始修改船数据.搜索需要修改的船数据
                     $ship_review_data = $review
                         ->field('shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time')
-                        ->where($review_data_where)
+                        ->where($review_edit_where)
                         ->find();
 
                     //新的船数据
@@ -613,18 +625,21 @@ class ReviewController extends AdminBaseController
                         $ship_data['expire_time'] = $ship_review_data['expire_time'];
                     }
 
-                    if (count($ship_review_data) > 0) {
+
+                    if (count($ship_data) > 0) {
                         $ship_result = $ship->editData($edit_result_map, $ship_data);
-                        if($ship_result !==false){
-                            $edit_result = $review->where($map)->save($data);
-                        }else{
-                            M()->rollback();
-                            $edit_result = false;
-                            $this->ajaxReturn(array('code' => 6, 'msg' => "状态更改失败"));
-                        }
                     } else {
-                        $edit_result = true;
+                        $ship_result = true;
                     }
+
+                    if ($ship_result !== false) {
+                        $edit_result = $review->where($map)->save($data);
+                    } else {
+                        M()->rollback();
+                        $edit_result = false;
+                        $this->ajaxReturn(array('code' => 6, 'msg' => "状态更改失败"));
+                    }
+
                 } else {
                     M()->rollback();
                     $edit_result = false;
@@ -796,7 +811,7 @@ class ReviewController extends AdminBaseController
                 } elseif ($result == 2) {
                     //如果审核通过,更改船信息
                     $review_data_where = array(
-                        'review_id' => $review_id,
+                        'id' => $review_id,
                         'shipid' => $shipid
                     );
 
@@ -840,9 +855,9 @@ class ReviewController extends AdminBaseController
 
                     if (count($ship_review_data) > 0) {
                         $ship_result = $ship->editData($edit_result_map, $ship_data);
-                        if($ship_result !==false){
+                        if ($ship_result !== false) {
                             $edit_result = $review->where($map)->save($data);
-                        }else{
+                        } else {
                             M()->rollback();
                             $edit_result = false;
                             $this->ajaxReturn(array('code' => 6, 'msg' => "状态更改失败"));
@@ -858,7 +873,7 @@ class ReviewController extends AdminBaseController
             } catch (\Exception $e) {
                 M()->rollback();
                 $edit_result = false;
-                $this->ajaxReturn(array('code' => 3, 'msg' =>"修改失败，原因:". $e->getMessage()));
+                $this->ajaxReturn(array('code' => 3, 'msg' => "修改失败，原因:" . $e->getMessage()));
             }
 
             if ($edit_result !== false) {
