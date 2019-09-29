@@ -98,7 +98,7 @@ class ShipController extends AdminBaseController
             }
 
             //C算法如果不提交底量纵倾刻度就复制容量的
-            if (strtolower($data['suanfa']) == "c") {
+            if (strtolower($data['suanfa']) == "c" or strtolower($data['suanfa']) == "d") {
                 if (empty($data['kedu1'])) {
                     $data['kedu1'] = $data['kedu'];
                 }
@@ -113,7 +113,7 @@ class ShipController extends AdminBaseController
 
             $data['img'] = I('post.img');
             $data['expire_time'] = strtotime(I('post.expire_time'));
-            $ship = new \Common\Model\ShipModel();
+            $ship = new \Common\Model\ShipFormModel();
             // 判断船舶是否存在
             $count = $ship->where(array('shipname' => $data['shipname']))->count();
             if ($count == 0) {
@@ -121,12 +121,13 @@ class ShipController extends AdminBaseController
                     //对data数据进行验证
                     $this->error($ship->getError());
                 } else {
-                    // 判断算法得出是否有底量测试
-                    if ($data['suanfa'] == 'c') {
+                    // 判断算法得出是否有底量测量孔
+                    if ($data['suanfa'] == 'c' or $data['suanfa'] == 'd') {
                         $data['is_diliang'] = '1';
                     } else {
                         $data['is_diliang'] = '2';
                     }
+
 
                     $res = $ship->addData($data);
                     if ($res) {
@@ -207,8 +208,8 @@ class ShipController extends AdminBaseController
                 $cou++;
             }
 
-            //根据算法处理油船的底量纵倾刻度，如果算法C且刻度为空，则复制容量书的纵倾刻度
-            if ($data['suanfa'] == 'c') {
+            //根据算法处理油船的底量纵倾刻度，如果算法C或D且刻度为空，则复制容量书的纵倾刻度
+            if ($data['suanfa'] == 'c' or $data['suanfa'] == 'd') {
                 if (empty($kedu1)) {
                     $kedu1 = $kedu;
                 } else {
@@ -268,6 +269,7 @@ class ShipController extends AdminBaseController
                                 $sql1 = "drop table `" . $msg['rongliang'] . "`";
                                 $Model->execute($sql1);
                             }
+
                             if (!empty($msg['zx'])) {
                                 $sql2 = "drop table `" . $msg['zx'] . "`";
                                 $Model->execute($sql2);
@@ -277,12 +279,15 @@ class ShipController extends AdminBaseController
                                 $sql3 = "drop table `" . $msg['rongliang_1'] . "`";
                                 $Model->execute($sql3);
                             }
+
                             if (!empty($msg['zx_1'])) {
                                 $sql4 = "drop table `" . $msg['zx_1'] . "`";
                                 $Model->execute($sql4);
                             }
+
+
                             // 新增船舶创建表、添加船舶历史数据汇总初步
-                            if (strtolower($data['suanfa']) == 'c') {
+                            if (strtolower($data['suanfa']) == 'c' or strtolower($data['suanfa']) == 'd') {
                                 $ship->createtable($data['suanfa'], $data['shipname'], $data['id'], $data['kedu'], $data['kedu1']);
                             } else {
                                 $ship->createtable($data['suanfa'], $data['shipname'], $data['id'], $data['kedu']);
