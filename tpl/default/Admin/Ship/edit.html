@@ -78,8 +78,9 @@
                         <option value="a" {$shipmsg['suanfa'] == "a" ? 'selected' : ''}>a</option>
                         <option value="b" {$shipmsg['suanfa'] == 'b' ? 'selected' : ''}>b</option>
                         <option value="c" {$shipmsg['suanfa'] == 'c' ? 'selected' : ''}>c</option>
+                        <option value="d" {$shipmsg['suanfa'] == 'd' ? 'selected' : ''}>d</option>
                     </select>
-                    <span style="color:red"><br>a:一本书(容量表)；b:一本书(容量表与纵倾修正表)；c:两本书(容量书与底量书)</span>
+                    <span style="color:red"><br>a:一本书(容量表)；b:一本书(容量表与纵倾修正表)；c:两本书两个表(容量书与底量书,纵倾修正表和容量表)；d：两本书一个表(容量表)</span>
                 </td>
             </tr>
             <tr>
@@ -140,7 +141,7 @@
                 </td>
             </tr>
             <tr id='tname1' style="display: {@:($shipmsg['suanfa'] == 'c') ? 'block' : 'none'@}">
-                <if condition="$shipmsg['suanfa'] == 'c'">
+                <if condition="$shipmsg['suanfa'] == 'c' || $shipmsg['suanfa'] == 'd'">
                     <td>底量表纵倾刻度值</td>
                     <td>
                         <for start="1" end="15">
@@ -173,9 +174,8 @@
             var id = $(this).val();
             // var tname = $("#tname");
             var tname1 = $("#tname1");
-            if(id == 'c')
+            if(id == 'c' || id == "d")
             {
-                
                 string = '<td style="width:120px;">底量表纵倾刻度值</td><td><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /></td>';
                 tname1.html(string);
                 $("#tname1").show()

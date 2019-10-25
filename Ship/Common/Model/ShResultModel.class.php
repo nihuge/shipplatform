@@ -453,7 +453,7 @@ class ShResultModel extends BaseModel
         $forntrecord = M("sh_forntrecord");
 
         $msg = $forntrecord
-            ->field('forntleft,forntright,centerleft,centerright,afterleft,afterright,fornt,center,after,solt,')
+            ->field('forntleft,forntright,centerleft,centerright,afterleft,afterright,fornt,center,after,solt')
             ->where($where)
             ->select();
 

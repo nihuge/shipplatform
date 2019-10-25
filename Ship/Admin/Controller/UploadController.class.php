@@ -203,24 +203,29 @@ class UploadController extends AdminBaseController
 				$table = $msg['rongliang'];
 				$presence .= '<tr><td>容量书容量表</td>' . $this->is_like($table,$cabinlist);
 			}
+
+
 			//容量--纵倾修正
 			if (!empty($msg['zx'])) {
-				$tname .= "&nbsp;<input type='radio' name='tname' value='".$msg['zx']."c' id='zx'><label for='zx'>纵倾修正表</label><hr/>";
+				$tname .= "V书(容量书)：&nbsp;<input type='radio' name='tname' value='".$msg['zx']."c' id='zx'><label for='zx'>纵倾修正表</label><hr/>";
 				$table = $msg['zx'];
 				$presence .= '<tr><td>容量书纵倾修正表</td>' . $this->is_like($table,$cabinlist);
 			}
+			
 			//底量--容量
 			if (!empty($msg['rongliang_1'])) {
 				$tname .= "B书(底量书)：&nbsp;<input type='radio' name='tname' value='".$msg['rongliang_1']."a' id='rl_1'><label for='rl_1'>容量表</label>";
 				$table = $msg['rongliang_1'];
 				$presence .= '<tr><td>底量书容量表</td>' . $this->is_like($table,$cabinlist);
 			}
+
 			//底量--纵倾修正
 			if (!empty($msg['zx_1'])) {
-				$tname .= "&nbsp;<input type='radio' name='tname' value='".$msg['zx_1']."c' id='zx_1'><label for='zx_1'>纵倾修正表</label>";
+				$tname .= "B书(底量书)：&nbsp;<input type='radio' name='tname' value='".$msg['zx_1']."c' id='zx_1'><label for='zx_1'>纵倾修正表</label>";
 				$table = $msg['zx_1'];
 				$presence .= '<tr><td>底量书纵倾修正表</td>' . $this->is_like($table,$cabinlist);
 			}
+
 			$data = array(
 				'sc'	       =>  $mod,
 				'presence'  => $presence,

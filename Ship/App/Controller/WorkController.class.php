@@ -1024,9 +1024,11 @@ class WorkController extends AppBaseController
                 $suanfa = $ship
                     // ->where(array('id'=>$data['shipid']))
                     ->getFieldById($data['shipid'], 'suanfa');
-                if ($data['qufen'] == 'diliang' && $suanfa == 'c') {
-                    $cabin = new \Common\Model\CabinModel();
+                $cabin = new \Common\Model\CabinModel();
+                if ($data['qufen'] == 'diliang' && ($suanfa == 'c' || $suanfa == 'd')) {
                     $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
+                } else {
+                    $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
                 }
 
                 //根据作业状态、作业ID、舱id判断作业是否重复
@@ -1290,8 +1292,10 @@ class WorkController extends AppBaseController
             $msg1 = $user->is_judges($uid, I('post.imei'));
             if ($msg1['code'] == '1') {
                 //初始化记录录入过程
-                $process = "";
+                $process = array();
                 $ship = new \Common\Model\ShipFormModel();
+                $resultrecord = M('resultrecord');
+
                 $shipmsg = $ship
                     ->field('suanfa')
                     ->where(array('id' => I('post.shipid')))
@@ -1300,10 +1304,26 @@ class WorkController extends AppBaseController
 
                 $cabin = new \Common\Model\CabinModel();
                 // 安卓端基准高度在计算底量书底量计算时提交错误
-                if ($data['qufen'] == 'diliang' && $shipmsg['suanfa'] == 'c') {
+                if ($data['qufen'] == 'diliang' && ($shipmsg['suanfa'] == 'c' || $shipmsg['suanfa'] == 'd')) {
                     $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
                 } else {
                     $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
+                }
+
+                // 查找数据条件
+                $where = array(
+                    'resultid' => $data['resultid'],
+                    'cabinid' => $data['cabinid'],
+                    'solt' => $data['solt'],
+                );
+
+                //获取原来的计算过程,没有就初始化
+                $old_process = $resultrecord->field('process')->where($where)->find();
+                if ($old_process !== false) {
+                    $process = json_decode($old_process['process'], true);
+                    if ($process == null) {
+                        $process = array();
+                    }
                 }
 
                 $bilge_stock = '';
@@ -1331,17 +1351,24 @@ class WorkController extends AppBaseController
                     $soltType = '作业后';
                 }
 
-                $process .= "Received meansure_value:\r\n\tullage=" . $data['ullage'] . ", sounding=" . $data['sounding'] . ", cabin_temperature=" . $data['temperature'] . ", soltType=," . $soltType . "\r\n\taltitudeheight=" . $data['altitudeheight'] . ", table_used=" . $data['qufen'] . ", bilge_stock=" . $bilge_stock . ", pipeline_stock=" . $pipeline_stock . ",\r\n";
+//                $process .= "Received meansure_value:\r\n\tullage=" . $data['ullage'] . ", sounding=" . $data['sounding'] . ", cabin_temperature=" . $data['temperature'] . ", soltType=," . $soltType . "\r\n\taltitudeheight=" . $data['altitudeheight'] . ", table_used=" . $data['qufen'] . ", bilge_stock=" . $bilge_stock . ", pipeline_stock=" . $pipeline_stock . ",\r\n";
+                $process['ullage'] = $data['ullage'];
+                $process['sounding'] = $data['sounding'];
+                $process['Cabin_temperature'] = $data['temperature'];
+                $process['method'] = $soltType;
+                $process['altitudeheight'] = $data['altitudeheight'];
+                $process['table_used'] = $data['qufen'];
+                $process['bilge_stock'] = $bilge_stock;
+                $process['pipeline_stock'] = $pipeline_stock;
 
 
-                // 判断数据是否存在
-                $where = array(
-                    'resultid' => $data['resultid'],
-                    'cabinid' => $data['cabinid'],
-                    'solt' => $data['solt'],
-                );
+//                // 判断数据是否存在
+//                $where = array(
+//                    'resultid' => $data['resultid'],
+//                    'cabinid' => $data['cabinid'],
+//                    'solt' => $data['solt'],
+//                );
 
-                $resultrecord = M('resultrecord');
                 // 获取作业记录数据个数
                 $rrecord = $resultrecord
                     ->where($where)
@@ -1549,13 +1576,12 @@ class WorkController extends AppBaseController
                                     'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
                                 );
                             } else {
-                                $data['houprocess'] = urlencode($process);
+                                $data['houprocess'] = json_encode($process);
                                 //作业后数据修改
                                 $where['solt'] = '2';
                                 $id = $resultrecord
                                     ->where($where)
                                     ->save($data);
-
 
                                 if ($id !== false) {
                                     $resultdata = array(
@@ -1590,7 +1616,7 @@ class WorkController extends AppBaseController
                                 }
                             }
                         } else {
-                            $data['qianprocess'] = urlencode($process);
+                            $data['qianprocess'] = json_encode($process);
                             // 修改作业前数据
                             $id = $resultrecord
                                 ->where($where)
@@ -1808,7 +1834,7 @@ class WorkController extends AppBaseController
                             }
                         }
                     } else {
-                        $data['qianprocess'] = urlencode($process);
+                        $data['qianprocess'] = json_encode($process);
                         // 没有记录作业数据，新增作业记录数据
                         $id = $resultrecord
                             ->add($data);
@@ -1902,6 +1928,80 @@ class WorkController extends AppBaseController
         }
         echo jsonreturn($res);
     }
+
+    /**
+     * 获取书本数据
+     * @param int cabinid 舱ID
+     * @param int uid 用户ID
+     * @param int resultid 计量ID
+     * @param int shipid 船ID
+     * @param int solt 1:作业前；2:作业后
+     * @param string imei 标
+     * @return @param code
+     * @return @param suanfa 算法
+     * @return @param correntkong 修正后空高
+     * */
+    public function getBookData()
+    {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid')) {
+            $user = new \Common\Model\UserModel();
+            $uid = I('post.uid');
+            // 判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges($uid, I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $result = new \Common\Model\WorkModel();
+                $res = $result->getBookData(I('post.resultid'), I('post.shipid'), I('post.cabinid'), I('post.solt'));
+            } else {
+                // 错误信息返回码
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+    /**
+     * 录入书本容量数据
+     * @param int cabinid 舱ID
+     * @param int uid 用户ID
+     * @param int resultid 计量ID
+     * @param int shipid 船ID
+     * @param int solt 1:作业前；2:作业后
+     * @param varchar imei 标识
+     * @param correntkong 修正后空高
+     * @param float ullage1 空高1
+     * @param float ullage2 空高2
+     * @param float capacity1 值1
+     * @param float capacity2 值2
+     * @return @param code
+     * */
+    public function getCapacityData()
+    {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid')) {
+            $user = new \Common\Model\UserModel();
+            $uid = I('post.uid');
+            // 判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges($uid, I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $result = new \Common\Model\WorkModel();
+                $res = $result->getCapacityData(I('post.resultid'), I('post.shipid'), I('post.cabinid'), I('post.solt'));
+            } else {
+                // 错误信息返回码
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
 
     /**
      * 录入书本容量数据
@@ -2000,8 +2100,10 @@ class WorkController extends AppBaseController
         if (I('post.uid') and I('post.imei') and I('post.firmid') and I('post.is_guanxian') and I('post.is_diliang') and I('post.shipname') and I('post.suanfa')) {
             $ship = new \Common\Model\ShipFormModel();
             $data = I('post.');
-            if (I('post.is_diliang') == '1') {
+            if (I('post.is_diliang') == '1' and I('post.suanfa') == "b") {
                 $data['suanfa'] = 'c';
+            } elseif (I('post.is_diliang') == '1' and I('post.suanfa') == "a") {
+                $data['suanfa'] = 'd';
             }
             $res = $ship->addship($data);
         } else {
@@ -2492,7 +2594,7 @@ class WorkController extends AppBaseController
                             $value['shipid'] = $other['shipid'];
                             if (isset($value['cabinid']) and $value['cabinid'] !== ''
                                 and isset($value['ullage']) and $value['ullage'] !== ''
-                                and isset($value['temperature']) and $value['temperature']!== '') {
+                                and isset($value['temperature']) and $value['temperature'] !== '') {
 
 
 //                            exit(jsonreturn($value));
@@ -2598,6 +2700,7 @@ class WorkController extends AppBaseController
                 $ship = new \Common\Model\ShipFormModel();
                 $result = new \Common\Model\WorkModel();
                 $resultlist = new \Common\Model\ResultlistModel();
+                $cabin = new \Common\Model\CabinModel();
 
 
                 /*and I('post.cabinid') and I('post.altitudeheight')
@@ -2616,16 +2719,20 @@ class WorkController extends AppBaseController
                     $data['quantity'] = I('post.quantity');
                     $data['is_work'] = 1;
 
+                    $cabin_name = "";
+
+                    $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+
                     //检查参数是否缺失
-                    if (!isset($data['ullage']) or $data['ullage']===''
-                        or !isset($data['cabinid']) or $data['cabinid']===''
-                        or !isset($data['altitudeheight']) or $data['altitudeheight']===''
-                        or !isset($data['temperature']) or $data['temperature']===''
-                        or !isset($data['sounding']) or $data['sounding']===''
+                    if (!isset($data['ullage']) or $data['ullage'] === ''
+                        or !isset($data['cabinid']) or $data['cabinid'] === ''
+                        or !isset($data['altitudeheight']) or $data['altitudeheight'] === ''
+                        or !isset($data['temperature']) or $data['temperature'] === ''
+                        or !isset($data['sounding']) or $data['sounding'] === ''
                     ) {
 
                         M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'])));
+                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
 
                     }
 
@@ -2633,9 +2740,11 @@ class WorkController extends AppBaseController
                     $suanfa = $ship
                         // ->where(array('id'=>$data['shipid']))
                         ->getFieldById($data['shipid'], 'suanfa');
-                    if ($data['qufen'] == 'diliang' && $suanfa == 'c') {
-                        $cabin = new \Common\Model\CabinModel();
+                    if ($data['qufen'] == 'diliang' && ($suanfa == 'c' || $suanfa == 'd')) {
                         $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
+
+                    } else {
+                        $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
                     }
 
                     //根据作业状态、作业ID、舱id判断作业是否重复
@@ -2653,6 +2762,8 @@ class WorkController extends AppBaseController
                             'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
                         );
                         M()->rollback();
+                        $res['cabinname'] = $cabin_name;
+
                         exit(jsonreturn($res));
                     } else {
                         // 允许重复
@@ -2672,6 +2783,7 @@ class WorkController extends AppBaseController
                                     'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
                                 );
                                 M()->rollback();
+                                $res['cabinname'] = $cabin_name;
                                 exit(jsonreturn($res));
                             } else {
                                 //判断空高是否在基准高度与0之内
@@ -2683,6 +2795,7 @@ class WorkController extends AppBaseController
                                         'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
                                     );
                                     M()->rollback();
+                                    $res['cabinname'] = $cabin_name;
                                     exit(jsonreturn($res));
                                 }
                             }
@@ -2696,6 +2809,8 @@ class WorkController extends AppBaseController
                                     'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
                                 );
                                 M()->rollback();
+                                $res['cabinname'] = $cabin_name;
+
                                 exit(jsonreturn($res));
                             }
                         }
@@ -2782,7 +2897,9 @@ class WorkController extends AppBaseController
                 M()->startTrans();
                 foreach ($datas as $key => $data) {
                     //初始化记录录入过程
-                    $process = "";
+                    $process = array();
+                    $cabin_name = "";
+
                     //赋值通用数据
                     $data['resultid'] = I('post.resultid');
                     $data['solt'] = I('post.solt');
@@ -2793,6 +2910,8 @@ class WorkController extends AppBaseController
                     $data['is_fugai'] = I('post.is_fugai');
                     $data['is_work'] = 1;
 
+                    $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+
                     //检查参数是否缺失
                     if (!isset($data['ullage']) or $data['ullage'] === ""
                         or !isset($data['cabinid']) or $data['cabinid'] === ""
@@ -2801,15 +2920,31 @@ class WorkController extends AppBaseController
                         or !isset($data['sounding']) or $data['sounding'] === ""
                     ) {
                         M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'])));
+                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
                     }
 
 
                     // 安卓端基准高度在计算底量书底量计算时提交错误
-                    if ($data['qufen'] == 'diliang' && $shipmsg['suanfa'] == 'c') {
+                    if ($data['qufen'] == 'diliang' && ($shipmsg['suanfa'] == 'c' || $shipmsg['suanfa'] == 'd')) {
                         $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
                     } else {
                         $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
+                    }
+
+                    // 查找数据条件
+                    $where = array(
+                        'resultid' => $data['resultid'],
+                        'cabinid' => $data['cabinid'],
+                        'solt' => $data['solt'],
+                    );
+
+                    //获取原来的计算过程,没有就初始化
+                    $old_process = $resultrecord->field('process')->where($where)->find();
+                    if ($old_process !== false) {
+                        $process = json_decode($old_process['process'], true);
+                        if ($process == null) {
+                            $process = array();
+                        }
                     }
 
                     $bilge_stock = '';
@@ -2837,15 +2972,16 @@ class WorkController extends AppBaseController
                         $soltType = '作业后';
                     }
 
-                    $process .= "Received meansure_value:\r\n\tullage=" . $data['ullage'] . ", sounding=" . $data['sounding'] . ", cabin_temperature=" . $data['temperature'] . ", soltType=," . $soltType . "\r\n\taltitudeheight=" . $data['altitudeheight'] . ", table_used=" . $data['qufen'] . ", bilge_stock=" . $bilge_stock . ", pipeline_stock=" . $pipeline_stock . ",\r\n";
+//                    $process .= "Received meansure_value:\r\n\tullage=" . $data['ullage'] . ", sounding=" . $data['sounding'] . ", cabin_temperature=" . $data['temperature'] . ", soltType=," . $soltType . "\r\n\taltitudeheight=" . $data['altitudeheight'] . ", table_used=" . $data['qufen'] . ", bilge_stock=" . $bilge_stock . ", pipeline_stock=" . $pipeline_stock . ",\r\n";
+                    $process['ullage'] = $data['ullage'];
+                    $process['sounding'] = $data['sounding'];
+                    $process['Cabin_temperature'] = $data['temperature'];
+                    $process['method'] = $soltType;
+                    $process['altitudeheight'] = $data['altitudeheight'];
+                    $process['table_used'] = $data['qufen'];
+                    $process['bilge_stock'] = $bilge_stock;
+                    $process['pipeline_stock'] = $pipeline_stock;
 
-
-                    // 判断数据是否存在
-                    $where = array(
-                        'resultid' => $data['resultid'],
-                        'cabinid' => $data['cabinid'],
-                        'solt' => $data['solt'],
-                    );
 
                     // 获取作业记录数据个数
                     $rrecord = $resultrecord
@@ -2860,6 +2996,8 @@ class WorkController extends AppBaseController
                             'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
                         );
                         M()->rollback();
+                        $res['cabinname'] = $cabin_name;
+
                         exit(jsonreturn($res));
                     } elseif ($rrecord > 0 and I('post.is_fugai') == 'Y') {
                         // 作业数据记录存在并且覆盖数据
@@ -2882,9 +3020,11 @@ class WorkController extends AppBaseController
                                     'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
                                 );
                                 M()->rollback();
+                                $res['cabinname'] = $cabin_name;
+
                                 exit(jsonreturn($res));
                             } else {
-                                $data['houprocess'] = urlencode($process);
+                                $data['process'] = json_encode($process);
                                 //作业后数据修改
                                 $where['solt'] = '2';
                                 $id = $resultrecord
@@ -2903,7 +3043,6 @@ class WorkController extends AppBaseController
                                     if ($rlist > 0) {
                                         $resultr = $resultlist->editData($where, $resultdata);
                                     } else {
-
                                         $resultdata['resultid'] = $data['resultid'];
                                         $resultdata['cabinid'] = $data['cabinid'];
                                         $resultdata['solt'] = $data['solt'];
@@ -2918,6 +3057,8 @@ class WorkController extends AppBaseController
                                             'sign' => 6,
                                         );
                                         M()->rollback();
+                                        $res['cabinname'] = $cabin_name;
+
                                         exit(jsonreturn($res));
                                     }
                                     /*$res = array(
@@ -2931,11 +3072,13 @@ class WorkController extends AppBaseController
                                         'sign' => 1,
                                     );
                                     M()->rollback();
+                                    $res['cabinname'] = $cabin_name;
+
                                     exit(jsonreturn($res));
                                 }
                             }
                         } else {
-                            $data['qianprocess'] = urlencode($process);
+                            $data['process'] = json_encode($process);
                             // 修改作业前数据
                             $id = $resultrecord
                                 ->where($where)
@@ -2967,6 +3110,8 @@ class WorkController extends AppBaseController
                                         'sign' => 6,
                                     );
                                     M()->rollback();
+                                    $res['cabinname'] = $cabin_name;
+
                                     exit(jsonreturn($res));
                                 }
 //                                $res = array(
@@ -2980,12 +3125,14 @@ class WorkController extends AppBaseController
                                     'sign' => 2,
                                 );
                                 M()->rollback();
+                                $res['cabinname'] = $cabin_name;
+
                                 exit(jsonreturn($res));
                             }
                         }
 
                     } elseif ($rrecord == 0) {
-                        $data['qianprocess'] = urlencode($process);
+                        $data['process'] = json_encode($process);
                         // 没有记录作业数据，新增作业记录数据
                         $id = $resultrecord
                             ->add($data);
@@ -3015,6 +3162,8 @@ class WorkController extends AppBaseController
                                     'sign' => 6,
                                 );
                                 M()->rollback();
+                                $res['cabinname'] = $cabin_name;
+
                                 exit(jsonreturn($res));
                             }
 
@@ -3030,6 +3179,8 @@ class WorkController extends AppBaseController
                                 'sign' => 3,
                             );
                             M()->rollback();
+                            $res['cabinname'] = $cabin_name;
+
                             exit(jsonreturn($res));
                         }
 
@@ -3040,6 +3191,8 @@ class WorkController extends AppBaseController
                             'sign' => 4,
                         );
                         M()->rollback();
+                        $res['cabinname'] = $cabin_name;
+
                         exit(jsonreturn($res));
                     }
                 }
@@ -3091,6 +3244,8 @@ class WorkController extends AppBaseController
     {
         if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
             $result = new \Common\Model\WorkModel();
+            $cabin = new \Common\Model\CabinModel();
+
             $uid = I('post.uid');
             $imei = I('post.imei');
             $resultid = I('post.resultid');
@@ -3102,7 +3257,11 @@ class WorkController extends AppBaseController
             //初始化修正后空高
             $correntKong = array();
             foreach ($datas as $key => $data) {
+                $cabin_name = "";
+                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+
                 if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['draft1'] !== '' and $data['draft2'] !== '' and $data['value1'] !== '' and $data['value2'] !== '' and $data['value3'] !== '' and $data['value4'] !== '') {
+
 
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
@@ -3113,6 +3272,7 @@ class WorkController extends AppBaseController
 
                     if ($res['code'] != 1) {
                         M()->rollback();
+                        $res['cabinname'] = $cabin_name;
                         exit(jsonreturn($res));
                     } else {
                         $correntKong[] = array('cabinid' => $data['cabinid'], 'correntkong' => $res['correntkong']);
@@ -3124,6 +3284,8 @@ class WorkController extends AppBaseController
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
                     );
+                    $res['cabinname'] = $cabin_name;
+
                     exit(jsonreturn($res));
                 }
             }
@@ -3163,6 +3325,8 @@ class WorkController extends AppBaseController
     {
         if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
             $result = new \Common\Model\WorkModel();
+            $cabin = new \Common\Model\CabinModel();
+
             $uid = I('post.uid');
             $imei = I('post.imei');
             $resultid = I('post.resultid');
@@ -3172,16 +3336,21 @@ class WorkController extends AppBaseController
             M()->startTrans();
 
             foreach ($datas as $key => $data) {
+                $cabin_name = "";
+                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
                 if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['capacity1'] !== '' and $data['capacity2'] !== '') {
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
                     $data['imei'] = $imei;
                     $data['solt'] = $solt;
                     $data['shipid'] = $shipid;
+
+
                     $res = $result->capacityreckon($data, 'b');
 
                     if ($res['code'] != 1) {
                         M()->rollback();
+                        $res['cabinname'] = $cabin_name;
                         exit(jsonreturn($res));
                     }
                 } else {
@@ -3190,6 +3359,8 @@ class WorkController extends AppBaseController
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
                     );
+                    $res['cabinname'] = $cabin_name;
+
                     exit(jsonreturn($res));
                 }
             }

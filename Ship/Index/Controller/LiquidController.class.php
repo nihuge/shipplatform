@@ -103,7 +103,7 @@ class LiquidController extends IndexBaseController
         $page = new \Org\Nx\Page($count, 20);
 
         $list = $this->db
-            ->field('r.personality,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid')
+            ->field('r.personality,r.time,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid')
             ->alias('r')
             ->join('left join ship s on s.id=r.shipid')
             ->join('left join user u on u.id=r.uid')
@@ -124,6 +124,7 @@ class LiquidController extends IndexBaseController
         $ship = new \Common\Model\ShipModel();
         foreach ($list as $key => $value) {
             $list[$key]['personality'] = json_decode($value['personality'], true);
+            $list[$key]['time'] = date("Y-m-d H:i:s",$value['time']);
             // 根据作业人公司类型判断这条作业是否可以评价
             if ($value['firmtype'] == 2) {
                 $list[$key]['is_coun'] = 'N';
@@ -587,7 +588,7 @@ class LiquidController extends IndexBaseController
             //查询作业列表
             $list = $this->db
                 ->alias('r')
-                ->field('r.*,s.shipname,u.username,r.qianchi,r.houchi,s.goodsname goodname,f.firmtype as ffirmtype,e.img as eimg,s.number as ship_number')
+                ->field('r.*,s.shipname,s.is_guanxian,s.suanfa,u.username,r.qianchi,r.houchi,s.goodsname goodname,f.firmtype as ffirmtype,e.img as eimg,s.number as ship_number')
                 ->join('left join ship s on r.shipid=s.id')
                 ->join('left join user u on r.uid = u.id')
                 ->join('left join firm f on u.firmid = f.id')
@@ -606,20 +607,68 @@ class LiquidController extends IndexBaseController
                 ->where($map)
                 ->find();
             $list['firmtype'] = $a['firmtype'];
-            if ($msg !== false) {
+            if ($list !== false) {
+                $resultrecord = M('resultrecord');
                 $where1 = array('re.resultid' => $list['id']);
                 $resultlist = new \Common\Model\ResultlistModel();
                 $resultmsg = $resultlist
                     ->alias('re')
-                    ->field('re.*,c.cabinname')
+                    ->field('re.*,c.cabinname,c.pipe_line')
                     ->join('left join cabin c on c.id = re.cabinid')
                     ->where($where1)
                     ->order('re.solt asc,re.cabinid asc')
                     ->select();
+
+                //初始化管线信息
+                $gxinfo = array(
+                    'qiangx' => 0,
+                    'qianxgx' => 0,
+                    'hougx' => 0,
+                    'houxgx' => 0,
+                );
                 //以舱区分数据（）
                 foreach ($resultmsg as $k => $v) {
+                    //获取计算数据
+                    $recordmsg = $resultrecord
+                        ->where(
+                            array(
+                                'resultid' => $v['resultid'],
+                                'solt' => $v['solt'],
+                                'cabinid' => $v['cabinid'])
+                        )
+                        ->find();
+
+                    /**
+                     * 此处处理管线单列
+                     */
+                    //初始化修正后管线容量
+                    $xgx = 0;
+                    //如果需要单列管线的同时，舱容表不包含管线且当前检验管线内有货。报告时货物容量减去管线容量
+                    if ($list['is_guanxian'] == 2 and $recordmsg['is_pipeline'] == 1) {
+                        // 计算修正后管道容量   管道容量*体积*膨胀
+                        $xgx = round($v['pipe_line'] * $v['volume'] * $v['expand'], 3);
+                        //作业舱容量减去管线容量
+                        $v['cabinweight'] -= $v['pipe_line'];
+                        //作业前舱容量减去修正后管线容量
+                        $v['standardcapacity'] -= $xgx;
+
+                        //作业前后管道容量汇总相加
+                        if ($v['solt'] == 1) {
+                            //作业前管线容量总和相加
+                            $gxinfo['qiangx'] += $v['pipe_line'];
+                            //作业前修正后管线容量总和相加,先计算修正后管线容量
+                            $gxinfo['qianxgx'] += $xgx;
+                        } elseif ($v['solt'] == 2) {
+                            //作业前管线容量总和相加
+                            $gxinfo['hougx'] += $v['pipe_line'];
+                            //作业前修正后管线容量总和相加,先计算修正后管线容量
+                            $gxinfo['houxgx'] += $xgx;
+                        }
+                    }
                     $result[$v['cabinid']][] = $v;
                 }
+
+
                 // 个性化信息
                 $personality = json_decode($list['personality'], true);
                 if (!empty($resultmsg)) {
@@ -649,7 +698,6 @@ class LiquidController extends IndexBaseController
                     ->count();
 
                 // 判断作业属于哪个类型的公司
-
                 if ($msg['pdf'] == 'null' or empty($msg['pdf'])) {
                     $pdf = 'ceshipdf';
                 } else {
@@ -661,7 +709,8 @@ class LiquidController extends IndexBaseController
                     'starttime' => $starttime,
                     'endtime' => $endtime,
                     'personality' => $personality,
-                    'coun' => $coun
+                    'coun' => $coun,
+                    'gx' => $gxinfo
                 );
                 $this->assign($assign);
                 $this->display($pdf);

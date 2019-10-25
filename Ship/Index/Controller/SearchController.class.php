@@ -19,8 +19,8 @@ class SearchController extends IndexBaseController
         parent::__construct();
         $this->db = new \Common\Model\FirmModel();
         $this->udb = new \Common\Model\UserModel();
-        $this->rdb = new \Common\Model\ResultModel();
-        $this->shipdb = new \Common\Model\ShipModel();
+        $this->rdb = new \Common\Model\WorkModel();
+        $this->shipdb = new \Common\Model\ShipFormModel();
     }
 
     /**
@@ -248,6 +248,17 @@ class SearchController extends IndexBaseController
             ->where(array('f.id' => $firmid))
             ->join('left join firm_historical_sum h on h.firmid = f.id')
             ->find();
+
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            foreach ($list as $key => $value) {
+                $list[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+            }
+            $content['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $content['img']);
+            $content['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['image']);
+        }
         // 求评分平均分
         $content['pin'] = round($content['grade'] / $content['grade_num'], 1);
         // p($content);die;
@@ -286,6 +297,18 @@ class SearchController extends IndexBaseController
             ->where(array('f.id' => $firmid))
             ->join('left join firm_historical_sum h on h.firmid = f.id')
             ->find();
+
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            foreach ($shiplist as $key => $value) {
+                $shiplist[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+            }
+            $content['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $content['img']);
+            $content['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $content['image']);
+        }
+
         // 求评分平均分
         $content['pin'] = round($content['grade'] / $content['grade_num'], 1);
         // p($content);die;
@@ -325,6 +348,15 @@ class SearchController extends IndexBaseController
             ->limit($page->firstRow, $page->listRows)
             ->select();
 
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            foreach ($list as $key => $value) {
+                $list[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+            }
+        }
+
         $assign = array(
             'list' => $list,
             'page' => $page->show(),
@@ -355,6 +387,16 @@ class SearchController extends IndexBaseController
             ->join('left join ship_historical_sum h on h.shipid = s.id')
             ->limit($page->firstRow, $page->listRows)
             ->select();
+
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            foreach ($data as $key => $value) {
+                $data[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+            }
+        }
+
         $assign = array(
             'data' => $data,
             'page' => $page->show(),
@@ -378,6 +420,14 @@ class SearchController extends IndexBaseController
             ->join('left join firm f on s.firmid = f.id')
             ->find();
         $data['mooring_num'] = count(explode(',', $data['mooring']));
+
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+        }
+
         $assign = array(
             'data' => $data
         );
@@ -399,6 +449,13 @@ class SearchController extends IndexBaseController
             ->join('left join firm f on s.firmid = f.id')
             ->find();
         $data['mooring_num'] = count(explode(',', $data['mooring']));
+
+        /**
+         * 处理域名访问无法获取用户上传图片的问题
+         */
+        if (is_Domain()) {
+            $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+        }
 
         // 获取最近作业的20条数据
         $rlist = $this->rdb
@@ -534,6 +591,15 @@ class SearchController extends IndexBaseController
                             ->where(array('resultlist_id' => $v['id']))
                             ->select();
 
+                        /**
+                         * 处理域名访问无法获取用户上传图片的问题
+                         */
+                        if (is_Domain()) {
+                            foreach ($listimg as $key => $value) {
+                                $listimg[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                            }
+                        }
+
                         $ullageimg = array();
                         $soundingimg = array();
                         $temperatureimg = array();
@@ -587,6 +653,16 @@ class SearchController extends IndexBaseController
                         $listimg = M('resultlist_img')
                             ->where(array('resultlist_id' => $v['id']))
                             ->select();
+
+                        /**
+                         * 处理域名访问无法获取用户上传图片的问题
+                         */
+                        if (is_Domain()) {
+                            foreach ($listimg as $key => $value) {
+                                $listimg[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                            }
+                        }
+
                         $ullageimg = array();
                         $soundingimg = array();
                         $temperatureimg = array();
@@ -668,6 +744,16 @@ class SearchController extends IndexBaseController
             $datata = M('fornt_img')
                 ->where(array('result_id' => $v1['id']))
                 ->select();
+
+            /**
+             * 处理域名访问无法获取用户上传图片的问题
+             */
+            if (is_Domain()) {
+                foreach ($datata as $key => $value) {
+                    $datata[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                }
+            }
+
             if (empty($datata)) {
                 $list[$k1]['firstfiles1'] = array();
                 $list[$k1]['tailfiles1'] = array();

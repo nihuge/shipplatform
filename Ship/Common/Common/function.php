@@ -249,14 +249,15 @@ function getpao($arr)
 function corrent($midu, $wendu)
 {
     //初始化模型静态变量
-    \Common\Model\WorkModel::$function_process = '';
+//    \Common\Model\WorkModel::$function_process = array();
     //设 M=15摄氏度时的实验室密度，T=舱壁温度，Vc=体积修正系数
     if ($midu >= 0.99) {
         $vc = 1.0094684142 - 6.33413410744 * 0.0001 * $wendu + 1.45710416212 * 0.0000001 * ($wendu * $wendu);
-        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0094684142 - 6.33413410744 * 0.0001 * Cabin_termperature + 1.45710416212 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
+//        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0094684142 - 6.33413410744 * 0.0001 * Cabin_termperature + 1.45710416212 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
+//        \Common\Model\WorkModel::$function_process = '\t VC= ROUND(1.0094684142 - 6.33413410744 * 0.0001 * Cabin_termperature + 1.45710416212 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
     } else {
         $vc = 1.0108020095 - 7.2343515319 * 0.0001 * $wendu + 2.1996598346 * 0.0000001 * ($wendu * $wendu);
-        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0108020095 - 7.2343515319 * 0.0001 *  Cabin_termperature + 2.1996598346 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
+//        \Common\Model\WorkModel::$function_process .= '\t VC= ROUND(1.0108020095 - 7.2343515319 * 0.0001 *  Cabin_termperature + 2.1996598346 * 0.0000001 * (Cabin_termperature * Cabin_termperature),4)=' . round($vc, 4);
     }
     return round($vc, 4);
     // $a = '1';
@@ -271,9 +272,9 @@ function corrent($midu, $wendu)
  */
 function expand($a, $b)
 {
-    \Common\Model\WorkModel::$function_process = '';
+//    \Common\Model\WorkModel::$function_process = array();
     $a = round((1 + 0.000012 * ($a) * (($b) - 20)), 6);
-    \Common\Model\WorkModel::$function_process .= '\t EC= round((1 + 0.000012 * (coefficient) * ((Cabin_temperature) - 20)), 6)=' . $a;
+//    \Common\Model\WorkModel::$function_process .= '\t EC= round((1 + 0.000012 * (coefficient) * ((Cabin_temperature) - 20)), 6)=' . $a;
     return eval("return $a;");
 }
 
@@ -284,7 +285,7 @@ function suanfa5002($a, $b, $c, $d, $e)
 {
 
     $suanfa = "round(($a-($b)),3)/($c-($d))*($e-($d))+$b";
-    \Common\Model\WorkModel::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall=" . $suanfa;
+//    \Common\Model\WorkModel::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall=" . $suanfa;
     return eval("return $suanfa;");
     // return $a.'~~~~'.$b.'~~~~'.$c.'~~~~'.$d.'~~~~'.$e;  
 }
@@ -363,7 +364,7 @@ function read_all_dir($dir)
 function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDFfileDir = "", $PDFfilename = "print.pdf")
 {
     //判断文件是否存在
-    $file = $_SERVER['DOCUMENT_ROOT'] .'/Public/pdf/' . $PDFfileDir . $PDFfilename;
+    $file = $_SERVER['DOCUMENT_ROOT'] . '/Public/pdf/' . $PDFfileDir . $PDFfilename;
 
     $fileDir = $_SERVER['DOCUMENT_ROOT'] . $miniAppPath . '/Public/pdf/' . $PDFfileDir;
 
@@ -1171,6 +1172,18 @@ function csicpdf($data = '')
         $t
         . '
         <tr>
+            <td align="left">&nbsp;管线</td>
+            <td colspan="4" align="left"></td>
+            <td align="left">' . $data['gx']['qiangx'] . '</td>
+            <td colspan="2" align="left"></td>
+            <td align="left">' . $data['gx']['qianxgx'] . '</td>
+            <td></td>
+            <td colspan="4" align="left"></td>
+            <td align="left">' . $data['gx']['hougx'] . '</td>
+            <td colspan="2" align="left"></td>
+            <td align="left">' . $data['gx']['houxgx'] . '</td>
+        </tr>
+        <tr>
             <td colspan="7" align="left">&nbsp;总容量</td>
             <td colspan="2">' . $data['content']['qianweight'] . '</td>
             <td></td>
@@ -1475,4 +1488,14 @@ function preg_ueditor_image_path($data)
     $data = htmlspecialchars_decode($data);
     $data = preg_replace('/src=\"^\/.*\/Upload\/image\/ueditor$/', 'src="' . $root_path . '/Upload/image/ueditor', $data);
     return $data;
+}
+
+/**
+ * 判断是否通过域名访问
+ */
+function is_Domain()
+{
+    $url_arr = $_SERVER['HTTP_HOST'];
+    \Think\Log::record("\r\n \r\n [domain] " . $url_arr . "\r\n \r\n" . preg_match('/^\w+\.\w+\.\w+$/', $url_arr), "DEBUG", true);
+    return preg_match('/^\w+\.\w+\.\w+$/', $url_arr);
 }

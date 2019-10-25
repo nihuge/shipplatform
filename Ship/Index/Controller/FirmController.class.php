@@ -79,6 +79,13 @@ class FirmController extends IndexBaseController
                     ->where(array('id'=>$firmid))
                     ->find();
 
+            //如果通过域名访问进来则去除最后一个开头的路径
+            if (is_Domain()) {
+                $data['logo'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['logo']);
+                $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+                $data['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['image']);
+            }
+
             $this->assign('data',$data);
             $this->display();            
         }

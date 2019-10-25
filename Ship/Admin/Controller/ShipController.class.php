@@ -114,7 +114,7 @@ class ShipController extends AdminBaseController
             $data['img'] = I('post.img');
             $data['expire_time'] = strtotime(I('post.expire_time'));
             $ship = new \Common\Model\ShipFormModel();
-            // 判断船舶是否存在
+            // 判断 船舶是否存在
             $count = $ship->where(array('shipname' => $data['shipname']))->count();
             if ($count == 0) {
                 if (!$ship->create($data)) {
@@ -166,7 +166,7 @@ class ShipController extends AdminBaseController
      */
     public function edit()
     {
-        $ship = new \Common\Model\ShipModel();
+        $ship = new \Common\Model\ShipFormModel();
         if (IS_POST) {
             $data = I('post.');
             foreach ($data['kedu'] as $key => $value) {

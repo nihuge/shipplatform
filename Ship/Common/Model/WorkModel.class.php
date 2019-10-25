@@ -7,6 +7,27 @@ use Think\Think;
 
 /**
  * 作业Model
+ *
+ *                            _ooOoo_
+ *                           o8888888o
+ *                           88" . "88
+ *                           (| -_- |)
+ *                           O\  =  /O
+ *                        ____/`---'\____
+ *                      .'  \\|     |//  `.
+ *                     /  \\|||  :  |||//  \
+ *                    /  _||||| -:- |||||-  \
+ *                    |   | \\\  -  /// |   |
+ *                    | \_|  ''\---/''  |   |
+ *                    \  .-\__  `-`  ___/-. /
+ *                  ___`. .'  /--.--\  `. . __
+ *               ."" '<  `.___\_<|>_/___.'  >'"".
+ *              | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *              \  \ `-.   \_ __\ /__ _/   .-` /  /
+ *         ======`-.____`-.___\_____/___.-`____.-'======
+ *                            `=---='
+ *        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *                      佛祖保佑       永无BUG
  * */
 class WorkModel extends BaseModel
 {
@@ -31,8 +52,8 @@ class WorkModel extends BaseModel
         //array('wharf','0,7','海船装运码头长度不能超过7个字符',0,'length'),//存在即验证 长度不能超过12个字符
         //array('inspection','0,7','海船商检量长度不能超过7个字符',0,'length'),//存在即验证 长度不能超过12个字符
     );
-    private $process = "";
-    static $function_process = "";
+    private $process = array();
+    static $function_process = array();
 
     /**
      * 添加作业数据
@@ -44,7 +65,7 @@ class WorkModel extends BaseModel
         $datas = $data;
         //判断船驳舱容表时间是否到期
         $ship = new \Common\Model\ShipModel();
-        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
+//        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
 //        if ($expire_time > time()) {
         //判断相同船是否有相同的航次
         $result = new \Common\Model\ResultModel();
@@ -234,11 +255,12 @@ class WorkModel extends BaseModel
      * @param string resultid 计量ID
      * @param string imei 标识
      * @param int uid 用户ID
+     * @param string gxtype 是否需要单列管线,y是需要单列管线，n是不需要
      * @return array
      * @return @param code 返回码
      * @return @param content 说明、内容
      */
-    public function resultsearch($resultid, $uid, $imei)
+    public function resultsearch($resultid, $uid, $imei, $gxtype = "y")
     {
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -251,7 +273,7 @@ class WorkModel extends BaseModel
             //查询作业列表
             $list = $this
                 ->alias('r')
-                ->field('r.*,s.shipname,s.suanfa,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype')
+                ->field('r.*,s.shipname,s.suanfa,s.is_guanxian,u.username,e.img as eimg,s.number as ship_number,f.firmtype as ffirmtype')
                 ->join('left join ship s on r.shipid=s.id')
                 ->join('left join user u on r.uid = u.id')
                 ->join('left join firm f on u.firmid = f.id')
@@ -316,13 +338,22 @@ class WorkModel extends BaseModel
                 $resultrecord = M('resultrecord');
                 $resultmsg = $resultlist
                     ->alias('re')
-                    ->field('re.*,c.cabinname')
+                    ->field('re.*,c.cabinname,c.pipe_line')
                     ->join('left join cabin c on c.id = re.cabinid')
                     ->where($where1)
                     ->order('re.solt asc,re.cabinid asc')
                     ->select();
                 // 以舱区分数据
                 $result = '';
+
+                //初始化管线信息
+                $gxinfo = array(
+                    'qiangx' => 0,
+                    'qianxgx' => 0,
+                    'hougx' => 0,
+                    'houxgx' => 0,
+                );
+
                 foreach ($resultmsg as $k => $v) {
                     $v['ullageimg'] = array();
                     $v['soundingimg'] = array();
@@ -341,6 +372,36 @@ class WorkModel extends BaseModel
                                 'cabinid' => $v['cabinid'])
                         )
                         ->find();
+
+
+                    /**
+                     * 此处处理管线单列
+                     */
+                    //初始化修正后管线容量
+                    $xgx = 0;
+                    //如果需要单列管线的同时，舱容表不包含管线且当前检验管线内有货。报告时货物容量减去管线容量
+                    if ($gxtype == "y" and $list['is_guanxian'] == 2 and $recordmsg['is_pipeline'] == 1) {
+                        // 计算修正后管道容量   管道容量*体积*膨胀
+                        $xgx = round($v['pipe_line'] * $v['volume'] * $v['expand'], 3);
+                        //作业舱容量减去管线容量
+                        $v['cabinweight'] -= $v['pipe_line'];
+                        //作业前舱容量减去修正后管线容量
+                        $v['standardcapacity'] -= $xgx;
+
+                        //作业前后管道容量汇总相加
+                        if ($v['solt'] == 1) {
+                            //作业前管线容量总和相加
+                            $gxinfo['qiangx'] += $v['pipe_line'];
+                            //作业前修正后管线容量总和相加,先计算修正后管线容量
+                            $gxinfo['qianxgx'] += $xgx;
+                        } elseif ($v['solt'] == 2) {
+                            //作业前管线容量总和相加
+                            $gxinfo['hougx'] += $v['pipe_line'];
+                            //作业前修正后管线容量总和相加,先计算修正后管线容量
+                            $gxinfo['houxgx'] += $xgx;
+                        }
+                    }
+
 
                     $v['qufen'] = $recordmsg['qufen'];
                     $v['quantity'] = $recordmsg['quantity'];
@@ -381,7 +442,8 @@ class WorkModel extends BaseModel
                     'resultmsg' => $a,
                     'starttime' => $starttime,
                     'endtime' => $endtime,
-                    'personality' => $personality
+                    'personality' => $personality,
+                    'gx' => $gxinfo
                 );
             } else {
                 //数据库连接错误	3
@@ -542,10 +604,24 @@ class WorkModel extends BaseModel
      */
     public function forntOperation($datas)
     {
+        $this->process = array();
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
         $msg1 = $user->is_judges($datas['uid'], $datas['imei']);
         if ($msg1['code'] == '1') {
+            $ship = new \Common\Model\ShipFormModel();
+            if ($datas['solt'] == '1') {
+                $result_msg = $this->field('qianprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $this->process = json_decode($result_msg['qianprocess'], true);
+            } elseif ($datas['solt'] == '2') {
+                $result_msg = $this->field('houprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $this->process = json_decode($result_msg['houprocess'], true);
+            }
+
+            if ($this->process == null) {
+                $this->process = array();
+            }
+
             //判断提交的值为空的时候，值等于对应的另一侧值
             if ($datas['forntleft'] !== null and $datas['forntright'] == null) {
                 // 前左不为空，前右为空
@@ -561,7 +637,11 @@ class WorkModel extends BaseModel
                 $forntright = $datas['forntright'];
             }
 
-            $this->process .= "nowtime:" . date('Y-m-d H:i:s', time()) . "------------------\r\nfornt=" . $forntleft . "\r\n";
+            $this->process["nowtime"] = date('Y-m-d H:i:s', time());
+            $this->process["fornt"] = $forntleft;
+
+//            $this->process .= "nowtime:" . date('Y-m-d H:i:s', time()) . "------------------\r\nfornt=" . $forntleft . "\r\n";
+
 
             if ($datas['afterleft'] !== null and $datas['afterright'] == null) {
                 // 后左不为空，后右为空
@@ -577,7 +657,7 @@ class WorkModel extends BaseModel
                 $afterright = $datas['afterright'];
             }
 
-            $this->process .= "after=" . $afterleft . "\r\n";
+            $this->process["after"] = $afterleft;
 
             //水尺数据
             $data = array(
@@ -596,47 +676,79 @@ class WorkModel extends BaseModel
             );
 
             if ($datas['solt'] == '1') {
-                $this->process .= "soltType=作业前 then:\r\n";
+
+                $this->process["soltType"] = "作业前";
 
                 //默认左减左
                 $data1['qianchi'] = $afterleft - $forntleft;
-                $this->process .= "\t Draught=" . $data1['qianchi'] . "\r\n";
+                $this->process["Draught"] = $data1['qianchi'];
+
+//                $this->process .= "\t Draught=" . $data1['qianchi'] . "\r\n";
 
                 //判断温度是否是15、20、25
                 if ($datas['temperature'] == '20℃') {
                     $data1['qiandensity'] = $datas['density'] / 0.9969;
                     $data1['qiantemperature'] = '15℃';
-                    $this->process .= "\t temperature: 20℃ then: now_density=(density/0.9969)=" . $datas['density'] . "/0.9969=" . $data1['qiandensity'] . "|now_temperature = 15℃\r\n";
+
+                    $this->process['temperature'] = "20℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
                 } elseif ($datas['temperature'] == '25℃') {
                     $data1['qiandensity'] = $datas['density'] / 0.9937;
                     $data1['qiantemperature'] = '15℃';
-                    $this->process .= "\t temperature: 25℃ then: now_density = (density/0.9937)=" . $datas['density'] . "/0.9937=" . $data1['qiandensity'] . "| now_temperature = 15℃\r\n";
+
+                    $this->process['temperature'] = "25℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
+//                    $this->process .= "\t temperature: 25℃ then: now_density = (density/0.9937)=" . $datas['density'] . "/0.9937=" . $data1['qiandensity'] . "| now_temperature = 15℃\r\n";
                 } else {
                     $data1['qiandensity'] = $datas['density'];
                     $data1['qiantemperature'] = '15℃';
-                    $this->process .= "\t temperature: 20℃ then: now_density = density | now_temperature=15℃\r\n";
+
+                    $this->process['temperature'] = "15℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
+//                    $this->process .= "\t temperature: 20℃ then: now_density = density | now_temperature=15℃\r\n";
                 }
-                $data1['qianprocess'] = urlencode($this->process);
+                $data1['qianprocess'] = json_encode($this->process);
             } elseif ($datas['solt'] == '2') {
-                $this->process .= "soltType: 作业后 then:\r\n";
+                $this->process["soltType"] = "作业后";
                 $data1['houchi'] = $afterleft - $forntleft;
-                $this->process .= "\t Draught=" . $data1['houchi'] . "\r\n";
+                $this->process["Draught"] = $data1['houchi'];
                 //判断温度是否是15、20、25
                 if ($datas['temperature'] == '20℃') {
                     $data1['houdensity'] = $datas['density'] / 0.9969;
                     $data1['houtemperature'] = '15℃';
-                    $this->process .= "\t temperature: 20℃ then: now_density=(density/0.9969)=" . $datas['density'] . "/0.9969=" . $data1['houdensity'] . "|now_temperature = 15℃\r\n";
+
+                    $this->process['temperature'] = "20℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
+//                    $this->process .= "\t temperature: 20℃ then: now_density=(density/0.9969)=" . $datas['density'] . "/0.9969=" . $data1['houdensity'] . "|now_temperature = 15℃\r\n";
                 } elseif ($datas['temperature'] == '25℃') {
                     $data1['houdensity'] = $datas['density'] / 0.9937;
                     $data1['houtemperature'] = '15℃';
-                    $this->process .= "\t temperature: 25℃ then: now_density = (density/0.9937)=" . $datas['density'] . "/0.9937=" . $data1['houdensity'] . "| now_temperature = 15℃\r\n";
+
+                    $this->process['temperature'] = "25℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
+//                    $this->process .= "\t temperature: 25℃ then: now_density = (density/0.9937)=" . $datas['density'] . "/0.9937=" . $data1['houdensity'] . "| now_temperature = 15℃\r\n";
                 } else {
                     $data1['houdensity'] = $datas['density'];
                     $data1['houtemperature'] = '15℃';
-                    $this->process .= "\t temperature: 20℃ then:now_density = density | now_temperature=15℃\r\n";
+
+                    $this->process['temperature'] = "15℃";
+                    $this->process['density'] = $datas['density'];
+                    $this->process['now_density'] = $data1['qiandensity'];
+
+//                    $this->process .= "\t temperature: 20℃ then:now_density = density | now_temperature=15℃\r\n";
                 }
                 //将过程存入数据库
-                $data1['houprocess'] = urlencode($this->process);
+                $data1['houprocess'] = json_encode($this->process);
             }
 
             // 判断水尺数据是否存在 添加/修改数据
@@ -653,6 +765,7 @@ class WorkModel extends BaseModel
                 //数据不存在--新增
                 $r = M('forntrecord')->add($data);
             }
+
             $datafile = array();
             // 判断是否存在首吃水 尾吃水
             if (!empty($datas['firstfiles']) && $datas['firstfiles'] != '[]') {
@@ -709,20 +822,24 @@ class WorkModel extends BaseModel
             );
             $res = $this->editData($m, $data1);
             // 修改数据成功
-            if ($res['code'] !== false and $r !== false) {
+            if ($res !== false and $r !== false) {
                 $where = array(
                     'solt' => $datas['solt'],
                     'resultid' => $datas['resultid'],
                     'is_work' => array('eq', 1)
                 );
-                // 如果存在作业数据，重新计算已录入的数据
-                $n = M('resultrecord')->where($where)->select();
-                if (!empty($n)) {
-                    foreach ($n as $key => $value) {
-                        $this->process = "";
-                        $value['uid'] = $datas['uid'];
-                        $value['imei'] = $datas['imei'];
-                        $this->reckon($value);
+                // 判断是否有舱容数据
+                $is_have_data = $ship->is_have_data($result_msg['shipid']);
+                if ($is_have_data === 'y') {
+                    // 如果存在作业数据，重新计算已录入的数据
+                    $n = M('resultrecord')->where($where)->select();
+                    if (!empty($n)) {
+                        foreach ($n as $key => $value) {
+                            $this->process = array();
+                            $value['uid'] = $datas['uid'];
+                            $value['imei'] = $datas['imei'];
+                            $this->reckon($value);
+                        }
                     }
                 }
                 M()->commit();
@@ -749,34 +866,59 @@ class WorkModel extends BaseModel
      * */
     public function suanfa($qiu, $ulist, $keys = '', $ullage = '', $chishui = '')
     {
-        self::$function_process = "";
+        self::$function_process = array();
+        self::$function_process['interpolation_calculation'] = array();
         //四种情况计算容量
         if (count($qiu) == '1' and count($ulist) == '1') {
             //【1】纵倾（吃水差）查出一条，空高查出1条
-            self::$function_process .= "count(ulist):1,count(Draught):1 then:\r\n";
+//            self::$function_process .= "count(ulist):1,count(Draught):1 then:\r\n";
+
+            self::$function_process['count(ulist)'] = "1";
+            self::$function_process['count(Draught)'] = "1";
             $res = $ulist[0][$keys[0]];
-            self::$function_process .= "final_result=" . $res;
+            self::$function_process['final_result'] = $res;
+
         } elseif (count($qiu) == '2' and count($ulist) == '2') {
-            self::$function_process .= "count(ulist):2,count(Draught):2 then:\r\n";
+//            self::$function_process .= "count(ulist):2,count(Draught):2 then:\r\n";
+
+            self::$function_process['count(ulist)'] = "2";
+            self::$function_process['count(Draught)'] = "2";
             //【2】纵倾（吃水差）查出2条，空高查出2条
             $hou = suanfa5002((float)$ulist[1][$keys[1]], (float)$ulist[0][$keys[1]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-            self::$function_process .= "\t interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall = " . $hou . "\r\n first_result=" . $hou . " \r\n";
+//            self::$function_process .= "\t interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall = " . $hou . "\r\n first_result=" . $hou . " \r\n";
+            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $hou);
+
             $qian = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-            self::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall= " . $qian . "\r\n second_result=" . $qian . " \r\n";
+//            self::$function_process .= "interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall= " . $qian . "\r\n second_result=" . $qian . " \r\n";
+            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $qian);
 
             $res = suanfa5002($hou, $qian, $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
-            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
+
+//            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+            self::$function_process['final_result'] = $res;
+
         } elseif (count($qiu) == '1' and count($ulist) == '2') {
-            self::$function_process .= "count(ulist):2,count(Draught):1 then:\r\n";
+
+//            self::$function_process .= "count(ulist):2,count(Draught):1 then:\r\n";
+            self::$function_process['count(ulist)'] = "2";
+            self::$function_process['count(Draught)'] = "1";
             //【3】纵倾（吃水差）查出1条，空高查出2条
             $res = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+//            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
+            self::$function_process['final_result'] = $res;
+
 //            interpolation_calculation_result =round(Cbig-Csmall,3)/(Xbig-Xsmall)*(X-Xsmall)+Csmall
         } elseif (count($qiu) == '2' and count($ulist) == '1') {
-            self::$function_process .= "count(ulist):1,count(Draught):2 then:\r\n";
+//            self::$function_process .= "count(ulist):1,count(Draught):2 then:\r\n";
+            self::$function_process['count(ulist)'] = "1";
+            self::$function_process['count(Draught)'] = "2";
             //【4】纵倾（吃水差）查出2条，空高查出1条
             $res = suanfa5002($ulist[0][$keys[1]], $ulist[0][$keys[0]], $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
-            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+//            self::$function_process .= " = " . $res . "\r\n final_result=" . $res . " \r\n";
+            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
+            self::$function_process['final_result'] = $res;
         } else {
             //其他错误	2
             $res = array(
@@ -892,6 +1034,7 @@ class WorkModel extends BaseModel
      */
     public function reckon($data, $type = 'l')
     {
+        $this->process = array();
         // 根据船ID获取纵倾值
         $ship = new \Common\Model\ShipModel();
         $shipmsg = $ship
@@ -907,11 +1050,32 @@ class WorkModel extends BaseModel
         }
 
         $resultlist = new \Common\Model\ResultlistModel();
+
+        //获取舱计算过程
+        $process = $resultlist->field("process")->where(array(
+            'cabinid' => $data['cabinid'],
+            'resultid' => $data['resultid'],
+            'solt' => $data['solt']
+        ))->find();
+//        //获取作业总计算过程
+//        $result = $this->getFieldById('');
+
+        //序列化过程
+        if ($process !== false) {
+            $this->process = json_decode($process['process'], true);
+            if ($this->process === null) {
+                $this->process = array();
+            }
+        } else {
+            $this->process = array();
+        }
+
         // 根据计量ID获取吃水差，温度。密度，
         $msg = $this
             ->field('qianchi,houchi,qiantemperature,qiandensity,houtemperature,houdensity,qianweight')
             ->where(array('id' => $data['resultid']))
             ->find();
+
         if ($msg == false || empty($msg)) {
             M()->rollback();
             //数据库连接错误	3
@@ -920,6 +1084,7 @@ class WorkModel extends BaseModel
             );
             die;
         }
+
         // 根据前后状态获取吃水差
         if ($data['solt'] == '1') {
             $chishui = $msg['qianchi'];
@@ -931,7 +1096,6 @@ class WorkModel extends BaseModel
             return $res = array(
                 'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
             );
-
             die;
         }
 
@@ -941,17 +1105,23 @@ class WorkModel extends BaseModel
         } else {
             $midu = $msg['houdensity'];
         }
-        $this->process = "nowtime:" . date('Y-m-d H:i:s', time()) . "------------------\r\ndensity:" . $midu . " then:\r\n";
+        $this->process['nowtime'] = date('Y-m-d H:i:s', time());
+//        $this->process['density'] = $midu;
 
         // 获取体积修正(15度的密度、温度)
         // $volume = corrent($midu,$temperature
         $volume = corrent($midu, $data['temperature']);
-        $this->process .= self::$function_process . "\r\n\tVC=" . $volume . "\r\n";
+        // 记录体积修正参数
+        $this->process['coefficient'] = $shipmsg['coefficient'];
+        $this->process['Cabin_temperature'] = $data['temperature'];
+//        $this->process['VC'] = array();
+        $this->process['VC'] = $volume;
+//        $this->process['VC']['formula'] = self::$function_process;
 
-        // 膨胀修正
-        $this->process .= "coefficient = " . $shipmsg['coefficient'] . ", Cabin_temperature:" . $data['temperature'] . "℃ then:\r\n";
+        self::$function_process = array();
+        //记录膨胀修正参数
         $expand = expand($shipmsg['coefficient'], $data['temperature']);
-        $this->process .= self::$function_process . "\r\n \tEC=" . $expand . "\r\n";
+        $this->process['EC'] = $expand;
 
 
         //判断船是否加管线
@@ -975,8 +1145,10 @@ class WorkModel extends BaseModel
             // $gx = 0-$guan['pipe_line'];
             // 2018/12/18    根据三通809的管线计算错误做修改
             $gx = 0;
-        }
+        } else {
 
+            $gx = 0;
+        }
 
         // 判断是否有舱容数据
         $is_have_data = $ship->is_have_data($data['shipid']);
@@ -1016,23 +1188,37 @@ class WorkModel extends BaseModel
         } else {
             $table_contain_pipeline = 'false';
         }
+//
+//
+//        $this->process .= "table_contain_pipeline = " . $table_contain_pipeline . ", pipeline_stock:" . $pipeline_stock . " then:\r\n\tpipeline_volume=" . $gx . "\r\n";
+        //记录计算过程
+        $this->process['bilge_stock'] = $bilge_stock;
+        $this->process['table_contain_pipeline'] = $table_contain_pipeline;
+        $this->process['pipeline_stock'] = $pipeline_stock;
+        $this->process['pipeline_volume'] = $gx;
+        $this->process['is_have_data'] = $is_have_data;
+        $this->process['sounding'] = $data['sounding'];
 
-
-        $this->process .= "table_contain_pipeline = " . $table_contain_pipeline . ", pipeline_stock:" . $pipeline_stock . " then:\r\n\tpipeline_volume=" . $gx . "\r\n";
-
+        $this->process['method'] = $shipmsg['suanfa'];
+        $this->process['table_used'] = $data['qufen'];
 
         $ullage = $data['ullage'];        // 空高
         $altitudeheight = round($data['altitudeheight'], 3);        // 基准高度
+
+        $this->process['ullage'] = $ullage;
+        $this->process['altitudeheight'] = $altitudeheight;
 
         // 根据船区分算法
         switch ($shipmsg['suanfa']) {
             case 'a':
                 //当空高大于等于基准高度并且不计算底量的时候
                 if ($data['quantity'] == '2' and $altitudeheight == $ullage) {
-                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+//                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+                    $this->process['Cabin_volume'] = 0;
                     $cabinweight = 0;
+
                 } else {
-                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
+//                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
                     // json转化数组
                     $qiu = $this->getjsonarray($shipmsg['tripbystern'], $chishui);
                     //返回的吃水差跟纵倾值
@@ -1042,32 +1228,75 @@ class WorkModel extends BaseModel
                     $field = $keys;
                     $field[] = 'ullage';
                     $ulist = $this->downup($ullage, $shipmsg['tankcapacityshipid'], $field, $data['cabinid']);
-                    $this->process .= "Search trim_table:\r\n\t";
+//                    $this->process .= "Search trim_table:\r\n\t";
+                    $this->process['trim_table'] = array();
                     if (count($qiu) == '1' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
                     } elseif (count($qiu) == '1' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . "=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . "=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . "=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . "=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
                     } else {
-                        $this->process .= "无法获取到表，错误！\r\n\t";
+                        $this->process['trim_table']['Ua'] = "错误";
+                        $this->process['trim_table']['Ub'] = "错误";
+                        $this->process['trim_table']['Da'] = "错误";
+                        $this->process['trim_table']['Db'] = "错误";
+                        $this->process['trim_table']['Caa'] = "错误";
+                        $this->process['trim_table']['Cab'] = "错误";
+                        $this->process['trim_table']['Cba'] = "错误";
+                        $this->process['trim_table']['Cbb'] = "错误";
                     }
-
                     //四种情况计算容量
                     $cabinweight = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 3) + $gx;
-                    $this->process .= self::$function_process . "SCV=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+SCV=" . $cabinweight . "\r\n\t";
+                    $this->process['trim_table']['process'] = self::$function_process;
+                    $this->process['trim_table']['SCV'] = $cabinweight - $gx;
+                    $this->process['cabin_first_result'] = $cabinweight - $gx;
+                    $this->process['Cabin_volume'] = $cabinweight;
                 }
 
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
-                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+//                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+                $this->process['now_cabin_volume'] = $standardcapacity;
 
                 //整合数据保存数据库
                 $datas = array(
@@ -1095,30 +1324,70 @@ class WorkModel extends BaseModel
                 $field = $keys;
                 $field[] = 'ullage';
                 $ulist = $this->downup($ullage, $shipmsg['zx'], $field, $data['cabinid']);
-
-                $this->process .= "Search trim_table:\r\n\t";
+                $this->process['trim_table'] = array();
                 if (count($qiu) == '1' and count($ulist) == '1') {
-                    $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                    $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                    $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                    $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
                 } elseif (count($qiu) == '2' and count($ulist) == '2') {
-                    $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                        . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
-                        . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
-                        . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                    $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                    $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                    $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                    $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                    $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                    $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
                 } elseif (count($qiu) == '1' and count($ulist) == '2') {
-                    $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                        . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                    $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                    $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                    $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                    $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
                 } elseif (count($qiu) == '2' and count($ulist) == '1') {
-                    $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                        . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                    $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                    $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                    $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                    $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                    $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                    $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                    $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
                 } else {
-                    $this->process .= "无法获取到表，错误！\r\n\t";
+                    $this->process['trim_table']['Ua'] = "错误";
+                    $this->process['trim_table']['Ub'] = "错误";
+                    $this->process['trim_table']['Da'] = "错误";
+                    $this->process['trim_table']['Db'] = "错误";
+                    $this->process['trim_table']['Caa'] = "错误";
+                    $this->process['trim_table']['Cab'] = "错误";
+                    $this->process['trim_table']['Cba'] = "错误";
+                    $this->process['trim_table']['Cbb'] = "错误";
                 }
 
 
                 //计算纵倾修正值
 
                 $zongxiu1 = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 0) / 1000;
-                $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+//                $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+                $this->process['trim_table']['process'] = self::$function_process;
+                $this->process['trim_table']['TC'] = $zongxiu1;
 
                 //根据纵修与基准高度-空高的差值比较取小
                 $chazhi = round(($ullage - $data['altitudeheight']), 3);
@@ -1130,40 +1399,58 @@ class WorkModel extends BaseModel
                     $zongxiu = $chazhi;
                 }
 
-                $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+//                $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+                $this->process['trim_table']['NowTC'] = $zongxiu;
+                $this->process['trim_table']['Sounding'] = $chazhi;
 
 
                 //得到修正空距 空距+纵倾修正值
                 $xiukong = round($ullage - $zongxiu, 3);
-                $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+//                $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+                $this->process['C_ullage'] = $xiukong;
+
                 //当修正空高大于等于基准高度并且不计算底量的时候
                 if ($data['quantity'] == '2' and $altitudeheight == $xiukong) {
-                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+//                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+                    $this->process['Cabin_volume'] = 0;
+
                     $cabinweight = 0;
                 } else {
-                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
+//                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
                     //根据修正空距到容量表查询数据
                     $field1 = array('ullage', 'capacity');
                     $ulist1 = $this->downup($xiukong, $shipmsg['rongliang'], $field1, $data['cabinid']);
                     //计算容量
                     $keys1[] = 'capacity';  //容量表代表容量的字段
                     $qiu1 = array('capacity' => 1);    //随意定义，只要是一位数组
-                    if (count($ulist) == '1') {
-                        $this->process .= "Received capacity_table: \r\n\t"
-                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
-                    } elseif (count($ulist) == '2') {
-                        $this->process .= "Received capacity_table: \r\n\t"
-                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "U2(" . $ulist[1]['ullage'] . ")->CV2(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+                    $this->process['capacity_table'] = array();
+                    if (count($ulist1) == '1') {
+                        $this->process['capacity_table']['U1'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['U2'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['CV1'] = $ulist1[0][$keys1[0]];
+                        $this->process['capacity_table']['CV2'] = $ulist1[0][$keys1[0]];
+//                        $this->process .= "Received capacity_table: \r\n\t"
+//                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+                    } elseif (count($ulist1) == '2') {
+                        $this->process['capacity_table']['U1'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['CV1'] = $ulist1[0][$keys1[0]];
+                        $this->process['capacity_table']['U2'] = $ulist1[1]['ullage'];
+                        $this->process['capacity_table']['CV2'] = $ulist1[1][$keys1[0]];
+//                        $this->process .= "Received capacity_table: \r\n\t"
+//                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "U2(" . $ulist[1]['ullage'] . ")->CV2(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
                     }
                     $cabinweight = round($this->suanfa($qiu1, $ulist1, $keys1, $xiukong, $chishui), 3) + $gx;
-                    $this->process .= self::$function_process . "cabin_first_result=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+cabin_first_result=" . $cabinweight . "\r\n\t";
+                    $this->process['capacity_table']['process'] = self::$function_process;
+                    $this->process['cabin_first_result'] = $cabinweight - $gx;
+                    $this->process['Cabin_volume'] = $cabinweight;
                 }
 
 
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
-                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+//                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+                $this->process['now_cabin_volume'] = $standardcapacity;
 
 
                 //整合数据保存数据库
@@ -1187,7 +1474,7 @@ class WorkModel extends BaseModel
             case 'c':
                 //判断底量计算
                 if ($data['qufen'] == 'diliang') {
-                    $this->process .= "method:C,table_used:diliang then\r\n\t";
+//                    $this->process .= "method:C,table_used:diliang then\r\n\t";
                     if (empty($shipmsg['trimcorrection1'])) {
                         $trimcorrection1 = $shipmsg['trimcorrection'];
                     } else {
@@ -1205,27 +1492,88 @@ class WorkModel extends BaseModel
 
                     $ulist = $this->downup($ullage, $shipmsg['zx_1'], $field, $data['cabinid']);
 
-                    $this->process .= "Search trim_table:\r\n\t";
+//                    $this->process .= "Search trim_table:\r\n\t";
+//                    if (count($qiu) == '1' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '2' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . "=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '1' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '2' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                    } else {
+//                        $this->process .= "无法获取到表，错误！\r\n\t";
+//                    }
+                    /**
+                     * 记录纵倾修正表
+                     */
+                    $this->process['trim_table'] = array();
                     if (count($qiu) == '1' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . "=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
                     } elseif (count($qiu) == '1' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
                     } else {
-                        $this->process .= "无法获取到表，错误！\r\n\t";
+                        $this->process['trim_table']['Ua'] = "错误";
+                        $this->process['trim_table']['Ub'] = "错误";
+                        $this->process['trim_table']['Da'] = "错误";
+                        $this->process['trim_table']['Db'] = "错误";
+                        $this->process['trim_table']['Caa'] = "错误";
+                        $this->process['trim_table']['Cab'] = "错误";
+                        $this->process['trim_table']['Cba'] = "错误";
+                        $this->process['trim_table']['Cbb'] = "错误";
                     }
 
                     //计算纵倾修正值
                     $zongxiu1 = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 0) / 1000;
-                    $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+//                    $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+                    $this->process['trim_table']['process'] = self::$function_process;
+                    $this->process['trim_table']['TC'] = $zongxiu1;
 
                     // writeLog(json_encode($zongxiu1));
                     //根据纵修与基准高度-空高的差值比较取小
@@ -1237,17 +1585,21 @@ class WorkModel extends BaseModel
                     } elseif ($chazhi == $zongxiu1) {
                         $zongxiu = $chazhi;
                     }
-                    $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+//                    $this->process = " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+                    $this->process['trim_table']['NowTC'] = $zongxiu;
+                    $this->process['trim_table']['Sounding'] = $chazhi;
+
 
                     //得到修正空距 空距+纵倾修正值
                     $xiukong = $ullage - $zongxiu;
-                    $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+//                    $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+                    $this->process['C_ullage'] = $xiukong;
 
                     //根据修正空距到容量表查询数据
                     $field1 = array('ullage', 'capacity');
                     $ulist1 = $this->downup($xiukong, $shipmsg['rongliang_1'], $field1, $data['cabinid']);
                 } else {
-                    $this->process .= "method:C and table_used:rongliang then\r\n\t";
+//                    $this->process .= "method:C and table_used:rongliang then\r\n\t";
 
                     //纵倾修正
                     $qiu = $this->getjsonarray($shipmsg['trimcorrection'], $chishui);
@@ -1259,27 +1611,85 @@ class WorkModel extends BaseModel
                     $field[] = 'ullage';
                     $ulist = $this->downup($ullage, $shipmsg['zx'], $field, $data['cabinid']);
 
-                    $this->process .= "Search trim_table:\r\n\t";
+//                    $this->process .= "Search trim_table:\r\n\t";
+//                    if (count($qiu) == '1' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '2' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '1' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . "=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                    } elseif (count($qiu) == '2' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                    } else {
+//                        $this->process .= "无法获取到表，错误！\r\n\t";
+//                    }
+                    $this->process['trim_table'] = array();
                     if (count($qiu) == '1' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[1] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
                     } elseif (count($qiu) == '1' and count($ulist) == '2') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[0] . "=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
                     } elseif (count($qiu) == '2' and count($ulist) == '1') {
-                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[0] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
-                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[1] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                        $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                        $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                        $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                        $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                        $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                        $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                        $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
                     } else {
-                        $this->process .= "无法获取到表，错误！\r\n\t";
+                        $this->process['trim_table']['Ua'] = "错误";
+                        $this->process['trim_table']['Ub'] = "错误";
+                        $this->process['trim_table']['Da'] = "错误";
+                        $this->process['trim_table']['Db'] = "错误";
+                        $this->process['trim_table']['Caa'] = "错误";
+                        $this->process['trim_table']['Cab'] = "错误";
+                        $this->process['trim_table']['Cba'] = "错误";
+                        $this->process['trim_table']['Cbb'] = "错误";
                     }
 
                     //计算纵倾修正值
                     $zongxiu1 = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 0) / 1000;
-                    $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+//                    $this->process .= self::$function_process . "TC=" . $zongxiu1 . "\r\n";
+                    $this->process['trim_table']['process'] = self::$function_process;
+                    $this->process['trim_table']['TC'] = $zongxiu1;
 
                     //根据纵修与基准高度-空高的差值比较取小
                     $chazhi = round(($ullage - $altitudeheight), 3);
@@ -1291,11 +1701,14 @@ class WorkModel extends BaseModel
                     } elseif ($chazhi == $zongxiu1) {
                         $zongxiu = $chazhi;
                     }
-                    $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+//                    $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\tNowTC=" . $zongxiu . "\r\n";
+                    $this->process['trim_table']['NowTC'] = $zongxiu;
+                    $this->process['trim_table']['Sounding'] = $chazhi;
 
                     //得到修正空距 空距+纵倾修正值
                     $xiukong = $ullage - $zongxiu;
-                    $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+//                    $this->process .= "C_ullage = ullage - NowTC =" . $ullage . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+                    $this->process['C_ullage'] = $xiukong;
 
                     //根据修正空距到容量表查询数据
                     $field1 = array('ullage', 'capacity');
@@ -1304,30 +1717,55 @@ class WorkModel extends BaseModel
                 //计算容量
                 //当修正空高大于等于基准高度并且不计算底量的时候
                 if ($data['quantity'] == '2' and $altitudeheight == $xiukong) {
-                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+//                    $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+                    $this->process['Cabin_volume'] = 0;
 
                     $cabinweight = 0;
                 } else {
-                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
+//                    $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\t";
                     $keys1[] = 'capacity';  //容量表代表容量的字段
                     $qiu1 = array('capacity' => 1);    //随意定义，只要是一位数组
+//                    if (count($ulist1) == '1') {
+//                        $this->process .= 'Received capacity_table:\r\n\t'
+//                            . "U1(" . $ulist1[0]['ullage'] . ")->CV1(" . $ulist1[0][$keys1[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+//                    } elseif (count($ulist1) == '2') {
+//                        $this->process .= 'Received capacity_table:\r\n\t'
+//                            . "U1(" . $ulist1[0]['ullage'] . ")->CV1(" . $ulist1[0][$keys1[0]] . ")\r\n\t"
+//                            . "U2(" . $ulist1[1]['ullage'] . ")->CV2(" . $ulist1[0][$keys1[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+//                    }
+
+                    $this->process['capacity_table'] = array();
                     if (count($ulist1) == '1') {
-                        $this->process .= 'Received capacity_table:\r\n\t'
-                            . "U1(" . $ulist1[0]['ullage'] . ")->CV1(" . $ulist1[0][$keys1[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+                        $this->process['capacity_table']['U1'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['CV1'] = $ulist1[0][$keys1[0]];
+                        $this->process['capacity_table']['U2'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['CV2'] = $ulist1[0][$keys1[0]];
+//                        $this->process .= "Received capacity_table: \r\n\t"
+//                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
                     } elseif (count($ulist1) == '2') {
-                        $this->process .= 'Received capacity_table:\r\n\t'
-                            . "U1(" . $ulist1[0]['ullage'] . ")->CV1(" . $ulist1[0][$keys1[0]] . ")\r\n\t"
-                            . "U2(" . $ulist1[1]['ullage'] . ")->CV2(" . $ulist1[0][$keys1[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+                        $this->process['capacity_table']['U1'] = $ulist1[0]['ullage'];
+                        $this->process['capacity_table']['CV1'] = $ulist1[0][$keys1[0]];
+                        $this->process['capacity_table']['U2'] = $ulist1[1]['ullage'];
+                        $this->process['capacity_table']['CV2'] = $ulist1[1][$keys1[0]];
+//                        $this->process .= "Received capacity_table: \r\n\t"
+//                            . "U1(" . $ulist[0]['ullage'] . ")->CV1(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "U2(" . $ulist[1]['ullage'] . ")->CV2(" . $ulist[0][$keys[0]] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
                     }
                     $cabinweight = round($this->suanfa($qiu1, $ulist1, $keys1, $xiukong, $chishui), 3) + $gx;
-                    $this->process .= self::$function_process . "cabin_first_result=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+cabin_first_result=" . $cabinweight . "\r\n\t";
+//                    $this->process .= self::$function_process . "cabin_first_result=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+cabin_first_result=" . $cabinweight . "\r\n\t";
+
+                    $this->process['capacity_table']['process'] = self::$function_process;
+                    $this->process['cabin_first_result'] = $cabinweight - $gx;
+                    $this->process['Cabin_volume'] = $cabinweight;
                     // writeLog(json_encode($cabinweight));
                     // writeLog(json_encode($gx));
                 }
 
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
-                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,3) = " . $standardcapacity . "\r\n";
+//                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,3) = " . $standardcapacity . "\r\n";
+                $this->process['now_cabin_volume'] = $standardcapacity;
+
                 //整合数据保存数据库
                 $datas = array(
                     'temperature' => $data['temperature'],    //温度
@@ -1343,6 +1781,207 @@ class WorkModel extends BaseModel
                     'expand' => $expand,        //膨胀修正系数
                     'correntkong' => $xiukong,        //修正空距
                     'listcorrection' => $zongxiu,        //纵倾修正
+                    'is_work' => '1'
+                );
+                break;
+            case 'd':
+                //判断底量计算
+                if ($data['qufen'] == 'diliang') {
+//                    $this->process .= "method:D,table_used:diliang then\r\n\t";
+
+                    //当空高大于等于基准高度并且不计算底量的时候
+                    if ($data['quantity'] == '2' and $altitudeheight == $ullage) {
+//                        $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+                        $this->process['Cabin_volume'] = 0;
+                        $cabinweight = 0;
+                    } else {
+                        if (empty($shipmsg['trimcorrection1'])) {
+                            $trimcorrection1 = $shipmsg['trimcorrection'];
+                        } else {
+                            $trimcorrection1 = $shipmsg['trimcorrection1'];
+                        }
+
+                        //纵倾修正
+                        $qiu = $this->getjsonarray($trimcorrection1, $chishui);
+                        // 根据吃水差获取数组键值（纵倾表的字段名）
+                        $keys = array_keys($qiu);
+
+                        // 主表806_2(底量计算)
+                        // 根据空高查询数据
+                        $field = $keys;
+                        $field[] = 'ullage';
+
+                        $ulist = $this->downup($ullage, $shipmsg['zx_1'], $field, $data['cabinid']);
+
+                        $this->process['trim_table'] = array();
+                        if (count($qiu) == '1' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
+                        } elseif (count($qiu) == '2' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                            $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
+                        } elseif (count($qiu) == '1' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
+                        } elseif (count($qiu) == '2' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                            $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
+                        } else {
+                            $this->process['trim_table']['Ua'] = "错误";
+                            $this->process['trim_table']['Ub'] = "错误";
+                            $this->process['trim_table']['Da'] = "错误";
+                            $this->process['trim_table']['Db'] = "错误";
+                            $this->process['trim_table']['Caa'] = "错误";
+                            $this->process['trim_table']['Cab'] = "错误";
+                            $this->process['trim_table']['Cba'] = "错误";
+                            $this->process['trim_table']['Cbb'] = "错误";
+                        }
+
+                        //四种情况计算容量
+                        $cabinweight = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 3) + $gx;
+//                        $this->process .= self::$function_process . "SCV=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+SCV=" . $cabinweight . "\r\n\t";
+                        $this->process['trim_table']['process'] = self::$function_process;
+                        $this->process['trim_table']['SCV'] = $cabinweight - $gx;
+                        $this->process['cabin_first_result'] = $cabinweight - $gx;
+                        $this->process['Cabin_volume'] = $cabinweight;
+                    }
+                } else {
+//                    $this->process .= "method:D and table_used:rongliang then\r\n\t";
+
+                    //当空高大于等于基准高度并且不计算底量的时候
+                    if ($data['quantity'] == '2' and $altitudeheight == $ullage) {
+//                        $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+                        $this->process['Cabin_volume'] = 0;
+                        $cabinweight = 0;
+                    } else {
+                        //纵倾修正
+                        $qiu = $this->getjsonarray($shipmsg['trimcorrection'], $chishui);
+                        // 根据吃水差获取数组键值（纵倾表的字段名）
+                        $keys = array_keys($qiu);
+                        //主表806_1(普通容量计算)
+                        //根据空高查询数据
+                        $field = $keys;
+                        $field[] = 'ullage';
+                        $ulist = $this->downup($ullage, $shipmsg['zx'], $field, $data['cabinid']);
+
+                        $this->process['trim_table'] = array();
+                        if (count($qiu) == '1' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[0][$keys[0]];
+                        } elseif (count($qiu) == '2' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cbb(" . $ulist[1][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                            $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[1][$keys[1]];
+                        } elseif (count($qiu) == '1' and count($ulist) == '2') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ub(" . $ulist[1]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Cba(" . $ulist[1][$keys[0]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[1]['ullage'];
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cba'] = $ulist[1][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[1][$keys[0]];
+                        } elseif (count($qiu) == '2' and count($ulist) == '1') {
+//                        $this->process .= "Ua(" . $ulist[0]['ullage'] . "):Da(" . $qiu[$keys[0]] . ")=Caa(" . $ulist[0][$keys[0]] . ")\r\n\t"
+//                            . "Ua(" . $ulist[0]['ullage'] . "):Db(" . $qiu[$keys[1]] . ")=Cab(" . $ulist[0][$keys[1]] . ")\r\n---------------------------------------\r\n";
+                            $this->process['trim_table']['Ua'] = $ulist[0]['ullage'];
+                            $this->process['trim_table']['Ub'] = $ulist[0]['ullage'];;
+                            $this->process['trim_table']['Da'] = $qiu[$keys[0]];
+                            $this->process['trim_table']['Db'] = $qiu[$keys[1]];
+                            $this->process['trim_table']['Caa'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cab'] = $ulist[0][$keys[1]];
+                            $this->process['trim_table']['Cba'] = $ulist[0][$keys[0]];
+                            $this->process['trim_table']['Cbb'] = $ulist[0][$keys[1]];
+                        } else {
+                            $this->process['trim_table']['Ua'] = "错误";
+                            $this->process['trim_table']['Ub'] = "错误";
+                            $this->process['trim_table']['Da'] = "错误";
+                            $this->process['trim_table']['Db'] = "错误";
+                            $this->process['trim_table']['Caa'] = "错误";
+                            $this->process['trim_table']['Cab'] = "错误";
+                            $this->process['trim_table']['Cba'] = "错误";
+                            $this->process['trim_table']['Cbb'] = "错误";
+                        }
+
+                        //四种情况计算容量
+                        $cabinweight = round($this->suanfa($qiu, $ulist, $keys, $ullage, $chishui), 3) + $gx;
+//                        $this->process .= self::$function_process . "SCV=" . $cabinweight . "\r\n\tCabin_volume=pipeline_volume+SCV=" . $cabinweight . "\r\n\t";
+                        $this->process['trim_table']['process'] = self::$function_process;
+                        $this->process['trim_table']['SCV'] = $cabinweight - $gx;
+                        $this->process['cabin_first_result'] = $cabinweight - $gx;
+                        $this->process['Cabin_volume'] = $cabinweight;
+                    }
+                }
+
+                // 计算标准容量   容量*体积*膨胀
+                $standardcapacity = round($cabinweight * $volume * $expand, 3);
+//                $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,3) = " . $standardcapacity . "\r\n";
+                $this->process['now_cabin_volume'] = $standardcapacity;
+
+                //整合数据保存数据库
+                $datas = array(
+                    'temperature' => $data['temperature'],    //温度
+                    'cabinweight' => $cabinweight,
+                    'cabinid' => $data['cabinid'],
+                    'ullage' => $ullage,            //空高
+                    'sounding' => $data['sounding'],    //实高
+                    'time' => time(),
+                    'resultid' => $data['resultid'],
+                    'solt' => $data['solt'],        //作业标识
+                    'standardcapacity' => $standardcapacity,        //标准容量
+                    'volume' => $volume,        //体积修正
+                    'expand' => $expand,        //膨胀修正系数
                     'is_work' => '1'
                 );
                 break;
@@ -1393,10 +2032,10 @@ class WorkModel extends BaseModel
             if ($aa == false) {
                 M()->rollback();
                 // 数据库错误	3
-                $res = array(
+                return array(
                     'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
                 );
-                echo jsonreturn($res);
+//                echo jsonreturn($res);
                 die;
             }
         }
@@ -1412,7 +2051,10 @@ class WorkModel extends BaseModel
             ->select();
         //根据总标准容量*密度得到作业前/后总的货重
         $total = round($allweight[0]['sums'] * ($midu - 0.0011), 3);
-        $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
+//        $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
+        $this->process['now_result_cargo_weight'] = $total;
+        $this->process['sum(now_cabin_volume)'] = $allweight[0]['sums'];
+        $this->process['AB'] = 0.0011;
 
         //作业前作业后区分是否计算总货重
         switch ($data['solt']) {
@@ -1429,15 +2071,22 @@ class WorkModel extends BaseModel
                 if ($r !== false) {
                     // 获取作业前、后的总货重
                     $sunmmsg = $this
-                        ->field('qiantotal,houtotal')
+                        ->field('qiantotal,houtotal,houprocess')
                         ->where(array('id' => $data['resultid']))
                         ->find();
                     // 计算总容量 后-前
                     $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 3);
+                    //记录计算总容量计算过程
+                    $result_process = json_decode($sunmmsg['houprocess'], true);
+                    if ($result_process == null) {
+                        $result_process = array();
+                    }
+                    $result_process['weight'] = $weight;
+
                     // 修改总货重
                     $res1 = $this
                         ->where(array('id' => $data['resultid']))
-                        ->save(array('weight' => $weight));
+                        ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
                     if ($res1 !== false) {
                         if ($type == 'l') {
                             $trans->commit();
@@ -1470,10 +2119,17 @@ class WorkModel extends BaseModel
                     // \Think\Log::record(($msg['houdensity']-$msg['qiandensity'])*$msg['qianweight']);
                     $total = round($total - ($msg['houdensity'] - $msg['qiandensity']) * $msg['qianweight'], 3);
                     //记录过程
-                    $this->process .= "soltType:作业后,now_result_cargo_weight:" . $total1 . ",before_result_cargo_weight = " . $msg['qianweight'] . ",now_density = "
-                        . $msg['houdensity'] . ",before_density=" . $msg['houdensity']
-                        . " then:\r\n\ttotal_cargo_weight = round(now_result_cargo_weight - (now_density - before_density) * before_result_cargo_weight, 3)=round("
-                        . $total1 . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;
+//                    $this->process .= "soltType:作业后,now_result_cargo_weight:" . $total1 . ",before_result_cargo_weight = " . $msg['qianweight'] . ",now_density = "
+//                        . $msg['houdensity'] . ",before_density=" . $msg['houdensity']
+//                        . " then:\r\n\ttotal_cargo_weight = round(now_result_cargo_weight - (now_density - before_density) * before_result_cargo_weight, 3)=round("
+//                        . $total1 . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;
+
+                    //记录过程
+                    $this->process['qiandensity'] = $msg['qiandensity'];
+                    $this->process['houdensity'] = $msg['houdensity'];
+                    $this->process['qianweight'] = $msg['qianweight'];
+                    $this->process['now_result_cargo_weight'] = $total1;
+                    $this->process['total_cargo_weight'] = $total;
                 }
 
                 $hou = array(
@@ -1484,15 +2140,24 @@ class WorkModel extends BaseModel
                 if ($r !== false) {
                     // 获取作业前、后的总货重
                     $sunmmsg = $this
-                        ->field('qiantotal,houtotal')
+                        ->field('qiantotal,houtotal,houprocess')
                         ->where(array('id' => $data['resultid']))
                         ->find();
                     // 计算总容量 后-前
                     $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 3);
+
+                    //记录计算总容量计算过程
+                    $result_process = json_decode($sunmmsg['houprocess'], true);
+                    if ($result_process == null) {
+                        $result_process = array();
+                    }
+                    $result_process['weight'] = $weight;
+
+
                     // 修改总货重
                     $res1 = $this
                         ->where(array('id' => $data['resultid']))
-                        ->save(array('weight' => $weight));
+                        ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
                     if ($res1 !== false) {
                         if ($type == 'l') {
                             $trans->commit();
@@ -1518,6 +2183,10 @@ class WorkModel extends BaseModel
             default:
                 M()->rollback();
                 # 不是作业前后，跳出
+                //其它错误  2
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                );
                 break;
         }
         //保存过程数据
@@ -1526,7 +2195,7 @@ class WorkModel extends BaseModel
                 'id' => $listid
             ),
             array(
-                'process' => urlencode($this->process)
+                'process' => json_encode($this->process)
             )//计算过程
         );
         return $res;
@@ -1590,8 +2259,8 @@ class WorkModel extends BaseModel
      * */
     public function reckon1($data, $type = 'l')
     {
-        $this->process = "";
-        self::$function_process = "";
+        $this->process = array();
+        self::$function_process = array();
 
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -1623,11 +2292,19 @@ class WorkModel extends BaseModel
                     ->where(array('id' => $r['id']))
                     ->save($data);
                 if ($re !== false) {
+
                     $ship = new \Common\Model\ShipModel();
                     $where1 = array(
                         's.id' => $data['shipid'],
                         'r.id' => $data['resultid']
                     );
+                    //获取旧过程，没有就初始化新过程
+                    $this->process = json_decode($r['process'], true);
+                    if ($this->process == null) {
+                        $this->process = array();
+                    }
+
+
                     $shipmsg = $ship
                         ->field('s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity,r.qianweight')
                         ->alias('s')
@@ -1655,16 +2332,22 @@ class WorkModel extends BaseModel
                         $midu = $shipmsg['houdensity'];
                     }
 
-                    $this->process .= "nowtime:" . date('Y-m-d H:i:s', time()) . "------------------\r\ndensity:" . $midu . " then:\r\n";
+//                    $this->process .= "nowtime:" . date('Y-m-d H:i:s', time()) . "------------------\r\ndensity:" . $midu . " then:\r\n";
+                    $this->process['nowtime'] = date('Y-m-d H:i:s', time());
+                    $this->process['density'] = $midu;
 
                     // 获取体积修正(15度的密度、温度)
                     $volume = corrent($midu, $r['temperature']);
-                    $this->process .= self::$function_process . "\r\n\tVC=" . $volume . "\r\n";
+//                    $this->process .= self::$function_process . "\r\n\tVC=" . $volume . "\r\n";
+                    $this->process['VC'] = $volume;
 
                     // 膨胀修正
-                    $this->process .= "coefficient = " . $shipmsg['coefficient'] . ", Cabin_temperature:" . $r['temperature'] . "℃ then:\r\n";
+//                    $this->process .= "coefficient = " . $shipmsg['coefficient'] . ", Cabin_temperature:" . $r['temperature'] . "℃ then:\r\n";
+                    $this->process['coefficient'] = $shipmsg['coefficient'];
+//                    $this->process['Cabin_temperature'] = $data['temperature'];
                     $expand = expand($shipmsg['coefficient'], $r['temperature']);
-                    $this->process .= self::$function_process . "\r\n \tEC=" . $expand . "\r\n";
+//                    $this->process .= self::$function_process . "\r\n \tEC=" . $expand . "\r\n";
+                    $this->process['EC'] = $expand;
 
                     //判断船是否加管线,管线容量
                     $cabin = new \Common\Model\CabinModel();
@@ -1685,7 +2368,9 @@ class WorkModel extends BaseModel
                         $gx = 0;
                     } elseif ($shipmsg['is_guanxian'] == '1' and $r['is_pipeline'] == '2') {
                         // 船容量包含管线，管线无容量--容量=舱容量-舱管线容量
-                        $gx = 0 - $guan['pipe_line'];
+                        // $gx = 0-$guan['pipe_line'];
+                        // 2018/12/18    根据三通809的管线计算错误做修改
+                        $gx = 0;
                     }
 
                     $bilge_stock = '';
@@ -1714,8 +2399,13 @@ class WorkModel extends BaseModel
                         $table_contain_pipeline = 'false';
                     }
 
-                    $this->process .= "table_contain_pipeline = " . $table_contain_pipeline . ", pipeline_stock:" . $pipeline_stock . " then:\r\n\tpipeline_volume=" . $gx . "\r\n";
+//                    $this->process .= "table_contain_pipeline = " . $table_contain_pipeline . ", pipeline_stock:" . $pipeline_stock . " then:\r\n\tpipeline_volume=" . $gx . "\r\n";
 
+                    //记录计算过程
+                    $this->process['table_contain_pipeline'] = $table_contain_pipeline;
+                    $this->process['pipeline_volume'] = $gx;
+
+                    $this->process['method'] = $shipmsg['suanfa'];
 
                     /**
                      * 表数据排序，小值在ullage1,draft1，大值在ullage2,draft2
@@ -1765,19 +2455,28 @@ class WorkModel extends BaseModel
                      * $qiu 吃水值的个数
                      * $ulist 几条数据
                      * */
-                    $this->process .= "Received trim_table:\r\n\t"
-                        . "Ua(" . $data['ullage1'] . "):Da(" . $data['draft1'] . ")=Caa(" . $data['value1'] . ")\r\n\t"
-                        . "Ua(" . $data['ullage1'] . "):Db(" . $data['draft2'] . ")=Cab(" . $data['value2'] . ")\r\n\t"
-                        . "Ub(" . $data['ullage2'] . "):Da(" . $data['draft1'] . ")=Cba(" . $data['value3'] . ")\r\n\t"
-                        . "Ub(" . $data['ullage2'] . "):Db(" . $data['draft2'] . ")=Cbb(" . $data['value4'] . ")\r\n---------------------------------------\r\n";
+                    /*                    $this->process .= "Received trim_table:\r\n\t"
+                                            . "Ua(" . $data['ullage1'] . "):Da(" . $data['draft1'] . ")=Caa(" . $data['value1'] . ")\r\n\t"
+                                            . "Ua(" . $data['ullage1'] . "):Db(" . $data['draft2'] . ")=Cab(" . $data['value2'] . ")\r\n\t"
+                                            . "Ub(" . $data['ullage2'] . "):Da(" . $data['draft1'] . ")=Cba(" . $data['value3'] . ")\r\n\t"
+                                            . "Ub(" . $data['ullage2'] . "):Db(" . $data['draft2'] . ")=Cbb(" . $data['value4'] . ")\r\n---------------------------------------\r\n";*/
+                    $this->process['trim_table'] = array();
+                    $this->process['trim_table']['Ua'] = $data['ullage1'];
+                    $this->process['trim_table']['Ub'] = $data['ullage2'];
+                    $this->process['trim_table']['Da'] = $data['draft1'];
+                    $this->process['trim_table']['Db'] = $data['draft2'];
+                    $this->process['trim_table']['Caa'] = $data['value1'];
+                    $this->process['trim_table']['Cab'] = $data['value2'];
+                    $this->process['trim_table']['Cba'] = $data['value3'];
+                    $this->process['trim_table']['Cbb'] = $data['value4'];
 
 
-                    \Think\Log::record("Received trim_table:\r\n\t"
+                    /*\Think\Log::record("Received trim_table:\r\n\t"
                         . "Ua(" . $data['ullage1'] . "):Da(" . $data['draft1'] . ")=Caa(" . $data['value1'] . ")\r\n\t"
                         . "Ua(" . $data['ullage1'] . "):Db(" . $data['draft2'] . ")=Cab(" . $data['value2'] . ")\r\n\t"
                         . "Ub(" . $data['ullage2'] . "):Da(" . $data['draft1'] . ")=Cba(" . $data['value3'] . ")\r\n\t"
                         . "Ub(" . $data['ullage2'] . "):Db(" . $data['draft2'] . ")=Cbb(" . $data['value4'] . ")\r\n---------------------------------------\r\n"
-                        , "DEBUG", true);
+                        , "DEBUG", true);*/
 
 
                     if ($chishui <= $data['draft1']) {
@@ -1865,26 +2564,35 @@ class WorkModel extends BaseModel
 
                     //根据提交数据计算
                     $msg = round($this->suanfa($qiu, $ulist, $keys, $r['ullage'], $chishui), 4);
+                    $this->process['trim_table']['process'] = self::$function_process;
 
 
                     // writeLog($msg);
                     switch ($shipmsg['suanfa']) {
+                        case 'd':
                         case 'a':
                             //不需要修正，
                             //当空高等于基准高度并且不计算底量的时候,容量为0
-                            $this->process .= self::$function_process . "SCV=" . $msg . "\r\n";
+                            $this->process['trim_table']['SCV'] = $msg;
+                            $this->process['cabin_first_result'] = $msg;
+//                            $this->process .= self::$function_process . "SCV=" . $msg . "\r\n";
                             if ($r['quantity'] == '2' and $r['altitudeheight'] == $r['ullage']) {
-                                $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
+//                                $this->process .= "ullage = altitudeheight,bilge_stock == false then:Cabin_volume=0\r\n\t";
                                 $cabinweight = 0;
                             } else {
                                 //四种情况计算容量
                                 $cabinweight = $msg + $gx;
-                                $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\tCabin_volume=pipeline_volume+SCV=" . $cabinweight . "\r\n\t";
+//                                $this->process .= "ullage != altitudeheight or bilge_stock == true then:\r\n\tCabin_volume=pipeline_volume+SCV=" . $cabinweight . "\r\n\t";
+                                //记录舱容量
                             }
+
+                            $this->process['Cabin_volume'] = $cabinweight;
 
                             // 计算标准容量   容量*体积*膨胀
                             $standardcapacity = round($cabinweight * $volume * $expand, 4);
-                            $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+//                            $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+                            $this->process['now_cabin_volume'] = $standardcapacity;
+
                             //整合数据保存数据库
                             $datas = array(
                                 'temperature' => $r['temperature'],
@@ -1931,7 +2639,10 @@ class WorkModel extends BaseModel
                             //根据总标准容量*密度得到作业前/后总的货重
                             $total = round($allweight[0]['sums'] * ($midu - 0.0011), 4);
 
-                            $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
+//                            $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
+                            $this->process['now_result_cargo_weight'] = $total;
+                            $this->process['sum(now_cabin_volume)'] = $allweight[0]['sums'];
+                            $this->process['AB'] = 0.0011;
 
                             // 图片上传
                             // 保存图片资源
@@ -1948,10 +2659,10 @@ class WorkModel extends BaseModel
                                 if ($aa == false) {
                                     M()->rollback();
                                     // 数据库错误	3
-                                    $res = array(
+                                    return array(
                                         'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
                                     );
-                                    echo jsonreturn($res);
+//                                    echo jsonreturn($res);
                                     die;
                                 }
                             }
@@ -1973,15 +2684,23 @@ class WorkModel extends BaseModel
                                     if ($r !== false) {
                                         // 获取作业前、后的总货重
                                         $sunmmsg = $this
-                                            ->field('qiantotal,houtotal')
+                                            ->field('qiantotal,houtotal,houprocess')
                                             ->where(array('id' => $data['resultid']))
                                             ->find();
                                         // 计算总容量 后-前
                                         $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 4);
+
+                                        //记录计算总容量计算过程
+                                        $result_process = json_decode($sunmmsg['houprocess'], true);
+                                        if ($result_process == null) {
+                                            $result_process = array();
+                                        }
+                                        $result_process['weight'] = $weight;
+
                                         // 修改总货重
                                         $res1 = $this
                                             ->where(array('id' => $data['resultid']))
-                                            ->save(array('weight' => $weight));
+                                            ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
                                         if ($res1 !== false) {
                                             if ($type == 'l') {
                                                 M()->commit();
@@ -2016,13 +2735,19 @@ class WorkModel extends BaseModel
                                         $total1 = $total;
                                         $total = round($total - ($msg['houdensity'] - $msg['qiandensity']) * $msg['qianweight'], 3);
 
-                                        //记录过程
+                                        /*//记录过程
                                         $this->process .= "soltType:作业后,now_result_cargo_weight:" . $total1 . ",before_result_cargo_weight = " . $msg['qianweight'] . ",now_density = "
                                             . $msg['houdensity'] . ",before_density=" . $msg['houdensity']
                                             . " then:\r\n\ttotal_cargo_weight = round(now_result_cargo_weight - (now_density - before_density) * before_result_cargo_weight, 3)=round("
-                                            . $total1 . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;
-
+                                            . $total1 . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;*/
+                                        //记录过程
+                                        $this->process['qiandensity'] = $msg['qiandensity'];
+                                        $this->process['houdensity'] = $msg['houdensity'];
+                                        $this->process['qianweight'] = $msg['qianweight'];
+                                        $this->process['now_result_cargo_weight'] = $total1;
+                                        $this->process['total_cargo_weight'] = $total;
                                     }
+
                                     $hou = array(
                                         'houweight' => round($allweight[0]['sums'], 4),
                                         'houtotal' => $total,
@@ -2031,15 +2756,22 @@ class WorkModel extends BaseModel
                                     if ($r !== false) {
                                         // 获取作业前、后的总货重
                                         $sunmmsg = $this
-                                            ->field('qiantotal,houtotal')
+                                            ->field('qiantotal,houtotal,houprocess')
                                             ->where(array('id' => $data['resultid']))
                                             ->find();
                                         // 计算总容量 后-前
                                         $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 4);
+                                        //记录计算总容量计算过程
+                                        $result_process = json_decode($sunmmsg['houprocess'], true);
+                                        if ($result_process == null) {
+                                            $result_process = array();
+                                        }
+                                        $result_process['weight'] = $weight;
+
                                         // 修改总货重
                                         $res1 = $this
                                             ->where(array('id' => $data['resultid']))
-                                            ->save(array('weight' => $weight));
+                                            ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
                                         if ($res1 !== false) {
                                             if ($type == 'l') {
                                                 M()->commit();
@@ -2061,8 +2793,8 @@ class WorkModel extends BaseModel
                                                 'id' => $listid
                                             ),
                                             array(
-                                                'process' => urlencode($this->process)
-                                            )//计算过程
+                                                'process' => json_encode($this->process)
+                                            )
                                         );
                                     } else {
                                         M()->rollback();
@@ -2080,14 +2812,15 @@ class WorkModel extends BaseModel
                         case 'b':
                         case 'c':
                             //计算纵倾修正值
-                            $this->process .= self::$function_process . "TC=" . $msg . "\r\n";
+//                            $this->process .= self::$function_process . "TC=" . $msg . "\r\n";
+                            $this->process['trim_table']['TC'] = $msg;
 
                             $zongxiu1 = round($msg, 0) / 1000;
 
                             //根据纵修与基准高度-空高的差值比较取小
                             $chazhi = round(($r['ullage'] - $r['altitudeheight']), 3);
 
-                            $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\t";
+//                            $this->process .= " TC:" . $zongxiu1 . ", -Sounding:" . $chazhi . " then:\r\n\t";
                             if ($chazhi > $zongxiu1) {
                                 $zongxiu = $chazhi;
                             } elseif ($chazhi < $zongxiu1) {
@@ -2095,16 +2828,19 @@ class WorkModel extends BaseModel
                             } elseif ($chazhi == $zongxiu1) {
                                 $zongxiu = $chazhi;
                             }
-                            $this->process .= " NowTC=" . $zongxiu . "\r\n";
+//                            $this->process .= " NowTC=" . $zongxiu . "\r\n";
+                            $this->process['trim_table']['NowTC'] = $zongxiu;
+                            $this->process['trim_table']['Sounding'] = $chazhi;
 
                             //得到修正空距 空距+纵倾修正值
                             $xiukong = round($r['ullage'] - $zongxiu, 3);
-                            $this->process .= "C_ullage = ullage - NowTC =" . $r['ullage'] . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+//                            $this->process .= "C_ullage = ullage - NowTC =" . $r['ullage'] . " - " . $zongxiu . "=" . $xiukong . "\r\n";
+                            $this->process['C_ullage'] = $xiukong;
 
                             $d = array(
                                 'correntkong' => $xiukong,
                                 'listcorrection' => $zongxiu,
-                                'process' => urlencode($this->process),
+                                'process' => json_encode($this->process)
                             );
                             $a = $resultrecord
                                 ->where(array('id' => $r['id']))
@@ -2126,7 +2862,6 @@ class WorkModel extends BaseModel
                                 );
                             }
                             break;
-
                         default:
                             M()->rollback();
                             // 船舶没有算法  2010
@@ -2165,8 +2900,8 @@ class WorkModel extends BaseModel
      * */
     public function capacityreckon($data, $type = 'l')
     {
-        $this->process = "";
-        self::$function_process = "";
+        $this->process = array();
+        self::$function_process = array();
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
         $msg1 = $user->is_judges($data['uid'], $data['imei']);
@@ -2178,9 +2913,11 @@ class WorkModel extends BaseModel
                 'cabinid' => $data['cabinid'],
                 'solt' => $data['solt']
             );
+
             $r = $resultrecord
                 ->where($where)
                 ->find();
+
             if (!empty($r)) {
                 $datam = array(
                     'xiuullage1' => $data['ullage1'],
@@ -2201,6 +2938,13 @@ class WorkModel extends BaseModel
                         's.id' => $data['shipid'],
                         'r.id' => $data['resultid']
                     );
+
+                    //获取旧过程，没有就初始化新过程
+                    $this->process = json_decode($r['process'], true);
+                    if ($this->process == null) {
+                        $this->process = array();
+                    }
+
                     $shipmsg = $ship
                         ->field('s.suanfa,s.is_guanxian,s.coefficient,r.qianchi,r.houchi,r.qiantemperature,r.qiandensity,r.houtemperature,r.houdensity')
                         ->alias('s')
@@ -2238,16 +2982,16 @@ class WorkModel extends BaseModel
                         ->field('id,pipe_line')
                         ->where(array('id' => $data['cabinid']))
                         ->find();
-                    if ($shipmsg['is_guanxian'] == '1' and $r['is_pipeline'] == '1') {
+                    if ($shipmsg['is_guanxian'] == '2' and $r['is_pipeline'] == '1') {
                         // 船容量不包含管线，管线有容量--容量=舱管线容量+舱容量
                         $gx = $guan['pipe_line'];
-                    } elseif ($shipmsg['is_guanxian'] == '1' and $r['is_pipeline'] == '2') {
+                    } elseif ($shipmsg['is_guanxian'] == '2' and $r['is_pipeline'] == '2') {
                         // 船容量不包含管线，管线无容量
                         $gx = 0;
-                    } elseif ($shipmsg['is_guanxian'] == '2' and $r['is_pipeline'] == '1') {
+                    } elseif ($shipmsg['is_guanxian'] == '1' and $r['is_pipeline'] == '1') {
                         // 船容量包含管线，管线有容量
                         $gx = 0;
-                    } elseif ($shipmsg['is_guanxian'] == '2' and $r['is_pipeline'] == '2') {
+                    } elseif ($shipmsg['is_guanxian'] == '1' and $r['is_pipeline'] == '2') {
                         // 船容量包含管线，管线无容量--容量=舱容量-舱管线容量
                         // $gx = 0-$guan['pipe_line'];
                         $gx = 0;
@@ -2272,9 +3016,18 @@ class WorkModel extends BaseModel
                             'capacity' => $data['capacity1']
                         );
                     }
-                    $this->process .= 'Received capacity_table:\r\n\t'
-                        . "U1(" . $dt1['ullage'] . ")->CV1(" . $dt1['capacity'] . ")\r\n\t"
-                        . "U2(" . $dt2['ullage'] . ")->CV2(" . $dt2['capacity'] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+
+//                    $this->process .= 'Received capacity_table:\r\n\t'
+//                        . "U1(" . $dt1['ullage'] . ")->CV1(" . $dt1['capacity'] . ")\r\n\t"
+//                        . "U2(" . $dt2['ullage'] . ")->CV2(" . $dt2['capacity'] . ")\r\n------------------------------------\r\nC_ullage:" . $data['correntkong'] . " then:";
+
+
+                    $this->process['capacity_table'] = array();
+                    $this->process['capacity_table']['U1'] = $data['ullage1'];
+                    $this->process['capacity_table']['CV1'] = $data['capacity1'];
+                    $this->process['capacity_table']['U2'] = $data['ullage2'];
+                    $this->process['capacity_table']['CV2'] = $data['capacity2'];
+
 
                     // 判断修正后的空高是否在数据中存在
                     if ($data['correntkong'] >= $dt1['ullage']) {
@@ -2305,15 +3058,21 @@ class WorkModel extends BaseModel
                     $keys[] = 'capacity';
                     //根据提交数据计算
                     //当修正空高大于等于基准高度并且不计算底量的时候
-                    self::$function_process = "";
+                    self::$function_process = array();
                     if ($r['quantity'] == '2' and $r['altitudeheight'] == $r['ullage']) {
-                        $this->process .= 'bilge_stock:false,altitudeheight=C_ullage then: cabin_volume=0 \r\n';
+//                        $this->process .= 'bilge_stock:false,altitudeheight=C_ullage then: cabin_volume=0 \r\n';
+                        $this->process['Cabin_volume'] = 0;
+
+
                         $cabinweight = 0;
                     } else {
-                        $this->process .= 'bilge_stock:ture or altitudeheight != C_ullage then:\r\n';
+//                        $this->process .= 'bilge_stock:ture or altitudeheight != C_ullage then:\r\n';
                         //计算容量
                         $cabinweight = round($this->suanfa($qiu, $ulist, $keys, $data['correntkong'], $chishui), 4) + $gx;
-                        $this->process .= self::$function_process . ' cabin_volume=' . $cabinweight;
+//                        $this->process .= self::$function_process . ' cabin_volume=' . $cabinweight;
+                        $this->process['capacity_table']['process'] = self::$function_process;
+                        $this->process['cabin_first_result'] = $cabinweight - $gx;
+                        $this->process['Cabin_volume'] = $cabinweight;
                     }
 
                     $ewer = array(
@@ -2327,7 +3086,9 @@ class WorkModel extends BaseModel
                     writeLog(json_encode($ewer));
                     // 计算标准容量   容量*体积*膨胀
                     $standardcapacity = round($cabinweight * $volume * $expand, 4);
-                    $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+//                    $this->process .= "now_cabin_volume = round(Cabin_volume*VC*EC,4) = " . $standardcapacity . "\r\n";
+                    $this->process['now_cabin_volume'] = $standardcapacity;
+
                     //整合数据保存数据库
                     $datas = array(
                         'temperature' => $r['temperature'],    //温度
@@ -2377,10 +3138,10 @@ class WorkModel extends BaseModel
                         if ($aa == false) {
                             M()->rollback();
                             // 数据库错误	3
-                            $res = array(
+                            return array(
                                 'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
                             );
-                            echo jsonreturn($res);
+//                            echo jsonreturn($res);
                             die;
                         }
                     }
@@ -2396,8 +3157,10 @@ class WorkModel extends BaseModel
                     //根据总标准容量*密度得到作业前/后总的货重
                     $total = round($allweight[0]['sums'] * ($midu - 0.0011), 4);
 
-                    $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
-
+//                    $this->process .= "now_result_cargo_weight = round(sum(now_cabin_volume) * (density - AB),4) =round(" . $allweight[0]['sums'] . " * (" . $midu . " - 0.0011),4) =" . $total . "\r\n";
+                    $this->process['now_result_cargo_weight'] = $total;
+                    $this->process['sum(now_cabin_volume)'] = $allweight[0]['sums'];
+                    $this->process['AB'] = 0.0011;
 
                     //作业前作业后区分是否计算总货重
                     switch ($data['solt']) {
@@ -2412,12 +3175,44 @@ class WorkModel extends BaseModel
                                 ->where(array('id' => $data['resultid']))
                                 ->save($g);
                             if ($e !== false) {
-                                if ($type == 'l') {
-                                    $trans->commit();
+                                // 获取作业前、后的总货重
+                                $sunmmsg = $this
+                                    ->field('qiantotal,houtotal,houprocess')
+                                    ->where(array('id' => $data['resultid']))
+                                    ->find();
+                                // 计算总容量 后-前
+                                $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 3);
+                                //记录计算总容量计算过程
+                                $result_process = json_decode($sunmmsg['houprocess'], true);
+                                if ($result_process == null) {
+                                    $result_process = array();
                                 }
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                );
+                                $result_process['weight'] = $weight;
+
+                                // 修改总货重
+                                $res1 = $this
+                                    ->where(array('id' => $data['resultid']))
+                                    ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
+                                if ($res1 !== false) {
+                                    if ($type == 'l') {
+                                        $trans->commit();
+                                    }
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                    );
+                                } else {
+                                    $trans->rollback();
+                                    //其它错误  2
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                    );
+                                }
+//                                if ($type == 'l') {
+//                                    $trans->commit();
+//                                }
+//                                $res = array(
+//                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+//                                );
                             } else {
                                 $trans->rollback();
                                 //其它错误  2
@@ -2431,35 +3226,50 @@ class WorkModel extends BaseModel
                             // 修改作业后总货重、总容量
                             // // 判断前后密度是否一样,如果不一样计算密度差
                             // 重量2-（密度2-密度1）*体积1
-                            if ($msg['qiandensity'] != $msg['houdensity']) {
-                                \Think\Log::record(($msg['houdensity'] - $msg['qiandensity']) * $msg['qianweight']);
-                                $total = round($total - ($msg['houdensity'] - $msg['qiandensity']) * $msg['qianweight'], 3);
+                            if ($shipmsg['qiandensity'] != $shipmsg['houdensity']) {
+                                $total1 = $total;
+//                                \Think\Log::record(($msg['houdensity'] - $msg['qiandensity']) * $msg['qianweight']);
+                                $total = round($total - ($shipmsg['houdensity'] - $shipmsg['qiandensity']) * $shipmsg['qianweight'], 3);
                                 //记录过程
-                                $this->process .= "soltType:作业后,now_result_cargo_weight:" . $total . ",before_result_cargo_weight = " . $msg['qianweight'] . ",now_density = "
+                                /*$this->process .= "soltType:作业后,now_result_cargo_weight:" . $total . ",before_result_cargo_weight = " . $msg['qianweight'] . ",now_density = "
                                     . $msg['houdensity'] . ",before_density=" . $msg['houdensity']
                                     . " then:\r\n\ttotal_cargo_weight = round(now_result_cargo_weight - (now_density - before_density) * before_result_cargo_weight, 3)=round("
-                                    . $total . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;
+                                    . $total . "-(" . $msg['houdensity'] . "-" . $msg['qiandensity'] . ")*" . $msg['qianweight'] . ",3)=" . $total;*/
+                                //记录过程
+                                $this->process['qiandensity'] = $shipmsg['qiandensity'];
+                                $this->process['houdensity'] = $shipmsg['houdensity'];
+                                $this->process['qianweight'] = $shipmsg['qianweight'];
+                                $this->process['now_result_cargo_weight'] = $total1;
+                                $this->process['total_cargo_weight'] = $total;
 
                             }
 
                             $hou = array(
                                 'houweight' => round($allweight[0]['sums'], 4),
                                 'houtotal' => $total,
-
                             );
-                            $r = $this->where(array('id' => $data['resultid']))->save($hou);
-                            if ($r !== false) {
+
+                            $h_r = $this->where(array('id' => $data['resultid']))->save($hou);
+                            if ($h_r !== false) {
                                 // 获取作业前、后的总货重
                                 $sunmmsg = $this
-                                    ->field('qiantotal,houtotal')
+                                    ->field('qiantotal,houtotal,houprocess')
                                     ->where(array('id' => $data['resultid']))
                                     ->find();
                                 // 计算总容量 后-前
                                 $weight = round(($sunmmsg['houtotal'] - $sunmmsg['qiantotal']), 4);
+
+                                //记录计算总容量计算过程
+                                $result_process = json_decode($sunmmsg['houprocess'], true);
+                                if ($result_process == null) {
+                                    $result_process = array();
+                                }
+                                $result_process['weight'] = $weight;
+
                                 // 修改总货重
                                 $res1 = $this
                                     ->where(array('id' => $data['resultid']))
-                                    ->save(array('weight' => $weight));
+                                    ->save(array('weight' => $weight, 'houprocess' => json_encode($result_process)));
                                 if ($res1 !== false) {
                                     if ($type == 'l') {
                                         $trans->commit();
@@ -2488,19 +3298,14 @@ class WorkModel extends BaseModel
                     }
 
                     //保存过程数据
-                    $resultlist->editData(
-                        array(
-                            'id' => $listid
-                        ),
-                        array(
-                            'process' => array(
-                                'exp', 'concat(process,"' . urlencode($this->process) . '")'
-                            ))//计算过程
-                    );
+                    $resultrecord
+                        ->where(array('id' => $r['id']))
+                        ->save(array('process' => json_encode($this->process)));
+
                 } else {
                     M()->rollback();
                     //其他错误	2
-                    return $res = array(
+                    return array(
                         'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
                     );
                     die;
@@ -2904,6 +3709,9 @@ class WorkModel extends BaseModel
             'total' => $msg['weight'],
             'is_have_data' => $is_have_data
         );
+
+        \Think\Log::record("\r\n \r\n return: \r\n \r\n " . json_encode($res), "DEBUG", true);
+
         return $res;
     }
 
@@ -2936,6 +3744,7 @@ class WorkModel extends BaseModel
             M()->rollback();
             return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA']);
         }
+
 
         if ($edit_result === false) {
             M()->rollback();
@@ -3043,6 +3852,43 @@ class WorkModel extends BaseModel
     //"capacityreckon"
 
     /**
+     * 获得单舱作业的无表船纵倾修正表（纵倾修正容量表）
+     * @param $resultid
+     * @param $shipid
+     * @param $cabinid
+     * @param $solt
+     * @return mixed
+     */
+    public function getBookData($resultid, $shipid, $cabinid, $solt)
+    {
+        $result_record = M('resultrecord');
+
+        $where = array(
+            'r.resultid' => $resultid,
+            'r.shipid' => $shipid,
+            'r.cabinid' => $cabinid,
+            'r.solt' => $solt,
+            'r.is_work' => 1,
+        );
+
+        $res = $result_record
+            ->alias('r')
+            ->field('r.cabinid,c.cabinname,r.solt,r.ullage,r.altitudeheight,r.ullage1,r.ullage2,r.draft1,r.draft2,r.value1,r.value2,r.value3,r.value4')
+            ->join('left join cabin as c on c.id=r.cabinid')
+            ->where($where)
+            ->select();
+
+        foreach ($res as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($value1 === null) {
+                    $res[$key][$key1] = "";
+                }
+            }
+        }
+        return $res;
+    }
+
+    /**
      * 获得无表船的纵倾修正表（纵倾修正容量表）
      * @param $resultid
      * @param $solt
@@ -3078,6 +3924,41 @@ class WorkModel extends BaseModel
             }
         }
         $res['chishui'] = $record_arr['chishui'];
+        return $res;
+    }
+
+    /**
+     * 获得单舱无表船的容量表
+     * @param $resultid
+     * @param $shipid
+     * @param $cabinid
+     * @param $solt
+     * @return mixed
+     */
+    public function getCapacityData($resultid, $shipid, $cabinid, $solt)
+    {
+        $result_record = M('resultrecord');
+        $where = array(
+            'r.resultid' => $resultid,
+            'r.shipid' => $shipid,
+            'r.cabinid' => $cabinid,
+            'r.solt' => $solt,
+            'r.is_work' => 1,
+        );
+
+        $res = $result_record
+            ->alias('r')
+            ->field('c.id as cabinid,c.cabinname,r.solt,r.ullage,r.correntkong,r.altitudeheight,r.xiuullage1 as ullage1,r.xiuullage2 as ullage2,r.capacity1,r.capacity2')
+            ->join('left join cabin as c on c.id=r.cabinid')
+            ->where($where)
+            ->select();
+        foreach ($res as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($value1 === null) {
+                    $res[$key][$key1] = "";
+                }
+            }
+        }
         return $res;
     }
 

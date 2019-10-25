@@ -108,7 +108,6 @@ class SearchController extends AdminBaseController
     public function msg()
     {
         $res = new \Common\Model\ResultModel();
-        $user = new \Common\Model\UserModel();
         //获取水尺数据
         $where = array(
             'r.id' => I('get.resultid')
@@ -116,24 +115,111 @@ class SearchController extends AdminBaseController
         //查询作业列表
         $list = $res
             ->alias('r')
-            ->field('r.*,s.shipname,u.username,r.qianchi,r.houchi,s.goodsname goodname')
+            ->field('r.*,s.shipname,s.is_guanxian,s.suanfa,u.username,r.qianchi,r.houchi,s.goodsname goodname')
             ->join('left join ship s on r.shipid=s.id')
             ->join('left join user u on r.uid = u.id')
             ->where($where)
             ->find();
-        if ($msg !== false) {
+        if ($list !== false) {
             $where1 = array('re.resultid' => $list['id']);
             $resultlist = new \Common\Model\ResultlistModel();
+            $resultrecord = M('resultrecord');
             $resultmsg = $resultlist
                 ->alias('re')
-                ->field('re.*,c.cabinname')
+                ->field('re.*,c.cabinname,c.pipe_line')
                 ->join('left join cabin c on c.id = re.cabinid')
                 ->where($where1)
                 ->order('re.solt asc,re.cabinid asc')
                 ->select();
             // p($resultmsg);die;
             //以舱区分数据（）
+
+            //初始化管线信息
+            $gxinfo = array(
+                'qiangx' => 0,
+                'qianxgx' => 0,
+                'hougx' => 0,
+                'houxgx' => 0,
+            );
+
+            //初始化纵倾修正表和舱容表的上传数量
+            $list['trim_table_count'] = 0;
+            $list['capacity_table_count'] = 0;
             foreach ($resultmsg as $k => $v) {
+                //获取计算数据
+                $recordmsg = $resultrecord
+                    ->where(
+                        array(
+                            'resultid' => $v['resultid'],
+                            'solt' => $v['solt'],
+                            'cabinid' => $v['cabinid'])
+                    )
+                    ->find();
+
+                /**
+                 * 此处处理管线单列
+                 */
+                //初始化修正后管线容量
+                $xgx = 0;
+                //如果需要单列管线的同时，舱容表不包含管线且当前检验管线内有货。报告时货物容量减去管线容量
+                if ($list['is_guanxian'] == 2 and $recordmsg['is_pipeline'] == 1) {
+                    // 计算修正后管道容量   管道容量*体积*膨胀
+                    $xgx = round($v['pipe_line'] * $v['volume'] * $v['expand'], 3);
+                    //作业舱容量减去管线容量
+                    $v['cabinweight'] -= $v['pipe_line'];
+                    //作业前舱容量减去修正后管线容量
+                    $v['standardcapacity'] -= $xgx;
+
+                    //作业前后管道容量汇总相加
+                    if ($v['solt'] == 1) {
+                        //作业前管线容量总和相加
+                        $gxinfo['qiangx'] += $v['pipe_line'];
+                        //作业前修正后管线容量总和相加,先计算修正后管线容量
+                        $gxinfo['qianxgx'] += $xgx;
+                    } elseif ($v['solt'] == 2) {
+                        //作业前管线容量总和相加
+                        $gxinfo['hougx'] += $v['pipe_line'];
+                        //作业前修正后管线容量总和相加,先计算修正后管线容量
+                        $gxinfo['houxgx'] += $xgx;
+                    }
+                }
+
+
+                /**
+                 * 此处导出纵倾修正表和舱容表
+                 */
+
+                //初始化是否有表上传的标识
+                $v['have_trim_table'] = false;
+                $v['have_capacity_table'] = false;
+                //先判断是否有纵倾修正表上传
+                if ($recordmsg['ullage1'] != '') {
+                    $v['have_trim_table'] = true;
+                    $v['trim_table'] = array(
+                        'ullage1' => $recordmsg['ullage1'],
+                        'ullage2' => $recordmsg['ullage2'],
+                        'draft1' => $recordmsg['draft1'],
+                        'draft2' => $recordmsg['draft2'],
+                        'value1' => $recordmsg['value1'],
+                        'value2' => $recordmsg['value2'],
+                        'value3' => $recordmsg['value3'],
+                        'value4' => $recordmsg['value4']
+                    );
+                    $list['trim_table_count'] += 1;
+
+                    //如果算法是b或者c并且有上传表的情况下
+                    if (($list['suanfa'] == 'b' || $list['suanfa'] == 'c') && $recordmsg['xiuullage1'] != '') {
+                        $v['have_capacity_table'] = true;
+                        $v['capacity_table'] = array(
+                            'xiuullage1' => $recordmsg['xiuullage1'],
+                            'xiuullage2' => $recordmsg['xiuullage2'],
+                            'capacity1' => $recordmsg['capacity1'],
+                            'capacity2' => $recordmsg['capacity2']
+                        );
+                        $list['capacity_table_count'] += 1;
+                    }
+                }
+
                 $result[$v['cabinid']][] = $v;
             }
             // 个性化信息
@@ -155,7 +241,8 @@ class SearchController extends AdminBaseController
                 'result' => $result,
                 'starttime' => $starttime,
                 'endtime' => $endtime,
-                'personality' => $personality
+                'personality' => $personality,
+                'gx' => $gxinfo
             );
             // p($assign);exit;
             $this->assign($assign);
@@ -482,4 +569,144 @@ class SearchController extends AdminBaseController
             $this->error('数据库连接错误');
         }
     }
+
+
+    /**
+     * 获取计算过程
+     */
+    public function new_process($resultid)
+    {
+        $res = new \Common\Model\ResultModel();
+        $res_list = new \Common\Model\ResultlistModel();
+        $res_record = M('resultrecord');
+//        $user = new \Common\Model\UserModel();
+
+        //获取水尺数据
+        $where = array(
+            'id' => $resultid
+        );
+
+        //查询作业列表
+        $list = $res
+            ->field('qianprocess,houprocess,weight,qianweight,houweight,qiantotal,houtotal')
+            ->where($where)
+            ->find();
+        $qianprocess_json = json_decode($list['qianprocess'], true);
+        $houprocess_json = json_decode($list['houprocess'], true);
+        $qianprocess = $qianprocess_json == null ? urldecode($list['qianprocess']) : $qianprocess_json;
+        $houprocess = $houprocess_json == null ? urldecode($list['houprocess']) : $houprocess_json;
+
+        if ($list !== false) {
+            /**
+             * 获取舱压载水的计算过程
+             */
+            $where1 = array(
+                'r.resultid' => $resultid,
+                'r.solt' => 1
+            );
+
+
+            $list_qian_process = $res_list
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
+                ->where($where1)
+                ->select();
+
+            //获取作业前排水表计算过程
+            $record_qian_process = $res_record
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
+                ->where($where1)
+                ->select();
+
+            $where1['r.solt'] = 2;
+
+            $list_hou_process = $res_list
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
+                ->where($where1)
+                ->select();
+
+            //获取作业后排水表计算过程
+            $record_hou_process = $res_record
+                ->alias("r")
+                ->field('r.process,c.cabinname')
+                ->join("left join cabin as c on c.id=r.cabinid")
+                ->where($where1)
+                ->select();
+
+            /**
+             * url反转义过程
+             */
+            $qianprocess['content'] = array();
+            $houprocess['content'] = array();
+
+            $list_qian = array();
+            $list_hou = array();
+
+            foreach ($list_qian_process as $key => $value) {
+                if ($value['process'] != "") {
+                    $process = json_decode($value['process'], true);
+                    $process['cabin_name'] = $value['cabinname'];
+                    $list_qian[] = $process;
+                }
+            }
+
+            foreach ($list_hou_process as $key => $value) {
+                if ($value['process'] != "") {
+                    $process = json_decode($value['process'], true);
+                    $process['cabin_name'] = $value['cabinname'];
+                    $list_hou[] = $process;
+                }
+            }
+
+            $qian_record = array();
+            $hou_record = array();
+
+            foreach ($record_qian_process as $key1 => $value1) {
+                if ($value1['process'] != "") {
+                    $process = json_decode($value1['process'], true);
+                    $process['cabin_name'] = $value1['cabinname'];
+                    $qian_record[] = $process;
+                }
+            }
+
+            foreach ($record_hou_process as $key1 => $value1) {
+                if ($value1['process'] != "") {
+                    $process = json_decode($value1['process'], true);
+                    $process['cabin_name'] = $value1['cabinname'];
+                    $hou_record[] = $process;
+                }
+            }
+
+            $qianprocess['content'] = array_merge($list_qian, $qian_record);
+
+            $houprocess['content'] = array_merge($list_hou, $hou_record);
+
+            /**
+             * 获取作业前数据
+             */
+
+            // 成功	1
+            $assign = array(
+                'qianprocess' => $qianprocess,
+                'houprocess' => $houprocess,
+                'qianweight' => $list['qianweight'],
+                'houweight' => $list['houweight'],
+                'qiantotal' => $list['qiantotal'],
+                'houtotal' => $list['houtotal']
+            );
+
+            // p($assign);exit;
+            $this->assign($assign);
+            $this->display();
+
+        } else {
+            $this->error('数据库连接错误');
+        }
+    }
+
 }

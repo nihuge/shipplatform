@@ -59,7 +59,7 @@
                     var num = $('#shipid option:selected').attr('NUMBER');
                     var suanfa = $('#shipid option:selected').attr('SUANFA');
                     console.log(num);
-                    if (suanfa == 'c') {
+                    if (suanfa == 'c' || suanfa == 'd') {
                         for (var i = 1; i <= num; i++) {
                             // pipe_line
                             string += '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][cabinname]" maxlength="5" tabindex="' + (num * 0 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][altitudeheight]" maxlength="5" tabindex="' + (num * 1 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="" name="data[' + i + '][dialtitudeheight]" maxlength="5" tabindex="' + (num * 2 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][bottom_volume]" maxlength="5" tabindex="' + (num * 3 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="" name="data[' + i + '][bottom_volume_di]" maxlength="5" tabindex="' + (num * 4 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][pipe_line]" maxlength="5" tabindex="' + (num * 5 + i) + '"/></td></tr>';

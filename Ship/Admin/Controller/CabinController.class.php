@@ -139,7 +139,7 @@ class CabinController extends AdminBaseController
 	    	}
 
 	    	// 判断提交的舱名是否有重复
-			$repeat_arr = FetchRepeatMemberInArray ( $array ); 
+			$repeat_arr = FetchRepeatMemberInArray ( $names );
 			if($repeat_arr){
 			  	$this->error('提交的舱名存在重复');
 		    	exit;

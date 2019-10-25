@@ -174,7 +174,7 @@ class ShipController extends AppBaseController
                         'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL'],
                     );
                 } else {
-                    // 判断是否有底量测量孔，有底量测量孔并且有纵倾修正表的话，算法为:c
+                    // 判断是否有底量测量孔， 有底量测量孔并且有纵倾修正表的话，算法为:c,没有纵倾修正表为D
                     if ($data['is_diliang'] == '1' and $data['suanfa'] == 'b') {
                         $data['suanfa'] = 'c';
                     } elseif ($data['is_diliang'] == '1' and $data['suanfa'] == 'a') {
@@ -187,6 +187,7 @@ class ShipController extends AppBaseController
                         //添加船成功，将此船的操作和查看权限加给检验公司和管理员。
                         $res = array(
                             'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                            'ship_id' => $res_s['content']['shipid']
                         );
                     } else {
                         $res = array(
@@ -260,7 +261,7 @@ class ShipController extends AppBaseController
                             $old_info = $this->db->field('shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
 
 
-                            if ($res_count > 1 or $old_info['review'] == 2) {
+                            if ($res_count > 1 or $old_info['review'] == 3) {
 
                                 /**
                                  * 开始对比数据差异，获取更改的数据

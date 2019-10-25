@@ -19,8 +19,8 @@ class UserModel extends BaseModel
         array('phone', '0,16', '联系电话长度不能超过16个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
         array('firmid', 'require', '公司名称不能为空', 0),//存在即验证 不能为空
         array('title', 'require', '账号不能为空', 0),//存在即验证 不能为空
-        array('operation_jur', '0,255', '操作权限长度不能超过255个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
-        array('search_jur', '0,255', '查询权限长度不能超过255个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
+        array('operation_jur', '0,400', '操作权限长度不能超过400个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
+        array('search_jur', '0,400', '查询权限长度不能超过400个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
     );
 
     /*

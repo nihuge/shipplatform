@@ -31,7 +31,8 @@ return array(
     'URL_MODEL' =>3,
         'DB_TYPE'   =>'mysqli',
         'DB_HOST'   =>'127.0.0.1',
-        'DB_NAME'   =>'shipplatform2',  // 数据库名
+//        'DB_NAME'   =>'shipplatform2',  // 数据库名
+        'DB_NAME'   =>'shipplatform_online',  // 数据库名
         'DB_USER'   =>'root',  //账号
         'DB_PWD'    =>'000000', //密码
         // 'DB_NAME'   =>'shipplatform',  // 数据库名

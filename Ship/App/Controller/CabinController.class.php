@@ -158,7 +158,7 @@ class CabinController extends AppBaseController
                             $num[] = substr_count($value['bottom_volume'], ".");
                             $num[] = substr_count($value['pipe_line'], ".");
 
-                            if (strtolower($shipmsg['suanfa']) == "c") {
+                            if (strtolower($shipmsg['suanfa']) == "c" || strtolower($shipmsg['suanfa']) == "d") {
                                 $num[] = substr_count($value['bottom_volume_di'], ".");
                                 $num[] = substr_count($value['dialtitudeheight'], ".");
                             }
@@ -235,6 +235,12 @@ class CabinController extends AppBaseController
                                 }
                             }
                         }
+
+                        $ship_data = array(
+                            'review' => 2
+                        );
+                        $ship->editData(array('id' => $shipid), $ship_data);
+
                         M()->commit();
                         $res = array(
                             'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
@@ -309,7 +315,7 @@ class CabinController extends AppBaseController
                         $num[] = substr_count($value1['altitudeheight'], ".");
                         $num[] = substr_count($value1['bottom_volume'], ".");
                         $num[] = substr_count($value1['pipe_line'], ".");
-                        if (strtolower($shipmsg['suanfa']) == "c") {
+                        if (strtolower($shipmsg['suanfa']) == "c" || strtolower($shipmsg['suanfa']) == "d") {
                             $num[] = substr_count($value1['bottom_volume_di'], ".");
                             $num[] = substr_count($value1['dialtitudeheight'], ".");
                         }
@@ -342,7 +348,7 @@ class CabinController extends AppBaseController
                      */
                     $work = new \Common\Model\WorkModel();
                     $res_count = $work->where(array('shipid' => $shipid))->count();
-                    if ($res_count > 1 or $shipmsg['review'] == 2) {
+                    if ($res_count > 1 or $shipmsg['review'] == 3) {
                         M()->startTrans();
                         /**
                          * 由于舱审核信息挂载载船的审核信息上，所以要考虑几种情况
@@ -350,7 +356,6 @@ class CabinController extends AppBaseController
                          * 1、没有船审核记录，但是提交了舱审核记录 ： 建立一个新的船审核记录，除了必要信息，其他内容全部留空
                          * 2、有船审核记录，提交了舱审核记录 ： 获得主键ID，用于外键连接
                          */
-
                         $review_data['shipid'] = $shipid;
                         $review_data['userid'] = $uid;
                         $review_data['create_time'] = time();
@@ -398,7 +403,7 @@ class CabinController extends AppBaseController
                                 /**
                                  * 复核授权机制判断
                                  */
-                                if (strtolower($shipmsg['suanfa']) == "c") {
+                                if (strtolower($shipmsg['suanfa']) == "c" || strtolower($shipmsg['suanfa']) == "d") {
                                     $field = 'cabinname,altitudeheight,dialtitudeheight,bottom_volume,bottom_volume_di,pipe_line';
                                 } else {
                                     $field = 'cabinname,altitudeheight,bottom_volume,pipe_line';

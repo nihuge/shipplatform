@@ -111,7 +111,13 @@ class AdminBaseController extends BaseController
          * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
          */
         try {
-            $ship_count = $work->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
+            $ship_count = $ship->alias('s')
+                ->field('s.id')
+                ->join('left join result as r on s.id=r.shipid')
+                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
+                ->group('s.id')
+                ->having('count(r.shipid)<2')
+                ->select();
         } catch (\Exception $e) {
             $ship_count = array();
         }
@@ -137,7 +143,14 @@ class AdminBaseController extends BaseController
          * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
          */
         try {
-            $sh_ship_count = $sh_result->field('shipid')->where(array('shipid' => array('exp', 'in (' . $sub_sql . ')')))->group('shipid')->having('count(1)<2')->select();
+            $sh_ship_count = $sh_ship
+                ->alias('s')
+                ->field('s.id')
+                ->join('left join sh_result as r on s.id=r.shipid')
+                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
+                ->group('s.id')
+                ->having('count(r.shipid)<2')
+                ->select();
         } catch (\Exception $e) {
             $sh_ship_count = array();
         }

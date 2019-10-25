@@ -69,6 +69,7 @@
             	<th>作业量</th>
                 <th>起运港</th>
                 <th>目的港</th>
+                <th>创建时间</th>
                 <th>操作</th>
             </tr>
             <volist name="list" id="v">
@@ -80,6 +81,7 @@
 	            <td>{$v['weight']}</td>
 	            <td>{$v['personality']['start']}</td>
 	            <td>{$v['personality']['objective']}</td>
+	            <td>{$v['time']}</td>
 	            <td>
                     <if condition="$v['is_edit'] == 1">
 	            	<a href="javascript:;" onclick="editresult({$v['id']})" class='aa1'>修改</a>&nbsp;&nbsp;

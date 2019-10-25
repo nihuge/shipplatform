@@ -433,7 +433,7 @@ class UploadController extends AppBaseController
                             $path = $res['dest'];
                             $ship_img = M("ship_img");
                             $data = array(
-                                'ship_id' => $shipid,
+                                'shipid' => $shipid,
                                 'img' => $path
                             );
 
@@ -542,7 +542,7 @@ class UploadController extends AppBaseController
                             $ship_img = M("ship_img");
                             $data = array(
                                 'type' => 2,
-                                'ship_id' => $shipid,
+                                'shipid' => $shipid,
                                 'img' => $path
                             );
 

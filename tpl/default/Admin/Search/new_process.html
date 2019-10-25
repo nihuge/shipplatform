@@ -1,0 +1,750 @@
+<extend name="Public:base"/>
+<block name="title">作业查询</block>
+<block name="navtitle">
+    <li class="active">
+        作业查询
+    </li>
+    <li class="active">
+        计算过程
+    </li>
+</block>
+<block name="activeopen31">class="active open"</block>
+<block name="active12">class="active"</block>
+<block name="content">
+    <style>
+        .table_01, .ju {
+            font-size: 14px;
+            color: #333;
+            font-family: "方正兰亭黑简";
+            margin: auto 5px;
+            font-weight: bold
+        }
+
+        .table_02 {
+            font-size: 14px;
+            font-family: "方正兰亭黑简";
+            color: #333;
+            margin: auto 5px;
+        }
+
+        .box02 {
+            height: 41px;
+            margin: 20px auto;
+            line-height: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            font-family: "方正兰亭黑简";
+        }
+
+        input {
+            background-color: #3ca0fe;
+            border: none;
+            margin-left: 7px;
+            height: 30px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .ju03 {
+            height: 35px;
+            width: 200px;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        .div1 {
+            display: inline-block;
+        }
+
+        .sj1 {
+            margin-left: 2em;
+        }
+
+        .sj2 {
+            margin-left: 4em;
+        }
+
+        .sj3 {
+            margin-left: 6em;
+        }
+
+        .sj4 {
+            margin-left: 8em;
+        }
+
+        .sj5 {
+            margin-left: 10em;
+        }
+    </style>
+    <!--	<h2 align="center">计算过程</h2>-->
+    <br>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业前</span>
+    </div>
+    <div class="content-loaded"
+         style="background-color:#f5f5f5;border-radius: 4px;word-break: break-all;line-height: 1.42857143;font-size: 13px;margin: 0 0 10px;display: block;border: 1px solid #ccc;">
+        <span><strong>全局数据：</strong></span>
+        <br/>
+        <span class="sj1">膨胀倍数：{$qianprocess['content'][0]['coefficient']}</span>
+        <br>
+        <span class="sj1">船算法：{$qianprocess['content'][0]['method']}</span>
+        <br/>
+        <br/>
+        <span><strong>水尺：</strong></span>
+        <br/>
+        <span class="sj1"><strong>收到水尺数据,时间:{$qianprocess['nowtime']}</strong></span>
+        <br/>
+        <span class="sj2">艏吃水：{$qianprocess['fornt']}</span>
+        <br/>
+        <span class="sj2">艉吃水：{$qianprocess['after']}</span>
+        <br/>
+        <span class="sj2">货物密度：{$qianprocess['density']}</span>
+        <br/>
+        <span class="sj2">密度测量时实验室温度：{$qianprocess['temperature']}</span>
+        <br/>
+        <span class="sj2"><strong>经过计算得出：</strong></span>
+        <br/>
+        <span class="sj3">15℃的标准温度下该货物的密度为：{$qianprocess['now_density']}</span>
+        <br/>
+        <span class="sj3">吃水差为：{$qianprocess['Draught']}</span>
+        <br/>
+        <br/>
+        <span><strong>各舱修正后容量表：</strong></span>
+        <br/>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj1">
+            <thead>
+            <th style="text-align: center">舱名</th>
+            <th style="text-align: center">修正后容量</th>
+            </thead>
+            <volist name="qianprocess['content']" id="v">
+                <tr>
+                    <td style="width: 40%">{$v['cabin_name']}</td>
+                    <td style="width: 60%">{$v['now_cabin_volume']}</td>
+                </tr>
+            </volist>
+
+            <tr>
+                <td style="width: 40%">共计：</td>
+                <td style="width: 60%">{$qianweight}</td>
+            </tr>
+        </table>
+        </span>
+
+        <br/>
+        <br/>
+        <volist name="qianprocess['content']" id="v">
+            <span style="text-align: center"><strong>---------------时间：{$v['nowtime']}，收到{$v['cabin_name']}舱的测量数据---------------</strong></span>
+            <br/>
+            <span class="sj1">空高：{$v['ullage']}</span>
+            <br/>
+            <span class="sj1">实高：{$v['sounding']}</span>
+            <br/>
+            <span class="sj1">基准高度：{$v['altitudeheight']}</span>
+            <br/>
+            <span class="sj1">舱温度：{$v['Cabin_temperature']}</span>
+            <br/>
+            <span class="sj1">使用的舱容表：{$v['table_used']}</span>
+            <br/>
+            <span class="sj1">是否有底量：{$v['bilge_stock']}</span>
+            <br/>
+            <span class="sj1">管线内是否有货：{$v['pipeline_stock']}</span>
+            <br/>
+            <span class="sj1">舱容表内容量是否包含管线：{$v['table_contain_pipeline']}</span>
+            <br/>
+            <br/>
+
+            <span class="sj1">
+                <strong>
+                    <if condition="$v['method'] eq 'a'||$v['method'] eq 'd'">
+                        容量表如下:
+                        <else/>
+                        纵倾修正表如下：
+                    </if>
+                </strong>
+            </span>
+            <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+                   align="center" width="50%"
+                   class="sj1">
+                <tr>
+                    <td rowspan="2" style="width: 33%">
+                    </td>
+                    <td style="width: 33%"><strong>纵倾值1</strong></td>
+                    <td style="width: 33%"><strong>纵倾值2</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Da']}</td>
+                    <td>{$v['trim_table']['Db']}</td>
+                </tr>
+                <tr>
+                    <td><strong>空高1</strong></td>
+                    <td><strong>值1</strong></td>
+                    <td><strong>值2</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Ua']}</td>
+                    <td>{$v['trim_table']['Caa']}</td>
+                    <td>{$v['trim_table']['Cab']}</td>
+                </tr>
+                <tr>
+                    <td><strong>空高2</strong></td>
+                    <td><strong>值3</strong></td>
+                    <td><strong>值4</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Ub']}</td>
+                    <td>{$v['trim_table']['Cba']}</td>
+                    <td>{$v['trim_table']['Cbb']}</td>
+                </tr>
+            </table>
+            <br/>
+            <if condition="$v['method'] eq 'b'||$v['method'] eq 'c'">
+                <span class="sj1">
+                    <strong>
+                            容量表如下:
+                    </strong>
+                </span>
+                <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+                       align="center" width="50%"
+                       class="sj1">
+                    <tr>
+                        <td style="width: 25%"><strong>空高1</strong></td>
+                        <td style="width: 25%"><strong>容量1</strong></td>
+                    </tr>
+                    <tr style="height: 40px">
+                        <td>{$v['capacity_table']['U1']}</td>
+                        <td>{$v['capacity_table']['CV1']}</td>
+
+                    </tr>
+                    <tr>
+                        <td style="width: 25%"><strong>空高2</strong></td>
+                        <td style="width: 25%"><strong>容量2</strong></td>
+                    </tr>
+                    <tr style="height: 40px">
+                        <td>{$v['capacity_table']['U2']}</td>
+                        <td>{$v['capacity_table']['CV2']}</td>
+                    </tr>
+                </table>
+            </if>
+            <br/>
+            <span class="sj1"><strong>该舱的计算过程如下：</strong></span>
+            <br/>
+            <span class="sj2">膨胀修正系数为：</span>
+            <br/>
+            <span class="sj3">round((1 + 0.000012 * 膨胀倍数 * (温度 - 20)), 6) </span>
+            <br/>
+            <span class="sj3"> = round((1 + 0.000012 * {$v['coefficient']} * ({$v['Cabin_temperature']} - 20)), 6)</span>
+            <br/>
+            <span class="sj3">= {$v['EC']}</span>
+            <br/>
+            <br/>
+            <if condition="$v['density'] egt 0.99">
+                <span class="sj2">体积修正系数：</span>
+                <br/>
+                <span class="sj3">因为密度为：{$v['density']},大于等于0.99，所以</span>
+                <br/>
+                <span class="sj3">1.0094684142 - 6.33413410744 * 0.0001 * 温度 + 1.45710416212 * 0.0000001 * (温度 * 温度)</span>
+                <br/>
+                <span class="sj3">= 1.0094684142 - 6.33413410744 * 0.0001 * {$v['Cabin_temperature']} + 1.45710416212 * 0.0000001 * ({$v['Cabin_temperature']} * {$v['Cabin_temperature']})</span>
+                <br/>
+                <span class="sj3">= {$v['VC']}</span>
+                <br/>
+                <else/>
+                <span class="sj2">体积修正系数：因为密度为{$v['density']},小于0.99，所以</span>
+                <br/>
+                <span class="sj3">1.0108020095 - 7.2343515319 * 0.0001 * 温度 + 2.1996598346 * 0.0000001 * (温度 * 温度)</span>
+                <br/>
+                <span class="sj3">= 1.0108020095 - 7.2343515319 * 0.0001 * {$v['Cabin_temperature']} + 2.1996598346 * 0.0000001 * ({$v['Cabin_temperature']} * {$v['Cabin_temperature']})</span>
+                <br/>
+                <span class="sj3">= {$v['VC']}</span>
+                <br/>
+            </if>
+            <br/>
+            <if condition="$v['method'] eq 'b'||$v['method'] eq 'c'">
+                <span class="sj2">纵倾修正值：</span>
+                <br/>
+                <span class="sj3">由于纵倾修正表内不重复的空高有{$v['trim_table']['process']['count(ulist)']}个，不重复的吃水差有{$v['trim_table']['process']['count(Draught)']}个，所以</span>
+                <br/>
+                <volist name="v['trim_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <if condition="$k eq 1">
+                        <span class="sj5">round((纵倾值2下空高1对应的值-纵倾值2下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值2下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Cab']}-{$v['trim_table']['Cbb']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cbb']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 2"/>
+                        <span class="sj5">round((纵倾值1下空高1对应的值-纵倾值1下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值1下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Caa']}-{$v['trim_table']['Cba']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cba']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 3"/>
+                        <span class="sj5">对以上两次插值计算继续插值计算得出最终值</span>
+                        <br>
+                        <span class="sj5">round((纵倾值1下两个空高的计算结果-纵倾值2下两个空高的计算结果),3)/(纵倾值1-纵倾值2)*(测量空高-空高2)+插值计算后的小值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['process']['interpolation_calculation'][1]['interpolation_calculation_result']}-{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}),3)/({$v['trim_table']['Da']}-{$v['trim_table']['Db']})*({$v['ullage']}-{$v['trim_table']['Db']})+{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                    </if>
+                </volist>
+                <span class="sj4">纵倾修正值计算最终结果为:{$v['trim_table']['process']['final_result']}</span>
+                <br/>
+                <span class="sj4">单位转换成米后为：{$v['trim_table']['NowTC']}</span>
+                <br/>
+                <span class="sj3">修正后空距：{$v['C_ullage']}</span>
+                <br/>
+                <br/>
+                <span class="sj3">标准容量：</span>
+                <br/>
+                <span class="sj4">由于容量表内不重复的空高有{$v['capacity_table']['process']['count(ulist)']}个，所以</span>
+                <br/>
+                <volist name="v['capacity_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <span class="sj5">round((空高1对应的容量值-空高2对应的容量值),3)/(空高1-空高2)*(测量空高-空高2)+空高2对应的容量值</span>
+                    <br>
+                    <span class="sj5">=round(({$v['capacity_table']['CV1']}-{$v['capacity_table']['CV2']}),3)/({$v['capacity_table']['U1']}-{$v['capacity_table']['U2']})*({$v['ullage']}-{$v['capacity_table']['U2']})+{$v['capacity_table']['CV2']}</span>
+                    <br>
+                    <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                    <br>
+                    <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                    <br>
+                </volist>
+                <span class="sj4">容量值为：{$v['cabin_first_result']}</span>
+                <br/>
+                <span class="sj4">由于船信息内舱容表是否包含管线为 {$v['table_contain_pipeline']} 且 管线内是否有货客户选择了{$v['pipeline_stock']} ，所以管线内的货物体积为：{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj4">标准容量值为：</span>
+                <br/>
+                <span class="sj5">查表容量值+管线货物体积</span>
+                <br/>
+                <span class="sj5">= {$v['cabin_first_result']}+{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj5">= {$v['Cabin_volume']}</span>
+                <br/>
+                <br/>
+                <span class="sj3">修正后容量：</span>
+                <br/>
+                <span class="sj4">=标准容量*体积修正系数*膨胀修正系数</span>
+                <br/>
+                <span class="sj4">={$v['Cabin_volume']}*{$v['VC']}*{$v['EC']}</span>
+                <br/>
+                <span class="sj4">={$v['now_cabin_volume']}</span>
+                <elseif condition="$v['method'] eq 'a'||$v['method'] eq 'd'"/>
+                <span class="sj2">容量表：</span>
+                <br/>
+                <span class="sj3">由于容量内不重复的空高有{$v['trim_table']['process']['count(ulist)']}个，不重复的吃水差有{$v['trim_table']['process']['count(Draught)']}个，所以</span>
+                <br/>
+                <volist name="v['trim_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <if condition="$k eq 1">
+                        <span class="sj5">round((纵倾值2下空高1对应的值-纵倾值2下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值2下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Cab']}-{$v['trim_table']['Cbb']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cbb']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 2"/>
+                        <span class="sj5">round((纵倾值1下空高1对应的值-纵倾值1下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值1下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Caa']}-{$v['trim_table']['Cba']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cba']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 3"/>
+                        <span class="sj5">对以上两次插值计算继续插值计算得出最终值</span>
+                        <br>
+                        <span class="sj5">round((纵倾值1下两个空高的计算结果-纵倾值2下两个空高的计算结果),3)/(纵倾值1-纵倾值2)*(测量空高-空高2)+插值计算后的小值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['process']['interpolation_calculation'][1]['interpolation_calculation_result']}-{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}),3)/({$v['trim_table']['Da']}-{$v['trim_table']['Db']})*({$v['ullage']}-{$v['trim_table']['Db']})+{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                    </if>
+                </volist>
+                <span class="sj4">查表容量值:{$v['cabin_first_result']}</span>
+                <br/>
+                <span class="sj4">由于船信息内舱容表是否包含管线为 {$v['table_contain_pipeline']} 且 管线内是否有货客户选择了{$v['pipeline_stock']} ，所以管线内的货物体积为：{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj4">标准容量值为：</span>
+                <br/>
+                <span class="sj5">查表容量值+管线货物体积</span>
+                <br/>
+                <span class="sj5">= {$v['cabin_first_result']}+{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj5">= {$v['Cabin_volume']}</span>
+                <br/>
+                <br/>
+                <span class="sj3">修正后容量：</span>
+                <br/>
+                <span class="sj4">=标准容量*体积修正系数*膨胀修正系数</span>
+                <br/>
+                <span class="sj4">={$v['Cabin_volume']}*{$v['VC']}*{$v['EC']}</span>
+                <br/>
+                <span class="sj4">={$v['now_cabin_volume']}</span>
+            </if>
+            <br/>
+            <br/>
+        </volist>
+    </div>
+    <br/>
+    <hr>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业后</span>
+    </div>
+    <div class="content-loaded"
+         style="background-color:#f5f5f5;border-radius: 4px;word-break: break-all;line-height: 1.42857143;font-size: 13px;margin: 0 0 10px;display: block;border: 1px solid #ccc;">
+        <span><strong>全局数据：</strong></span>
+        <br/>
+        <span class="sj1">膨胀倍数：{$houprocess['content'][0]['coefficient']}</span>
+        <br>
+        <span class="sj1">船算法：{$houprocess['content'][0]['method']}</span>
+        <br/>
+        <br/>
+        <span><strong>水尺：</strong></span>
+        <br/>
+        <span class="sj1"><strong>收到水尺数据,时间:{$houprocess['nowtime']}</strong></span>
+        <br/>
+        <span class="sj2">艏吃水：{$houprocess['fornt']}</span>
+        <br/>
+        <span class="sj2">艉吃水：{$houprocess['after']}</span>
+        <br/>
+        <span class="sj2">货物密度：{$houprocess['density']}</span>
+        <br/>
+        <span class="sj2">密度测量时实验室温度：{$houprocess['temperature']}</span>
+        <br/>
+        <span class="sj2"><strong>经过计算得出：</strong></span>
+        <br/>
+        <span class="sj3">15℃的标准温度下该货物的密度为：{$houprocess['now_density']}</span>
+        <br/>
+        <span class="sj3">吃水差为：{$houprocess['Draught']}</span>
+        <br/>
+        <br/>
+        <span><strong>各舱修正后容量表：</strong></span>
+        <br/>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj1">
+            <thead>
+            <th style="text-align: center">舱名</th>
+            <th style="text-align: center">修正后容量</th>
+            </thead>
+            <volist name="houprocess['content']" id="v">
+                <tr>
+                    <td style="width: 40%">{$v['cabin_name']}</td>
+                    <td style="width: 60%">{$v['now_cabin_volume']}</td>
+                </tr>
+            </volist>
+
+            <tr>
+                <td style="width: 40%">共计：</td>
+                <td style="width: 60%">{$houweight}</td>
+            </tr>
+
+        </table>
+        </span>
+
+        <br/>
+        <br/>
+        <volist name="houprocess['content']" id="v">
+            <span style="text-align: center"><strong>---------------时间：{$v['nowtime']}，收到{$v['cabin_name']}舱的测量数据---------------</strong></span>
+            <br/>
+            <span class="sj1">空高：{$v['ullage']}</span>
+            <br/>
+            <span class="sj1">实高：{$v['sounding']}</span>
+            <br/>
+            <span class="sj1">基准高度：{$v['altitudeheight']}</span>
+            <br/>
+            <span class="sj1">舱温度：{$v['Cabin_temperature']}</span>
+            <br/>
+            <span class="sj1">使用的舱容表：{$v['table_used']}</span>
+            <br/>
+            <span class="sj1">是否有底量：{$v['bilge_stock']}</span>
+            <br/>
+            <span class="sj1">管线内是否有货：{$v['pipeline_stock']}</span>
+            <br/>
+            <span class="sj1">舱容表内容量是否包含管线：{$v['table_contain_pipeline']}</span>
+            <br/>
+            <br/>
+
+            <span class="sj1">
+                <strong>
+                    <if condition="$v['method'] eq 'a'||$v['method'] eq 'd'">
+                        容量表如下:
+                        <else/>
+                        纵倾修正表如下：
+                    </if>
+                </strong>
+            </span>
+            <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+                   align="center" width="50%"
+                   class="sj1">
+                <tr>
+                    <td rowspan="2" style="width: 33%">
+                    </td>
+                    <td style="width: 33%"><strong>纵倾值1</strong></td>
+                    <td style="width: 33%"><strong>纵倾值2</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Da']}</td>
+                    <td>{$v['trim_table']['Db']}</td>
+                </tr>
+                <tr>
+                    <td><strong>空高1</strong></td>
+                    <td><strong>值1</strong></td>
+                    <td><strong>值2</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Ua']}</td>
+                    <td>{$v['trim_table']['Caa']}</td>
+                    <td>{$v['trim_table']['Cab']}</td>
+                </tr>
+                <tr>
+                    <td><strong>空高2</strong></td>
+                    <td><strong>值3</strong></td>
+                    <td><strong>值4</strong></td>
+                </tr>
+                <tr style="height: 40px">
+                    <td>{$v['trim_table']['Ub']}</td>
+                    <td>{$v['trim_table']['Cba']}</td>
+                    <td>{$v['trim_table']['Cbb']}</td>
+                </tr>
+            </table>
+            <br/>
+            <if condition="$v['method'] eq 'b'||$v['method'] eq 'c'">
+                <span class="sj1">
+                    <strong>
+                            容量表如下:
+                    </strong>
+                </span>
+                <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+                       align="center" width="50%"
+                       class="sj1">
+                    <tr>
+                        <td style="width: 25%"><strong>空高1</strong></td>
+                        <td style="width: 25%"><strong>容量1</strong></td>
+                    </tr>
+                    <tr style="height: 40px">
+                        <td>{$v['capacity_table']['U1']}</td>
+                        <td>{$v['capacity_table']['CV1']}</td>
+
+                    </tr>
+                    <tr>
+                        <td style="width: 25%"><strong>空高2</strong></td>
+                        <td style="width: 25%"><strong>容量2</strong></td>
+                    </tr>
+                    <tr style="height: 40px">
+                        <td>{$v['capacity_table']['U2']}</td>
+                        <td>{$v['capacity_table']['CV2']}</td>
+                    </tr>
+                </table>
+            </if>
+            <br/>
+            <span class="sj1"><strong>该舱的计算过程如下：</strong></span>
+            <br/>
+            <span class="sj2">膨胀修正系数为：</span>
+            <br/>
+            <span class="sj3">round((1 + 0.000012 * 膨胀倍数 * (温度 - 20)), 6) </span>
+            <br/>
+            <span class="sj3"> = round((1 + 0.000012 * {$v['coefficient']} * ({$v['Cabin_temperature']} - 20)), 6)</span>
+            <br/>
+            <span class="sj3">= {$v['EC']}</span>
+            <br/>
+            <br/>
+            <if condition="$v['density'] egt 0.99">
+                <span class="sj2">体积修正系数：</span>
+                <br/>
+                <span class="sj3">因为密度为：{$v['density']},大于等于0.99，所以</span>
+                <br/>
+                <span class="sj3">1.0094684142 - 6.33413410744 * 0.0001 * 温度 + 1.45710416212 * 0.0000001 * (温度 * 温度)</span>
+                <br/>
+                <span class="sj3">= 1.0094684142 - 6.33413410744 * 0.0001 * {$v['Cabin_temperature']} + 1.45710416212 * 0.0000001 * ({$v['Cabin_temperature']} * {$v['Cabin_temperature']})</span>
+                <br/>
+                <span class="sj3">= {$v['VC']}</span>
+                <br/>
+                <else/>
+                <span class="sj2">体积修正系数：因为密度为{$v['density']},小于0.99，所以</span>
+                <br/>
+                <span class="sj3">1.0108020095 - 7.2343515319 * 0.0001 * 温度 + 2.1996598346 * 0.0000001 * (温度 * 温度)</span>
+                <br/>
+                <span class="sj3">= 1.0108020095 - 7.2343515319 * 0.0001 * {$v['Cabin_temperature']} + 2.1996598346 * 0.0000001 * ({$v['Cabin_temperature']} * {$v['Cabin_temperature']})</span>
+                <br/>
+                <span class="sj3">= {$v['VC']}</span>
+                <br/>
+            </if>
+            <br/>
+            <if condition="$v['method'] eq 'b'||$v['method'] eq 'c'">
+                <span class="sj2">纵倾修正值：</span>
+                <br/>
+                <span class="sj3">由于纵倾修正表内不重复的空高有{$v['trim_table']['process']['count(ulist)']}个，不重复的吃水差有{$v['trim_table']['process']['count(Draught)']}个，所以</span>
+                <br/>
+                <volist name="v['trim_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <if condition="$k eq 1">
+                        <span class="sj5">round((纵倾值2下空高1对应的值-纵倾值2下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值2下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Cab']}-{$v['trim_table']['Cbb']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cbb']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 2"/>
+                        <span class="sj5">round((纵倾值1下空高1对应的值-纵倾值1下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值1下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Caa']}-{$v['trim_table']['Cba']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cba']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 3"/>
+                        <span class="sj5">对以上两次插值计算继续插值计算得出最终值</span>
+                        <br>
+                        <span class="sj5">round((纵倾值1下两个空高的计算结果-纵倾值2下两个空高的计算结果),3)/(纵倾值1-纵倾值2)*(测量空高-空高2)+插值计算后的小值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['process']['interpolation_calculation'][1]['interpolation_calculation_result']}-{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}),3)/({$v['trim_table']['Da']}-{$v['trim_table']['Db']})*({$v['ullage']}-{$v['trim_table']['Db']})+{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                    </if>
+                </volist>
+                <span class="sj4">纵倾修正值计算最终结果为:{$v['trim_table']['process']['final_result']}</span>
+                <br/>
+                <span class="sj4">单位转换成米后为：{$v['trim_table']['NowTC']}</span>
+                <br/>
+                <span class="sj3">修正后空距：{$v['C_ullage']}</span>
+                <br/>
+                <br/>
+                <br/>
+                <span class="sj3">标准容量：</span>
+                <br/>
+                <span class="sj4">由于容量表内不重复的空高有{$v['capacity_table']['process']['count(ulist)']}个，所以</span>
+                <br/>
+                <volist name="v['capacity_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <span class="sj5">round((空高1对应的容量值-空高2对应的容量值),3)/(空高1-空高2)*(测量空高-空高2)+空高2对应的容量值</span>
+                    <br>
+                    <span class="sj5">=round(({$v['capacity_table']['CV1']}-{$v['capacity_table']['CV2']}),3)/({$v['capacity_table']['U1']}-{$v['capacity_table']['U2']})*({$v['ullage']}-{$v['capacity_table']['U2']})+{$v['capacity_table']['CV2']}</span>
+                    <br>
+                    <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                    <br>
+                    <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                    <br>
+                </volist>
+                <span class="sj4">容量值为：{$v['cabin_first_result']}</span>
+                <br/>
+                <span class="sj4">由于船信息内舱容表是否包含管线为 {$v['table_contain_pipeline']} 且 管线内是否有货客户选择了{$v['pipeline_stock']} ，所以管线内的货物体积为：{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj4">标准容量值为：</span>
+                <br/>
+                <span class="sj5">查表容量值+管线货物体积</span>
+                <br/>
+                <span class="sj5">= {$v['cabin_first_result']}+{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj5">= {$v['Cabin_volume']}</span>
+                <br/>
+                <br/>
+                <span class="sj3">修正后容量：</span>
+                <br/>
+                <span class="sj4">=标准容量*体积修正系数*膨胀修正系数</span>
+                <br/>
+                <span class="sj4">={$v['Cabin_volume']}*{$v['VC']}*{$v['EC']}</span>
+                <br/>
+                <span class="sj4">={$v['now_cabin_volume']}</span>
+
+                <elseif condition="$v['method'] eq 'a'||$v['method'] eq 'd'"/>
+
+                <span class="sj2">容量表：</span>
+                <br/>
+                <span class="sj3">由于容量内不重复的空高有{$v['trim_table']['process']['count(ulist)']}个，不重复的吃水差有{$v['trim_table']['process']['count(Draught)']}个，所以</span>
+                <br/>
+                <volist name="v['trim_table']['process']['interpolation_calculation']" id="vv" key="k">
+                    <span class="sj4">第{$k}次插值计算过程如下:</span>
+                    <br/>
+                    <if condition="$k eq 1">
+                        <span class="sj5">round((纵倾值2下空高1对应的值-纵倾值2下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值2下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Cab']}-{$v['trim_table']['Cbb']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cbb']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 2"/>
+                        <span class="sj5">round((纵倾值1下空高1对应的值-纵倾值1下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值1下空高2对应的值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['Caa']}-{$v['trim_table']['Cba']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cba']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <elseif condition="$k eq 3"/>
+                        <span class="sj5">对以上两次插值计算继续插值计算得出最终值</span>
+                        <br>
+                        <span class="sj5">round((纵倾值1下两个空高的计算结果-纵倾值2下两个空高的计算结果),3)/(纵倾值1-纵倾值2)*(测量空高-空高2)+插值计算后的小值</span>
+                        <br>
+                        <span class="sj5">=round(({$v['trim_table']['process']['interpolation_calculation'][1]['interpolation_calculation_result']}-{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}),3)/({$v['trim_table']['Da']}-{$v['trim_table']['Db']})*({$v['ullage']}-{$v['trim_table']['Db']})+{$v['trim_table']['process']['interpolation_calculation'][0]['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">={$vv['interpolation_calculation_result']}</span>
+                        <br>
+                        <span class="sj5">结果为：{$vv['interpolation_calculation_result']}</span>
+                        <br>
+                    </if>
+                </volist>
+                <span class="sj4">查表容量值:{$v['cabin_first_result']}</span>
+                <br/>
+                <span class="sj4">由于船信息内舱容表是否包含管线为 {$v['table_contain_pipeline']} 且 管线内是否有货客户选择了{$v['pipeline_stock']} ，所以管线内的货物体积为：{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj4">标准容量值为：</span>
+                <br/>
+                <span class="sj5">查表容量值+管线货物体积</span>
+                <br/>
+                <span class="sj5">= {$v['cabin_first_result']}+{$v['pipeline_volume']}</span>
+                <br/>
+                <span class="sj5">= {$v['Cabin_volume']}</span>
+                <br/>
+                <br/>
+                <span class="sj3">修正后容量：</span>
+                <br/>
+                <span class="sj4">=标准容量*体积修正系数*膨胀修正系数</span>
+                <br/>
+                <span class="sj4">={$v['Cabin_volume']}*{$v['VC']}*{$v['EC']}</span>
+                <br/>
+                <span class="sj4">={$v['now_cabin_volume']}</span>
+            </if>
+            <br/>
+            <br/>
+
+        </volist>
+    </div>
+</block>

@@ -56,7 +56,8 @@
                     <td>{$v['shipname']}</td>
                     <td>{$v['firmname']}</td>
                     <td>{$v['number']}</td>
-                    <td>{$v['cabinnum']}</td>
+                    <td><a href="{:U('Cabin/index',array('shipid'=>$v['id']))}">{$v['cabinnum']} <span
+                            class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a></td>
                     <td>
                         <a href="{:U('Ship/edit',array('id'=>$v['id']))}">修改</a>
                         &nbsp;/&nbsp;

@@ -1,4 +1,4 @@
-<extend name="Public:base" />
+<extend name="Public:base"/>
 <block name="title">作业查询</block>
 <block name="navtitle">
     <li class="active">
@@ -10,36 +10,91 @@
 </block>
 <block name="active12">class="active"</block>
 <block name="content">
-	<style>
-        .table_01,.ju { font-size:14px; color:#333; font-family:"方正兰亭黑简";margin:auto 5px;font-weight: bold}
-        .table_02 { font-size:14px; font-family:"方正兰亭黑简"; color:#333;margin:auto 5px;}
-        .box02 { height:41px; margin:20px auto; line-height:50px; text-align:center; font-size:14px; color:#fff; font-family:"方正兰亭黑简";}
-        input { background-color:#3ca0fe; border:none; margin-left:7px; height:30px; color:#fff; font-size:14px; cursor:pointer;}
-        .ju03 {height:35px; width:200px;}
-        tr{text-align: center;}
-        .div1{display: inline-block;}
+    <style>
+        .table_01, .ju {
+            font-size: 14px;
+            color: #333;
+            font-family: "方正兰亭黑简";
+            margin: auto 5px;
+            font-weight: bold
+        }
+
+        .table_02 {
+            font-size: 14px;
+            font-family: "方正兰亭黑简";
+            color: #333;
+            margin: auto 5px;
+        }
+
+        .box02 {
+            height: 41px;
+            margin: 20px auto;
+            line-height: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            font-family: "方正兰亭黑简";
+        }
+
+        input {
+            background-color: #3ca0fe;
+            border: none;
+            margin-left: 7px;
+            height: 30px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .ju03 {
+            height: 35px;
+            width: 200px;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        .div1 {
+            display: inline-block;
+        }
     </style>
-	<h2 align="center">{$content['goodname']}计重记录单</h2>
-	<br>
+    <h2 align="center">{$content['goodname']}计重记录单</h2>
+    <br>
     <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
         <div class="div1" style="text-align: left;width:45px;height:40px;line-height: 40px;">船名：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:135px;text-align: center;">{$content['shipname']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:135px;text-align: center;">{$content['shipname']}
+        </div>
         <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">航次号：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">{$personality['voyage']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">
+            {$personality['voyage']}
+        </div>
         <div class="div1" style="text-align: center;width:75px;height:40px;line-height: 40px;">作业地点：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['locationname']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+            {$personality['locationname']}
+        </div>
         <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">运单量：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:95px;text-align: center;">{$personality['transport']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:95px;text-align: center;">
+            {$personality['transport']}
+        </div>
         <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">货名：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">{$personality['goodsname']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">
+            {$personality['goodsname']}
+        </div>
         <div class="div1" style="text-align: center;width:45px;height:40px;line-height: 40px;">编号：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['number']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+            {$personality['number']}
+        </div>
     </div>
     <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
         <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">起运港：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:125px;text-align: center;">{$personality['start']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:125px;text-align: center;">
+            {$personality['start']}
+        </div>
         <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">目的港：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['objective']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+            {$personality['objective']}
+        </div>
         <div class="div1" style="text-align: left;width:115px;height:40px;line-height: 40px;">作业起止时间：</div>
         <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$endtime}</div>
         <div class="div1" style="text-align: left;width:25px;height:40px;line-height: 40px;">到</div>
@@ -49,33 +104,39 @@
         <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">&nbsp;</div>
         <div class="div1" style="text-align: left;width:130px;height:40px;line-height: 40px;">首次</div>
         <div class="div1" style="text-align: left;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['qianchi']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['qianchi']}
+        </div>
         <div class="div1" style="text-align: left;width:70px;height:40px;line-height: 40px;">&nbsp;</div>
         <div class="div1" style="text-align: center;width:130px;height:40px;line-height: 40px;">末次</div>
         <div class="div1" style="text-align: center;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
-        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['houchi']}</div>
+        <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['houchi']}
+        </div>
     </div>
     <table border="1" cellspacing="0" cellpadding="0" align="center" width="1077px" class="table_02">
         <tr>
             <th>油舱名</th>
             <th>温度</th>
             <th>空距
-                <br>(米)</th>
+                <br>(米)
+            </th>
             <th>纵倾修正<br>值(米)</th>
             <th>修正后空<br>距(米)</th>
             <th>容量
-                <br>(米 <sup>3</sup> )</th>
+                <br>(米 <sup>3</sup> )
+            </th>
             <th>体积修正<br>系数</th>
             <th>膨胀修正<br>系数</th>
             <th>标准容量</th>
             <th width="2px"></th>
             <th>温度</th>
             <th>空距
-                <br>(米)</th>
+                <br>(米)
+            </th>
             <th>纵倾修正<br>值(米)</th>
             <th>修正后空<br>距(米)</th>
             <th>容量
-                <br>(米 <sup>3</sup> )</th>
+                <br>(米 <sup>3</sup> )
+            </th>
             <th>体积修正<br>系数</th>
             <th>膨胀修正<br>系数</th>
             <th>标准容量</th>
@@ -100,28 +161,40 @@
                 <td>{$v[1]['volume']}</td>
                 <td>{$v[1]['expand']}</td>
                 <td>{$v[1]['standardcapacity']}</td>
-                
+
             </tr>
         </volist>
+        <!--        <tr>-->
+        <!--            <td style="height:20px"></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--            <td></td>-->
+        <!--        </tr>-->
         <tr>
-            <td style="height:20px"></td>
+            <td>&nbsp;管线</td>
+            <td colspan="4"></td>
+            <td>{$gx['qiangx']}</td>
+            <td colspan="2"></td>
+            <td>{$gx['qianxgx']}</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="4"></td>
+            <td>{$gx['hougx']}</td>
+            <td colspan="2"></td>
+            <td>{$gx['houxgx']}</td>
         </tr>
         <tr>
             <td style="height:20px" class="ju01">总容量</td>
@@ -162,7 +235,7 @@
         <tr>
             <th colspan="4" style="border-bottom:solid 1px black;height:30px;">&nbsp;</th>
         </tr>
-        
+
         <tr>
             <th colspan=4>&nbsp;</th>
         </tr>
@@ -179,4 +252,138 @@
             <th width="175px" style="border-bottom:solid 1px black"></th>
         </tr>
     </table>
+
+    <if condition="$content['trim_table_count'] gt 0 || $content['capacity_table_count'] gt 0">
+
+        <h1 style="text-align: center;margin-top: 150px;">无表船上传表展示</h1>
+        <hr>
+        <if condition="$content['trim_table_count'] gt 0">
+            <h2 style="text-align: center;border-top: #0C0C0C solid 2px">表1</h2>
+            <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+                   align="center" width="100%"
+                   class="table_02">
+                <tbody>
+                <volist name="result" id="v">
+                    <if condition="$v['have_trim_table'] neq true">
+                        <tr>
+                            <td rowspan="2" style="width: 16%">
+                                <strong style="font-size: x-large">{$v[0]['cabinname']}</strong>
+                            </td>
+                            <td style="width: 17%"><strong>纵倾值1</strong></td>
+                            <td style="width: 17%"><strong>纵倾值2</strong></td>
+                            <td style="width: 2px;border-bottom: 0px;"></td>
+                            <td style="width: 17%" rowspan="2">
+                                <strong style="font-size: x-large">{$v[0]['cabinname']}</strong>
+                            </td>
+                            <td style="width: 17%"><strong>纵倾值1</strong></td>
+                            <td style="width: 17%"><strong>纵倾值2</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$v[0]['trim_table']['draft1']}</td>
+                            <td>{$v[0]['trim_table']['draft1']}</td>
+                            <td style="width: 2px;border-top: 0px;"></td>
+                            <td>{$v[1]['trim_table']['draft1']}</td>
+                            <td>{$v[1]['trim_table']['draft1']}</td>
+                        </tr>
+                        <!--                        <tr style="height: 5px;">-->
+                        <!--                            <td colspan="9"></td>-->
+                        <!--                        </tr>-->
+                        <tr>
+                            <td><strong>空高1</strong></td>
+                            <td><strong>值1</strong></td>
+                            <td><strong>值2</strong></td>
+                            <td style="width: 2px;border-bottom: 0px;"></td>
+
+                            <td><strong>空高1</strong></td>
+                            <td><strong>值1</strong></td>
+                            <td><strong>值2</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$v[0]['trim_table']['ullage1']}</td>
+                            <td>{$v[0]['trim_table']['value1']}</td>
+                            <td>{$v[0]['trim_table']['value2']}</td>
+                            <td style="width: 2px;border-top: 0px;"></td>
+                            <td>{$v[1]['trim_table']['ullage1']}</td>
+                            <td>{$v[1]['trim_table']['value1']}</td>
+                            <td>{$v[1]['trim_table']['value2']}</td>
+                        </tr>
+                        <!--                        <tr style="height: 5px;">-->
+                        <!--                            <td colspan="9"></td>-->
+                        <!--                        </tr>-->
+                        <tr>
+                            <td><strong>空高2</strong></td>
+                            <td><strong>值3</strong></td>
+                            <td><strong>值4</strong></td>
+                            <td style="width: 2px;border-bottom: 0px;"></td>
+                            <td><strong>空高2</strong></td>
+                            <td><strong>值3</strong></td>
+                            <td><strong>值4</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$v[0]['trim_table']['ullage2']}</td>
+                            <td>{$v[0]['trim_table']['value3']}</td>
+                            <td>{$v[0]['trim_table']['value4']}</td>
+                            <td style="width: 2px;border-top: 0px;"></td>
+                            <td>{$v[1]['trim_table']['ullage2']}</td>
+                            <td>{$v[1]['trim_table']['value3']}</td>
+                            <td>{$v[1]['trim_table']['value4']}</td>
+                        </tr>
+                        <tr style="height: 40px;">
+                            <td colspan="9"></td>
+                        </tr>
+                    </if>
+                </volist>
+                </tbody>
+            </table>
+        </if>
+
+        <if condition="$content['capacity_table_count'] gt 0">
+            <h2 style="padding-top: 60px;text-align: center;border-top: #0C0C0C solid 2px">表2</h2>
+            <table style="text-align: center" border="1" cellspacing="0" cellpadding="0" align="center" width="100%"
+                   class="table_02">
+                <tbody>
+                <volist name="result" id="v">
+                    <if condition="$v['have_trim_table'] neq true">
+                        <tr>
+                            <td colspan="5">
+                                <strong style="font-size: x-large">{$v[0]['cabinname']}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%"><strong>空高1</strong></td>
+                            <td style="width: 25%"><strong>容量1</strong></td>
+                            <td width="2px"></td>
+                            <td style="width: 25%"><strong>空高1</strong></td>
+                            <td style="width: 25%"><strong>容量1</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$v[0]['capacity_table']['xiuullage1']}</td>
+                            <td>{$v[0]['capacity_table']['capacity1']}</td>
+                            <td></td>
+                            <td>{$v[1]['capacity_table']['xiuullage1']}</td>
+                            <td>{$v[1]['capacity_table']['capacity1']}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%"><strong>空高2</strong></td>
+                            <td style="width: 25%"><strong>容量2</strong></td>
+                            <td width="2px"></td>
+                            <td style="width: 25%"><strong>空高2</strong></td>
+                            <td style="width: 25%"><strong>容量2</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$v[0]['capacity_table']['xiuullage2']}</td>
+                            <td>{$v[0]['capacity_table']['capacity2']}</td>
+                            <td></td>
+                            <td>{$v[1]['capacity_table']['xiuullage2']}</td>
+                            <td>{$v[1]['capacity_table']['capacity2']}</td>
+                        </tr>
+                        <tr style="height: 20px;">
+                            <td colspan="9"></td>
+                        </tr>
+                    </if>
+                </volist>
+                </tbody>
+            </table>
+        </if>
+    </if>
 </block>

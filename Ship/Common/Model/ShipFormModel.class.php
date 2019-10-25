@@ -118,7 +118,7 @@ class ShipFormModel extends BaseModel
                 'shiplist' => $shiplist
             );
         } elseif ($firmtype == '1') {
-            // 获取所有的船舶公司的船
+            // 获取所有的船舶 公司的船
             $where = array(
                 'firmtype' => '2',
                 "del_sign" => 1,
