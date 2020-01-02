@@ -1,0 +1,476 @@
+<extend name="Public:base" />
+<block name='navhover2'>dropbtnhover</block>
+<block name="title">作业详情</block>
+<block name="center">
+<!--startprint9-->
+    <style>
+        .table_01,.ju { font-size:14px; color:#333; font-family:"方正兰亭黑简";margin:auto 5px;font-weight: bold}
+        .table_02 { font-size:14px; font-family:"方正兰亭黑简"; color:#333;margin:auto 5px;}
+        .box02 { height:41px; margin:20px auto; line-height:50px; text-align:center; font-size:14px; color:#fff; font-family:"方正兰亭黑简";}
+        input { background-color:#3ca0fe; border:none; margin-left:7px; height:30px; color:#fff; font-size:14px; cursor:pointer;}
+        .ju03 {height:35px; width:200px;}
+        tr{text-align: center;}
+        .div1{display: inline-block;}
+        .quiz{border:solid 1px #ccc;height:270px;}
+        .quiz h3{font-size:14px;line-height:35px;height:35px;border-bottom:solid 1px #e8e8e8;padding-left:20px;background:#f8f8f8;color:#666;position:relative;}
+        .quiz_content{padding-top:10px;padding-left:20px;position:relative;height:205px;}
+        .quiz_content .btm{border:none;width:100px;height:33px;background:url(__HOME_IMG__/btn.gif) no-repeat;margin:10px 0 0 64px;display:inline;cursor:pointer;}
+        .quiz_content li.full-comment{position:relative;z-index:99;height:41px;}
+        .quiz_content li.cate_l{height:24px;line-height:24px;padding-bottom:10px;}
+        .quiz_content li.cate_l dl dt{float:left;}
+        .quiz_content li.cate_l dl dd{float:left;padding-right:15px;}
+        .quiz_content li.cate_l dl dd label{cursor:pointer;}
+        .quiz_content .l_text{height:120px;position:relative;padding-left:18px;}
+        .quiz_content .l_text .m_flo{float:left;width:47px;}
+        .quiz_content .l_text .text{width:634px;height:109px;border:solid 1px #ccc;}
+        .quiz_content .l_text .tr{position:absolute;bottom:-18px;right:40px;}
+        /*goods-comm-stars style*/
+        .goods-comm{height:41px;position:relative;z-index:7;}
+        .goods-comm-stars{line-height:25px;padding-left:12px;height:41px;position:absolute;top:0px;left:0;width:400px;}
+        .goods-comm-stars .star_l{float:left;display:inline-block;margin-right:5px;display:inline;}
+        .goods-comm-stars .star_choose{float:left;display:inline-block;}
+        /* rater star */
+        .rater-star{position:relative;list-style:none;margin:0;padding:0;background-repeat:repeat-x;background-position:left top;float:left;}
+        .rater-star-item, .rater-star-item-current, .rater-star-item-hover{position:absolute;top:0;left:0;background-repeat:repeat-x;}
+        .rater-star-item{background-position: -100% -100%;}
+        .rater-star-item-hover{background-position:0 -48px;cursor:pointer;}
+        .rater-star-item-current{background-position:0 -48px;cursor:pointer;}
+        .rater-star-item-current.rater-star-happy{background-position:0 -25px;}
+        .rater-star-item-hover.rater-star-happy{background-position:0 -25px;}
+        .rater-star-item-current.rater-star-full{background-position:0 -72px;}
+        /* popinfo */
+        .popinfo{display:none;position:absolute;top:30px;background:url(__HOME_IMG__/comment/infobox-bg.gif) no-repeat;padding-top:8px;width:192px;margin-left:-14px;}
+        .popinfo .info-box{border:1px solid #f00;border-top:0;padding:0 5px;color:#F60;background:#FFF;}
+        .popinfo .info-box div{color:#333;}
+        .rater-click-tips{font:12px/25px;color:#333;margin-left:10px;background:url(__HOME_IMG__/comment/infobox-bg-l.gif) no-repeat 0 0;width:125px;height:34px;padding-left:16px;overflow:hidden;}
+        .rater-click-tips span{display:block;background:#FFF9DD url(__HOME_IMG__/comment/infobox-bg-l-r.gif) no-repeat 100% 0;height:34px;line-height:34px;padding-right:5px;}
+        .rater-star-item-tips{background:url(__HOME_IMG__/comment/star-tips.gif) no-repeat 0 0;height:41px;overflow:hidden;}
+        .cur.rater-star-item-tips{display:block;}
+        .rater-star-result{color:#FF6600;font-weight:bold;padding-left:10px;float:left;}
+        @("@")page
+              {
+                  size:  auto;   /* auto is the initial value */
+                  margin: 0mm;  /* this affects the margin in the printer settings */
+              }
+    </style>
+    <table style="text-align: center;width: 95%;border-bottom: 3px double;margin:0 auto;">
+        <tbody>
+        <tr>
+            <td style="font-size:xx-large" colspan="3">
+                南&nbsp;京&nbsp;中&nbsp;理&nbsp;外&nbsp;轮&nbsp;理&nbsp;货&nbsp;有&nbsp;限&nbsp;公&nbsp;司
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 30%;text-align: right;" rowspan="2">
+                <img src="Public/home/img/aaa.png">
+            </td>
+            <td style="text-align: left">
+                <span style="text-align: left">
+                CHINA&nbsp;&nbsp;OCEAN&nbsp;&nbsp;SHIPPING&nbsp;&nbsp;TALLY&nbsp;&nbsp;CO.,&nbsp;LTD.&nbsp;&nbsp;NANJING</span>
+            </td>
+            <td style="width: 150px;text-align: center;" rowspan="3">
+                <img src="{$arr['content']['verify']}" style="width: 80px;height: 80px;"/>
+                <p>扫描上方二维码验真伪</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left">
+                <span style="margin-left: 40px;">Add:68#Beizushian,Guolou&nbsp;District,Nanjing,China</span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align: left">
+                <span style="margin-left: 10px;">Tel:86-25-58582066&nbsp;&nbsp;&nbsp;Fax:86-25-58752747&nbsp;&nbsp;Postcode:210015</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div style="margin-top: 30px;text-align: center;font-size:x-large;">
+        <strong>水尺计重记录单</strong>
+    </div>
+    <div style="text-align: center;font-size:large;">
+        <strong>海伦船型</strong>
+    </div>
+    <table style="width: 95%;margin: 0 auto;text-align: center;border-collapse: collapse;">
+        <tbody>
+        <tr style="height: 10px">
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 11%"></td>
+            <td style="width: 12%"></td>
+        </tr>
+        <tr>
+            <td><strong>船名</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["content"]["shipname"]}</td>
+            <td><strong>航次</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["voyage"]}</td>
+            <td><strong>货名</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["cargoname"]}</td>
+        </tr>
+        <tr>
+            <td><strong>装货港</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["start"]}</td>
+            <td><strong>卸货港</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["objective"]}</td>
+            <td><strong>检验地点</strong></td>
+            <td colspan="2" style="border-bottom: 1px solid;">{$arr["personality"]["locationname"]}</td>
+        </tr>
+        <tr>
+            <td><strong>开工时间</strong></td>
+            <td colspan="3" style="border-bottom: 1px solid;">{$arr["content"]["time"]}</td>
+            <td><strong>完工时间</strong></td>
+            <td colspan="4" style="border-bottom: 1px solid;">{$nowTime}</td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td style="height: 20px"></td>
+            <td colspan="3" style="height: 20px"><strong>空载吃水</strong></td>
+            <td style="height: 20px"></td>
+            <td style="height: 20px"></td>
+            <td style="height: 20px" colspan="3"><strong>重载吃水</strong></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="border: 1px solid;">艏</td>
+            <td style="border: 1px solid;">艉</td>
+            <td style="border: 1px solid;">舯</td>
+            <td></td>
+            <td></td>
+            <td style="border: 1px solid;">艏</td>
+            <td style="border: 1px solid;">艉</td>
+            <td style="border: 1px solid;">舯</td>
+        </tr>
+        <tr>
+            <td>左舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["forntleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["afterleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["centerleft"]}</td>
+            <td></td>
+            <td>左舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["forntleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["afterleft"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["centerleft"]}</td>
+        </tr>
+        <tr>
+            <td>右舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["forntright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["afterright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["centerright"]}</td>
+            <td></td>
+            <td>右舷</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["forntright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["afterright"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["centerright"]}</td>
+        </tr>
+        <tr>
+            <td>平均值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fornt"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["after"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["center"]}</td>
+            <td></td>
+            <td>平均值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fornt"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["after"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["center"]}</td>
+        </tr>
+        <tr>
+            <td>修正值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fc"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["ac"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["mc"]}</td>
+            <td></td>
+            <td>修正值</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fc"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["ac"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["mc"]}</td>
+        </tr>
+        <tr>
+            <td>龙骨修正</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td></td>
+            <td>龙骨修正</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+            <td style="border: 1px solid;">0</td>
+        </tr>
+        <tr>
+            <td>修正后</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["fm"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["am"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["q"]["mm"]}</td>
+            <td></td>
+            <td>修正后</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["fm"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["am"]}</td>
+            <td style="border: 1px solid;">{$arr["fornt"]["h"]["mm"]}</td>
+        </tr>
+        <tr>
+            <td colspan="9" style="height: 20px;"></td>
+        </tr>
+        <tr>
+            <td><strong>平均吃水</strong></td>
+            <td><strong>{$arr["content"]["qian_d_m"]}</strong></td>
+            <td><strong>m</strong></td>
+            <td colspan="2"></td>
+            <td><strong>平均吃水</strong></td>
+            <td><strong>{$arr["content"]["hou_d_m"]}</strong></td>
+            <td><strong>m</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>排水量</td>
+            <td>{$arr["record"]["q"]["dsc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>排水量</td>
+            <td>{$arr["record"]["h"]["dsc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>纵倾修正</td>
+            <td>{$arr["record"]["q"]["dc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>纵倾修正</td>
+            <td>{$arr["record"]["h"]["dc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>港水修正</td>
+            <td>{$arr["record"]["q"]["dpc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>港水修正</td>
+            <td>{$arr["record"]["h"]["dpc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>修正后</td>
+            <td>{$arr["content"]["qian_dspc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>修正后</td>
+            <td>{$arr["content"]["hou_dspc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="9" style="height: 10px;"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>空载相关数据</strong></td>
+            <td colspan="2"></td>
+            <td colspan="3"><strong>重载相关数据</strong></td>
+            <td>
+        </tr>
+        <tr>
+            <td>空 船</td>
+            <td>{$arr["content"]["ship_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>空 船</td>
+            <td>{$arr["content"]["ship_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>轻 油</td>
+            <td>{$arr["content"]["qian_fuel_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>轻 油</td>
+            <td>{$arr["content"]["hou_fuel_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>重 油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>重 油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>润滑油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>润滑油</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>淡 水</td>
+            <td>{$arr["content"]["qian_fwater_weight"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>淡 水</td>
+            <td>{$arr["content"]["hou_fwater_weight"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>常 数</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>常 数</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>压载水</td>
+            <td>{$arr["content"]["qian_bw"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>压载水</td>
+            <td>{$arr["content"]["hou_bw"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>其它货物</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>其它货物</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>其 它</td>
+            <td>0</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>其 它</td>
+            <td>0</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>合 计</td>
+            <td>{$qian_total}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>合 计</td>
+            <td>{$hou_total}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>排水量</td>
+            <td>{$arr["content"]["qian_dspc"]}</td>
+            <td>MT</td>
+            <td colspan="2"></td>
+            <td>排水量</td>
+            <td>{$arr["content"]["hou_dspc"]}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td>排水量差值</td>
+            <td>{$hou_qian_dspc}</td>
+            <td>MT</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td>水油差值</td>
+            <td>{$hou_qian_total}</td>
+            <td>MT</td>
+            <td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td><strong>总计货重</strong></td>
+            <td><strong>{$arr["content"]["weight"]}</strong></td>
+            <td><strong>MT</strong></td>
+            <td>
+        </tr>
+        <tr style="height: 20px;">
+            <td colspan="9"></td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid;"><strong>备注：</strong></td>
+            <td colspan="8" style="border-bottom: 1px solid;text-align: left;">{$arr["content"]["remark"]}</td>
+        </tr>
+        <tr style="height: 25px;">
+            <td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+        </tr>
+        <tr style="height: 25px;">
+            <td colspan="9" style="border-bottom: 1px solid;height: 25px;"></td>
+        </tr>
+        <tr style="height: 40px;">
+            <td></td>
+            <td colspan="3" style="border-bottom: 1px solid;height: 40px;">{$arr["content"]["username"]}</td>
+            <td colspan="2"></td>
+            <td colspan="2" style="border-bottom: 1px solid;height: 40px;"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="3" align="center" style="text-align: center"><strong>检验员</strong></td>
+            <td colspan="2"></td>
+            <td colspan="2" align="center" style="text-align: center"><strong>大副</strong></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--endprint9-->
+    <div class="box02">
+        <input type="button" onclick="preview(9)" name="reset" value="打&nbsp;&nbsp;印" align="right" class="ju03">
+    </div>
+    <script>
+    function preview(oper){
+        if (oper < 10){
+            //get_page_info();
+            bdhtml=window.document.body.innerHTML;//获取当前页的html代码
+            sprnstr="<!--startprint"+oper+"-->";//设置打印开始区域
+            eprnstr="<!--endprint"+oper+"-->";//设置打印结束区域
+            prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+            prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+            window.document.body.innerHTML=prnhtml;
+            if (!!window.ActiveXObject || "ActiveXObject" in window) { //是否ie
+                remove_ie_header_and_footer();
+            }
+            window.print();
+            // prnhtml.print();
+            window.document.body.innerHTML=bdhtml;
+        } else {
+            if (!!window.ActiveXObject || "ActiveXObject" in window) { //是否ie
+                remove_ie_header_and_footer();
+            }
+            window.print();
+        }
+    }
+    function remove_ie_header_and_footer() {
+        var hkey_path;
+        hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell");
+            RegWsh.RegWrite(hkey_path + "header", "");
+            RegWsh.RegWrite(hkey_path + "footer", "");
+        } catch (e) {}
+    }
+</script>
+</block>

@@ -52,13 +52,13 @@ hr{
 
 .editMask5 .editBox1 {
     position: absolute;
-    width: 630px;
-    height: 600px;
+    width: 80%;
+    height: 900px;
     background: #FFF;
-    left: 45%;
-    top: 35%;
-    margin-left: -225px;
-    margin-top: -165px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40%;
+    margin-top: -450px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -125,13 +125,13 @@ hr{
 
 .editMask6 .editBox1 {
     position: absolute;
-    width: 630px;
-    height: 600px;
+    width: 80%;
+    height: 900px;
     background: #FFF;
-    left: 45%;
-    top: 35%;
-    margin-left: -225px;
-    margin-top: -165px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40%;
+    margin-top: -450px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -191,7 +191,7 @@ hr{
 .bar1{
 	height: 40px;
     line-height: 40px;
-	width: 590px;
+	width: 90%;
 	float: left;
 	background-color: #6889ff;
 	text-align: center;
@@ -201,7 +201,7 @@ hr{
 }
 .editBox1 ul.pass {
     float: left;
-    width: 590px;
+    width: 90%;
     margin: 10px 20px;
     /*height: 325px;*/
     overflow-y:auto
@@ -322,13 +322,13 @@ hr{
 
 .editMask7 .editBox1 {
     position: absolute;
-    width: 630px;
-    height: 650px;
+    width: 80%;
+    height: 900px;
     background: #FFF;
-    left: 45%;
-    top: 25%;
-    margin-left: -225px;
-    margin-top: -165px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40%;
+    margin-top: -450px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;

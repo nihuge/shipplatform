@@ -62,7 +62,7 @@ class UserController extends AdminBaseController
                     //获得管理员的权限
                     $where = array('id' => $id);
                     $operatorId = I('post.operator');
-                    $adminJurs = $user->field('operation_jur,search_jur')->where($where)->find();
+                    $adminJurs = $user->field('operation_jur,search_jur,sh_operation_jur,sh_search_jur')->where($where)->find();
 
                     if (!$user->create($adminJurs)) {
                         //对data数据进行验证
@@ -155,15 +155,7 @@ class UserController extends AdminBaseController
             }
 
             $data = I('post.');
-            // 判断是否提交操作权限，查询权限在新增的时候与操作权限一样
-            if (I('post.operation_jur')) {
-                // 将数组转换字符串
-                $operation_jur = implode(',', I('post.operation_jur'));
-                $data['operation_jur'] = $operation_jur;
-            } else {
-                // 没有传值
-                $data['operation_jur'] = '';
-            }
+
             $map = array(
                 'id' => $data['id']
             );
@@ -182,31 +174,173 @@ class UserController extends AdminBaseController
         } else {
             //获取用户信息
             $usermsg = $user
-                ->field('id,title,username,phone,firmid,operation_jur')
+                ->field('id,title,username,phone,firmid')
                 ->where(array('id' => I('get.id')))
                 ->find();
             if ($usermsg !== false and !empty($usermsg)) {
                 // 根据firmid获取公司操作权限
                 $firm = new \Common\Model\FirmModel();
-                $firmmsg = $firm->getFirmOperationSearch(I('get.firmid'));
+//                $firmmsg = $firm->getFirmOperationSearch(I('get.firmid'));
+                $firmmsg = $firm->getFieldById(I('get.firmid'), 'firmname');
+                $assign = array(
+                    'usermsg' => $usermsg,
+                    'firmmsg' => $firmmsg,
+                );
+                $this->assign($assign);
+                $this->display();
+            } else {
+                $this->error('获取数据失败！');
+            }
+
+        }
+    }
+
+    /**
+     * 修改用户操作权限
+     * */
+    public
+    function edit_msg()
+    {
+        $user = new \Common\Model\UserModel();
+        if (IS_POST) {
+            $data = array();
+            // 判断是否提交操作权限，查询权限在新增的时候与操作权限一样
+            if (I('post.operation_jur')) {
+                // 将数组转换字符串
+                $operation_jur = implode(',', I('post.operation_jur'));
+                $data['operation_jur'] = $operation_jur;
+            } else {
+                // 没有传值
+                $data['operation_jur'] = '';
+            }
+
+            // 判断是否提交操作权限，查询权限在新增的时候与操作权限一样
+            if (I('post.sh_operation_jur')) {
+                // 将数组转换字符串
+                $sh_operation_jur = implode(',', I('post.sh_operation_jur'));
+                $data['sh_operation_jur'] = $sh_operation_jur;
+            } else {
+                // 没有传值
+                $data['sh_operation_jur'] = '';
+            }
+
+            $map = array(
+                'id' => trimall(I('post.id'))
+            );
+
+            if (!$user->create($data)) {
+                //对data数据进行验证
+                $this->error($user->getError());
+            } else {
+                // 修改用户信息
+                $resu = $user->editData($map, $data);
+                if ($resu !== false) {
+                    $this->success('修改用户信息成功!', U('index'));
+                } else {
+                    $this->error("修改用户信息失败！");
+                }
+            }
+        } else {
+            //获取用户信息
+            $usermsg = $user
+                ->field('id,firmid,operation_jur,sh_operation_jur')
+                ->where(array('id' => I('get.id')))
+                ->find();
+            if ($usermsg !== false and !empty($usermsg)) {
+                // 根据firmid获取公司操作权限
+                $firm = new \Common\Model\FirmModel();
+                $firmmsg = $firm->getFirmOperationSearch($usermsg['firmid']);
 
                 // 获取公司下操作的船信息
                 $ship = new \Common\Model\ShipModel();
                 $where = array(
                     'id' => array('in', $firmmsg['operation_jur'])
                 );
+
                 $shiplist = $ship->field('id,shipname')->where($where)->select();
 
-                $operation_jur = explode(',', $usermsg['operation_jur']);
+                // 获取公司下操作的船信息
+                $sh_ship = new \Common\Model\ShShipModel();
 
-                $assign = array(
-                    'usermsg' => $usermsg,
-                    'firmmsg' => $firmmsg,
-                    'shiplist' => $shiplist,
-                    'operation_jur' => $operation_jur
+                $sh_where = array(
+                    'id' => array('in', $firmmsg['sh_operation_jur'])
                 );
-                $this->assign($assign);
-                $this->display();
+
+                $sh_shiplist = $sh_ship->field('id,shipname')->where($sh_where)->select();
+
+                $jurlist = explode(',', $usermsg['operation_jur']);
+                $sh_jurlist = explode(',', $usermsg['sh_operation_jur']);
+
+//                $assign = array(
+//                    'usermsg' => $usermsg,
+//                    'firmmsg' => $firmmsg,
+//                    'shiplist' => $shiplist,
+//                );
+                $txt = "<form action='" . U("User/edit_msg") . "' method='post'><input type='hidden' name='id' value='" . $usermsg['id'] . "'>";
+                $txt .= <<<table
+<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="width:85%;margin:15px auto;text-align: center;">
+                        <tbody><tr>
+                            <td colspan="3">油船操作权限</td>
+                            </tr><tr>
+table;
+                $ship_count = count($shiplist);
+                if($ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无液货船操作权限，请点击<a href='".U('firm/configOperator',array('id'=>$usermsg['firmid'],'firmtype'=>$firmmsg['firmtype']))."' style='color: #0d7bdc'>这里</a>配置权限</td>";
+
+                foreach ($shiplist as $key => $value) {
+                    $checked = "";
+                    if (in_array($value['id'], $jurlist)) {
+                        $checked = "checked";
+                    }
+                    $txt .= "<td id=\"ajaxship\"><label>
+                                    <input class=\"ace ace-checkbox-2\" type=\"checkbox\" name=\"operation_jur[]\" " . $checked . " value=\"" . $value['id'] . "\">
+                                    <span class=\"lbl\"> " . $value['shipname'] . "</span> 
+                                </label></td>";
+                    if ($key + 1 == $ship_count && ($key + 1) % 3 != 0) {
+                        $col_num = 3 - ($key + 1) % 3;
+                        $txt .= "<td colspan='" . $col_num . "'></td>";
+                    }
+                    if (($key + 1) % 3 == 0 && $key + 1 < $ship_count) {
+                        $txt .= "</tr><tr>";
+                    }
+                }
+
+                $txt .= <<<shtable
+                            </tr>
+                            <tr>
+                            <td colspan="3">散货操作权限</td>
+                            </tr><tr>
+shtable;
+                $sh_ship_count = count($sh_shiplist);
+                if($sh_ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无散货船操作权限，请点击<a href='".U('firm/configOperator',array('id'=>$usermsg['firmid'],'firmtype'=>$firmmsg['firmtype']))."' style='color: #0d7bdc'>这里</a>配置权限</td>";
+                foreach ($sh_shiplist as $key1 => $value1) {
+                    $sh_checked = "";
+                    if (in_array($value1['id'], $sh_jurlist)) {
+                        $sh_checked = "checked";
+                    }
+
+                    $txt .= "<td id=\"ajaxship\"><label>
+                                    <input class=\"ace ace-checkbox-2\" type=\"checkbox\" name=\"sh_operation_jur[]\" " . $sh_checked . " value=\"" . $value1['id'] . "\">
+                                    <span class=\"lbl\"> " . $value1['shipname'] . "</span> 
+                                </label></td>";
+                    if ($key1 + 1 == $sh_ship_count && ($key1 + 1) % 3 != 0) {
+                        $sh_col_num = 3 - ($key1 + 1) % 3;
+                        $txt .= "<td colspan='" . $sh_col_num . "'></td>";
+                    }
+                    if (($key1 + 1) % 3 == 0 && $key1 + 1 < $sh_ship_count) {
+                        $txt .= "</tr><tr>";
+                    }
+                }
+
+                $txt .= <<<endhtml
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center;">
+                                <input type="submit" name="sub" value="提交" class="btn btn-primary">
+                            </td>
+                        </tr>
+                    </tbody></table>
+endhtml;
+                $this->ajaxReturn(array('state' => 1, 'message' => "成功", 'content' => $txt));
             } else {
                 $this->error('获取数据失败！');
             }
@@ -223,15 +357,23 @@ class UserController extends AdminBaseController
         $user = new \Common\Model\UserModel();
         if (IS_POST) {
             $map = array(
-                'id' => I('post.id')
+                'id' => intval(I('post.id'))
             );
-            $data = array('look_other' => I('post.look_other'));
+
             if (I('post.search_jur')) {
                 // 将数组转换字符串
                 $search_jur = implode(',', I('post.search_jur'));
                 $data['search_jur'] = $search_jur;
             } else {
                 $data['search_jur'] = '';
+            }
+
+            if (I('post.sh_search_jur')) {
+                // 将数组转换字符串
+                $sh_search_jur = implode(',', I('post.sh_search_jur'));
+                $data['sh_search_jur'] = $sh_search_jur;
+            } else {
+                $data['sh_search_jur'] = '';
             }
 
             if (!$user->create($data)) {
@@ -248,10 +390,10 @@ class UserController extends AdminBaseController
             }
         } else {
             $where = array(
-                'id' => I('get.id')
+                'id' => intval(I('get.id'))
             );
             $data = $user
-                ->field('id,search_jur,look_other')
+                ->field('id,sh_search_jur,search_jur,look_other')
                 ->where($where)
                 ->find();
             if ($data !== false and !empty($data)) {
@@ -260,6 +402,7 @@ class UserController extends AdminBaseController
                 $firmlist = $firm->getFirmShip();
                 // 字符串转换数组
                 $data['search_jur'] = explode(',', $data['search_jur']);
+                $data['sh_search_jur'] = explode(',', $data['sh_search_jur']);
                 $assign = array(
                     'data' => $data,
                     'firmlist' => $firmlist
@@ -270,7 +413,6 @@ class UserController extends AdminBaseController
                 $this->error('获取数据有误！');
             }
         }
-
     }
 
     /**
@@ -295,7 +437,7 @@ class UserController extends AdminBaseController
         if ($firm_status['del_sign'] == 2 and $data['status'] == 1) {
             //如果公司被软删除，并且要进行解冻操作时，阻止操作
             $this->ajaxReturn(array("state" => 3, 'msg' => "公司被删除，无法解冻，请恢复公司后再解冻"));
-        }else{
+        } else {
             //验证通过 可以对数据进行操作
             $res = $user->editData($map, $data);
             if ($res !== false) {
@@ -334,5 +476,46 @@ class UserController extends AdminBaseController
         }
     }
 
+    /**
+     * 更改查询限制
+     * */
+    public
+    function change_look_other($userId)
+    {
+        $id = intval($userId);//接受id
+        $user = new \Common\Model\UserModel();
+        if (IS_POST) {
+            $map = array(
+                'id' => $id
+            );
+            $data = array('look_other' => intval(I('post.look_other')));
+            if (!$user->create($data)) {
+                //对data数据进行验证
+                $this->error($user->getError());
+            } else {
+                // 修改用户查询条件
+                $resu = $user->editData($map, $data);
+                if ($resu !== false) {
+                    $this->success("修改成功", U("index"));
+                } else {
+                    $this->error("修改失败");
+                }
+            }
+        } else {
+            $where = array(
+                'id' => $id
+            );
 
+            $data = $user
+                ->field('username,look_other')
+                ->where($where)
+                ->find();
+
+            $this->ajaxReturn(array(
+                'state' => 1,
+                'look_other' => $data['look_other'],
+                'username' => $data['username'],
+            ));
+        }
+    }
 }

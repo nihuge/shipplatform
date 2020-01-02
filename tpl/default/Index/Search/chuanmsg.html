@@ -67,7 +67,7 @@
     </div>
     <div class='dadiv'>
 	    <div class="biaotis">
-	        公司船舶
+	        公司液货船舶
 	        <p class="mor"><a href="__CONTROLLER__/morechuan/firmid/{$content['id']}" class='aa2'>更多数据</a></p>
 	    </div>
 		<volist name="list" id="v">
@@ -102,6 +102,33 @@
 		</div>
 		<?php $xu++;?>
 		</volist>
+
+		<div class="biaotis">
+			公司散货船舶
+			<p class="mor"><a href="__CONTROLLER__/sh_morechuan/firmid/{$content['id']}" class='aa2'>更多数据</a></p>
+		</div>
+		<volist name="sh_list" id="v">
+			<div class='xinx_1'>
+				<a href="{:U('Search/shipmsg',array('shipid'=>$v['id']))}">
+					<img src="{:($v['img'] == '') ? '__INDEX_IMAGE__/no_photo_big.png' : $v['img']}" class="img">
+					<div class="divv1">
+						<div class='divv1_1'>
+							<p class="pp1">船名</p>
+							<p class="pp2">{$v['shipname']}</p>
+						</div>
+						<div class='divv1_1'>
+							<p class="pp1">主装</p>
+							<p class="pp2">{$v['goodsname']}</p>
+						</div>
+						<div class='divv1_1'>
+							<p class="pp1">自重</p>
+							<p class="pp2">{:($v['weight'] == '')?'无资料':$v['weight']."MT"} </p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</volist>
+
 		<div class="biaotis">
 	        历史汇总数据
 	    </div>

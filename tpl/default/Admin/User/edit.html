@@ -37,22 +37,7 @@
                         <tr>
                             <td>公司名称</td>
                             <td>
-                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-5" name="firmname" readonly value="{$firmmsg['firmname']}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>操作权限</td>
-                            <td id="ajaxship">
-                                 <volist name="shiplist" id="v" empty=''>
-                                <!-- <label>
-                                    {$v['shipname']}
-                                    <input type="checkbox" name='operation_jur[]' value="{$v['id']}" {:in_array($v['id'],$operation_jur) ? 'checked' : ''}>&nbsp;
-                                </label> -->
-                                <label>
-                                    <input class="ace ace-checkbox-2" type="checkbox" name='operation_jur[]' {:in_array($v['id'],$operation_jur) ? 'checked' : ''} value="{$v['id']}"/>
-                                    <span class="lbl"> {$v['shipname']}</span> 
-                                </label>
-                                </volist>
+                                <input type="text" id="form-field-1" class="col-xs-10 col-sm-5" name="firmname" readonly value="{$firmmsg}"/>
                             </td>
                         </tr>
                         <tr>

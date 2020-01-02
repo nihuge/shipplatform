@@ -1,0 +1,364 @@
+<extend name="Public:base"/>
+<block name='navhover2'>dropbtnhover</block>
+<block name='title'>作业详情</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/bulk.css">
+
+    <script src="__INDEX_JS__/showphoto.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".divcabin .panel:first").next().show();
+            $(".panel .look").click(function () {
+                var images = ['<img src="__INDEX_IMAGE__/w-d.png">', '<img src="__INDEX_IMAGE__/w-u.png">'];
+                var display = $(this).parent().next().css('display');
+                if (display == 'block') {
+                    // 设置显示
+                    $(this).html(images[0]);
+                } else {
+                    $(this).html(images[1]);
+                }
+                $(this).parent().next().toggle(300);
+            })
+        })
+    </script>
+    <div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            作业系统>散货船系统>作业数据详情
+        </div>
+    </div>
+    <div class='rmsg'>
+        <div class='msgs'>
+            <p class='pp1'>船名</p>
+            <p class='pp2'>{$content['shipname']}</p>
+        </div>
+        <div class='msgs'>
+            <p class='pp1'>操作人</p>
+            <p class='pp2'>{$content['username']}</p>
+        </div>
+        <div class='msgs'>
+            <p class='pp1'>货重(吨)</p>
+            <p class='pp2'>{$content['weight']}</p>
+        </div>
+        <foreach name="personality" item="vo" key="k">
+            <div class='msgs'>
+                <p class='pp1'>{$vo['title']}</p>
+                <p class='pp2'>{$vo['value']}</p>
+            </div>
+        </foreach>
+    </div>
+    <div style='height: 10px;width: 100%;'></div>
+    <div class='cabinmsg'>
+        <div class='chi'>
+            <div class='shui'>
+                <p class='pp'>首检水尺数据</p>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏左吃水</p>
+                    <p class='pp2'>{$qian['fornt']['forntleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯左吃水</p>
+                    <p class='pp2'>{$qian['fornt']['centerleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉左吃水</p>
+                    <p class='pp2'>{$qian['fornt']['afterleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏右吃水</p>
+                    <p class='pp2'>{$qian['fornt']['forntright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯右吃水</p>
+                    <p class='pp2'>{$qian['fornt']['centerright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉右吃水</p>
+                    <p class='pp2'>{$qian['fornt']['afterright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏平均吃水</p>
+                    <p class='pp2'>{$qian['fornt']['fornt']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯平均吃水</p>
+                    <p class='pp2'>{$qian['fornt']['center']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉平均吃水</p>
+                    <p class='pp2'>{$qian['fornt']['after']}</p>
+                </div>
+                <!--                <div class='chishuimsg'>-->
+                <!--                    <p class='ppp1'>本次重量</p>-->
+                <!--                    <p class='pp2'>{$content['qiantotal']}</p>-->
+                <!--                </div>-->
+                <!--                <div class='chishuimsg'></div>-->
+            </div>
+            <div class='shui'>
+                <p class='pp'>末检水尺数据</p>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏左吃水</p>
+                    <p class='pp2'>{$hou['fornt']['forntleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯左吃水</p>
+                    <p class='pp2'>{$hou['fornt']['centerleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉左吃水</p>
+                    <p class='pp2'>{$hou['fornt']['afterleft']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏右吃水</p>
+                    <p class='pp2'>{$hou['fornt']['forntright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯右吃水</p>
+                    <p class='pp2'>{$hou['fornt']['centerright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉右吃水</p>
+                    <p class='pp2'>{$hou['fornt']['afterright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艏平均吃水</p>
+                    <p class='pp2'>{$hou['fornt']['afterright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>舯平均吃水</p>
+                    <p class='pp2'>{$hou['fornt']['afterright']}</p>
+                </div>
+                <div class='chishuimsg'>
+                    <p class='ppp1'>艉平均吃水</p>
+                    <p class='pp2'>{$hou['fornt']['afterright']}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class='cabinmsg'>
+            <div class='chi'>
+                <div class='shui'>
+                    <p class='pp'>首检排水量表&nbsp;D_M：{$content['qian_d_m']}</p>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位吃水值</p>
+                        <p class='pp2'>{$qian['table']['d_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位吃水值</p>
+                        <p class='pp2'>{$qian['table']['d_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位TPC值</p>
+                        <p class='pp2'>{$qian['table']['tpc_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位TPC值</p>
+                        <p class='pp2'>{$qian['table']['tpc_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位DS值</p>
+                        <p class='pp2'>{$qian['table']['ds_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位DS值</p>
+                        <p class='pp2'>{$qian['table']['ds_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位LCA值</p>
+                        <p class='pp2'>{$qian['table']['lca_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位LCA值</p>
+                        <p class='pp2'>{$qian['table']['lca_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>计算后上位xf值</p>
+                        <p class='pp2'>{$qian['table']['xf_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>计算后下位xf值</p>
+                        <p class='pp2'>{$qian['table']['xf_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>D_M+50cm的mtc值</p>
+                        <p class='pp2'>{$qian['table']['mtc_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>D_M-50cm的mtc值</p>
+                        <p class='pp2'>{$qian['table']['mtc_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>当前港水密度</p>
+                        <p class='pp2'>{$content['qian_pwd']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>表载港水密度</p>
+                        <p class='pp2'>{$content['ptwd']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>矫正后最终排水量：</p>
+                        <p class='pp2'>{$qian['table']['mtc_down']}</p>
+                    </div>
+
+
+
+
+                    <!--                <div class='chishuimsg'>-->
+                    <!--                    <p class='ppp1'>本次重量</p>-->
+                    <!--                    <p class='pp2'>{$content['qiantotal']}</p>-->
+                    <!--                </div>-->
+                    <!--                <div class='chishuimsg'></div>-->
+                </div>
+                <div class='shui'>
+                    <p class='pp'>末检排水量表&nbsp;D_M：{$content['hou_d_m']}</p>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位吃水值</p>
+                        <p class='pp2'>{$hou['table']['d_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位吃水值</p>
+                        <p class='pp2'>{$hou['table']['d_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位TPC值</p>
+                        <p class='pp2'>{$hou['table']['tpc_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位TPC值</p>
+                        <p class='pp2'>{$hou['table']['tpc_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>上位DS值</p>
+                        <p class='pp2'>{$hou['table']['ds_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位DS值</p>
+                        <p class='pp2'>{$hou['table']['ds_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位LCA值</p>
+                        <p class='pp2'>{$hou['table']['lca_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>下位LCA值</p>
+                        <p class='pp2'>{$hou['table']['lca_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>计算后上位xf值</p>
+                        <p class='pp2'>{$hou['table']['xf_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>计算后下位xf值</p>
+                        <p class='pp2'>{$hou['table']['xf_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>D_M+50cm的mtc值</p>
+                        <p class='pp2'>{$hou['table']['mtc_up']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>D_M-50cm的mtc值</p>
+                        <p class='pp2'>{$hou['table']['mtc_down']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>当前港水密度</p>
+                        <p class='pp2'>{$content['hou_pwd']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>表载港水密度</p>
+                        <p class='pp2'>{$content['ptwd']}</p>
+                    </div>
+                    <div class='tablemsg'>
+                        <p class='ppp1'>矫正后最终排水量：</p>
+                        <p class='pp2'>{$hou['table']['mtc_down']}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class='cabindiv'>
+                <div class='divcabin'>
+                    <p class='pp'>首检压载水表</p>
+                    <volist name="qian['bw']" id="vo">
+                        <?php $i=0;?>
+                        <div class="panel">
+                            <div class="head1">
+                                舱名：{$vo['cabinname']}
+                                <span class='look'>
+                            <img src="__INDEX_IMAGE__/w-d.png">
+                        </span>
+                            </div>
+                            <div class="contentss">
+                                <table border="1" cellspacing="0" cellpadding="0" class="table">
+                                    <tr>
+                                        <td>
+                                            <p class='pp1'>水深</p>
+                                            <p class='pp2'>{$vo['sounding']}</p>
+                                        </td>
+                                        <td>
+                                            <p class='pp1'>体积</p>
+                                            <p class='pp2'>{$vo['volume']}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class='pp1'>密度</p>
+                                            <p class='pp2'>{$vo['density']}</p>
+                                        </td>
+                                        <td>
+                                            <p class='pp1'>重量</p>
+                                            <p class='pp2'>{$vo['weight']}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <?php $i++;?>
+                    </volist>
+                </div>
+                <div class='divcabin'>
+                    <p class='pp'>末检压载水表</p>
+                    <volist name="hou['bw']" id="vo">
+                        <?php $i=0;?>
+                        <div class="panel">
+                            <div class="head1">
+                                舱名：{$vo['cabinname']}
+                                <span class='look'>
+                            <img src="__INDEX_IMAGE__/w-d.png">
+                        </span>
+                            </div>
+                            <div class="contentss">
+                                <table border="1" cellspacing="0" cellpadding="0" class="table">
+                                    <tr>
+                                        <td>
+                                            <p class='pp1'>水深</p>
+                                            <p class='pp2'>{$vo['sounding']}</p>
+                                        </td>
+                                        <td>
+                                            <p class='pp1'>体积</p>
+                                            <p class='pp2'>{$vo['volume']}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class='pp1'>密度</p>
+                                            <p class='pp2'>{$vo['density']}</p>
+                                        </td>
+                                        <td>
+                                            <p class='pp1'>重量</p>
+                                            <p class='pp2'>{$vo['weight']}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <?php $i++;?>
+                    </volist>
+                </div>
+            </div>
+            <div class='remarks'>
+                <p class='pp3'>备注</p>
+                <p class='pp4'>{$content['remark']}</p>
+            </div>
+            <div class='baobiao'>
+                <a href="__CONTROLLER__/baobiao/resultid/{$content['id']}" class="butt1">预览打印报表</a>
+            </div>
+        </div>
+</block>

@@ -29,7 +29,7 @@ class ShipFormModel extends BaseModel
         array('firmid', '/^[1-9]\d*$/', '公司id必须为自然数', 2, 'regex'),//值不为空即验证 必须为自然数
         array('cabinnum', '/^[1-9]\d*$/', '舱总数必须为自然数', 0, 'regex'),//值不为空即验证 必须为自然数
         array('coefficient', '/^[1-9]\d*$/', '膨胀倍数必须为自然数', 0, 'regex'),//值不为空即验证 必须为自然数
-        array('suanfa', array('a', 'b', 'c','d'), '算法的范围不正确！', 0, 'in'), // 存在即验证 判断是否在一个范围内
+        array('suanfa', array('a', 'b', 'c', 'd'), '算法的范围不正确！', 0, 'in'), // 存在即验证 判断是否在一个范围内
         array('number', '1,50', '编号长度不能超过50个字符', 0, 'length'),//存在即验证 长度不能超过12个字符
         // 在一个范围之内
         array('is_guanxian', array('1', '2'), '是否包含管线的范围不正确！', 0, 'in'),
@@ -64,11 +64,79 @@ class ShipFormModel extends BaseModel
                     ->where(array('id' => array('IN', $usermsg['operation_jur']), "del_sign" => 1))
                     ->select();
                 if ($list !== false) {
+                    //返回数组，用于排序
+                    $retrun_list = array();
+
                     foreach ($list as $key => $value) {
                         $list[$key]['expire_time'] = date('Y年m月d日', $value['expire_time']);
-                        if($value['expire_time'] > time()){
+                        if ($value['expire_time'] > time()) {
                             $list[$key]['expired'] = false;
-                        }else{
+                        } else {
+                            $list[$key]['expired'] = true;
+                        }
+                        $list[$key]['pinyin'] = strtoupper(pinyin($value['shipname'], "one"));
+                        //赋值拼音全拼当做键给返回数组
+                        $retrun_list[pinyin($value['shipname'])] = $list[$key];
+                    }
+                    //根据键正序排序
+                    ksort($retrun_list, SORT_STRING);
+
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                        'content' => array_values($retrun_list)//只返回值，不返回键
+                    );
+                } else {
+                    //数据库连接错误   3
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                    );
+                }
+            } else {
+                //该用户下面没有船  10
+                $res = array(
+                    'code' => $this->ERROR_CODE_RESULT['IS_NO_SHIP']
+                );
+            }
+        } else {
+            // 错误信息返回码
+            $res = $msg1;
+        }
+        return $res;
+    }
+
+    /**
+     * 获取用户可以查询的船列表
+     * @param string imei 标识
+     * @param int uid 用户ID
+     * @return array
+     * @return @param code 返回码
+     * @return @param content 说明、内容
+     */
+    public function shipSearchList($uid, $imei)
+    {
+        $user = new \Common\Model\UserModel();
+        //判断用户状态、是否到期、标识比对
+        $msg1 = $user->is_judges($uid, $imei);
+        if ($msg1['code'] == '1') {
+            $where = array(
+                'id' => $uid
+            );
+            //获取用户的船舶列表id
+            $usermsg = $user
+                ->field('search_jur')
+                ->where($where)
+                ->find();
+            if ($usermsg !== false and !empty($usermsg['search_jur'])) {
+                $list = $this
+                    ->field('id,shipname,goodsname,expire_time')
+                    ->where(array('id' => array('IN', $usermsg['search_jur']), "del_sign" => 1))
+                    ->select();
+                if ($list !== false) {
+                    foreach ($list as $key => $value) {
+                        $list[$key]['expire_time'] = date('Y年m月d日', $value['expire_time']);
+                        if ($value['expire_time'] > time()) {
+                            $list[$key]['expired'] = false;
+                        } else {
                             $list[$key]['expired'] = true;
                         }
                     }
@@ -206,6 +274,27 @@ class ShipFormModel extends BaseModel
         }
         return $res;
     }
+
+    /**
+     * 判断船是否被锁定
+     */
+    public function is_lock($shipid)
+    {
+        $work = new \Common\Model\WorkModel();
+        $res_count = $work->where(array('shipid' => $shipid))->count();
+        if ($res_count > 1) {
+            //如果被新建审核或者作业次数大于1，则状态为锁定
+            return true;
+        } else {
+            $info = $this->field('review')->where(array('id' => $shipid))->find();
+            if ($info['review'] == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 
     /**
      * 新增船
@@ -561,7 +650,7 @@ sql;
                 'trimcorrection' => $trimcorrection,
                 'trimcorrection1' => $trimcorrection1,
             );
-        }else if ($suanfa == 'd') {
+        } else if ($suanfa == 'd') {
             // 确定刻度
             $cou = 1;
             $str = '';
@@ -634,8 +723,6 @@ sql;
                 'trimcorrection1' => $trimcorrection1,
             );
         }
-
-
 
 
         $map = array(

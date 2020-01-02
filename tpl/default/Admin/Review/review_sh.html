@@ -247,14 +247,12 @@
                 <td style="text-align: center;margin: auto 0;line-height:100%;" id="ship_img_text">船舶照片</td>
                 <td colspan="3">
                     <div id="ship_img">
-                        <if condition="$ship_img_count gt 0">
+                        <if condition="$img_count gt 0">
                             <volist name="shipimg" id="img">
-                                <if condition="$img['type'] eq 1">
-                                    <img class="normalFace"
-                                         layer-src="{:($img['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $img['img']}"
-                                         src="{:($img['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $img['img']}"
-                                         onclick="zoom();" alt="test" style='width: 150px;height: 110px;'>
-                                </if>
+                                <img class="normalFace"
+                                     layer-src="{:($img['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $img['img']}"
+                                     src="{:($img['img'] == '') ? '__PUBLIC__/Admin/noimg.png' : $img['img']}"
+                                     onclick="zoom();" alt="test" style='width: 150px;height: 110px;'>
                             </volist>
                             <else/>
                             未上传图片

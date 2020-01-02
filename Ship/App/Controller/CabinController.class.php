@@ -239,7 +239,7 @@ class CabinController extends AppBaseController
                         $ship_data = array(
                             'review' => 2
                         );
-                        $ship->editData(array('id' => $shipid), $ship_data);
+                        $ship->editData(array('id' => $shipid,'review' => 1), $ship_data);
 
                         M()->commit();
                         $res = array(
@@ -356,9 +356,11 @@ class CabinController extends AppBaseController
                          * 1、没有船审核记录，但是提交了舱审核记录 ： 建立一个新的船审核记录，除了必要信息，其他内容全部留空
                          * 2、有船审核记录，提交了舱审核记录 ： 获得主键ID，用于外键连接
                          */
-                        $review_data['shipid'] = $shipid;
-                        $review_data['userid'] = $uid;
-                        $review_data['create_time'] = time();
+                        $review_data = array(
+                            'shipid'=>$shipid,
+                            'userid'=>$uid,
+                            'create_time'=>time(),
+                        );
 
                         //用于新建船审核记录的数据
                         $ship_review_data = $review_data;
@@ -448,7 +450,7 @@ class CabinController extends AppBaseController
 
                                         if ($name_count > 0 or $review_name_count > 0) {
                                             M()->rollback();
-                                            //船舶已存在   2014
+                                            //船舱已存在   2020
                                             $res = array(
                                                 'code' => $this->ERROR_CODE_RESULT['HAVE_CABIN'],
                                                 'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_CABIN']]

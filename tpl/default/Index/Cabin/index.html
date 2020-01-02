@@ -1,10 +1,10 @@
-<extend name="Public:base" />
+<extend name="Public:base"/>
 <block name='navhover5'>dropbtnhover</block>
 <block name='title'>船舶管理</block>
 <block name="center">
-	<link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
-	<link rel="stylesheet" href="__INDEX_CSS__/ship.css">
-	<div style="background-color: #f2f2f2;padding: 6px 30px;">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <link rel="stylesheet" href="__INDEX_CSS__/ship.css">
+    <div style="background-color: #f2f2f2;padding: 6px 30px;">
         <div class='nav'>
             管理员设置>船舶管理>船舱管理
         </div>
@@ -13,44 +13,61 @@
         <table id="customers">
             <tr>
                 <th>船名</th>
-	            <th>舱名</th>
-	            <th>容量表基准高度</th>
-	            <th>容量表底量</th>
-	            <th>管线容量</th>
-	            <th>操作</th>
+                <th>舱名</th>
+                <th>容量表基准高度</th>
+                <th>容量表底量</th>
+                <th>管线容量</th>
+                <th>操作</th>
             </tr>
             <volist name="data" id="v">
-            <tr style="color:{$v['colors']}">
-                <td>{$v['shipname']}</td>
-	            <td>{$v['cabinname']}</td>
-	            <td>{$v['altitudeheight']}</td>
-	            <td>{$v['bottom_volume']}</td>
-	            <td>{$v['pipe_line']}</td>
-	            <td><a href="javascript:;" onclick="edit({$v['id']})" class="aa1">修改</a></td>
-            </tr>	
-        	</volist>
+                <tr style="color:{$v['colors']}">
+                    <td>{$v['shipname']}</td>
+                    <td>{$v['cabinname']}</td>
+                    <td>{$v['altitudeheight']}</td>
+                    <td>{$v['bottom_volume']}</td>
+                    <td>{$v['pipe_line']}</td>
+                    <td><a href="javascript:;" onclick="edit({$v['id']})" class="aa1">修改</a></td>
+                </tr>
+            </volist>
             <tr style="background-color: #fff">
-            	<td colspan="6" style="border-right: 0px;">{$page}</td>
+                <td colspan="6" style="border-right: 0px;">{$page}</td>
             </tr>
         </table>
     </div>
     <!-- 修改船舱 -->
     <div class="editMask7">
-        <div class="editBox1" id='editBox1'>
-            
-        
-            
+        <div class="editBox1" id='editBox1'
+             style="min-height: calc(100% - 160px);height: calc(100% - 120px);overflow-y: auto;">
+
+
         </div>
         <script>
+            var load_index;//loading控制Id
+            var upload_url = "{:U('Upload/upload_cabin_img',array('time'=>1))}";
+            var img_btn_obj;
+            var img_count;
 
-           $('.editMask7').on('click', function(event){
-                if($(event.target).is('.mmqx') || $(event.target).is('.editMask7') ) {
+            //弹出loading框
+            function open_loading() {
+                load_index = layer.load(1, {
+                    shade: [0.4, '#787878'] //0.4透明度的灰色背景
+                    , time: 30 * 1000//30秒自动关闭
+                });
+                // setTimeout(function() {close_loading()}, 3000);
+            }
+
+            function close_loading() {
+                layer.close(load_index)
+            }
+
+            $('.editMask7').on('click', function (event) {
+                if ($(event.target).is('.mmqx') || $(event.target).is('.editMask7')) {
                     event.preventDefault();
                     $(this).removeClass('is-visible3');
                 }
             });
 
-            function edit(id){
+            function edit(id) {
                 // 判断作业是否已开始
                 $.ajax({
                     url: "{:U('Cabin/cabinmsg')}",
@@ -59,12 +76,12 @@
                         'id': id,
                     },
                     dataType: "json",
-                    success: function(data) {
+                    success: function (data) {
                         if (data.state == 1) {
                             $("#editBox1").html(data.content);
                             event.preventDefault();
                             $('.editMask7').addClass('is-visible3');
-                            $('.editMask7').find(".tip_info i").remove()                  
+                            $('.editMask7').find(".tip_info i").remove()
                         } else {
                             layer.msg(data.message, {icon: 5});
                         }
@@ -82,7 +99,7 @@
                 var bottom_volume = $('#bottom_volume').val();
                 var dialtitudeheight = $('#dialtitudeheight').val();
                 var bottom_volume_di = $('#bottom_volume_di').val();
-                 
+
                 // console.log(id);
                 // console.log(shipid);
                 // console.log(cabinname);
@@ -105,10 +122,25 @@
                         'bottom_volume_di': bottom_volume_di,
                     },
                     dataType: "json",
-                    success: function(data) {
+                    success: function (data) {
                         if (data.state == 1) {
                             layer.msg(data.message, {icon: 1});
-                            setTimeout(function() { location.reload(); }, 2000);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        } else if (data.state == 200) {
+                            //如果选择了图片
+                            if (img_count > 0) {
+                                open_loading();
+                                upload_url = upload_url + "&id=" + data.review_id + "&shipid={$data[0]['shipid']}";
+                                img_btn_obj.reload({
+                                    url: upload_url
+                                });
+                                $('#upload_img').click();
+                            } else {
+                                //如果没选择图片
+                                layer.msg("该舱所属船数据不能轻易更改，请上传舱容图片", {icon: 5});
+                            }
                         } else {
                             layer.msg(data.message, {icon: 5});
                         }
@@ -118,18 +150,18 @@
         </script>
     </div>
     <script>
-        $('body').on('click' , '#shipiddd' , function(){ 
+        $('body').on('click', '#shipiddd', function () {
             var h = $("#hiden");
             $.ajax({
-                url:"{:U('Cabin/ajax_diliang')}",
-                data:'shipid='+$(this).val(),
-                type:'post',
-                async:false,
-                dataType:'json',
-                success:function(res){
+                url: "{:U('Cabin/ajax_diliang')}",
+                data: 'shipid=' + $(this).val(),
+                type: 'post',
+                async: false,
+                dataType: 'json',
+                success: function (res) {
                     if (res == '1') {
                         h.show();
-                    }else{
+                    } else {
                         h.hide();
                     }
                 }

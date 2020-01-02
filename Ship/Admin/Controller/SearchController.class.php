@@ -576,6 +576,15 @@ class SearchController extends AdminBaseController
      */
     public function new_process($resultid)
     {
+        //三通的作业跳转到老界面
+        $user = new \Common\Model\UserModel();
+        //取出三通公司的所有员工
+        $santongUsers = $user
+            ->field('id')
+            ->where()
+            ->count();
+
+
         $res = new \Common\Model\ResultModel();
         $res_list = new \Common\Model\ResultlistModel();
         $res_record = M('resultrecord');
@@ -583,7 +592,7 @@ class SearchController extends AdminBaseController
 
         //获取水尺数据
         $where = array(
-            'id' => $resultid
+            'id' => $resultid,
         );
 
         //查询作业列表
@@ -591,10 +600,23 @@ class SearchController extends AdminBaseController
             ->field('qianprocess,houprocess,weight,qianweight,houweight,qiantotal,houtotal')
             ->where($where)
             ->find();
-        $qianprocess_json = json_decode($list['qianprocess'], true);
-        $houprocess_json = json_decode($list['houprocess'], true);
-        $qianprocess = $qianprocess_json == null ? urldecode($list['qianprocess']) : $qianprocess_json;
-        $houprocess = $houprocess_json == null ? urldecode($list['houprocess']) : $houprocess_json;
+
+        //三通公司的作业将跳转到老界面
+//        if ($list['firmid'] == 6) {
+//            $this->redirect('Search/process',array('resultid'=>$resultid),0,"正在跳转到旧版计算过程界面");
+//        }
+
+        $qianprocess = json_decode($list['qianprocess'], true);
+        $houprocess = json_decode($list['houprocess'], true);
+//        $qianprocess = $qianprocess_json == null ?  : $qianprocess_json;
+//        $houprocess = $houprocess_json == null ? $this->redirect('Search/process', array('resultid' => $resultid), 0, "正在跳转到旧版计算过程界面") : $houprocess_json;
+        //所有无法解析的计算过程都跳转到老界面
+        if ($qianprocess == null and $list['qianprocess'] != "") {
+            $this->redirect('Search/process', array('resultid' => $resultid), 0, "正在跳转到旧版计算过程界面");
+        }
+        if ($houprocess == null and $list['houprocess'] != ""){
+            $this->redirect('Search/process', array('resultid' => $resultid), 0, "正在跳转到旧版计算过程界面");
+        }
 
         if ($list !== false) {
             /**

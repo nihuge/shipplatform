@@ -109,7 +109,7 @@ class ConsumptionModel extends BaseModel
 	 * @return array
 	 * @return array code 返回码
 	 * */
-	public function buckleMoney($uid='',$firmid='',$resultid='')
+	public function buckleMoney($uid='',$firmid='',$resultid='',$type = 1)
 	{
 	    if (!empty($uid) or !empty($firmid) and !empty($resultid)) {
 	    	// 判断用户是否存在，公司是否存在，公司余额是否够使用

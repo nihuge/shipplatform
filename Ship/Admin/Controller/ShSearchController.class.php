@@ -160,7 +160,7 @@ class ShSearchController extends AdminBaseController
         $forntrecord = M("sh_forntrecord");
 
         $msg = $forntrecord
-            ->field('*')
+            ->field(true)
             ->where($where)
             ->select();
 
@@ -231,7 +231,6 @@ class ShSearchController extends AdminBaseController
         $NowTime = date('Y-m-d H:i:s', time());
 
 
-
         $this->assign("arr", $arr);
         $this->assign("qian_total", $qian_total);
         $this->assign("hou_total", $hou_total);
@@ -242,6 +241,7 @@ class ShSearchController extends AdminBaseController
 
         $this->display();
     }
+
 
     /**
      * 详情
@@ -261,8 +261,8 @@ class ShSearchController extends AdminBaseController
             ->field('qianprocess,houprocess')
             ->where($where)
             ->find();
-        $qianprocess = urldecode($list['qianprocess']);
-        $houprocess = urldecode($list['houprocess']);
+        $qianprocess = json_decode($list['qianprocess'],true);
+        $houprocess = json_decode($list['houprocess'],true);
         if ($list !== false) {
 
             /**
@@ -290,40 +290,117 @@ class ShSearchController extends AdminBaseController
             /**
              * url反转义过程
              */
-            $record_qian_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace(array('\r\n','\t'), array("\r\n","\t"), urldecode($record_qian_process['process'])));
 
-            $record_hou_process = str_replace(array("Dc1 =", "Dc2 =", "Dc =", "Dsc =", "Dpc =", "Dspc ="), array("\r\nDc1 =", "\r\nDc2 =", "\r\nDc =", "\r\nDsc =", "\r\nDpc =", "\r\nDspc ="), str_replace(array('\r\n','\t'), array("\r\n","\t"), urldecode($record_hou_process['process'])));
+            $qian_record = array();
+            $hou_record = array();
 
-            $qianprocess .= "\r\n ---------------------TABLE---------------------- \r\n" . $record_qian_process;
+            if ($record_qian_process['process'] != "") {
+                $qian_record = json_decode($record_qian_process['process'], true);
+            }
 
-            $houprocess .= "\r\n ---------------------TABLE---------------------- \r\n" . $record_hou_process;
+            if ($record_hou_process['process'] != "") {
+                $hou_record = json_decode($record_hou_process['process'], true);
+            }
 
-            // p($resultmsg);die;
-            //以舱区分数据（）
-            /*            foreach ($resultmsg as $k => $v) {
-                            $result[$v['cabinid']][] = $v;
-                        }
-                        // 个性化信息
-                        $personality = json_decode($list['personality'], true);
-                        if (!empty($resultmsg)) {
-                            //取出舱详情最后一个元素时间
-                            $start = end($resultmsg);
-                            $starttime = date("Y-m-d H:i", $start['time']);
-                            //取出舱详情第一个元素时间
-                            $end = reset($resultmsg);
-                            $endtime = date("Y-m-d H:i", $end['time']);
-                        } else {
-                            $starttime = '';
-                            $endtime = '';
-                        }*/
+            $qianprocess = array_merge($qianprocess, $qian_record);
+
+            $houprocess = array_merge($houprocess, $hou_record);
+
+            // 成功	1
+            $assign = array(
+                'qianprocess' => json_encode($qianprocess),
+                'houprocess' => json_encode($houprocess),
+            );
+
+            // p($assign);exit;
+            $this->assign($assign);
+            $this->display();
+
+        } else {
+            $this->error('数据库连接错误');
+        }
+    }
+
+
+    /**
+     * 获取计算过程
+     */
+    public function new_process($resultid)
+    {
+        $res = new \Common\Model\ShResultModel();
+        $res_record = M('sh_resultrecord');
+
+        //获取水尺数据
+        $where = array(
+            'id' => $resultid
+        );
+
+        //查询作业列表
+        $list = $res
+            ->field('qianprocess,houprocess,weight,qian_constant,hou_constant')
+            ->where($where)
+            ->find();
+        $qianprocess_json = json_decode($list['qianprocess'], true);
+        $houprocess_json = json_decode($list['houprocess'], true);
+
+        $qianprocess = $qianprocess_json == null ? urldecode($list['qianprocess']) : $qianprocess_json;
+        $houprocess = $houprocess_json == null ? urldecode($list['houprocess']) : $houprocess_json;
+
+        if ($list !== false) {
+            /**
+             * 获取舱压载水的计算过程
+             */
+            $where1 = array(
+                'resultid' => $resultid,
+                'solt' => 1
+            );
+
+            //获取作业前排水表计算过程
+            $record_qian_process = $res_record
+                ->field('process')
+                ->where($where1)
+                ->find();
+
+            $where1['solt'] = 2;
+
+            //获取作业后排水表计算过程
+            $record_hou_process = $res_record
+                ->field('process')
+                ->where($where1)
+                ->find();
+
+            /**
+             * url反转义过程
+             */
+
+            $qian_record = array();
+            $hou_record = array();
+
+            if ($record_qian_process['process'] != "") {
+                $qian_record = json_decode($record_qian_process['process'], true);
+            }
+
+            if ($record_hou_process['process'] != "") {
+                $hou_record = json_decode($record_hou_process['process'], true);
+            }
+
+            $qianprocess = array_merge($qianprocess, $qian_record);
+
+            $houprocess = array_merge($houprocess, $hou_record);
+
+            /**
+             * 获取作业前数据
+             */
 
             // 成功	1
             $assign = array(
                 'qianprocess' => $qianprocess,
                 'houprocess' => $houprocess,
+                'qianweight' => $list['qian_constant'],
+                'houweight' => $list['hou_constant'],
+                'total' => $list['weight']
             );
 
-            // p($assign);exit;
             $this->assign($assign);
             $this->display();
 

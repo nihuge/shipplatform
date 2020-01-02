@@ -23,14 +23,21 @@ class LoginController extends Controller
             }
             //根据用户名与密码匹配查询
             $where = array(
-                'u.title' => I('post.title'),
-                'u.pwd' => encrypt(I('post.pwd'))
+                'u.title' => ":title",
+                'u.pwd' => ":pwd"
+            );
+
+            //根据用户名与密码匹配查询
+            $bind = array(
+                ':title' => I('post.title'),
+                ':pwd' => encrypt(I('post.pwd'))
             );
             $user = new \Common\Model\UserModel();
             $arr = $user
                 ->field('u.id,u.username,u.imei,u.firmid,u.pid,u.status,u.phone,f.firmname,f.logo')
                 ->alias('u')
                 ->where($where)
+                ->bind($bind)
                 ->join('left join firm f on f.id = u.firmid')
                 ->find();
             //如果通过域名访问进来则去除最后一个开头的路径

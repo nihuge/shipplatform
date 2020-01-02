@@ -1,4 +1,4 @@
-<extend name="Public:base" />
+<extend name="Public:base"/>
 <block name="title">用户管理</block>
 <block name="navtitle">
     <li class="active">
@@ -12,76 +12,121 @@
 <block name="content">
     <div class="page-container">
         <div class="col-sm-12">
-            <div id="dropdown14" class="tab-pane" style="overflow-x: scroll;height:720px;">
-                <table id="sample-table-3" class="table table-striped table-bordered table-hover" style='margin:auto auto;text-align: center;'>
+            <div id="dropdown14" class="tab-pane">
+                <table id="sample-table-3" class="table table-striped table-bordered table-hover"
+                       style='margin:auto auto;text-align: center;'>
                     <form action="__ACTION__" method="post">
-                    <input type="hidden" name="id" value="{$data['id']}">
-                    <tr>
-                        <td colspan="3" style='color:red;text-align:left;'>
-                            1：船舶不勾选默认查看操作员自己的作业记录；<br>
-                            2：船舶不勾选，查看公司数据选项无效；<br>
-                            3：船舶勾选，查询结果根据船舶选项跟查看公司选项筛选；
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>查看公司数据</td>
-                        <td colspan="2" style="text-align:left;">
-                            <label>
-                                <input type="radio" name='look_other' value="1" {:($data['look_other'] == '1') ? 'checked' : ''}>被勾选的船舶，只看本公司数据
-                            </label><br>
-                            <label>
-                                <input type="radio" name='look_other' value="2" {:($data['look_other'] == '2') ? 'checked' : ''}>被勾选的船舶，可以看所有公司的数据
-                            </label>
-                        </td>
-                    </tr>
-                    
-                    <foreach name="firmlist" item="v">
-                        <tr class="b-group">
-                            <!--公司列表-->
-                            <td style="width:200px;padding:auto auto;vertical-align: middle;font-size: 18px;">
-                                {$v['firmname']}
-                            </td>
-                            <td style="width:70px;padding:auto auto;vertical-align: middle;font-size: 16px;">
-                                <!-- <label for="firm{$v['id']}" style="vertical-align:middle;">全选</label>
-                                <input type="checkbox" value="{$value['id']}"  style="vertical-align:middle;margin:0px 0px;" id="firm{$v['id']}" > -->
-                                <label>
-                                    <input class="ace ace-checkbox-2" type="checkbox" onclick='checkAll(this)'/>
-                                    <span class="lbl"> 全选</span> 
-                                </label>
-                            </td>
-                            <td>
-                                <table id="sample-table-1" class="table table-striped table-bordered table-hover" style='margin:auto auto;text-align: center;margin-bottom:30px;'>
-                                    <tr>
-                                        <td>
-                                            <!--船列表-->
-                                            <foreach name="v['shiplist']" item="value">
-                                                <!-- <label for="ship{$value['id']}" style="vertical-align:middle">{$value['shipname']}</label>
-                                                <input type="checkbox" name="search_jur[]" value="{$value['id']}" <?php echo in_array($value['id'],$data['search_jur']) ? 'checked':'';?> style="vertical-align:middle;margin:0px 0px; " id="ship{$value['id']}"> -->
-                                                <label>
-                                                    <input class="ace ace-checkbox-2" type="checkbox" value="{$value['id']}" name="search_jur[]" id="ship{$value['id']}"
-                                                    {:in_array($value['id'],$data['search_jur']) ? 'checked':''}
-                                                    />
-                                                    <span class="lbl"> {$value['shipname']}</span> 
-                                                </label>
-                                                &nbsp;&nbsp;
-                                            </foreach>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </foreach>
-                </table></div>    
-                <table id="sample-table-3" class="table table-striped table-bordered table-hover" style='margin:auto auto;text-align: center;'>
-                    <tr>
-                        <td colspan=3 style="text-align: center;">
-                            <input type="submit" name="sub" value="提交" class="btn btn-primary">
-                        </td>
-                    </tr>
+                        <input type="hidden" name="id" value="{$data['id']}">
+                        <if condition="$data['look_other'] eq 3">
+                            <p style="color: red"> 只查看自己的查询限制下，无法更改查询权限，请至首页更改查询限制</p>
+                        </if>
+                        <foreach name="firmlist" item="v">
+                            <tr class="b-group">
+                                <!--公司列表-->
+                                <td style="width:200px;padding:auto auto;vertical-align: middle;font-size: 18px;">
+                                    {$v['firmname']}
+                                </td>
+                                <td style="width:70px;padding:auto auto;vertical-align: middle;font-size: 16px;">
+                                    <if condition="$data['look_other'] eq 3">
+                                        <label>
+                                            <input class="ace ace-checkbox-2" type="checkbox" disabled
+                                                   onclick='checkAll(this)'/>
+                                            <span class="lbl"> 全选</span>
+                                        </label>
+                                        <else/>
+                                        <label>
+                                            <input class="ace ace-checkbox-2" type="checkbox" onclick='checkAll(this)'/>
+                                            <span class="lbl"> 全选</span>
+                                        </label>
+                                    </if>
+                                </td>
+                                <td>
+                                    <table id="sample-table-1"
+                                           class="table table-striped table-bordered table-hover"
+                                           style='margin:auto auto;text-align: center;margin-bottom:30px;'>
+                                        <tr>
+                                            <td style="width:90px;text-align:right;vertical-align: middle;">液货船：</td>
+                                            <td>
+                                                <!--船列表-->
+                                                <foreach name="v['shiplist']" item="value">
+                                                    <if condition="$data['look_other'] eq 3">
+
+                                                        <label>
+                                                            <input class="ace ace-checkbox-2" type="checkbox"
+                                                                   value="{$value['id']}" name="search_jur[]" disabled
+                                                                   id="ship{$value['id']}"
+                                                                   {:in_array($value['id'],$data['search_jur'])?'checked':''}
+                                                            />
+                                                            <span class="lbl"> {$value['shipname']}</span>
+                                                        </label>
+                                                        <else/>
+                                                        <label>
+                                                            <input class="ace ace-checkbox-2" type="checkbox"
+                                                                   value="{$value['id']}" name="search_jur[]"
+                                                                   id="ship{$value['id']}"
+                                                                   {:in_array($value['id'],$data['search_jur'])?'checked':''}
+                                                            />
+                                                            <span class="lbl"> {$value['shipname']}</span>
+                                                        </label>
+                                                    </if>
+
+                                                    &nbsp;&nbsp;
+                                                </foreach>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table id="sample-table-2"
+                                           class="table table-striped table-bordered table-hover"
+                                           style='margin:auto auto;text-align: center;margin-bottom:30px;'>
+                                        <tr>
+                                            <td style="width:90px;text-align:right;vertical-align: middle;">散货船：</td>
+                                            <td>
+                                                <!--船列表-->
+                                                <foreach name="v['sh_shiplist']" item="value">
+                                                    <if condition="$data['look_other'] eq 3">
+                                                        <label>
+                                                            <input class="ace ace-checkbox-2" type="checkbox"
+                                                                   value="{$value['id']}" name="sh_search_jur[]" disabled
+                                                                   id="sh_ship{$value['id']}"
+                                                                   {:in_array($value['id'],$data['search_jur'])?'checked':''} />
+                                                            <span class="lbl"> {$value['shipname']}</span>
+                                                        </label>
+                                                        <else/>
+                                                        <label>
+                                                            <input class="ace ace-checkbox-2" type="checkbox"
+                                                                   value="{$value['id']}" name="sh_search_jur[]"
+                                                                   id="sh_ship{$value['id']}"
+                                                                   {:in_array($value['id'],$data['sh_search_jur'])?'checked':''}/>
+                                                            <span class="lbl"> {$value['shipname']}</span>
+                                                        </label>
+                                                    </if>
+
+                                                    &nbsp;&nbsp;
+                                                </foreach>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </foreach>
                 </table>
-                <!-- </form> -->
-                                    
-            
+            </div>
+            <table id="sample-table-3" class="table table-striped table-bordered table-hover"
+                   style='margin:auto auto;text-align: center;'>
+                <tr>
+                    <td colspan=3 style="text-align: center;">
+                        <if condition="$data['look_other'] eq 3">
+                            <input type="submit" name="sub" disabled value="提交" class="btn btn-primary">
+                            <else/>
+                            <input type="submit" name="sub" value="提交" class="btn btn-primary">
+                        </if>
+                    </td>
+                </tr>
+            </table>
+            <!-- </form> -->
+
+
             </form>
         </div>
     </div>

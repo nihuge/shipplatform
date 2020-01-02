@@ -268,12 +268,13 @@ class FirmController extends AdminBaseController
         if (IS_POST) {
             // 判断提交的操作权限是否超出限制
             $msg = $firm
-                ->field('limit,search_jur')
+                ->field('limit,search_jur,sh_search_jur')
                 ->where(array('id' => I('post.id')))
                 ->find();
             $operation_jur = I('post.operation_jur');
-            if (!empty($operation_jur) and isset($operation_jur)) {
-                if ($msg['limit'] < count(I('post.operation_jur'))) {
+            $sh_operation_jur = I('post.sh_operation_jur');
+            if ((!empty($operation_jur) and isset($operation_jur)) or (!empty($sh_operation_jur) and isset($sh_operation_jur))) {
+                if ($msg['limit'] < count(I('post.operation_jur')) + count(I('post.sh_operation_jur'))) {
                     $this->error("超出公司限制船舶数");
                     exit;
                 }
@@ -281,11 +282,16 @@ class FirmController extends AdminBaseController
             // 判断查询条件是否为空，为空时，操作权限就是查询权限
             $data = I('post.');
             $operation_jur = implode(',', I('post.operation_jur'));
+            $sh_operation_jur = implode(',', I('post.sh_operation_jur'));
             $data['operation_jur'] = $operation_jur;
+            $data['sh_operation_jur'] = $sh_operation_jur;
             $data['firm_jur'] = implode(',', I('post.firm_jur'));
 
             if (empty($msg['search_jur'])) {
                 $data['search_jur'] = $operation_jur;
+            }
+            if (empty($msg['sh_search_jur'])) {
+                $data['sh_search_jur'] = $sh_operation_jur;
             }
 
             $map = array(
@@ -306,6 +312,7 @@ class FirmController extends AdminBaseController
                     );
                     $admin_data = array(
                         'operation_jur' => $operation_jur,
+                        'sh_operation_jur' => $sh_operation_jur,
                     );
                     $admin_result = $userDo->editData($admin_map, $admin_data);
                     if ($admin_result !== false) {
@@ -319,9 +326,7 @@ class FirmController extends AdminBaseController
                 }
             }
         } else {
-            // 获取公司列表及公司名下所有船列表
-            $ship = new \Common\Model\ShipModel();
-            $firmShipList = $ship->getShipList(I('get.id'), I('get.firmtype'));
+            $firmShipList = $firm->getShipList(I('get.id'), I('get.firmtype'));
             // 获取公司操作权限
             $data = $firm->getFirmOperationSearch(I('get.id'));
 

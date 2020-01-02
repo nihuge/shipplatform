@@ -54,6 +54,7 @@ class ReviewController extends AdminBaseController
          *
          * 生成sql:select shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
          */
+
         try {
             $ship_id = $ship->alias('s')
                 ->field('s.id')
@@ -94,6 +95,7 @@ class ReviewController extends AdminBaseController
         } else {
             $data = array();
         }
+
         // 获取所有公司列表
         $firm = new \Common\Model\FirmModel();
         $firmlist = $firm->field('id,firmname')->select();
@@ -214,7 +216,6 @@ class ReviewController extends AdminBaseController
         }
 
         $sh_ship = new \Common\Model\ShShipModel();
-        $sh_result = new \Common\Model\ShResultModel();
 
         /**
          * 获取符合条件的油船新建审核数量
@@ -259,7 +260,7 @@ class ReviewController extends AdminBaseController
 
         $ship_id_arr = array();
         foreach ($sh_ship_id as $value) {
-            $ship_id_arr[] = $value['shipid'];
+            $ship_id_arr[] = $value['id'];
         }
 
         if ($count > 0) {
@@ -770,7 +771,7 @@ class ReviewController extends AdminBaseController
             ->find();
 
         //获取所有图片信息
-        $img_msg = $review_img->where(array('ship_id' => $shipid, 'review_id' => $reviewid))->select();
+        $img_msg = $review_img->where(array('review_id' => $reviewid))->select();
 
         // 获取所有公司列表
         $firmlist = $firm->field('id,firmname')->select();

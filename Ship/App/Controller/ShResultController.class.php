@@ -30,71 +30,47 @@ class ShResultController extends AppBaseController
             //判断用户状态、公司状态、标识比对
             $msg = $user->is_judges($uid, I('post.imei'));
             if ($msg['code'] == '1') {
+                // 根据用户id获取可以查询的船列表
+                $msg = $user->getUserOperationSeach($uid);
                 $where = '1';
-                /*// 根据用户id获取可以查询的船列表
-                $msg = $user->getUserOperationSeach($uid);*/
+
                 if (I('post.search') != null) {
                     // 查询指令列表
-                    if (I('post.shipname') !== '' and I('post.shipname') !== null) {
-                        $ship = new \Common\Model\ShShipModel();
-                        $shipmsg = $ship
-                            ->field('id,shipname')
-                            ->where(array('shipname' => I('post.shipname')))
-                            ->find();
-                        if (empty($shipmsg) || $shipmsg == false) {
-                            // 船名输入有误！  2002
-                            $res = array(
-                                'code' => $this->ERROR_CODE_RESULT['NOT_SHIP']
-                            );
-                            echo jsonreturn($res);
-                            die;
-                        }
-
-                        #todo 完善查询作业的权限功能
-                        /*if ($msg['search_jur'] !== '') {
-                            // 判断提交的船是否在权限之内
-                            if (!in_array($shipmsg['id'], $msg['search_jur_array'])) {
-                                // 该船不在查询范围之内！！  2001
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_RESULT['SHIP_NOT_RANGE']
-                                );
-                                echo jsonreturn($res);
-                                die;
-                            }
-                        }*/
-
-                        $where .= " and r.shipid = " . $shipmsg['id'];
+                    if (I('post.shipname')) {
+                        $shipname = trimall(I('post.shipname'));
                     }
-                    /*else {
-                        if ($msg['search_jur'] == '') {
-                            // 查询权限为空时，查看所有操作权限之内的作业
-                            if ($msg['operation_jur'] == '') {
-                                $operation_jur = "-1";
-                            } else {
-                                $operation_jur = $msg['operation_jur'];
-                            }
-                            $where .= " and r.uid ='$uid' and r.shipid in (" . $operation_jur . ")";
+                    $where .= " and s.shipname like '%" . $shipname . "%'";
+
+                    if ($msg['sh_search_jur'] == '') {
+                        // 查询权限为空时，查看所有操作权限之内的作业
+                        if ($msg['sh_operation_jur'] == '') {
+                            $operation_jur = "-1";
                         } else {
-                            $where .= " and r.shipid in (" . $msg['search_jur'] . ")";
+                            $operation_jur = $msg['sh_operation_jur'];
                         }
+                        $where .= " and r.uid ='$uid' and s.id in (" . $operation_jur . ")";
+                    } else {
+                        $where .= " and s.id in (" . $msg['sh_search_jur'] . ")";
                     }
+
                     // 获取登陆用户的所属公司ID
                     $firmid = $user->getFieldById($uid, 'firmid');
                     if ($msg['look_other'] == '1') {
                         $where .= " and u.firmid=$firmid";
-                    }*/
+                    } elseif ($msg['look_other'] == '3') {
+                        $where .= " and u.id=$uid";
+                    }
 
-                }
-                /*else {
+                } else {
                     // 作业指令列表
-                    if ($msg['operation_jur'] == '') {
+                    if ($msg['sh_operation_jur'] == '') {
                         $operation_jur = "-1";
                     } else {
-                        $operation_jur = $msg['operation_jur'];
+                        $operation_jur = $msg['sh_operation_jur'];
                     }
                     $where .= " and r.uid ='$uid' ";
                     $where .= " and r.shipid in (" . $operation_jur . ")";
-                }*/
+                }
 
                 // 条件---航次
                 if (I('post.voyage') != null) {
@@ -143,7 +119,7 @@ class ShResultController extends AppBaseController
                 $begin = ($p - 1) * $per;
                 //查询作业列表
                 $list = $result
-                    ->field('r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,r.hou_d_m,r.qian_dspc,r.hou_dspc,r.qian_constant,r.hou_constant')
+                    ->field('r.id,r.uid,r.shipid,r.weight,r.solt,r.remark,r.personality,s.shipname,u.username,f.firmtype,r.qian_d_m,r.hou_d_m,r.qian_dspc,r.hou_dspc,r.qian_constant,r.hou_constant,r.finish,r.finish_time')
                     ->alias('r')
                     ->join('left join sh_ship s on r.shipid=s.id')
                     ->join('left join user u on r.uid = u.id')
@@ -174,43 +150,6 @@ class ShResultController extends AppBaseController
                         $list[$key]['nums'] = count($list[$key]['list']);
                         $list[$key]['personality'] = json_decode($v['personality'], true);
 
-                        #todo 判断有无算法，或者有无录入修正表等等
-                        // 判断船是否有数据 y:有；n:没有 为空是没有算法
-//                        $list[$key]['is_have_data'] = $ship->is_have_data($v['shipid']);
-
-                        #todo 完善查询作业的判断是否可以评价，判断作业是否完成--电子签证功能
-                        /*// 根据作业人公司类型判断这条作业是否可以评价
-                        // 判断作业是否完成----电子签证
-                        $coun = M('electronic_visa')
-                            ->where(array('resultid' => $v['id']))
-                            ->count();
-                        if ($coun > 0) {
-                            if ($v['firmtype'] == 2) {
-                                $list[$key]['is_coun'] = '1';
-                            } else {
-                                // 船舶所属公司
-                                $rfirmid = $ship->getFieldById($v['shipid'], 'firmid');
-                                if ($v['uid'] == $uid) {
-                                    // 检验公司评价
-                                    if ($v['grade1'] != 0) {
-                                        $list[$key]['is_coun'] = '4';
-                                    } else {
-                                        $list[$key]['is_coun'] = '2';
-                                    }
-                                } elseif ($rfirmid == $a['id']) {
-                                    // 船舶公司评价
-                                    if ($v['grade2'] != 0) {
-                                        $list[$key]['is_coun'] = '4';
-                                    } else {
-                                        $list[$key]['is_coun'] = '2';
-                                    }
-                                } else {
-                                    $list[$key]['is_coun'] = '1';
-                                }
-                            }
-                        } else {
-                            $list[$key]['is_coun'] = '3';
-                        }*/
                     }
                     //成功	1
                     $res = array(
@@ -300,6 +239,41 @@ class ShResultController extends AppBaseController
     }
 
 
+
+    /**
+     * 完成作业
+     * @param int uid 用户ID
+     * @param string imei 标识
+     * @param int resultid 发货方
+     * @return array
+     * @return @param code 返回码
+     * @return @param resultid 说明、内容
+     */
+    public function finish_result()
+    {
+        if (I('post.uid') and I('post.resultid') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、公司状态、标识比对
+            $msg = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg['code'] == '1') {
+                $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+                $res = $result->finishResult(I('post.resultid'),I('post.uid'));
+            } else {
+                //返回错误返回码
+                $res = $msg;
+            }
+        } else {
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+
     /**
      * 修改作业
      * @param int uid 用户ID
@@ -330,6 +304,8 @@ class ShResultController extends AppBaseController
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
             if ($msg1['code'] == '1') {
                 $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
                 $data = I('post.');
                 $res = $result->editResult($data);
             } else {
@@ -364,26 +340,26 @@ class ShResultController extends AppBaseController
      * @return @param array
      * @return @param code 返回码
      */
-    public function fornt()
-    {
-        //判断前左、右是否有
-        if (I('post.forntleft') != null and I('post.forntright') != null
-            and I('post.afterleft') != null and I('post.afterright') != null
-            and I('post.centerleft') != null and I('post.centerright') != null
-            and I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.pwd')) {
+    /*    public function fornt()
+        {
+            //判断前左、右是否有
+            if (I('post.forntleft') != null and I('post.forntright') != null
+                and I('post.afterleft') != null and I('post.afterright') != null
+                and I('post.centerleft') != null and I('post.centerright') != null
+                and I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.pwd')) {
 
-            $result = new \Common\Model\ShResultModel();
-            $data = I('post.');
-            $res = $result->forntOperation($data);
+                $result = new \Common\Model\ShResultModel();
+                $data = I('post.');
+                $res = $result->forntOperation($data);
 
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }
+            } else {
+                //参数不正确，参数缺失    4
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                );
+            }
+            echo jsonreturn($res);
+        }*/
 
     /**
      * 水尺录入(修改)
@@ -413,6 +389,9 @@ class ShResultController extends AppBaseController
             and I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.pwd')) {
 
             $result = new \Common\Model\ShResultModel();
+            //如果作业已经结束则报错作业已完成 2029
+            if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
             $data = I('post.');
             $res = $result->forntOperation1($data);
 
@@ -539,6 +518,7 @@ class ShResultController extends AppBaseController
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
             if ($msg1['code'] == '1') {
                 $result = new \Common\Model\ShResultModel();
+
                 $res = $result->forntsearch(I('post.resultid'));
             } else {
                 // 错误信息
@@ -591,6 +571,7 @@ class ShResultController extends AppBaseController
             //获取数据
             $result = new \Common\Model\ShResultModel();
             $arr = $result->resultsearch(I('post.resultid'), I('post.uid'), I('post.imei'));
+            $arr['content']['verify'] = shGetReportErCode($arr['content']['id'], $arr['content']['uid']);
             if ($arr['code'] == '1') {
 //                // 获取公司pdf方法名
 //                $firm = new \Common\Model\FirmModel();
@@ -610,7 +591,7 @@ class ShResultController extends AppBaseController
 //                        $filepath = "miniprogram/" . $uid . "/";
 //                        $PDFname = $resultid . ".pdf";
 //                        //如果是https，则返回全部的
-                        $filename = $result->pdf($arr,I('post.resultid'),I('post.uid'));//生成PDF文件
+                $filename = $result->pdf($arr, I('post.resultid'), I('post.uid'));//生成PDF文件
 //
 //                        if ($filename != '') {
 //                            $filename = '/Public/pdf/' . $filepath . $PDFname;
@@ -620,17 +601,17 @@ class ShResultController extends AppBaseController
 //                        $filename = pdf($arr, $firmmsg);//生成PDF文件
 //                    }
 //
-                    if ($filename != '') {
-                        $res = array(
-                            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                            'filename' => $filename
-                        );
-                    } else {
-                        //pdf文件失败 2005
-                        $res = array(
-                            'code' => $this->ERROR_CODE_RESULT['NOT_FILE']
-                        );
-                    }
+                if ($filename != '') {
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                        'filename' => $filename
+                    );
+                } else {
+                    //pdf文件失败 2005
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['NOT_FILE']
+                    );
+                }
 //                } else {
 //                    //该作业所属公司没有pdf文件模板  2006
 //                    $res = array(
@@ -1050,14 +1031,36 @@ class ShResultController extends AppBaseController
             // 判断用户状态、是否到期、标识比对
             $msg1 = $user->is_judges($uid, I('post.imei'));
             if ($msg1['code'] == '1') {
+                $sh_result = new \Common\Model\ShResultModel();
+                $sh_ship = new \Common\Model\ShShipModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if($sh_result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
                 $solt = I('post.solt');
                 $shipid = I('post.shipid');
-                $resultid = I('post.resultid');
+                $resultid = trimall(I('post.resultid'));
+                $ship_weight = $sh_ship->getFieldById($shipid, 'weight');//获取船舶自重
+
+                if ($solt == '1') {
+                    $process = json_decode($sh_result->getFieldById($resultid, "qianprocess"), true);
+                } elseif ($solt == '2') {
+                    $process = json_decode($sh_result->getFieldById($resultid, "houprocess"), true);
+                } else {
+                    //其他错误 4
+                    return array(
+                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+                    );
+                }
+
+                if ($process == null) {
+                    $process = array();
+                }
 
                 $cabin_info = I('post.cabininfo');
                 $resultlist = new \Common\Model\ShResultlistModel();
 
-                $process = "";
+                $process['cabin'] = array();
+
                 M()->startTrans();
                 foreach ($cabin_info as $key => $value) {
 
@@ -1076,7 +1079,16 @@ class ShResultController extends AppBaseController
                     $value['volume'] = round((float)$value['volume'], 5);
                     $value['density'] = round((float)$value['density'], 5);
                     $value['weight'] = round((float)$value['volume'] * (float)$value['density'], 5);
-                    $process .= $value['cabinname'] . ": \r\n volume=" . $value['volume'] . ",density=" . $value['density'] . ",weight=" . $value['volume'] . "*" . $value['density'] . "=" . $value['weight'] . " \r\n";
+//                    $process .= $value['cabinname'] . ": \r\n volume=" . $value['volume'] . ",density=" . $value['density'] . ",weight=" . $value['volume'] . "*" . $value['density'] . "=" . $value['weight'] . " \r\n";
+                    $process['cabin'][] = array(
+                        'cabinname' => $value['cabinname'],
+                        'volume' => $value['volume'],
+                        'density' => $value['density'],
+                        'sounding' => $value['sounding'],
+                        'weight' => $value['weight']
+                    );
+
+
                     if ($value['weight'] !== null and $value['volume'] !== null and $value['density'] !== null and $value['sounding'] !== null) {
                         // 对数据进行验证
                         if (!$resultlist->create($value)) {
@@ -1127,20 +1139,28 @@ class ShResultController extends AppBaseController
                 $result = new \Common\Model\ShResultModel();
                 #todo 检测计算中需要用到的数据是否缺失，缺失则返回步骤错位
                 if ($solt == "1") {
-                    $result_msg = $result->field('qian_dspc,qian_fwater_weight,qian_sewage_weight,qian_fuel_weight,qian_other_weight,qian_constant,hou_constant')->where(array('id' => $resultid))->find();
+                    $result_msg = $result
+                        ->field('qian_dspc,qian_fwater_weight,qian_sewage_weight,qian_fuel_weight,qian_other_weight,qian_constant,hou_constant')
+                        ->where(array('id' => $resultid))
+                        ->find();
                     $data_r = array(
-                        'qian_constant' => round((float)$result_msg['qian_dspc'] - (float)$total_weight['t_weight'] - (float)$result_msg['qian_fwater_weight'] - (float)$result_msg['qian_sewage_weight'] - (float)$result_msg['qian_fuel_weight'] - (float)$result_msg['qian_other_weight'], 5),
+                        'qian_constant' => round((float)$result_msg['qian_dspc'] - (float)$total_weight['t_weight'] - (float)$result_msg['qian_fwater_weight'] - (float)$result_msg['qian_sewage_weight'] - (float)$result_msg['qian_fuel_weight'] - (float)$result_msg['qian_other_weight'] - $ship_weight, 5),
                     );
-                    $process .= "t_weight=" . (float)$total_weight['t_weight'] . " \r\n qian_constant=dspc - t_weight - fwater_weight- sewage_weight - fuel_weight - other_weight=" . $data_r['qian_constant'];
+                    $process['t_weight'] = (float)$total_weight['t_weight'];
+                    $process['ship_weight'] = $ship_weight;
+                    $process['constant'] = (float)$data_r['qian_constant'];
+
                     if ($result_msg['hou_constant'] > 0) {
                         if ($result_msg['qian_constant'] >= $result_msg['hou_constant']) {
                             $data_r['weight'] = round((float)$result_msg['qian_constant'] - (float)$result_msg['hou_constant'], 5);
+                            $process['heavier'] = 'q';
                         } else {
                             $data_r['weight'] = round((float)$result_msg['hou_constant'] - (float)$result_msg['qian_constant'], 5);
+                            $process['heavier'] = 'h';
                         }
-                        $process .= "weight=" . $data_r['weight'];
+                        $process['weight'] = (float)$data_r['weight'];
                     }
-                    $data_r['qianprocess'] = array('exp', 'concat(qianprocess,"' . urlencode($process) . '")');
+                    $data_r['qianprocess'] = json_encode($process);
 
                     $resr = $result->editData(array('id' => $resultid), $data_r);
 
@@ -1162,16 +1182,21 @@ class ShResultController extends AppBaseController
                 } elseif ($solt == "2") {
                     $result_msg = $result->field('hou_dspc,hou_fwater_weight,hou_sewage_weight,hou_fuel_weight,hou_other_weight,qian_constant,hou_constant')->where(array('id' => $resultid))->find();
                     $data_r = array(
-                        'hou_constant' => round((float)$result_msg['hou_dspc'] - (float)$total_weight['t_weight'] - (float)$result_msg['hou_fwater_weight'] - (float)$result_msg['hou_sewage_weight'] - (float)$result_msg['hou_fuel_weight'] - (float)$result_msg['hou_other_weight'], 5),
+                        'hou_constant' => round((float)$result_msg['hou_dspc'] - (float)$total_weight['t_weight'] - (float)$result_msg['hou_fwater_weight'] - (float)$result_msg['hou_sewage_weight'] - (float)$result_msg['hou_fuel_weight'] - (float)$result_msg['hou_other_weight'] - $ship_weight, 5),
                     );
-                    $process .= "t_weight=" . (float)$total_weight['t_weight'] . " \r\n constant=dspc - t_weight - fwater_weight- sewage_weight - fuel_weight - other_weight=" . $data_r['hou_constant'];
+                    $process['t_weight'] = (float)$total_weight['t_weight'];
+                    $process['ship_weight'] = $ship_weight;
+                    $process['constant'] = (float)$data_r['qian_constant'];
                     if ($result_msg['qian_constant'] >= $result_msg['hou_constant']) {
                         $data_r['weight'] = round((float)$result_msg['qian_constant'] - (float)$result_msg['hou_constant'], 5);
+                        $process['heavier'] = 'q';
                     } else {
                         $data_r['weight'] = round((float)$result_msg['hou_constant'] - (float)$result_msg['qian_constant'], 5);
+                        $process['heavier'] = 'h';
                     }
-                    $process .= "weight=" . $data_r['weight'];
-                    $data_r['houprocess'] = array('exp', 'concat(houprocess,"' . urlencode($process) . '")');
+                    $process['weight'] = (float)$data_r['weight'];
+
+                    $data_r['houprocess'] = json_encode($process);
                     $resr = $result->editData(array('id' => $resultid), $data_r);
                     if ($resr === false) {
                         M()->rollback();
@@ -1349,38 +1374,11 @@ class ShResultController extends AppBaseController
         echo jsonreturn($res);
     }
 
+
     /**
-     * 录入书本数据
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param int shipid 船ID
-     * @param int solt 1:作业前；2:作业后
-     * @param string imei 标识
-     * @return @param code
-     * @return @param suanfa 算法
-     * @return @param correntkong 修正后空高
-     * */
-    public function bookdata()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')
-            and I('post.solt') and I('post.shipid') and I('post.ptwd') !== null
-            and I('post.d_up') !== null and I('post.d_down') !== null
-            and I('post.tpc_up') !== null and I('post.tpc_down') !== null
-            and I('post.ds_up') !== null and I('post.ds_down') !== null
-            and I('post.xf_up') !== null and I('post.xf_down') !== null
-            and I('post.mtc_up') !== null and I('post.mtc_down') !== null) {
-            $result = new \Common\Model\ShResultModel();
-            $res = $result->reckon1(I('post.'));
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }
-
-
+     * 录入排水量表数据
+     *
+     */
     public function NewBookData()
     {
         if (I('post.uid') and I('post.imei') and I('post.resultid')
@@ -1388,9 +1386,12 @@ class ShResultController extends AppBaseController
             and I('post.d_up') !== null and I('post.d_down') !== null
             and I('post.tpc_up') !== null and I('post.tpc_down') !== null
             and I('post.ds_up') !== null and I('post.ds_down') !== null
-            and I('post.xf_up') !== null and I('post.xf_down') !== null
+            and I('post.lca_up') !== null and I('post.lca_down') !== null
             and I('post.mtc_up') !== null and I('post.mtc_down') !== null) {
             $result = new \Common\Model\ShResultModel();
+            //如果作业已经结束则报错作业已完成 2029
+            if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
             $res = $result->reckon2(I('post.'));
         } else {
             //参数不正确，参数缺失    4
@@ -1401,37 +1402,6 @@ class ShResultController extends AppBaseController
         echo jsonreturn($res);
     }
 
-    /**
-     * 录入书本容量数据
-     * @param int cabinid 舱ID
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param int shipid 船ID
-     * @param int solt 1:作业前；2:作业后
-     * @param varchar imei 标识
-     * @param correntkong 修正后空高
-     * @param float ullage1 空高1
-     * @param float ullage2 空高2
-     * @param float capacity1 值1
-     * @param float capacity2 值2
-     * @return @param code
-     * */
-/*    public function capacitydata()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')
-            and I('post.solt') and I('post.shipid') and I('post.cabinid')
-            and I('post.ullage1') !== null and I('post.ullage2') !== null
-            and I('post.capacity1') !== null and I('post.capacity2') !== null) {
-            $result = new \Common\Model\ResultModel();
-            $res = $result->capacityreckon(I('post.'));
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }*/
 
     /**
      * 根据用户ID获取可以操作的船所属公司
@@ -1624,7 +1594,7 @@ class ShResultController extends AppBaseController
                     'solt' => trimall(I('post.solt'))
                 );
 
-                $recordlist = $resultRecord->field('d_up,d_down,tpc_up,tpc_down,ds_up,ds_down,xf_up,xf_down,mtc_up,mtc_down,ptwd,solt,shipid,resultid')->where($where)->find();
+                $recordlist = $resultRecord->field('d_up,d_down,tpc_up,tpc_down,ds_up,ds_down,lca_up,lca_down,xf_up,xf_down,mtc_up,mtc_down,ptwd,solt,shipid,resultid')->where($where)->find();
                 //成功 1
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
@@ -1656,8 +1626,6 @@ class ShResultController extends AppBaseController
         }
         echo jsonreturn($res);
     }
-
-
 
     /**
      * 电子签证

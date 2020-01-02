@@ -33,12 +33,24 @@ class ShShipModel extends BaseModel
      */
     public function shiplist($uid, $imei)
     {
+
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
         $msg1 = $user->is_judges($uid, $imei);
         if ($msg1['code'] == '1') {
+            $where = array();
+            $msg = $user->field('sh_operation_jur')->where(array('id' => intval($uid)))->find();
+            // 查询权限为空时，查看所有操作权限之内的作业
+            if ($msg['sh_operation_jur'] == '') {
+                $operation_jur = array("-1");
+            } else {
+                $operation_jur = json_decode($msg['sh_operation_jur'], true);
+            }
+            $where['id'] = array('in', $operation_jur);
+
             $list = $this
                 ->field('id,shipname,goodsname')
+                ->where($where)
                 ->select();
             if ($list !== false) {
                 $res = array(
@@ -514,5 +526,25 @@ sql;
             M('ship_historical_sum')->add($arr);
         }
         return 1;
+    }
+
+    public function is_lock($shipid)
+    {
+        /**
+         * 查找船的作业次数和新建审核状态
+         */
+        $work = new \Common\Model\ShResultModel();
+        $res_count = $work->where(array('shipid' => $shipid))->count();
+        if ($res_count > 1) {
+            return true;
+        } else {
+            //去除多余的0，防止验证差异时出错
+            $old_info = $this->field('review')->where(array('id' => $shipid))->find();
+            if ($old_info['review'] == 2) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

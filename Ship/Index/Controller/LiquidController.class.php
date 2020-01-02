@@ -16,7 +16,7 @@ class LiquidController extends IndexBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->db = new \Common\Model\ResultModel();
+        $this->db = new \Common\Model\WorkModel();
     }
 
     /**
@@ -33,12 +33,14 @@ class LiquidController extends IndexBaseController
 
         if ($msg['search_jur'] == '') {
             // 查询权限为空时，查看所有操作权限之内的作业
+            $where = " r.uid ='$uid'";
+
             if ($msg['operation_jur'] == '') {
                 $operation_jur = "all";
             } else {
                 $operation_jur = $msg['operation_jur'];
+                $where .= " and r.shipid in (" . $operation_jur . ")";
             }
-            $where = " r.uid ='$uid' and r.shipid in (" . $operation_jur . ")";
         } else {
             $where = " r.shipid in (" . $msg['search_jur'] . ")";
         }
@@ -124,7 +126,7 @@ class LiquidController extends IndexBaseController
         $ship = new \Common\Model\ShipModel();
         foreach ($list as $key => $value) {
             $list[$key]['personality'] = json_decode($value['personality'], true);
-            $list[$key]['time'] = date("Y-m-d H:i:s",$value['time']);
+            $list[$key]['time'] = date("Y-m-d H:i:s", $value['time']);
             // 根据作业人公司类型判断这条作业是否可以评价
             if ($value['firmtype'] == 2) {
                 $list[$key]['is_coun'] = 'N';
@@ -595,6 +597,7 @@ class LiquidController extends IndexBaseController
                 ->join('left join electronic_visa e on e.resultid = r.id')
                 ->where($where)
                 ->find();
+            $list['verify'] = getReportErCode($list['id'], $list['uid']);
             // 获取当前登陆用户的公司类型
             $uid = $_SESSION['user_info']['id'];
             $map = array(

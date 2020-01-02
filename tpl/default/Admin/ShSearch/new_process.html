@@ -1,0 +1,554 @@
+<extend name="Public:base"/>
+<block name="title">作业查询</block>
+<block name="navtitle">
+    <li class="active">
+        作业查询
+    </li>
+    <li class="active">
+        计算过程
+    </li>
+</block>
+<block name="activeopen31">class="active open"</block>
+<block name="active54">class="active"</block>
+<block name="content">
+    <style>
+        .table_01, .ju {
+            font-size: 14px;
+            color: #333;
+            font-family: "方正兰亭黑简";
+            margin: auto 5px;
+            font-weight: bold
+        }
+
+        .table_02 {
+            font-size: 14px;
+            font-family: "方正兰亭黑简";
+            color: #333;
+            margin: auto 5px;
+        }
+
+        .box02 {
+            height: 41px;
+            margin: 20px auto;
+            line-height: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            font-family: "方正兰亭黑简";
+        }
+
+        input {
+            background-color: #3ca0fe;
+            border: none;
+            margin-left: 7px;
+            height: 30px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .ju03 {
+            height: 35px;
+            width: 200px;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        .div1 {
+            display: inline-block;
+        }
+
+        .sj1 {
+            margin-left: 2em;
+        }
+
+        .sj2 {
+            margin-left: 4em;
+        }
+
+        .sj3 {
+            margin-left: 6em;
+        }
+
+        .sj4 {
+            margin-left: 8em;
+        }
+
+        .sj5 {
+            margin-left: 10em;
+        }
+
+        .sj6 {
+            margin-left: 12em;
+        }
+
+    </style>
+    <h2 align="center">计算过程</h2>
+    <br>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业前</span>
+    </div>
+    <div class="content-loaded"
+         style="background-color:#f5f5f5;border-radius: 4px;word-break: break-all;line-height: 1.42857143;font-size: 13px;margin: 0 0 10px;display: block;border: 1px solid #ccc;">
+        <span><strong>船舶数据：</strong></span>
+        <br/>
+        <span class="sj1">船舶自重：{$qianprocess['ship_weight']}</span>
+        <br/>
+        <span class="sj1">船舶名称：{$qianprocess['ship_name']}</span>
+        <br>
+        <span class="sj1">艏水尺距艏垂线距离：{$qianprocess['Df']}</span>
+        <br>
+        <span class="sj1">艉水尺距艉垂线距离：{$qianprocess['Da']}</span>
+        <br>
+        <span class="sj1">舯水尺距舯垂线距离：{$qianprocess['Dm']}</span>
+        <br/>
+        <span class="sj1">垂线间距(LBP)：{$qianprocess['LBP']}</span>
+        <br/>
+        <span class="sj1">表载港水密度：{$qianprocess['table']['pt']}</span>
+        <br/>
+        <br/>
+        <span><strong>全局数据：</strong></span>
+        <br/>
+        <span class="sj1">港水密度：{$qianprocess['p']}</span>
+        <br/>
+        <span class="sj1">船内淡水总重：{$qianprocess['fwater_weight']}</span>
+        <br/>
+        <span class="sj1">船内污水总重：{$qianprocess['sewage_weight']}</span>
+        <br/>
+        <span class="sj1">船内燃油总重：{$qianprocess['fuel_weight']}</span>
+        <br/>
+        <span class="sj1">船内其他货物总重：{$qianprocess['other_weight']}</span>
+        <br/>
+        <br/>
+        <span><strong>水尺：</strong></span>
+        <br/>
+        <span class="sj1"><strong>收到水尺数据,时间:{$qianprocess['nowtime']}</strong></span>
+        <br/>
+        <span class="sj2">艏左吃水：{$qianprocess['forntleft']}</span>
+        <br/>
+        <span class="sj2">艏右吃水：{$qianprocess['forntright']}</span>
+        <br/>
+        <span class="sj2">艉左吃水：{$qianprocess['afterleft']}</span>
+        <br/>
+        <span class="sj2">艉右吃水：{$qianprocess['afterright']}</span>
+        <br/>
+        <span class="sj2">舯左吃水：{$qianprocess['centerleft']}</span>
+        <br/>
+        <span class="sj2">舯右吃水：{$qianprocess['centerright']}</span>
+        <br/>
+        <span class="sj2"><strong>各计算过程：</strong></span>
+        <br/>
+        <span class="sj3"><strong>舱压载水表如下：</strong></span>
+        <br/>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj4">
+            <thead>
+            <th style="text-align: center">舱名</th>
+            <th style="text-align: center">容量</th>
+            <th style="text-align: center">水深</th>
+            <th style="text-align: center">密度</th>
+            <th style="text-align: center">重量</th>
+            </thead>
+            <volist name="qianprocess['cabin']" id="v">
+                <tr>
+                    <td style="width: 40%">{$v['cabinname']}</td>
+                    <td style="width: 15%">{$v['volume']}</td>
+                    <td style="width: 15%">{$v['sounding']}</td>
+                    <td style="width: 15%">{$v['density']}</td>
+                    <td style="width: 15%">{$v['weight']}</td>
+                </tr>
+            </volist>
+            <tr>
+                <td>总重：</td>
+                <td colspan="3"></td>
+                <td style=>{$qianprocess['t_weight']}</td>
+            </tr>
+        </table>
+
+        <span class="sj3"><strong>水尺相对垂线位置计算：</strong></span>
+        <br/>
+        <span class="sj4">艏水尺相对艏垂线位置：<if condition="$qianprocess['Pf'] eq 0">因为艏水尺距艏垂线距离大于0，<else/>因为艏水尺距艏垂线距离小于等于0， </if>所以Pf = {$qianprocess['Pf']}</span>
+        <br/>
+        <span class="sj4">艉水尺相对艉垂线位置：<if condition="$qianprocess['Pa'] eq 0">因为艉水尺距艉垂线距离大于0，<else/>因为艉水尺距艉垂线距离小于等于0， </if>所以Pa = {$qianprocess['Pa']}</span>
+        <br/>
+        <span class="sj4">舯水尺相对舯垂线位置：<if condition="$qianprocess['Pm'] eq 0">因为舯水尺距舯垂线距离大于0，<else/>因为舯水尺距舯垂线距离小于等于0， </if>所以Pm = {$qianprocess['Pm']}</span>
+        <br/>
+
+        <span class="sj3"><strong>横倾校正计算：</strong></span>
+        <br/>
+        <span class="sj4">艏平均吃水：(艏左吃水 + 艏右吃水)/2 = ({$qianprocess['forntleft']} + {$qianprocess['forntright']})/2 = {$qianprocess['Fps']}</span>
+        <br/>
+        <span class="sj4">艉平均吃水：(艉左吃水 + 艉右吃水)/2 = ({$qianprocess['afterleft']} + {$qianprocess['afterright']})/2 = {$qianprocess['Aps']}</span>
+        <br/>
+        <span class="sj4">舯平均吃水：(舯左吃水 + 舯右吃水)/2 = ({$qianprocess['centerleft']} + {$qianprocess['centerright']})/2 = {$qianprocess['Mps']}</span>
+        <br/>
+
+        <span class="sj3"><strong>纵倾校正计算：</strong></span>
+        <br/>
+        <span class="sj4">吃水差：艏平均吃水 - 艉平均吃水 = {$qianprocess['Fps']} + {$qianprocess['Aps']} = {$qianprocess['T']}</span>
+        <br/>
+        <span class="sj4">吃水差异或值：<if condition="$T gt 0">由于吃水差大于0，<else/>由于吃水差小于等于0，</if>所以Tf={$qianprocess['Tf']}</span>
+        <br/>
+        <span class="sj4">艏正负幂值：吃水差异或值 ⊕ 艏水尺相对艏垂线位置 = {$qianprocess['Tf']} ⊕ {$qianprocess['Pf']} = {$qianprocess['Fflag']}</span>
+        <br/>
+        <span class="sj4">艉正负幂值：吃水差异或值 ⊕ 艉水尺相对艉垂线位置 = {$qianprocess['Tf']} ⊕ {$qianprocess['Pa']} = {$qianprocess['Aflag']}</span>
+        <br/>
+        <span class="sj4">舯正负幂值：吃水差异或值 ⊕ 舯水尺相对舯垂线位置 = {$qianprocess['Tf']} ⊕ {$qianprocess['Pm']} = {$qianprocess['Mflag']}</span>
+        <br/>
+        <span class="sj4">艏艉水尺间长：垂线间距 + (-1)^艏正负幂值 * 艏水尺距艏垂线距离 -(-1)^艉正负幂值 * 艉水尺距艉垂线距离 = {$qianprocess['LBP']} + (-1)^{$qianprocess['Fflag']} * {$qianprocess['Df']} -(-1)^{$qianprocess['Aflag']} * {$qianprocess['Da']} = {$qianprocess['LBM']}</span>
+        <br/>
+        <span class="sj4">艏吃水校正值：取绝对值（艏水尺距艏垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$qianprocess['Df']} * {$qianprocess['T']} / {$qianprocess['LBM']}）= {$qianprocess['Fc']}</span>
+        <br/>
+        <span class="sj4">艉吃水校正值：取绝对值（艉水尺距艉垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$qianprocess['Da']} * {$qianprocess['T']} / {$qianprocess['LBM']}）= {$qianprocess['Ac']}</span>
+        <br/>
+        <span class="sj4">舯吃水校正值：取绝对值（舯水尺距舯垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$qianprocess['Dm']} * {$qianprocess['T']} / {$qianprocess['LBM']}）= {$qianprocess['Mc']}</span>
+        <br/>
+        <span class="sj4">校正后艏吃水：艏平均吃水 + (-1)^艏正负幂值 * 艏吃水校正值 = {$qianprocess['Fps']} + (-1)^{$qianprocess['Fflag']} * {$qianprocess['Fc']} = {$qianprocess['Fm']}</span>
+        <br/>
+        <span class="sj4">校正后艉吃水：艉平均吃水 (-1)^艉正负幂值 * 艉吃水校正值 = {$qianprocess['Aps']} + (-1)^{$qianprocess['Aflag']} * {$qianprocess['Ac']} = {$qianprocess['Am']}</span>
+        <br/>
+        <span class="sj4">校正后舯吃水：舯平均吃水 (-1)^舯正负幂值 * 舯吃水校正值 = {$qianprocess['Mps']} + (-1)^{$qianprocess['Mflag']} * {$qianprocess['Mc']} = {$qianprocess['Mm']}</span>
+        <br/>
+        <span class="sj4">校正后吃水差：校正后艉吃水 - 校正后艏吃水 = {$qianprocess['Am']} - {$qianprocess['Fm']} = {$qianprocess['TC']}</span>
+        <br/>
+
+        <span class="sj3"><strong>拱陷校正计算：</strong></span>
+        <br/>
+        <span class="sj4">拱陷校正后总平均吃水：(校正后艏吃水 + 校正后艉吃水 + 6 * 校正后舯吃水)/8 = ({$qianprocess['Fm']} + {$qianprocess['Am']} + 6 * {$qianprocess['Mm']})/8 = {$qianprocess['D_M']}</span>
+        <br/>
+
+        <span class="sj3"><strong>排水量表计算：</strong></span>
+        <br/>
+        <span class="sj4"><strong>排水量表展示：</strong></span>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj5">
+            <tr>
+                <td style="width: 25%"><strong>上位吃水</strong></td>
+                <td style="width: 25%"><strong>下位吃水</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$qianprocess['table']['Dup']}</td>
+                <td>{$qianprocess['table']['Ddown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位TPC值</strong></td>
+                <td style="width: 25%"><strong>下位TPC置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$qianprocess['table']['TPCup']}</td>
+                <td>{$qianprocess['table']['TPCdown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位DS值</strong></td>
+                <td style="width: 25%"><strong>下位DS置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$qianprocess['table']['DSup']}</td>
+                <td>{$qianprocess['table']['DSdown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位漂心位置(LCA)值</strong></td>
+                <td style="width: 25%"><strong>下位漂心位置(LCA)置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$qianprocess['table']['LCAup']}</td>
+                <td>{$qianprocess['table']['LCAdown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>D_M+50cm处的MTC值</strong></td>
+                <td style="width: 25%"><strong>D_M-50cm处的MTC值</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$qianprocess['table']['MTCup']}</td>
+                <td>{$qianprocess['table']['MTCdown']}</td>
+            </tr>
+        </table>
+        <span class="sj4"><strong>计算排水量：</strong></span>
+        <br/>
+        <span class="sj5">上位漂心距船舯距离值(Xfup)：垂线间距 / 2 - 上位漂心位置(LCA)值 = {$qianprocess['table']['Xfup']}</span>
+        <br/>
+        <span class="sj5">下位漂心距船舯距离值(Xfdown)：垂线间距 / 2 - 下位漂心位置(LCA)值 = {$qianprocess['table']['Xfdown']}</span>
+        <br/>
+        <if condition="$qianprocess['table']['type'] eq 'm' && $qianprocess['table']['method'] eq 'm'">
+            <span class="sj5">TPC：(上位TPC值 - 下位TPC值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位TPC值 = ({$qianprocess['table']['TPCup']} - {$qianprocess['table']['TPCdown']}) / ({$qianprocess['table']['Dup']} - {$qianprocess['table']['Ddown']}) * ({$qianprocess['D_M']} - {$qianprocess['table']['Ddown']}) + {$qianprocess['table']['TPCup']} = {$qianprocess['table']['TPC']}</span>
+            <br/>
+            <span class="sj5">排水量值：(上位DS值 - 下位DS值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位DS值 = ({$qianprocess['table']['DSup']} - {$qianprocess['table']['DSdown']}) / ({$qianprocess['table']['Dup']} - {$qianprocess['table']['Ddown']}) * ({$qianprocess['D_M']} - {$qianprocess['table']['Ddown']}) + {$qianprocess['table']['DSup']} = {$qianprocess['table']['DS']}</span>
+            <br/>
+            <span class="sj5">漂心距船舯距离值：(上位Xf值 - 下位Xf值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位Xf值 = ({$qianprocess['table']['Xfup']} - {$qianprocess['table']['Xfdown']}) / ({$qianprocess['table']['Dup']} - {$qianprocess['table']['Ddown']}) * ({$qianprocess['D_M']} - {$qianprocess['table']['Ddown']}) + {$qianprocess['table']['Xfup']} = {$qianprocess['table']['Xf']}</span>
+            <br/>
+
+            <else/>
+
+            <span class="sj5">TPC：由于上下位吃水相对于D_M属于极值，所以TPC = {$qianprocess['table']['TPC']}</span>
+            <br/>
+            <span class="sj5">排水量值：由于上下位吃水相对于D_M属于极值，所以DS = {$qianprocess['table']['DS']}</span>
+            <br/>
+            <span class="sj5">漂心距船舯距离值：由于上下位吃水相对于D_M属于极值，所以Xf = {$qianprocess['table']['Xf']}</span>
+            <br/>
+        </if>
+
+        <span class="sj5">D/M吃水处上下50cm纵倾力矩MTC的变化差量：D_M+50cm处的MTC值 - D_M-50cm处的MTC值 = {$qianprocess['table']['MTCup']} - {$qianprocess['table']['MTCdown']} = {$qianprocess['dmdz']}</span>
+        <br/>
+        <span class="sj5"><strong>纵倾校正：</strong></span>
+        <br/>
+        <span class="sj6">一次校正值：100 * 矫正后吃水差 * 漂心距船舯距离值 * TPC / 垂线间距 = 100 * {$qianprocess['table']['Tc']} * {$qianprocess['table']['Xf']} * {$qianprocess['table']['TPC']} / {$qianprocess['LBP']} = {$qianprocess['Dc1']}</span>
+        <br/>
+        <span class="sj6">二次校正值：50 * D/M吃水处上下50cm纵倾力矩MTC的变化差量 * 矫正后吃水差^2 / 垂线间距 = 50 * {$qianprocess['table']['dmdz']} * {$qianprocess['table']['Tc']}^2 / {$qianprocess['LBP']} = {$qianprocess['Dc2']}</span>
+        <br/>
+        <span class="sj6">排水量纵倾校正值：一次校正值 + 二次校正值 = {$qianprocess['Dc1']} + {$qianprocess['Dc2']} = {$qianprocess['Dc']}</span>
+        <br/>
+        <span class="sj6">校正后排水量：排水量值 + 排水量纵倾校正值 = {$qianprocess['table']['DS']} + {$qianprocess['Dc']} = {$qianprocess['Dsc']}</span>
+        <br/>
+        <span class="sj5"><strong>港水密度校正</strong></span>
+        <br/>
+        <span class="sj6">排水量校正值：校正后排水量 * (港水密度 - 表载港水密度) / 表载港水密度 =  {$qianprocess['Dpc']}</span>
+        <br/>
+        <span class="sj6">校正后最终排水量：校正后排水量 + 排水量校正值 = {$qianprocess['Dsc']} + {$qianprocess['Dpc']} = {$qianprocess['Dspc']}</span>
+        <br/>
+        <br/>
+        <span class="sj1"><strong>最终本次作业得出结果：</strong></span>
+        <br/>
+        <span class="sj2">矫正后排水量 - 舱压载水总重 - 船内淡水总重 - 船内污水总重 - 船内燃油总重 - 船内其他货物总重 - 船舶自重 = {$qianprocess['Dspc']} - {$qianprocess['t_weight']} - {$qianprocess['fwater_weight']} - {$qianprocess['sewage_weight']} - {$qianprocess['fuel_weight']} - {$qianprocess['other_weight']} - {$qianprocess['ship_weight']} = {$qianprocess['constant']}</span>
+    </div>
+    <br/>
+    <hr>
+    <div style="text-align: center">
+        <span style="margin: 10px 0;font-size: xx-large;text-align: center">作业后</span>
+    </div>
+    <div class="content-loaded"
+         style="background-color:#f5f5f5;border-radius: 4px;word-break: break-all;line-height: 1.42857143;font-size: 13px;margin: 0 0 10px;display: block;border: 1px solid #ccc;">
+        <span><strong>船舶数据：</strong></span>
+        <br/>
+        <span class="sj1">船舶自重：{$houprocess['ship_weight']}</span>
+        <br/>
+        <span class="sj1">船舶名称：{$houprocess['ship_name']}</span>
+        <br>
+        <span class="sj1">艏水尺距艏垂线距离：{$houprocess['Df']}</span>
+        <br>
+        <span class="sj1">艉水尺距艉垂线距离：{$houprocess['Da']}</span>
+        <br>
+        <span class="sj1">舯水尺距舯垂线距离：{$houprocess['Dm']}</span>
+        <br/>
+        <span class="sj1">垂线间距(LBP)：{$houprocess['LBP']}</span>
+        <br/>
+        <span class="sj1">表载港水密度：{$houprocess['table']['pt']}</span>
+        <br/>
+        <br/>
+        <span><strong>全局数据：</strong></span>
+        <br/>
+        <span class="sj1">港水密度：{$houprocess['p']}</span>
+        <br/>
+        <span class="sj1">船内淡水总重：{$houprocess['fwater_weight']}</span>
+        <br/>
+        <span class="sj1">船内污水总重：{$houprocess['sewage_weight']}</span>
+        <br/>
+        <span class="sj1">船内燃油总重：{$houprocess['fuel_weight']}</span>
+        <br/>
+        <span class="sj1">船内其他货物总重：{$houprocess['other_weight']}</span>
+        <br/>
+        <br/>
+        <span><strong>水尺：</strong></span>
+        <br/>
+        <span class="sj1"><strong>收到水尺数据,时间:{$houprocess['nowtime']}</strong></span>
+        <br/>
+        <span class="sj2">艏左吃水：{$houprocess['forntleft']}</span>
+        <br/>
+        <span class="sj2">艏右吃水：{$houprocess['forntright']}</span>
+        <br/>
+        <span class="sj2">艉左吃水：{$houprocess['afterleft']}</span>
+        <br/>
+        <span class="sj2">艉右吃水：{$houprocess['afterright']}</span>
+        <br/>
+        <span class="sj2">舯左吃水：{$houprocess['centerleft']}</span>
+        <br/>
+        <span class="sj2">舯右吃水：{$houprocess['centerright']}</span>
+        <br/>
+        <span class="sj2"><strong>各计算过程：</strong></span>
+        <br/>
+        <span class="sj3"><strong>舱压载水表如下：</strong></span>
+        <br/>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj4">
+            <thead>
+            <th style="text-align: center">舱名</th>
+            <th style="text-align: center">容量</th>
+            <th style="text-align: center">水深</th>
+            <th style="text-align: center">密度</th>
+            <th style="text-align: center">重量</th>
+            </thead>
+            <volist name="houprocess['cabin']" id="v">
+                <tr>
+                    <td style="width: 40%">{$v['cabinname']}</td>
+                    <td style="width: 15%">{$v['volume']}</td>
+                    <td style="width: 15%">{$v['sounding']}</td>
+                    <td style="width: 15%">{$v['density']}</td>
+                    <td style="width: 15%">{$v['weight']}</td>
+                </tr>
+            </volist>
+            <tr>
+                <td>总重：</td>
+                <td colspan="3"></td>
+                <td style=>{$houprocess['t_weight']}</td>
+            </tr>
+        </table>
+
+        <span class="sj3"><strong>水尺相对垂线位置计算：</strong></span>
+        <br/>
+        <span class="sj4">艏水尺相对艏垂线位置：<if condition="$houprocess['Pf'] eq 0">因为艏水尺距艏垂线距离大于0，<else/>因为艏水尺距艏垂线距离小于等于0， </if>所以Pf = {$houprocess['Pf']}</span>
+        <br/>
+        <span class="sj4">艉水尺相对艉垂线位置：<if condition="$houprocess['Pa'] eq 0">因为艉水尺距艉垂线距离大于0，<else/>因为艉水尺距艉垂线距离小于等于0， </if>所以Pa = {$houprocess['Pa']}</span>
+        <br/>
+        <span class="sj4">舯水尺相对舯垂线位置：<if condition="$houprocess['Pm'] eq 0">因为舯水尺距舯垂线距离大于0，<else/>因为舯水尺距舯垂线距离小于等于0， </if>所以Pm = {$houprocess['Pm']}</span>
+        <br/>
+
+        <span class="sj3"><strong>横倾校正计算：</strong></span>
+        <br/>
+        <span class="sj4">艏平均吃水：(艏左吃水 + 艏右吃水)/2 = ({$houprocess['forntleft']} + {$houprocess['forntright']})/2 = {$houprocess['Fps']}</span>
+        <br/>
+        <span class="sj4">艉平均吃水：(艉左吃水 + 艉右吃水)/2 = ({$houprocess['afterleft']} + {$houprocess['afterright']})/2 = {$houprocess['Aps']}</span>
+        <br/>
+        <span class="sj4">舯平均吃水：(舯左吃水 + 舯右吃水)/2 = ({$houprocess['centerleft']} + {$houprocess['centerright']})/2 = {$houprocess['Mps']}</span>
+        <br/>
+
+        <span class="sj3"><strong>纵倾校正计算：</strong></span>
+        <br/>
+        <span class="sj4">吃水差：艏平均吃水 - 艉平均吃水 = {$houprocess['Fps']} + {$houprocess['Aps']} = {$houprocess['T']}</span>
+        <br/>
+        <span class="sj4">吃水差异或值：<if condition="$T gt 0">由于吃水差大于0，<else/>由于吃水差小于等于0，</if>所以Tf={$houprocess['Tf']}</span>
+        <br/>
+        <span class="sj4">艏正负幂值：吃水差异或值 ⊕ 艏水尺相对艏垂线位置 = {$houprocess['Tf']} ⊕ {$houprocess['Pf']} = {$houprocess['Fflag']}</span>
+        <br/>
+        <span class="sj4">艉正负幂值：吃水差异或值 ⊕ 艉水尺相对艉垂线位置 = {$houprocess['Tf']} ⊕ {$houprocess['Pa']} = {$houprocess['Aflag']}</span>
+        <br/>
+        <span class="sj4">舯正负幂值：吃水差异或值 ⊕ 舯水尺相对舯垂线位置 = {$houprocess['Tf']} ⊕ {$houprocess['Pm']} = {$houprocess['Mflag']}</span>
+        <br/>
+        <span class="sj4">艏艉水尺间长：垂线间距 + (-1)^艏正负幂值 * 艏水尺距艏垂线距离 -(-1)^艉正负幂值 * 艉水尺距艉垂线距离 = {$houprocess['LBP']} + (-1)^{$houprocess['Fflag']} * {$houprocess['Df']} -(-1)^{$houprocess['Aflag']} * {$houprocess['Da']} = {$houprocess['LBM']}</span>
+        <br/>
+        <span class="sj4">艏吃水校正值：取绝对值（艏水尺距艏垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$houprocess['Df']} * {$houprocess['T']} / {$houprocess['LBM']}）= {$houprocess['Fc']}</span>
+        <br/>
+        <span class="sj4">艉吃水校正值：取绝对值（艉水尺距艉垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$houprocess['Da']} * {$houprocess['T']} / {$houprocess['LBM']}）= {$houprocess['Ac']}</span>
+        <br/>
+        <span class="sj4">舯吃水校正值：取绝对值（舯水尺距舯垂线距离 * 吃水差 / 艏艉水尺间长）= 取绝对值（{$houprocess['Dm']} * {$houprocess['T']} / {$houprocess['LBM']}）= {$houprocess['Mc']}</span>
+        <br/>
+        <span class="sj4">校正后艏吃水：艏平均吃水 + (-1)^艏正负幂值 * 艏吃水校正值 = {$houprocess['Fps']} + (-1)^{$houprocess['Fflag']} * {$houprocess['Fc']} = {$houprocess['Fm']}</span>
+        <br/>
+        <span class="sj4">校正后艉吃水：艉平均吃水 (-1)^艉正负幂值 * 艉吃水校正值 = {$houprocess['Aps']} + (-1)^{$houprocess['Aflag']} * {$houprocess['Ac']} = {$houprocess['Am']}</span>
+        <br/>
+        <span class="sj4">校正后舯吃水：舯平均吃水 (-1)^舯正负幂值 * 舯吃水校正值 = {$houprocess['Mps']} + (-1)^{$houprocess['Mflag']} * {$houprocess['Mc']} = {$houprocess['Mm']}</span>
+        <br/>
+        <span class="sj4">校正后吃水差：校正后艉吃水 - 校正后艏吃水 = {$houprocess['Am']} - {$houprocess['Fm']} = {$houprocess['TC']}</span>
+        <br/>
+
+        <span class="sj3"><strong>拱陷校正计算：</strong></span>
+        <br/>
+        <span class="sj4">拱陷校正后总平均吃水：(校正后艏吃水 + 校正后艉吃水 + 6 * 校正后舯吃水)/8 = ({$houprocess['Fm']} + {$houprocess['Am']} + 6 * {$houprocess['Mm']})/8 = {$houprocess['D_M']}</span>
+        <br/>
+
+        <span class="sj3"><strong>排水量表计算：</strong></span>
+        <br/>
+        <span class="sj4"><strong>排水量表展示：</strong></span>
+        <table style="text-align: center;margin-bottom: 20px;" border="1" cellspacing="0" cellpadding="0"
+               align="center" width="50%"
+               class="sj5">
+            <tr>
+                <td style="width: 25%"><strong>上位吃水</strong></td>
+                <td style="width: 25%"><strong>下位吃水</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$houprocess['table']['Dup']}</td>
+                <td>{$houprocess['table']['Ddown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位TPC值</strong></td>
+                <td style="width: 25%"><strong>下位TPC置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$houprocess['table']['TPCup']}</td>
+                <td>{$houprocess['table']['TPCdown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位DS值</strong></td>
+                <td style="width: 25%"><strong>下位DS置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$houprocess['table']['DSup']}</td>
+                <td>{$houprocess['table']['DSdown']}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%"><strong>上位漂心位置(LCA)值</strong></td>
+                <td style="width: 25%"><strong>下位漂心位置(LCA)置</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$houprocess['table']['LCAup']}</td>
+                <td>{$houprocess['table']['LCAdown']}</td>
+            </tr>
+            <!--            <tr>
+                            <td style="width: 25%"><strong>上位Xf值</strong></td>
+                            <td style="width: 25%"><strong>下位Xf置</strong></td>
+                        </tr>
+                        <tr style="height: 40px">
+                            <td>{$houprocess['table']['Xfup']}</td>
+                            <td>{$houprocess['table']['Xfdown']}</td>
+                        </tr>-->
+            <tr>
+                <td style="width: 25%"><strong>D_M+50cm处的MTC值</strong></td>
+                <td style="width: 25%"><strong>D_M-50cm处的MTC值</strong></td>
+            </tr>
+            <tr style="height: 40px">
+                <td>{$houprocess['table']['MTCup']}</td>
+                <td>{$houprocess['table']['MTCdown']}</td>
+            </tr>
+        </table>
+        <span class="sj4"><strong>计算排水量：</strong></span>
+        <br/>
+        <span class="sj5">上位漂心距船舯距离值(Xfup)：垂线间距 / 2 - 上位漂心位置(LCA)值 = {$houprocess['table']['Xfup']}</span>
+        <br/>
+        <span class="sj5">下位漂心距船舯距离值(Xfdown)：垂线间距 / 2 - 下位漂心位置(LCA)值 = {$houprocess['table']['Xfdown']}</span>
+        <br/>
+        <if condition="$houprocess['table']['type'] eq 'm' && $houprocess['table']['method'] eq 'm'">
+            <span class="sj5">TPC：(上位TPC值 - 下位TPC值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位TPC值 = ({$houprocess['table']['TPCup']} - {$houprocess['table']['TPCdown']}) / ({$houprocess['table']['Dup']} - {$houprocess['table']['Ddown']}) * ({$houprocess['D_M']} - {$houprocess['table']['Ddown']}) + {$houprocess['table']['TPCup']} = {$houprocess['table']['TPC']}</span>
+            <br/>
+            <span class="sj5">排水量值：(上位DS值 - 下位DS值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位DS值 = ({$houprocess['table']['DSup']} - {$houprocess['table']['DSdown']}) / ({$houprocess['table']['Dup']} - {$houprocess['table']['Ddown']}) * ({$houprocess['D_M']} - {$houprocess['table']['Ddown']}) + {$houprocess['table']['DSup']} = {$houprocess['table']['DS']}</span>
+            <br/>
+            <span class="sj5">漂心距船舯距离值：(上位Xf值 - 下位Xf值) / (上位吃水 - 下位吃水) * (拱陷校正后总平均吃水 - 下位吃水) + 上位Xf值 = ({$houprocess['table']['Xfup']} - {$houprocess['table']['Xfdown']}) / ({$houprocess['table']['Dup']} - {$houprocess['table']['Ddown']}) * ({$houprocess['D_M']} - {$houprocess['table']['Ddown']}) + {$houprocess['table']['Xfup']} = {$houprocess['table']['Xf']}</span>
+            <br/>
+
+            <else/>
+
+            <span class="sj5">TPC：由于上下位吃水相对于D_M属于极值，所以TPC = {$houprocess['table']['TPC']}</span>
+            <br/>
+            <span class="sj5">排水量值：由于上下位吃水相对于D_M属于极值，所以DS = {$houprocess['table']['DS']}</span>
+            <br/>
+            <span class="sj5">漂心距船舯距离值：由于上下位吃水相对于D_M属于极值，所以Xf = {$houprocess['table']['Xf']}</span>
+            <br/>
+        </if>
+
+        <span class="sj5">D/M吃水处上下50cm纵倾力矩MTC的变化差量：D_M+50cm处的MTC值 - D_M-50cm处的MTC值 = {$houprocess['table']['MTCup']} - {$houprocess['table']['MTCdown']} = {$houprocess['dmdz']}</span>
+        <br/>
+        <span class="sj5"><strong>纵倾校正：</strong></span>
+        <br/>
+        <span class="sj6">一次校正值：100 * 矫正后吃水差 * 漂心距船舯距离值 * TPC / 垂线间距 = 100 * {$houprocess['table']['Tc']} * {$houprocess['table']['Xf']} * {$houprocess['table']['TPC']} / {$houprocess['LBP']} = {$houprocess['Dc1']}</span>
+        <br/>
+        <span class="sj6">二次校正值：50 * D/M吃水处上下50cm纵倾力矩MTC的变化差量 * 矫正后吃水差^2 / 垂线间距 = 50 * {$houprocess['table']['dmdz']} * {$houprocess['table']['Tc']}^2 / {$houprocess['LBP']} = {$houprocess['Dc2']}</span>
+        <br/>
+        <span class="sj6">排水量纵倾校正值：一次校正值 + 二次校正值 = {$houprocess['Dc1']} + {$houprocess['Dc2']} = {$houprocess['Dc']}</span>
+        <br/>
+        <span class="sj6">校正后排水量：排水量值 + 排水量纵倾校正值 = {$houprocess['table']['DS']} + {$houprocess['Dc']} = {$houprocess['Dsc']}</span>
+        <br/>
+        <span class="sj5"><strong>港水密度校正</strong></span>
+        <br/>
+        <span class="sj6">排水量校正值：校正后排水量 * (港水密度 - 表载港水密度) / 表载港水密度 =  {$houprocess['Dpc']}</span>
+        <br/>
+        <span class="sj6">校正后最终排水量：校正后排水量 + 排水量校正值 = {$houprocess['Dsc']} + {$houprocess['Dpc']} = {$houprocess['Dspc']}</span>
+        <br/>
+        <br/>
+        <span class="sj1"><strong>最终本次作业得出结果：</strong></span>
+        <br/>
+        <span class="sj2">矫正后排水量 - 舱压载水总重 - 船内淡水总重 - 船内污水总重 - 船内燃油总重 - 船内其他货物总重 - 船舶自重 = {$houprocess['Dspc']} - {$houprocess['t_weight']} - {$houprocess['fwater_weight']} - {$houprocess['sewage_weight']} - {$houprocess['fuel_weight']} - {$houprocess['other_weight']} - {$houprocess['ship_weight']} = {$houprocess['constant']}</span>
+    </div>
+</block>

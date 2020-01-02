@@ -67,7 +67,7 @@
     </div>
     <div class='dadiv'>
 	    <div class="biaotis">
-	        历史作业评价
+	        历史舱容作业检验评价
 	        <p class="mor"><a href="__CONTROLLER__/morejian/firmid/{$content['id']}" class='mor1'>更多数据</a></p>
 	    </div>
 		<volist name="list" id="v">
@@ -92,17 +92,34 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="divv2">
-				<p class="pp3">作业评价</p>
-				<div style="display: inline-block;padding:6px">
-					<div class="evaluate1">  
-		                <div id="starts{$xu}" class='starts'></div> 
-		            </div>
-				</div>
-			</div> -->
 		</div>
 		<?php $xu++;?>
 		</volist>
+
+		<div class="biaotis">
+			近期散货作业检验
+			<p class="mor"><a href="__CONTROLLER__/sh_morejian/firmid/{$content['id']}" class='mor1'>更多数据</a></p>
+		</div>
+		<volist name="sh_list" id="v">
+			<div class='xinx_1'>
+				<img src="{:empty($v['img']) ? '__INDEX_IMAGE__/no_photo_big.png' : $v['img']}" class="img">
+				<div class="divv1">
+					<div class='divv1_1'>
+						<p class="pp1">航次</p>
+						<p class="pp2">{$v['personality']['voyage']}</p>
+					</div>
+					<div class='divv1_1'>
+						<p class="pp1">地点</p>
+						<p class="pp2">{$v['personality']['locationname']}</p>
+					</div>
+					<div class='divv1_1'>
+						<p class="pp1">船名</p>
+						<p class="pp2">{$v['shipname']}</p>
+					</div>
+				</div>
+			</div>
+		</volist>
+
 		<div class="biaotis">
 	        历史汇总数据
 	    </div>
@@ -115,10 +132,7 @@
 			<p class="pp2">{$content['weight']}</p>
 	    </div>
 	</div>
-    <!-- <div class="xinx_2">
-    	<p class="pp1">船名</p>
-		<p class="pp2"></p>
-    </div> -->
+
     <script>
     	$("#starts1").raty({ 
     		readOnly: true, 

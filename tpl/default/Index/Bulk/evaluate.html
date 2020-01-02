@@ -1,0 +1,175 @@
+<extend name="Public:base" />
+<block name='navhover2'>dropbtnhover</block>
+<block name='title'>作业评价</block>
+<block name="center">
+
+	<link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+	<script src="__INDEX_JS__/jquery-1.9.1.min.js"></script> 
+	<script src="__INDEX_JS__/jquery.raty.js"></script>
+    <!-- 判断是否已完成作业 判断是否是检验公司作业 -->
+    <if condition="$coun gt 0 and $content['ffirmtype'] == '1'">
+        <if condition="$content['grade1'] == '0' and $content['firmtype'] == '1'">
+            <!-- 判断是否是检验公司 --> 
+        	<div style="background-color: #f2f2f2;padding: 6px 30px;">
+                <div class='nav'>
+                    作业系统>液货船系统>检验公司评价
+                </div>
+            </div>
+            <div class='rmsg'>
+            	<div style="display: inline-block;vertical-align: middle;">
+            		<img src="__INDEX_IMAGE__/you.png" class="img">
+            	</div>
+            	<div class='titlet'>
+                    <form action="__CONTROLLER__/evaluate" id="" method="post">
+                        <input type="hidden" name="uid" value="{$content['uid']}">
+                        <input type="hidden" name="id" value="{$content['id']}">
+                        <input type="hidden" name="shipid" value="{$content['shipid']}">
+                        <input type="hidden" name="firmtype" value="1">
+                		<p>请您对本次作业的船舶公司进行评价</p>
+                        <div style="width: 150px;margin-left: 150px;">
+                    		<div class="evaluate11">  
+                			    <div id="starts" class='starts'></div>  
+                			</div>  
+                        </div>
+            			<p class='p11'>满意请打五分哟！(一星代表一分)</p>
+                		<input type="text" id="grade" hidden name='grade'/> 
+                		<p class='p12'>留言</p>
+                		<textarea name="content" id="" cols="30" rows="10" class='liuy' placeholder="请写下我们需要改进的，或者对我们的建议！(最多90个字)" maxlength="90"></textarea>
+                		<input type="submit" value='提&nbsp;交' class='subt'>
+                        <div style="height: 10px"></div>
+                    </form>
+            	</div>
+            </div> 
+        <elseif condition="$content['grade2'] == '0' and $content['firmtype'] == '2'" />
+            <!-- 判断是否是船舶公司 -->
+            <div style="background-color: #f2f2f2;padding: 6px 30px;">
+                <div class='nav'>
+                    作业系统>液货船系统>船舶公司评价
+                </div>
+            </div>
+            <div class='rmsg'>
+            	<div style="display: inline-block;vertical-align: middle;">
+            		<img src="__INDEX_IMAGE__/you2.png" class="img">
+            	</div>
+            	<div class='titlet'>
+                    <form action="__CONTROLLER__/evaluate" id="" method="post">
+                        <input type="hidden" name="uid" value="{$content['uid']}">
+                        <input type="hidden" name="shipid" value="{$content['shipid']}">
+                        <input type="hidden" name="firmtype" value="2">
+                        <input type="hidden" name="id" value="{$content['id']}">
+                		<p>请您对本次作业的检验公司进行评价</p>
+                        <div style="width: 150px;margin-left: 150px;">
+                    		<div class="evaluate11">  
+                			    <div id="starts1" class='starts'></div> 
+                			</div>  
+                        </div>
+            			<p class='p11'>满意请打五分哟！(一星代表一分)</p>
+                		<input type="text" id="grade1" hidden name='grade'/> 
+                		<p class='p12'>留言</p>
+                		<textarea name="content" id="" cols="30" rows="10" class='liuy' placeholder="请写下我们需要改进的，或者对我们的建议！(最多90个字)" maxlength="90"></textarea>
+                		<input type="submit" value='提&nbsp;交' class='subt'>
+                        <div style="height: 10px"></div>
+                    </form>
+            	</div>
+            </div>
+        <elseif condition="$content['grade1'] !== '0' and $content['grade2'] !== '0'"/>
+             <!-- 显示双方的评价 -->
+            <div style="background-color: #f2f2f2;padding: 6px 30px;">
+                <div class='nav'>
+                    检验公司评价
+                </div>
+            </div>
+            <div class='rmsg'>
+                <div style="display: inline-block;vertical-align: middle;">
+                    <img src="__INDEX_IMAGE__/you.png" class="img">
+                </div>
+                <div class='titlet'>
+                    <p>本次作业的船舶公司的评价</p>
+                    <div style="width: 150px;margin-left: 150px;">
+                        <div class="evaluate11">  
+                            <div id="starts2" class='starts'></div>
+                        </div>
+                    </div>
+                    <p class='p11'>一星代表一分</p>
+                    <p class='p12'>留言</p>
+                    <textarea name="content" readOnly id="" cols="30" rows="10" class='liuy' placeholder="请写下我们需要改进的，或者对我们的建议！(最多90个字)" maxlength="90">{$content['evaluate2']}</textarea>
+                </div>
+            </div> 
+            <div style="background-color: #f2f2f2;padding: 6px 30px;">
+                <div class='nav'>
+                    船舶公司评价
+                </div>
+            </div>
+            <div class='rmsg'>
+                <div style="display: inline-block;vertical-align: middle;">
+                    <img src="__INDEX_IMAGE__/you2.png" class="img">
+                </div>
+                <div class='titlet'>
+                    <p>本次作业的检验公司的评价</p>
+                    <div style="width: 150px;margin-left: 150px;">
+                        <div class="evaluate11">  
+                            <div id="starts3" class='starts'></div>
+                        </div>
+                    </div>
+                    <p class='p11'>一星代表一分</p>
+                    <p class='p12'>留言</p>
+                    <textarea name="content" readOnly id="" cols="30" rows="10" class='liuy' placeholder="请写下我们需要改进的，或者对我们的建议！(最多90个字)" maxlength="90">{$content['evaluate1']}</textarea>
+                </div>
+            </div>
+        <else />
+            <div class='rmsgs'>
+                <div style="width: 450px;margin: 140px 350px;height:152px;">
+                    <img src="__INDEX_IMAGE__/img3.png" style="display: inline-block;vertical-align: middle;">
+                    <div style="display: inline-block;">
+                        <p style="color: #666666;font-size: 24px;margin-bottom: 40px;margin-left: 30px;">感谢您对本次作业的评价</p>
+                        <p style="color: #ad5800;font-size: 20px;margin-left: 75px;">请耐心等待对方评价</p>
+                    </div>
+                </div>
+            </div>
+        </if>
+    </if>
+    <script>
+    	$(function(){  
+	        $("#starts").raty({  
+	            number : 5,//星星个数  
+	            path : '__INDEX_IMAGE__',//图片路径  
+	            starOn : 'star-on.png',//黄色星星图片（可自定义）  
+	            starOff : 'star-off.png',//灰色星星图片（可自定义）  
+	            hints : ['很差','一般','不错','很好','满意'],//自定义标题  
+                size:34,
+	            click : function(score, evt) {  
+	                $("#grade").val(score);//将分数保存到<input>中  
+	            }  
+	        });  
+	        $("#starts1").raty({  
+	            number : 5,//星星个数  
+	            path : '__INDEX_IMAGE__',//图片路径  
+	            starOn : 'star-on.png',//黄色星星图片（可自定义）  
+	            starOff : 'star-off.png',//灰色星星图片（可自定义）  
+	            hints : ['很差','一般','不错','很好','满意'],//自定义标题  
+                size:34,
+	            click : function(score, evt) {  
+	                $("#grade1").val(score);//将分数保存到<input>中  
+	            }  
+	        });
+            $("#starts2").raty({ 
+                readOnly:true,
+                number:5,
+                path : "__INDEX_IMAGE__",
+                starOn:"star-on.png",
+                starOff : "star-off.png",
+                starHalf:"star-half.png",
+                score:"<?php echo $content['grade2'];?>",
+            });   
+            $("#starts3").raty({ 
+                readOnly:true,
+                number:5,
+                path : "__INDEX_IMAGE__",
+                starOn:"star-on.png",
+                starOff : "star-off.png",
+                starHalf:"star-half.png",
+                score:<?php echo $content['grade1'];?>
+            });
+		});  
+    </script>
+</block>

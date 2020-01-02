@@ -42,50 +42,31 @@ class WorkController extends AppBaseController
 
                 if (I('post.search') != null) {
                     // 查询指令列表
-                    if (I('post.shipname') !== '' and I('post.shipname') !== null) {
-                        $ship = new \Common\Model\ShipFormModel();
-                        $shipmsg = $ship
-                            ->field('id,shipname')
-                            ->where(array('shipname' => I('post.shipname')))
-                            ->find();
-                        if (empty($shipmsg) || $shipmsg == false) {
-                            // 船名输入有误！  2002
-                            $res = array(
-                                'code' => $this->ERROR_CODE_RESULT['NOT_SHIP']
-                            );
-                            echo jsonreturn($res);
-                            die;
-                        }
-                        if ($msg['search_jur'] !== '') {
-                            // 判断提交的船是否在权限之内
-                            if (!in_array($shipmsg['id'], $msg['search_jur_array'])) {
-                                // 该船不在查询范围之内！！  2001
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_RESULT['SHIP_NOT_RANGE']
-                                );
-                                echo jsonreturn($res);
-                                die;
-                            }
-                        }
-                        $where .= " and r.shipid = " . $shipmsg['id'];
-                    } else {
-                        if ($msg['search_jur'] == '') {
-                            // 查询权限为空时，查看所有操作权限之内的作业
-                            if ($msg['operation_jur'] == '') {
-                                $operation_jur = "-1";
-                            } else {
-                                $operation_jur = $msg['operation_jur'];
-                            }
-                            $where .= " and r.uid ='$uid' and r.shipid in (" . $operation_jur . ")";
-                        } else {
-                            $where .= " and r.shipid in (" . $msg['search_jur'] . ")";
-                        }
+                    if (I('post.shipname')) {
+                        $shipname = trimall(I('post.shipname'));
                     }
+                    $where .= " and s.shipname like '%" . $shipname . "%'";
+
+                    if ($msg['search_jur'] == '') {
+                        // 查询权限为空时，查看所有操作权限之内的作业
+                        if ($msg['operation_jur'] == '') {
+                            $operation_jur = "-1";
+                        } else {
+                            $operation_jur = $msg['operation_jur'];
+                        }
+                        $where .= " and r.uid ='$uid' and s.id in (" . $operation_jur . ")";
+                    } else {
+                        $where .= " and s.id in (" . $msg['search_jur'] . ")";
+                    }
+
                     // 获取登陆用户的所属公司ID
                     $firmid = $user->getFieldById($uid, 'firmid');
                     if ($msg['look_other'] == '1') {
                         $where .= " and u.firmid=$firmid";
+                    } elseif ($msg['look_other'] == '3') {
+                        $where .= " and u.id=$uid";
                     }
+
                 } else {
                     // 作业指令列表
                     if ($msg['operation_jur'] == '') {
@@ -97,8 +78,9 @@ class WorkController extends AppBaseController
                     $where .= " and r.shipid in (" . $operation_jur . ")";
                 }
 
+
                 // 条件---航次
-                if (I('post.voyage') != null) {
+                if (I('post.voyage')) {
                     $voyage = trimall(I('post.voyage'));
                     // $where .= " and r.voyage = '$voyage'";
                     $where .= " and r.personality like  '" . '%"voyage":"' . $voyage . '%\'';
@@ -258,7 +240,7 @@ class WorkController extends AppBaseController
      */
     public function addresult()
     {
-        if (I('post.uid') and I('post.shipid') and I('post.voyage') !== null and I('post.start') !== null and I('post.objective') !== null and I('post.imei')) {
+        if (I('post.uid') and I('post.shipid') and I('post.imei')) {
             $user = new \Common\Model\UserModel();
             //判断用户状态、公司状态、标识比对
             $msg = $user->is_judges(I('post.uid'), I('post.imei'));
@@ -282,6 +264,145 @@ class WorkController extends AppBaseController
                     //重复数据   2003
                     $res = array(
                         'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
+                    );
+                }
+            } else {
+                //返回错误返回码
+                $res = $msg;
+            }
+        } else {
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+
+    /**
+     * 修改作业
+     * @param int uid 用户ID
+     * @param int shipid 船ID
+     * @param string voyage 航次
+     * @param string locationname 作业地点
+     * @param string start 起运港
+     * @param string objective 目的港
+     * @param string goodsname 货名
+     * @param string transport 运单量
+     * @param string imei 标识
+     * @param string shipper 发货方
+     * @param string feedershipname 海船船名
+     * @param string number 编号
+     * @param string wharf 海船装运码头
+     * @param string volume 海船发货量
+     * @param string inspection 海船商检量
+     * @param string sumload 总装载量
+     * @return array
+     * @return @param code 返回码
+     * @return @param resultid 说明、内容
+     */
+    public function later_edit_result()
+    {
+        if (I('post.uid') and I('post.resultid') and I('post.imei') and I('post.start') != null and I('post.objective') != null) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、公司状态、标识比对
+            $msg = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg['code'] == '1') {
+                $result = new \Common\Model\WorkModel();
+                $data = I('post.');
+                //添加数据
+                $res = $result->laterEditResult($data);
+            } else {
+                //返回错误返回码
+                $res = $msg;
+            }
+        } else {
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+    /**
+     * 修改个性化字段信息
+     * @param int uid 用户ID
+     * @param int shipid 船ID
+     * @param string voyage 航次
+     * @param string locationname 作业地点
+     * @param string start 起运港
+     * @param string objective 目的港
+     * @param string goodsname 货名
+     * @param string transport 运单量
+     * @param string imei 标识
+     * @param string shipper 发货方
+     * @param string feedershipname 海船船名
+     * @param string number 编号
+     * @param string wharf 海船装运码头
+     * @param string volume 海船发货量
+     * @param string inspection 海船商检量
+     * @param string sumload 总装载量
+     * @return array
+     * @return @param code 返回码
+     * @return @param resultid 说明、内容
+     */
+    public function get_personality_info()
+    {
+        if (I('post.uid') and I('post.resultid') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、公司状态、标识比对
+            $msg = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg['code'] == '1') {
+                $result = new \Common\Model\WorkModel();
+                $where = array(
+                    'r.id' => ':id',
+                    'r.uid' => ':uid'
+                );
+                $bind = array(
+                    ":uid" => intval(I('post.uid')),
+                    ':id' => intval(I('post.resultid')),
+                );
+                $res_person = $result
+                    ->alias('r')
+                    ->field('r.personality,s.shipname')
+                    ->join('left join ship as s on s.id=r.shipid')
+                    ->where($where)
+                    ->bind($bind)
+                    ->find();
+                $res_person['personality'] = json_decode($res_person['personality'], true);
+                $firm = new \Common\Model\FirmModel();
+                $firmmsg = $firm
+                    ->field('personality')
+                    ->where(array('id' => $msg['content']))
+                    ->find();
+                if ($firmmsg !== false and !empty($firmmsg['personality'])) {
+                    //获取用户公司的自定义字段，如果存在没填写的字段则不允许打印pdf
+                    $person = new \Common\Model\PersonalityModel();
+                    $where = array(
+                        'id' => array('in', json_decode($firmmsg['personality'], true))
+                    );
+                    $person_arr = $person->field('title,name')->where($where)->select();
+                    foreach ($person_arr as $key => $value) {
+                        //判断是否存在,如果其中有空值报错个性化字段残缺，2030
+                        if (!empty($res_person['personality'][$value['name']]) and $res_person['personality'][$value['name']] != "") {
+                            $person_arr[$key]['value'] = $res_person['personality'][$value['name']];
+                        } else {
+                            $person_arr[$key]['value'] = "";
+                        }
+                    }
+
+                    array_unshift($person_arr,array("title" => "船名", 'name' => 'shipname', "value" => $res_person['shipname']));
+
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                        'content' => $person_arr
+                    );
+                } else {
+                    //该作业所属公司没有pdf文件模板  2006
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['FIRM_NOT_PDF']
                     );
                 }
             } else {
@@ -596,8 +717,17 @@ class WorkController extends AppBaseController
                     ->join('left join user u on u.firmid = f.id')
                     ->where(array('u.id' => I('post.uid')))
                     ->find();
-                if ($firmmsg !== false and !empty($firmmsg['pdf'])) {
-
+                if ($firmmsg !== false and !empty($firmmsg['pdf']) and !empty($firmmsg['personality'])) {
+                    //获取用户公司的自定义字段，如果存在没填写的字段则不允许打印pdf
+                    $person = new \Common\Model\PersonalityModel();
+                    $where = array(
+                        'id' => array('in', json_decode($firmmsg['personality'], true))
+                    );
+                    $person_arr = $person->field('name')->where($where)->select();
+                    foreach ($person_arr as $key => $value) {
+                        //判断是否存在,如果其中有空值报错个性化字段残缺，2030
+                        if (empty($arr['personality'][$value['name']]) or $arr['personality'][$value['name']] == "") exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['PERSON_INCOMPLETE'])));
+                    }
                     //引入了https，做https协议的适配
                     $is_https = I('post.minipost');
                     if ($is_https) {
@@ -607,7 +737,6 @@ class WorkController extends AppBaseController
                         $PDFname = $resultid . ".pdf";
                         //如果是https，则返回全部的
                         $filename = pdf($arr, $firmmsg, "", $filepath, $PDFname);//生成PDF文件
-
                         if ($filename != '') {
                             $filename = '/Public/pdf/' . $filepath . $PDFname;
                         }
@@ -659,6 +788,29 @@ class WorkController extends AppBaseController
         if (I('post.uid') and I('post.imei')) {
             $ship = new \Common\Model\ShipFormModel();
             $res = $ship->shiplist(I('post.uid'), I('post.imei'));
+        } else {
+            //参数不正确，参数缺失	5
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+    /**
+     * 获取用户可以查询的船列表
+     * @param int uid 用户ID
+     * @param string imei 标识
+     * @return @param array
+     * @return @param code 返回码
+     * @return @param content 说明、内容
+     * @
+     */
+    public function shipSearchList()
+    {
+        if (I('post.uid') and I('post.imei')) {
+            $ship = new \Common\Model\ShipFormModel();
+            $res = $ship->shipSearchList(I('post.uid'), I('post.imei'));
         } else {
             //参数不正确，参数缺失	5
             $res = array(
@@ -1310,6 +1462,16 @@ class WorkController extends AppBaseController
                     $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
                 }
 
+                //判断空高是否在基准高度与0之内
+                if ($data['ullage'] < 0 or $data['ullage'] > $data['altitudeheight']) {
+                    //空高有误 2009
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
+                    );
+                    M()->rollback();
+                    exit(jsonreturn($res));
+                }
+
                 // 查找数据条件
                 $where = array(
                     'resultid' => $data['resultid'],
@@ -1917,9 +2079,19 @@ class WorkController extends AppBaseController
      * */
     public function bookdata()
     {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.ullage2') !== '' and I('post.draft1') !== '' and I('post.draft2') !== '' and I('post.value1') !== '' and I('post.value2') !== '' and I('post.value3') !== '' and I('post.value4') !== '') {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.draft1') !== '' and I('post.value1') !== '') {
             $result = new \Common\Model\WorkModel();
-            $res = $result->reckon1(I('post.'));
+            $data = I('post.');
+
+            if ($data['draft2'] == "") {
+                //如果刻度2没有填写，但是填写了刻度2所在列的值，说明是不对的,报错4，参数缺失
+                if ($data['value2'] != "" or $data['value4'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'])));
+            } else {
+                //如果刻度2写了，但是没填写刻度2所在列的值，说明是不对的,报错4，参数缺失
+                if ($data['value2'] == "" or ($data['value4'] == "" and $data['ullage2'] != "")) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'])));
+            }
+
+            $res = $result->reckon1($data);
         } else {
             //参数不正确，参数缺失    4
             $res = array(
@@ -2020,7 +2192,7 @@ class WorkController extends AppBaseController
      * */
     public function capacitydata()
     {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.ullage2') !== '' and I('post.capacity1') !== '' and I('post.capacity2') !== '') {
+        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.cabinid') and I('post.ullage1') !== '' and I('post.capacity1') !== '') {
 
             $result = new \Common\Model\WorkModel();
             $res = $result->capacityreckon(I('post.'));
@@ -2901,12 +3073,12 @@ class WorkController extends AppBaseController
                     $cabin_name = "";
 
                     //赋值通用数据
-                    $data['resultid'] = I('post.resultid');
-                    $data['solt'] = I('post.solt');
-                    $data['shipid'] = I('post.shipid');
-                    $data['qufen'] = I('post.qufen');
+                    $data['resultid'] = intval(I('post.resultid'));
+                    $data['solt'] = intval(I('post.solt'));
+                    $data['shipid'] = intval(I('post.shipid'));
+                    $data['qufen'] = intval(I('post.qufen'));
                     $data['quantity'] = I('post.quantity');
-                    $data['is_pipeline'] = I('post.is_pipeline');
+                    $data['is_pipeline'] = intval(I('post.is_pipeline'));
                     $data['is_fugai'] = I('post.is_fugai');
                     $data['is_work'] = 1;
 
@@ -2929,6 +3101,16 @@ class WorkController extends AppBaseController
                         $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
                     } else {
                         $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
+                    }
+                    //判断空高是否在基准高度与0之内
+                    if ($data['ullage'] < 0 or $data['ullage'] > $data['altitudeheight']) {
+                        //空高有误 2009
+                        $res = array(
+                            'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
+                        );
+                        M()->rollback();
+                        $res['cabinname'] = $cabin_name;
+                        exit(jsonreturn($res));
                     }
 
                     // 查找数据条件
@@ -3256,13 +3438,46 @@ class WorkController extends AppBaseController
             M()->startTrans();
             //初始化修正后空高
             $correntKong = array();
+            //吃水差刻度是否有过值的记录
+            $draftFlag = true;
+            //数组第一个key
+            $firstKey = -1;
+
             foreach ($datas as $key => $data) {
-                $cabin_name = "";
                 $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
 
-                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['draft1'] !== '' and $data['draft2'] !== '' and $data['value1'] !== '' and $data['value2'] !== '' and $data['value3'] !== '' and $data['value4'] !== '') {
+                /**
+                 * 该部分验证刻度2的数据是否是全空或者全满
+                 */
+                if ($data['draft2'] == "") {
+                    //如果刻度2没有填写，但是填写了刻度2所在列的值，说明是不对的,报错4，参数缺失
+                    if ($data['value2'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
+                    if ($data['value4'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
+                    if ($firstKey == -1) {
+                        $draftFlag = false;
+                        $firstKey = $key;
+                    } else {
+                        //如果第一个舱已经有了数据，后面的舱没有数据，说明数据没有全空或者全满，报错4，参数缺失
+                        if ($draftFlag === true) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "draft2")));
+                    }
+                } else {
+                    //如果刻度2写了，但是没填写刻度2所在列的值，说明是不对的,报错4，参数缺失
+                    if ($data['value2'] == "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
+                    if ($data['value4'] == "" and $data['ullage2'] != "") {
+                        exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
+                    }
+                    if ($firstKey == -1) {
+                        $draftFlag = true;
+                        $firstKey = $key;
+                    } else {
+                        //如果第一个舱没有数据，后面的舱却有了数据，说明数据没有全空或者全满，报错4，参数缺失
+                        if ($draftFlag === false) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $firstKey, "type" => "draft2")));
+                    }
+                }
 
 
+                //允许出现部分数据不填写，校验后不填写的数据自动补全
+                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['draft1'] !== '' and $data['value1'] !== '') {
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
                     $data['imei'] = $imei;
@@ -3273,6 +3488,7 @@ class WorkController extends AppBaseController
                     if ($res['code'] != 1) {
                         M()->rollback();
                         $res['cabinname'] = $cabin_name;
+                        $res['index'] = $key;
                         exit(jsonreturn($res));
                     } else {
                         $correntKong[] = array('cabinid' => $data['cabinid'], 'correntkong' => $res['correntkong']);
@@ -3336,9 +3552,9 @@ class WorkController extends AppBaseController
             M()->startTrans();
 
             foreach ($datas as $key => $data) {
-                $cabin_name = "";
+
                 $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
-                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['ullage2'] !== '' and $data['capacity1'] !== '' and $data['capacity2'] !== '') {
+                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['capacity1'] !== '') {
                     $data['resultid'] = $resultid;
                     $data['uid'] = $uid;
                     $data['imei'] = $imei;
@@ -3351,6 +3567,7 @@ class WorkController extends AppBaseController
                     if ($res['code'] != 1) {
                         M()->rollback();
                         $res['cabinname'] = $cabin_name;
+                        $res['index'] = $key;
                         exit(jsonreturn($res));
                     }
                 } else {
@@ -3360,7 +3577,7 @@ class WorkController extends AppBaseController
                         'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
                     );
                     $res['cabinname'] = $cabin_name;
-
+                    $res['index'] = $key;
                     exit(jsonreturn($res));
                 }
             }

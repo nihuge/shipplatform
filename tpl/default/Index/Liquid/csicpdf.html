@@ -4,6 +4,7 @@
 <block name="center">
 <!--startprint9-->
     <style>
+
         .table_01,.ju { font-size:14px; color:#333; font-family:"方正兰亭黑简";margin:auto 5px;font-weight: bold}
         .table_02 { font-size:14px; font-family:"方正兰亭黑简"; color:#333;margin:auto 5px;}
         .box02 { height:41px; margin:20px auto; line-height:50px; text-align:center; font-size:14px; color:#fff; font-family:"方正兰亭黑简";}
@@ -45,17 +46,26 @@
         .rater-click-tips{font:12px/25px;color:#333;margin-left:10px;background:url(__HOME_IMG__/comment/infobox-bg-l.gif) no-repeat 0 0;width:125px;height:34px;padding-left:16px;overflow:hidden;}
         .rater-click-tips span{display:block;background:#FFF9DD url(__HOME_IMG__/comment/infobox-bg-l-r.gif) no-repeat 100% 0;height:34px;line-height:34px;padding-right:5px;}
         .rater-star-item-tips{background:url(__HOME_IMG__/comment/star-tips.gif) no-repeat 0 0;height:41px;overflow:hidden;}
-        .cur.rater-star-item-tips{display:block;}   
+        .cur.rater-star-item-tips{display:block;}
         .rater-star-result{color:#FF6600;font-weight:bold;padding-left:10px;float:left;}
-        @("@")page 
+        @("@")page
         {
             size:  auto;   /* auto is the initial value */
             margin: 0mm;  /* this affects the margin in the printer settings */
-        } 
+            size: portrait; /* 纵向打印 */
+        }
     </style>
 
     <div style="margin: 10px 61px;">
-        <h2 align="center">{$content['goodname']}计重记录单</h2>
+        <div style="width: 100%;display: flex;flex-direction: row;justify-content: space-between;">
+            <div style="width: 20%;"></div>
+            <h2 style=" width: 60%;text-align:center;line-height: 100px;">{$content['goodname']}计重记录单</h2>
+            <div style="width:20%;height: 100px;">
+                <img style="width: 80px;height: 80px;display:block;margin:0 auto;" src="{$content['verify']}"/>
+                <p style="text-align: center;">扫描上方二维码验真伪</p>
+            </div>
+        </div>
+
         <br>
         <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
             <div class="div1" style="text-align: left;width:45px;height:40px;line-height: 40px;">船名：</div>
@@ -75,7 +85,7 @@
             <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">起运港：</div>
             <div class="div1" style="border-bottom:solid 1px black;width:125px;text-align: center;">{$personality['start']}</div>
             <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">目的港：</div>
-            <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['objective']}</div>     
+            <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">{$personality['objective']}</div>
             <div class="div1" style="text-align: left;width:115px;height:40px;line-height: 40px;">作业起止时间：</div>
             <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$endtime}</div>
             <div class="div1" style="text-align: left;width:25px;height:40px;line-height: 40px;">到</div>
@@ -142,7 +152,7 @@
                     <td>{$v[1]['volume']}</td>
                     <td>{$v[1]['expand']}</td>
                     <td>{$v[1]['standardcapacity']}</td>
-                    
+
                 </tr>
             </volist>
             <tr>
@@ -193,7 +203,7 @@
             <div class="div1" style="border-bottom:solid 1px black;width:225px;">{$personality['thermometer']}</div>
             <div class="div1" style="text-align: left;width:90px;height:40px;line-height: 40px;margin-left: 55px;">量油尺编号：</div>
             <div class="div1" style="border-bottom:solid 1px black;width:220px;">{$personality['dipstick']}</div>
-            
+
         </div>
         <table border="0" cellspacing="0" cellpadding="0" width="1077px" class="ju">
            <!--  <tr>
@@ -212,7 +222,7 @@
             <tr>
                 <th colspan="4" style="border-bottom:solid 1px black;height:30px;">&nbsp;</th>
             </tr>
-            
+
             <tr>
                 <th colspan=4>&nbsp;</th>
             </tr>
@@ -230,7 +240,7 @@
                     <if condition="$content['ffirmtype'] == '1'">
                         <if condition="!empty($content['eimg'])"><img src="{$content[eimg]}" style="height: 60px;width:180px"></if>
                     <else/>
-                        
+
                     </if>
                 </th>
             </tr>
@@ -245,7 +255,7 @@
             <!-- </form> -->
         </div>
     </div>
-        
+
     <script>
     function preview(oper){
         if (oper < 10){
@@ -274,7 +284,7 @@
         var hkey_path;
         hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
         try {
-            var RegWsh = new ActiveXObject("WScript.Shell"); //设置上页边距（8）   
+            var RegWsh = new ActiveXObject("WScript.Shell"); //设置上页边距（8）
             // RegWsh.RegWrite(hkey_path + HKEY_Path + HKEY_Key, "8");
             RegWsh.RegWrite(hkey_path + "header", "");
             RegWsh.RegWrite(hkey_path + "footer", "");

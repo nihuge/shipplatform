@@ -72,7 +72,8 @@ class UserModel extends BaseModel
         //判断标识是否一致
         $umsg = $this
             ->field($field)
-            ->where(array('id' => $uid))
+            ->where(array('id' => ":id"))
+            ->bind(array(':id' => trimall($uid)))
             ->find();
         if ($umsg['imei'] == $imei) {
             // 判断公司状态
@@ -173,16 +174,23 @@ class UserModel extends BaseModel
      * */
     public function login($title, $pwd, $imei)
     {
+//        judgeOneString($title)
         $where = array(
-            'title' => $title,
-            'pwd' => encrypt($pwd)
+            'u.title' => ":title",
+            'u.pwd' => ":pwd"
         );
+        $bind = array(
+            ":title" => $title,
+            ":pwd" => encrypt($pwd),
+        );
+
         $arr = $this
             ->alias('u')
             ->join('left join firm f on f.id = u.firmid')
 //            ->field('u.status,u.imei,u.firmid,f.firmtype')
             ->field('u.id,u.title,u.username,u.status,u.firmid,f.firmtype,u.pid')
             ->where($where)
+            ->bind($bind)
             ->find();
         if ($arr != '') {
             // 判断用户状态
@@ -320,11 +328,13 @@ class UserModel extends BaseModel
     public function getUserOperationSeach($uid)
     {
         $usermsg = $this
-            ->field('id,operation_jur,search_jur,look_other,firmid')
+            ->field('id,operation_jur,search_jur,sh_operation_jur,sh_search_jur,look_other,firmid')
             ->where(array('id' => $uid))
             ->find();
         $usermsg['operation_jur_array'] = explode(',', $usermsg['operation_jur']);
         $usermsg['search_jur_array'] = explode(',', $usermsg['search_jur']);
+        $usermsg['sh_operation_jur_array'] = explode(',', $usermsg['sh_operation_jur']);
+        $usermsg['sh_search_jur_array'] = explode(',', $usermsg['sh_search_jur']);
         $usermsg['look_other'] = $usermsg['look_other'];
         return $usermsg;
     }
@@ -375,5 +385,29 @@ class UserModel extends BaseModel
             }
         }
         return $res;
+    }
+
+    /**
+     * 判断用户是否是公司管理员
+     * @param $uid
+     * @param $firm_id
+     * @return bool
+     */
+    public function checkAdmin($uid, $firm_id)
+    {
+        $where = array(
+            "id" => ":uid",
+            'firm_id' => ":firm_id"
+        );
+        $bind = array(
+            ":uid" => intval($uid),
+            ":firm_id" => intval($firm_id),
+        );
+        $u_res = $this->field("pid")->where($where)->bind($bind)->find();
+        if ($u_res['pid'] === 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

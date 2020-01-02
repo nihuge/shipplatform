@@ -244,7 +244,6 @@ class ShipController extends AppBaseController
                             );
 //                        echo ajaxReturn(array("state" => 2, 'message' => $this->db->getError()));
                         } else {
-
                             // 判断是否有底量测量孔，有底量测量孔并且有纵倾修正表的话，算法为:c,没有的话算法为：d
                             if ($data['is_diliang'] == '1' and $data['suanfa'] == 'b') {
                                 $data['suanfa'] = 'c';
@@ -260,140 +259,143 @@ class ShipController extends AppBaseController
 
                             $old_info = $this->db->field('shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
 
+                            //验证船名是否和已有的船名重复
+                            $name_count = $this->db->where(array('shipname' => $data['shipname'], 'id' => array('neq', $data['id'])))->count();
 
-                            if ($res_count > 1 or $old_info['review'] == 3) {
-
-                                /**
-                                 * 开始对比数据差异，获取更改的数据
-                                 */
-                                unset($old_info['review']);
-
-                                /**
-                                 * 占位数组，防止重复提交时有些值没有被覆盖掉
-                                 */
-                                $tpl_data = array(
-                                    'shipname' => null,
-                                    'cabinnum' => null,
-                                    'coefficient' => null,
-                                    'is_guanxian' => null,
-                                    'is_diliang' => null,
-                                    'suanfa' => null,
-                                    'expire_time' => null,
+                            if ($name_count > 0) {
+                                //船舶已存在   2014
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_RESULT['HAVE_SHIP'],
+                                    'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
                                 );
-                                //对比差异
-                                $diff_info = array_diff_assoc($old_info, $data);
-                                //新值赋值
-                                foreach ($diff_info as $key => $value) {
-                                    $diff_info[$key] = $data[$key];
-                                }
+                                exit(jsonreturn($res));
+                            }
 
-                                $ship_review = M("ship_review");
-                                if ($diff_info['shipname'] !== null) {
-                                    //验证船名是否和已有的船名重复
-                                    $name_count = $this->db->where(array('shipname' => $diff_info['shipname']))->count();
-                                    //验证船名是否和正在审核中其他船的船名重复
-                                    $review_name_count = $ship_review->where(array(
-                                        'shipname' => $diff_info['shipname'],
-                                        'shipid' => array('neq', $data['id']),
-                                        'status' => 1
-                                    ))->count();
-
-                                    if ($name_count > 0 or $review_name_count > 0) {
-                                        //船舶已存在   2014
-                                        $res = array(
-                                            'code' => $this->ERROR_CODE_RESULT['HAVE_SHIP'],
-                                            'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
-                                        );
-                                        exit(jsonreturn($res));
-                                    }
-                                }
-
-
-                                if ($diff_info['cabinnum'] !== null) {
-                                    if ($diff_info['cabinnum'] >= $old_info['cabinnum']) {
-                                        //不可以减少舱总数，2026
-                                        $res = array(
-                                            'code' => $this->ERROR_CODE_RESULT['CAN_NOT_REDUCE_CABIN_NUM'],
-                                            'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['CAN_NOT_REDUCE_CABIN_NUM']]
-                                        );
-                                        exit(jsonreturn($res));
-                                    }
-                                }
-
-
-                                $review_data = array_merge($tpl_data, $diff_info);
-
-
-                                $review_data['shipid'] = $data['id'];
-                                $review_data['userid'] = I("post.uid");
-                                $review_data['create_time'] = time();
-
-                                $review_map = array(
-                                    'shipid' => $data['id'],
-                                    'status' => 1
+                            if ($data['cabinnum'] < $old_info['cabinnum']) {
+                                //不可以减少舱总数，2026
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_RESULT['CAN_NOT_REDUCE_CABIN_NUM'],
+                                    'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['CAN_NOT_REDUCE_CABIN_NUM']]
                                 );
 
-                                /**
-                                 * 重复上传会覆盖。以最新的为准
-                                 */
-                                M()->startTrans();
-                                $review_count = $ship_review->where($review_map)->count();
-                                if ($review_count >= 1) {
-                                    //修改
-                                    $result = $ship_review->where($review_map)->save($review_data);
-                                    //修改时获取主键ID
-                                    if ($result !== false) {
-                                        $id = $ship_review->field('id,data_status,cabin_picture,picture')->where($review_map)->find();
-                                        $result = (int)$id['id'];
-                                        if ($id['data_status'] == 3 and $id['cabin_picture'] == 1) {
-                                            //如果状态是上传舱信息但没有舱照片则改为只上传了船信息
-                                            $status_data = array(
-                                                'data_status' => 1
+                            } else {
+                                if ($res_count > 1 or $old_info['review'] == 3) {
+
+                                    /**
+                                     * 开始对比数据差异，获取更改的数据
+                                     */
+                                    unset($old_info['review']);
+
+                                    /**
+                                     * 占位数组，防止重复提交时有些值没有被覆盖掉
+                                     */
+                                    $tpl_data = array(
+                                        'shipname' => null,
+                                        'cabinnum' => null,
+                                        'coefficient' => null,
+                                        'is_guanxian' => null,
+                                        'is_diliang' => null,
+                                        'suanfa' => null,
+                                        'expire_time' => null,
+                                    );
+                                    //对比差异
+                                    $diff_info = array_diff_assoc($old_info, $data);
+                                    //新值赋值
+                                    foreach ($diff_info as $key => $value) {
+                                        $diff_info[$key] = $data[$key];
+                                    }
+
+                                    $ship_review = M("ship_review");
+                                    if ($diff_info['shipname'] !== null) {
+                                        //验证船名是否和正在审核中其他船的船名重复
+                                        $review_name_count = $ship_review->where(array(
+                                            'shipname' => $diff_info['shipname'],
+                                            'shipid' => array('neq', $data['id']),
+                                            'status' => 1
+                                        ))->count();
+
+                                        if ($review_name_count > 0) {
+                                            //船舶已存在   2014
+                                            $res = array(
+                                                'code' => $this->ERROR_CODE_RESULT['HAVE_SHIP'],
+                                                'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
                                             );
-                                            $status_result = $ship_review->where($review_map)->save($status_data);
-                                            if ($status_result === false) {
-                                                M()->rollback();
-                                                //修改失败,错误11
-                                                $res = array(
-                                                    'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
-                                                );
-                                                exit(jsonreturn($res));
-                                            }
+                                            exit(jsonreturn($res));
                                         }
                                     }
+
+
+                                    $review_data = array_merge($tpl_data, $diff_info);
+
+
+                                    $review_data['shipid'] = $data['id'];
+                                    $review_data['userid'] = I("post.uid");
+                                    $review_data['create_time'] = time();
+
+                                    $review_map = array(
+                                        'shipid' => $data['id'],
+                                        'status' => 1
+                                    );
+
+                                    /**
+                                     * 重复上传会覆盖。以最新的为准
+                                     */
+                                    M()->startTrans();
+                                    $review_count = $ship_review->where($review_map)->count();
+                                    if ($review_count >= 1) {
+                                        //修改
+                                        $result = $ship_review->where($review_map)->save($review_data);
+                                        //修改时获取主键ID
+                                        if ($result !== false) {
+                                            $id = $ship_review->field('id,data_status,cabin_picture,picture')->where($review_map)->find();
+                                            $result = (int)$id['id'];
+                                            if ($id['data_status'] == 3 and $id['cabin_picture'] == 1) {
+                                                //如果状态是上传舱信息但没有舱照片则改为只上传了船信息
+                                                $status_data = array(
+                                                    'data_status' => 1
+                                                );
+                                                $status_result = $ship_review->where($review_map)->save($status_data);
+                                                if ($status_result === false) {
+                                                    M()->rollback();
+                                                    //修改失败,错误11
+                                                    $res = array(
+                                                        'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
+                                                    );
+                                                    exit(jsonreturn($res));
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        //新建
+                                        $result = $ship_review->add($review_data);
+                                    }
+                                    if ($result !== false) {
+                                        M()->commit();
+                                        //等待审核
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_RESULT['WAIT_REVIEW'],
+                                            'review_id' => $result
+                                        );
+                                    } else {
+                                        M()->rollback();
+                                        //修改失败,错误11
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
+                                        );
+                                    }
                                 } else {
-                                    //新建
-                                    $result = $ship_review->add($review_data);
-                                }
-                                if ($result !== false) {
-                                    M()->commit();
-                                    //等待审核
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_RESULT['WAIT_REVIEW'],
-                                        'review_id' => $result
-                                    );
-//                                    echo ajaxReturn($res);
-                                } else {
-                                    M()->rollback();
-                                    //修改失败,错误11
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
-                                    );
-                                }
-                            } else {
-                                $result = $this->db->editData($map, $data);
-                                if ($result !== false) {
-                                    //成功
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                    );
-//                                    echo ajaxReturn($res);
-                                } else {
-                                    //修改失败,错误11
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
-                                    );
-//                            echo ajaxReturn(array("state" => 2, 'message' => "修改失败"));
+                                    $result = $this->db->editData($map, $data);
+                                    if ($result !== false) {
+                                        //成功
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                        );
+                                    } else {
+                                        //修改失败,错误11
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
+                                        );
+                                    }
                                 }
                             }
                         }

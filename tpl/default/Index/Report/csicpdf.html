@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证报告</title>
+    <link rel="stylesheet" href="__INDEX_CSS__/login.css">
+    <script src="__INDEX_JS__/jquery1.8.3.min.js" type="text/javascript"></script>
+    <script src="__INDEX_STATIC__/layer/layer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="__INDEX_CSS__/base.css">
+    <!-- 分野分页样式 -->
+    <link rel="stylesheet" type="text/css" href="__INDEX_CSS__/page.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css">
+    <script src="__PUBLIC__/laydate/laydate.js"></script>
+    <script src="__PUBLIC__/layui/layui.all.js"></script>
+
+    <style>
+        .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
+    </style>
+</head>
+<body>
+<div class="outer" style="padding:0px;">
+    <div class="topBox" style="position: unset;">
+        <div class="box">
+            <div class="boxleft">
+                <div class="imgs">
+                    <a href="{:U('index/index')}"><img src="__INDEX_IMAGE__/login/img.png"></a>
+                </div>
+                <div class="height1"></div>
+                <div class="kong1"></div>
+                <div class="logofont">舱容计量报告在线验证</div>
+            </div>
+        </div>
+    </div>
+    <style>
+
+        .table_01, .ju {
+            font-size: 14px;
+            color: #333;
+            font-family: "方正兰亭黑简";
+            margin: auto 5px;
+            font-weight: bold
+        }
+
+        .table_02 {
+            font-size: 14px;
+            font-family: "方正兰亭黑简";
+            color: #333;
+            margin: auto 5px;
+        }
+
+        .table_02 th{
+            border: 1px solid grey;
+        }
+        .table_02 td{
+            border: 1px solid grey;
+        }
+
+        .box02 {
+            height: 41px;
+            margin: 20px auto;
+            line-height: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            font-family: "方正兰亭黑简";
+        }
+
+        input {
+            background-color: #3ca0fe;
+            border: none;
+            margin-left: 7px;
+            height: 30px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .ju03 {
+            height: 35px;
+            width: 200px;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        .div1 {
+            display: inline-block;
+        }
+
+        .quiz {
+            border: solid 1px #ccc;
+            height: 270px;
+        }
+
+        .quiz h3 {
+            font-size: 14px;
+            line-height: 35px;
+            height: 35px;
+            border-bottom: solid 1px #e8e8e8;
+            padding-left: 20px;
+            background: #f8f8f8;
+            color: #666;
+            position: relative;
+        }
+
+        .quiz_content {
+            padding-top: 10px;
+            padding-left: 20px;
+            position: relative;
+            height: 205px;
+        }
+
+        .quiz_content .btm {
+            border: none;
+            width: 100px;
+            height: 33px;
+            background: url(__HOME_IMG__/btn.gif) no-repeat;
+            margin: 10px 0 0 64px;
+            display: inline;
+            cursor: pointer;
+        }
+
+        .quiz_content li.full-comment {
+            position: relative;
+            z-index: 99;
+            height: 41px;
+        }
+
+        .quiz_content li.cate_l {
+            height: 24px;
+            line-height: 24px;
+            padding-bottom: 10px;
+        }
+
+        .quiz_content li.cate_l dl dt {
+            float: left;
+        }
+
+        .quiz_content li.cate_l dl dd {
+            float: left;
+            padding-right: 15px;
+        }
+
+        .quiz_content li.cate_l dl dd label {
+            cursor: pointer;
+        }
+
+        .quiz_content .l_text {
+            height: 120px;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .quiz_content .l_text .m_flo {
+            float: left;
+            width: 47px;
+        }
+
+        .quiz_content .l_text .text {
+            width: 634px;
+            height: 109px;
+            border: solid 1px #ccc;
+        }
+
+        .quiz_content .l_text .tr {
+            position: absolute;
+            bottom: -18px;
+            right: 40px;
+        }
+
+        /*goods-comm-stars style*/
+        .goods-comm {
+            height: 41px;
+            position: relative;
+            z-index: 7;
+        }
+
+        .goods-comm-stars {
+            line-height: 25px;
+            padding-left: 12px;
+            height: 41px;
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 400px;
+        }
+
+        .goods-comm-stars .star_l {
+            float: left;
+            display: inline-block;
+            margin-right: 5px;
+            display: inline;
+        }
+
+        .goods-comm-stars .star_choose {
+            float: left;
+            display: inline-block;
+        }
+
+        /* rater star */
+        .rater-star {
+            position: relative;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            background-repeat: repeat-x;
+            background-position: left top;
+            float: left;
+        }
+
+        .rater-star-item, .rater-star-item-current, .rater-star-item-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-repeat: repeat-x;
+        }
+
+        .rater-star-item {
+            background-position: -100% -100%;
+        }
+
+        .rater-star-item-hover {
+            background-position: 0 -48px;
+            cursor: pointer;
+        }
+
+        .rater-star-item-current {
+            background-position: 0 -48px;
+            cursor: pointer;
+        }
+
+        .rater-star-item-current.rater-star-happy {
+            background-position: 0 -25px;
+        }
+
+        .rater-star-item-hover.rater-star-happy {
+            background-position: 0 -25px;
+        }
+
+        .rater-star-item-current.rater-star-full {
+            background-position: 0 -72px;
+        }
+
+        .popinfo {
+            display: none;
+            position: absolute;
+            top: 30px;
+            background: url(__HOME_IMG__/comment/infobox-bg.gif) no-repeat;
+            padding-top: 8px;
+            width: 192px;
+            margin-left: -14px;
+        }
+
+        .popinfo .info-box {
+            border: 1px solid #f00;
+            border-top: 0;
+            padding: 0 5px;
+            color: #F60;
+            background: #FFF;
+        }
+
+        .popinfo .info-box div {
+            color: #333;
+        }
+
+        .rater-click-tips {
+            font: 12px/25px;
+            color: #333;
+            margin-left: 10px;
+            background: url(__HOME_IMG__/comment/infobox-bg-l.gif) no-repeat 0 0;
+            width: 125px;
+            height: 34px;
+            padding-left: 16px;
+            overflow: hidden;
+        }
+
+        .rater-click-tips span {
+            display: block;
+            background: #FFF9DD url(__HOME_IMG__/comment/infobox-bg-l-r.gif) no-repeat 100% 0;
+            height: 34px;
+            line-height: 34px;
+            padding-right: 5px;
+        }
+
+        .rater-star-item-tips {
+            background: url(__HOME_IMG__/comment/star-tips.gif) no-repeat 0 0;
+            height: 41px;
+            overflow: hidden;
+        }
+
+        .cur.rater-star-item-tips {
+            display: block;
+        }
+
+        .rater-star-result {
+            color: #FF6600;
+            font-weight: bold;
+            padding-left: 10px;
+            float: left;
+        }
+
+    </style>
+
+    <div style="margin: 10px 61px;">
+        <h2 align="center">{$content['goodname']}计重记录单</h2>
+        <br>
+        <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
+            <div class="div1" style="text-align: left;width:45px;height:40px;line-height: 40px;">船名：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:135px;text-align: center;">
+                {$content['shipname']}
+            </div>
+            <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">航次号：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">
+                {$personality['voyage']}
+            </div>
+            <div class="div1" style="text-align: center;width:75px;height:40px;line-height: 40px;">作业地点：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+                {$personality['locationname']}
+            </div>
+            <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">运单量：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:95px;text-align: center;">
+                {$personality['transport']}
+            </div>
+            <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">货名：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:105px;text-align: center;">
+                {$personality['goodsname']}
+            </div>
+            <div class="div1" style="text-align: center;width:45px;height:40px;line-height: 40px;">编号：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+                {$personality['number']}
+            </div>
+        </div>
+        <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
+            <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">起运港：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:125px;text-align: center;">
+                {$personality['start']}
+            </div>
+            <div class="div1" style="text-align: left;width:63px;height:40px;line-height: 40px;">目的港：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:120px;text-align: center;">
+                {$personality['objective']}
+            </div>
+            <div class="div1" style="text-align: left;width:115px;height:40px;line-height: 40px;">作业起止时间：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$endtime}</div>
+            <div class="div1" style="text-align: left;width:25px;height:40px;line-height: 40px;">到</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:160px;text-align: center;">{$starttime}</div>
+        </div>
+        <!-- <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
+            <div class="div1" style="text-align: left;width:60px;height:40px;line-height: 40px;">&nbsp;</div>
+            <div class="div1" style="text-align: left;width:130px;height:40px;line-height: 40px;">首次</div>
+            <div class="div1" style="text-align: left;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['qianchi']}</div>
+             <div class="div1" style="text-align: left;width:70px;height:40px;line-height: 40px;">&nbsp;</div>
+            <div class="div1" style="text-align: center;width:130px;height:40px;line-height: 40px;">末次</div>
+            <div class="div1" style="text-align: center;width:100px;height:40px;line-height: 40px;">吃水差(米)：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:145px;text-align: center;">{$content['houchi']}</div>
+        </div> -->
+        <!-- <h3>&nbsp;</h3> -->
+        <table border="1" cellspacing="0" cellpadding="0" align="center" width="1077px" class="table_02">
+            <tr>
+                <th colspan="9">首次检验<span style="float: right">吃水差：{$content['qianchi']}&nbsp;</span></th>
+                <th width="2px"></th>
+                <th colspan="8">末次检验<span style="float: right">吃水差：{$content['houchi']}&nbsp;</span></th>
+            </tr>
+            <tr>
+                <th>油舱名</th>
+                <th>温度</th>
+                <th>空距
+                    <br>(米)
+                </th>
+                <th>纵倾修正<br>值(米)</th>
+                <th>修正后空<br>距(米)</th>
+                <th>容量
+                    <br>(米 <sup>3</sup> )
+                </th>
+                <th>体积修正<br>系数</th>
+                <th>膨胀修正<br>系数</th>
+                <th>标准容量</th>
+                <th width="2px"></th>
+                <th>温度</th>
+                <th>空距
+                    <br>(米)
+                </th>
+                <th>纵倾修正<br>值(米)</th>
+                <th>修正后空<br>距(米)</th>
+                <th>容量
+                    <br>(米 <sup>3</sup> )
+                </th>
+                <th>体积修正<br>系数</th>
+                <th>膨胀修正<br>系数</th>
+                <th>标准容量</th>
+            </tr>
+            <volist name="result" id="v">
+                <tr>
+                    <td style='height:20px'>{$v[0]['cabinname']}</td>
+                    <td>{$v[0]['temperature']}</td>
+                    <td>{$v[0]['ullage']}</td>
+                    <td>{$v[0]['listcorrection']}</td>
+                    <td>{$v[0]['correntkong']}</td>
+                    <td>{$v[0]['cabinweight']}</td>
+                    <td>{$v[0]['volume']}</td>
+                    <td>{$v[0]['expand']}</td>
+                    <td>{$v[0]['standardcapacity']}</td>
+                    <td></td>
+                    <td>{$v[1]['temperature']}</td>
+                    <td>{$v[1]['ullage']}</td>
+                    <td>{$v[1]['listcorrection']}</td>
+                    <td>{$v[1]['correntkong']}</td>
+                    <td>{$v[1]['cabinweight']}</td>
+                    <td>{$v[1]['volume']}</td>
+                    <td>{$v[1]['expand']}</td>
+                    <td>{$v[1]['standardcapacity']}</td>
+
+                </tr>
+            </volist>
+            <tr>
+                <td>&nbsp;管线</td>
+                <td colspan="4"></td>
+                <td>{$gx['qiangx']}</td>
+                <td colspan="2"></td>
+                <td>{$gx['qianxgx']}</td>
+                <td></td>
+                <td colspan="4"></td>
+                <td>{$gx['hougx']}</td>
+                <td colspan="2"></td>
+                <td>{$gx['houxgx']}</td>
+            </tr>
+
+            <tr>
+                <td style="height:20px" class="ju01">总容量</td>
+                <td colspan="6"></td>
+                <td colspan="2">{$content['qianweight']}</td>
+                <td></td>
+                <td colspan="6"></td>
+                <td colspan="2">{$content['houweight']}</td>
+            </tr>
+            <tr>
+                <td colspan="7" align="left" style="height:20px" class="ju01">&nbsp;实验室密度15℃(克/厘米<sup>3</sup>)</td>
+                <td colspan="2">{$content['qiandensity']}</td>
+                <td></td>
+                <td colspan="6" align="left">&nbsp;实验室密度15℃(克/厘米<sup>3</sup>)</td>
+                <td colspan="2">{$content['houdensity']}</td>
+            </tr>
+            <tr>
+                <td colspan="7" align="left" style="height:20px" class="ju01">&nbsp;重量(吨)</td>
+                <td colspan="2">{$content['qiantotal']}</td>
+                <td></td>
+                <td colspan="6" align="left">&nbsp;重量(吨)</td>
+                <td colspan="2">{$content['houtotal']}</td>
+            </tr>
+            <tr>
+                <td colspan="16" align="right" style="height:20px" class="ju01">货重(吨)&nbsp;</td>
+                <td colspan="2">{$content['weight']}</td>
+            </tr>
+        </table>
+        <h3></h3>
+        <div style="width:1077px;margin:auto 5px;font-weight: bold;font-size:14px;">
+            <div class="div1" style="text-align: left;width:80px;height:40px;line-height: 40px;">图表编号：</div>
+            <div class="div1" style="border-bottom:solid 1px black;width:220px;">{$content['ship_number']}</div>
+            <div class="div1" style="text-align: left;width:90px;height:40px;line-height: 40px;margin-left: 55px;">
+                温度计编号：
+            </div>
+            <div class="div1" style="border-bottom:solid 1px black;width:225px;">{$personality['thermometer']}</div>
+            <div class="div1" style="text-align: left;width:90px;height:40px;line-height: 40px;margin-left: 55px;">
+                量油尺编号：
+            </div>
+            <div class="div1" style="border-bottom:solid 1px black;width:220px;">{$personality['dipstick']}</div>
+
+        </div>
+        <table border="0" cellspacing="0" cellpadding="0" width="1077px" class="ju">
+            <!--  <tr>
+                 <th colspan=4>&nbsp;</th>
+             </tr> -->
+            <!--  <tr>
+                 <th>温度计编号：</th>
+                 <th style="border-bottom:solid 1px black"> {$personality['thermometer']} </th>
+                 <th>量油尺编号：</th>
+                 <th style="border-bottom:solid 1px black"> {$personality['dipstick']} </th>
+             </tr> -->
+            <tr>
+                <th width="50px" align="left" class="ju02">备注：</th>
+                <th colspan='3' style="border-bottom:solid 1px black;text-align:left">&nbsp;&nbsp;{$content['remark']}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4" style="border-bottom:solid 1px black;height:30px;">&nbsp;</th>
+            </tr>
+
+            <tr>
+                <th colspan=4>&nbsp;</th>
+            </tr>
+            <tr>
+                <th width="50px" align="left" class="ju02">计量员：</th>
+                <th width="185px" style="">
+                    <if condition="$content['ffirmtype'] == '1'">
+                        {$content['username']}
+                        <else/>
+                        <if condition="!empty($content['eimg'])"><img src="{$content[eimg]}"
+                                                                      style="height: 60px;width:180px"></if>
+                    </if>
+                </th>
+                <th width="285px" align="right" class="ju02">船舶签章：</th>
+                <th width="175px" style="">
+                    <if condition="$content['ffirmtype'] == '1'">
+                        <if condition="!empty($content['eimg'])"><img src="{$content[eimg]}"
+                                                                      style="height: 60px;width:180px"></if>
+                        <else/>
+
+                    </if>
+                </th>
+            </tr>
+        </table>
+        <h3>&nbsp;</h3>
+        <div style="width: 1077px;text-align: right;">（本单证版权归中理检验公司所有，由南京携众提供技术支持。）</div>
+    </div>
+</div>
+</body>
+</html>

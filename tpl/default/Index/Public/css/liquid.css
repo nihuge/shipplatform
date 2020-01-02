@@ -1,63 +1,66 @@
 @charset "utf-8";
 
-.shang{
+.shang {
     height: 285px;
     background-color: #f2f2f2;
     padding: 6px 30px;
 }
 
-.nav{
+.nav {
     margin-top: 14px;
     margin-bottom: 14px;
     font-size: 18px;
     color: #666666;
 }
 
-.nav1{
-	margin: 14px 14px 0px 14px;
-	height: 20px;
-	line-height: 20px;
-	width: 940px;
-	display: inline-block;
+.nav1 {
+    margin: 14px 14px 0px 14px;
+    height: 20px;
+    line-height: 20px;
+    width: 940px;
+    display: inline-block;
 }
 
-.nav1 img{
-	display: inline-block;
-	/*height: 20px;*/
-	vertical-align: middle;
+.nav1 img {
+    display: inline-block;
+    /*height: 20px;*/
+    vertical-align: middle;
 }
 
-.nav1 p{
-	display: inline-block;
-	vertical-align: middle;
-	font-size: 16px;
-	color: #666666;
+.nav1 p {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #666666;
 }
 
-.xuan{
-	width: 255px;
-	height: 75px;
-	margin: 14px 14px 0px;
-	float: left;
-	/*border: 1px solid red;*/
+.xuan {
+    width: 255px;
+    height: 75px;
+    margin: 14px 14px 0px;
+    float: left;
+    /*border: 1px solid red;*/
 }
-.xuan p{
-	margin-bottom: 10px;
-	font-size: 16px;
-	color: #666666;
+
+.xuan p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #666666;
 }
-.xuan input{
-	background-color: #f2f9ff;
-	width: 100%;
-	height: 34px;
-	padding:5px;
+
+.xuan input {
+    background-color: #f2f9ff;
+    width: 100%;
+    height: 34px;
+    padding: 5px;
 }
-.xuan select{
-	
-	width: 265px;
-	height: 44px;
-	padding:5px;
-	/* 清除默认的箭头样式 */
+
+.xuan select {
+
+    width: 265px;
+    height: 44px;
+    padding: 5px;
+    /* 清除默认的箭头样式 */
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -67,63 +70,63 @@
     background-size: 12px;
 }
 
-.xuan .subt{
-	width: 130px;
-	height: 44px;
-	background-color: #ffab40;
-	cursor:pointer;
-	font-size: 16px;
-	color:#ffffff;
+.xuan .subt {
+    width: 130px;
+    height: 44px;
+    background-color: #ffab40;
+    cursor: pointer;
+    font-size: 16px;
+    color: #ffffff;
 }
 
 /*作业列表*/
-.xia{
-	padding: 20px 30px;
-	background: url(../image/img8.png) repeat;
+.xia {
+    padding: 20px 30px;
+    background: url(../image/img8.png) repeat;
     background-size: 60px 60px;
 }
 
-.xiabutton{
-	width: 160px;
-	height: 40px;
-	background-color: #6889ff;
-	color: #ffffff;
-	cursor: pointer;
+.xiabutton {
+    width: 160px;
+    height: 40px;
+    background-color: #6889ff;
+    color: #ffffff;
+    cursor: pointer;
     font-size: 16px;
 }
 
 /*列表样式*/
-#customers
-{
-	width:100%;
-	border-collapse:collapse;
-	margin:14px auto;
+#customers {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px auto;
 }
-#customers td 
-{
-    font-size:14px;
-    border-right:1px solid #a6c4ee;
-    padding:3px 7px 2px 7px;
+
+#customers td {
+    font-size: 14px;
+    border-right: 1px solid #a6c4ee;
+    padding: 3px 7px 2px 7px;
     height: 40px;
     text-align: center;
     color: #808080
 }
-#customers tr 
-{
-    background: rgb(249,243,243,0.50);
+
+#customers tr {
+    background: rgb(249, 243, 243, 0.50);
 }
 
-#customers tr:nth-child(even){background: rgb(207,222,244,0.66);}
+#customers tr:nth-child(even) {
+    background: rgb(207, 222, 244, 0.66);
+}
 
-#customers th 
-{
-    font-weight:normal;
-	font-size:15px;
-    padding:3px 7px 2px 7px;
+#customers th {
+    font-weight: normal;
+    font-size: 15px;
+    padding: 3px 7px 2px 7px;
     height: 40px;
-    border-right:1px solid #a6c4ee;
-	background-color:#3f7fda;
-	color:#ffffff;
+    border-right: 1px solid #a6c4ee;
+    background-color: #3f7fda;
+    color: #ffffff;
     text-align: center;
 }
 
@@ -206,7 +209,7 @@
     width: 520px;
     margin: 10px 20px 10px 50px;
     height: 325px;
-    overflow-y:auto
+    overflow-y: auto
 }
 
 .editMask2 .editBox ul.pass li {
@@ -242,10 +245,11 @@
     background-color: #f2f9ff;
     padding: 0px 10px;
 }
-.editBox ul.pass li p select{
+
+.editBox ul.pass li p select {
     width: 235px;
     height: 40px;
-    padding:5px;
+    padding: 5px;
     /* 清除默认的箭头样式 */
     appearance: none;
     -moz-appearance: none;
@@ -335,7 +339,7 @@
     width: 520px;
     margin: 10px 20px 10px 50px;
     height: 325px;
-    overflow-y:auto
+    overflow-y: auto
 }
 
 .editMask3 .editBox ul.pass li {
@@ -373,11 +377,12 @@
 }
 
 /*作业数据详情*/
-.rmsg{
+.rmsg {
     padding: 14px 47px;
     background-color: #fff;
-    font-size:0
+    font-size: 0
 }
+
 .rmsg .msgs {
     list-style: none;
     padding: 10px 10px;
@@ -388,27 +393,31 @@
     height: 16px;
     line-height: 16px;
 }
-.pp1{
+
+.pp1 {
     color: #0a2956;
     float: left;
     font-size: 14px;
 }
-.ppp1{
+
+.ppp1 {
     color: #333333;
     float: left;
     font-size: 14px;
 }
-.pp2{
-    color: #808080;    
+
+
+.pp2 {
+    color: #808080;
     font-size: 14px;
     float: right;
-    width: 140px;
+    width: 40%;
     overflow: hidden;
     text-align: right;
 }
 
 /*舱数据*/
-.cabinmsg{
+.cabinmsg {
     background: url(../image/img8.png) repeat;
     background-size: 60px 60px;
 }
@@ -416,14 +425,16 @@
 .cabinmsg .chi {
     padding: 14px 26px;
 }
-.chi .shui{
+
+.chi .shui {
     display: inline-block;
-    margin: 10px 30px;
-    width: 511px;    
+    margin: 0px 10px;
+    width: 45%;
     font-size: 0;
+    border-right: 1px solid #e6eef2;
 }
 
-.pp{
+.pp {
     text-align: center;
     color: #0a2596;
     font-size: 18px;
@@ -434,23 +445,38 @@
     list-style: none;
     padding: 10px 10px;
     border: 1px solid #e6eef2;
-    width: 222px;
+    width: 28%;
     display: inline-block;
     /*float: left;*/
     height: 26px;
     line-height: 26px;
+
 }
 
-.cabindiv{
+.tablemsg {
+    list-style: none;
+    padding: 10px 10px;
+    border: 1px solid #e6eef2;
+    width: 28%;
+    display: inline-block;
+    /*float: left;*/
+    height: 26px;
+    line-height: 26px;
+
+}
+
+.cabindiv {
     padding: 10px 26px;
     font-size: 0;
 }
-.divcabin{
+
+.divcabin {
     display: inline-block;
     margin: 0px 10px;
     font-size: 18px;
-    width: 554px;
-    vertical-align:top;
+    width: 45%;
+    vertical-align: top;
+    border-right: 1px solid #e6eef2;
 }
 
 .panel {
@@ -491,7 +517,7 @@
     padding: 5px 20px;
     background: #7fa5e9;
     font-size: 15px;
-    color:#ffffff;
+    color: #ffffff;
 }
 
 .contentss {
@@ -502,35 +528,36 @@
 }
 
 
-.table{
-    width:500px;
-    margin:auto auto;
+.table {
+    width: 500px;
+    margin: auto auto;
     text-align: center;
-    border-collapse:collapse;
-   
+    border-collapse: collapse;
+
 }
-.table tr{
+
+.table tr {
     height: 40px;
     line-height: 40px;
 }
 
-.table tr td{
+.table tr td {
     border: 1px solid #a6c4ee;
     padding: 0px 10px;
 }
 
 
-.remarks{
+.remarks {
     padding: 25px 35px;
 }
 
-.pp3{
+.pp3 {
     margin-left: 20px;
     margin-right: 20px;
     display: inline-block;
 }
 
-.pp4{
+.pp4 {
     line-height: 35px;
     font-size: 14px;
     background-color: #dbe6f6;
@@ -540,11 +567,12 @@
     padding: 0px 10px;
 }
 
-.baobiao{
+.baobiao {
     text-align: center;
     padding: 20px;
 }
-.butt1{
+
+.butt1 {
     height: 40px;
     line-height: 40px;
     padding: 10px 20px;
@@ -554,12 +582,13 @@
 }
 
 /*评价*/
-.rmsg .img{
+.rmsg .img {
     margin: 35px 80px 80px;
     width: 250px;
     height: 225px;
 }
-.rmsg .titlet{
+
+.rmsg .titlet {
     display: inline-block;
     height: 225px;
     vertical-align: top;
@@ -567,59 +596,67 @@
     text-align: center;
     margin-top: 40px;
 }
-.titlet p{
+
+.titlet p {
     color: #666666;
     font-size: 24px;
     margin: 9px auto;
-    
+
 }
-.titlet .p11{
+
+.titlet .p11 {
     color: #fd8e0c;
     font-size: 15px;
-    
+
 }
-.titlet .p12{
+
+.titlet .p12 {
     color: #666666;
     font-size: 18px;
     text-align: left;
 }
-.titlet .liuy{
+
+.titlet .liuy {
     padding: 14px 10px;
     width: 580px;
     height: 80px;
     line-height: 20px;
     overflow-y: auto;
     background-color: #e6edf8;
-    resize:none;
+    resize: none;
     border: 0;
 }
-.evaluate{  
-    width:100%; 
+
+.evaluate {
+    width: 100%;
     /*margin: 10px 100px 10px 150px;*/
-}  
-.evaluate{
+}
+
+.evaluate {
     text-align: center;
 }
-.starts{  
-    width:150px;  
-    float:left;  
-}  
-.title2{    
-    float:left;  
-}  
- 
 
-.titlet .subt{
+.starts {
+    width: 150px;
+    float: left;
+}
+
+.title2 {
+    float: left;
+}
+
+
+.titlet .subt {
     margin: 10px;
     width: 130px;
     height: 44px;
     background-color: #ffab40;
-    cursor:pointer;
+    cursor: pointer;
     font-size: 16px;
-    color:#ffffff;
+    color: #ffffff;
 }
- 
-.rmsgs{
+
+.rmsgs {
     padding: 14px 47px;
-    font-size:20px;
+    font-size: 20px;
 }

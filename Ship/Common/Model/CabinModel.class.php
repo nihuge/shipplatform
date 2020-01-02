@@ -41,7 +41,7 @@ class CabinModel extends BaseModel
             $list = $this
                 ->field('id,cabinname,altitudeheight,dialtitudeheight')
                 ->where($where)
-                ->order('order_number asc')
+                ->order('order_number asc,id asc')
                 ->select();
             if ($list !== false) {
                 $res = array(

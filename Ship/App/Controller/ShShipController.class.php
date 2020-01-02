@@ -38,13 +38,12 @@ class ShShipController extends AppBaseController
                     // 获取公司操作权限船舶
                     $firm = new \Common\Model\FirmModel();
                     $firmmsg = $firm
-                        ->field('firmtype')
+                        ->field('firmtype,sh_operation_jur')
                         ->where(array('id' => $usermsg['firmid']))
                         ->find();
-                    /*$operation_jur = explode(',', $firmmsg['operation_jur']);
-                    $where = array(
-                        'id' => array('in', $operation_jur)
-                    );*/
+                    $operation_jur = explode(',', $firmmsg['sh_operation_jur']);
+
+                    $where = array('del_sign' => 1, 'id' => array('in', $operation_jur));
 
                     if (trimall(I('post.firmid'))) {
                         $where['firmid'] = trimall(I('post.firmid'));
@@ -79,15 +78,6 @@ class ShShipController extends AppBaseController
                         ->where($where_review)
                         ->select();
 
-                    //匹配船
-//                    foreach ($review_list as $key1 => $value1) {
-//                        foreach ($list as $key2 => $value2) {
-//                            if ($value2['id'] == $value1['shipid'] && $value1['shipid'] != "") {
-//
-//                            }
-//                        }
-//                    }
-
                     //匹配船使用优化写法
                     $keyArr = array();
                     $valArr = array();
@@ -108,8 +98,6 @@ class ShShipController extends AppBaseController
                         }
                     }
 
-
-
                     if ($firmmsg['firmtype'] == '1') {
                         // 检验公司获取所有的船公司
                         $firmlist = $firm->field('id,firmname')->where(array('firmtype' => '2'))->select();
@@ -117,6 +105,7 @@ class ShShipController extends AppBaseController
                         // 船舶公司获取本公司
                         $firmlist = $firm->field('id,firmname')->where(array('id' => $usermsg['firmid']))->select();
                     }
+
                     foreach ($list as $key1 => $value1) {
                         $list[$key1]['expire_time'] = date('Y-m-d', $value1['expire_time']);
                     }
@@ -155,7 +144,7 @@ class ShShipController extends AppBaseController
         if (I('post.firmid') and I('post.shipname') and I('post.lbp') != null
             and I('post.df') != null and I('post.da') != null
             and I('post.dm') != null and I('post.uid') and I('post.cabinnum') != null
-            and I('post.imei')) {
+            and I('post.imei') and I('post.expire_time') and I('post.ptwd')) {
             //添加数据
             $data = I('post.');
             $data['uid'] = trimall(I('post.uid'));

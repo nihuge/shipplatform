@@ -97,7 +97,7 @@ $error_code_result = array(
     'NEED_IMG' => 2016,   // 电子签证不能为空
     'HAVE_IMG' => 2017,   // 电子签证已存在
     'IS_REPEAT_RESULT' => 2018,   // 已存在相同的作业！
-    'NOT_EVAL' => 2019,   // 作业尚未完成，不可以评价
+    'NOT_EVAL' => 2019,   // 作业尚未完成
     'HAVE_CABIN' => 2020,   // 船舱已存在
     'NOT_ALL_CABIN' => 2021,   // 传入的船舱数据数量不等于建船时提供的船舱数
     'RE_RECKON_FALL' => 2022,   // 重新计算数据时失败
@@ -107,6 +107,8 @@ $error_code_result = array(
     'CAN_NOT_REDUCE_CABIN_NUM' => 2026,   // 不可以减少舱总数
     'NOT_FIND_CABIN' => 2027,   // 舱未找到
     'CAN_NOT_EDIT_NOT_WORK' => 2028,   // 不可以更改不作业的数据
+    'WORK_COMPLETE' => 2029,   // 作业已完成
+    'PERSON_INCOMPLETE' => 2030,   // 个性化字段不完整，请补充完整个性化字段
 );
 define('error_code_result', json_encode($error_code_result));
 
@@ -129,7 +131,7 @@ $error_code_result_zh = array( // /提示信息需要对应修改
     2016 => '电子签证不能为空',
     2017 => '电子签证已存在',
     2018 => '已存在相同的作业！',
-    2019 => '作业尚未完成，不可以评价',
+    2019 => '作业尚未完成',
     2020 => '船舱已存在',
     2021 => '传入的船舱数据数量不等于建船时提供的船舱数',
     2022 => '重新计算数据时失败',
@@ -139,5 +141,7 @@ $error_code_result_zh = array( // /提示信息需要对应修改
     2026 => '不可以减少舱总数',
     2027 => '舱未找到',
     2028 => '不可以更改不作业的数据',
+    2029 => '作业已完成',
+    2030 => '个性化字段不完整，请补充完整个性化字段',
 );
 define('error_code_result_zh', json_encode($error_code_result_zh));

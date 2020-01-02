@@ -122,9 +122,10 @@ class WorkModel extends BaseModel
                                 $moorings = explode(',', $moorings);
                             }
 
-
-                            array_push($moorings, $datas['start']);
-                            array_push($moorings, $datas['objective']);
+                            //去除首尾空格后，添加港口信息
+                            if (trim($datas['start']) != "") array_push($moorings, $datas['start']);
+                            if (trim($datas['objective']) != "") array_push($moorings, $datas['objective']);
+                            //去除重复项
                             $moorings = array_unique($moorings);
                             $moorings = implode(',', $moorings);
                             // 修改船舶统计停泊港
@@ -246,6 +247,130 @@ class WorkModel extends BaseModel
                 'code' => $this->ERROR_CODE_RESULT['IS_REPEAT_RESULT'],
                 'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['IS_REPEAT_RESULT']],
             );
+        }
+        return $res;
+    }
+
+
+    /**
+     * 结束后修改作业数据
+     */
+    public function laterEditResult($data)
+    {
+        // 对数据进行验证
+        if (!$this->create($data)) {
+            // 如果创建失败 表示验证没有通过 输出错误提示信息
+            //数据格式有错   7
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['ERROR_DATA'],
+                'msg' => $this->getError()
+            );
+        } else {
+
+            $resultid = intval($data['resultid']);
+            $shipid = intval($data['shipid']);
+            $uid = intval($data['uid']);
+            //不允许更改航次,ID和shipid。去除杂项值;
+            unset($data['voyage']);
+            unset($data['id']);
+            unset($data['shipid']);
+            unset($data['resultid']);
+
+            $self_personality = json_decode($this->getFieldById($resultid, "personality"), true);
+
+            // 获取船舶原始起始点、终点港原来的统计停泊港
+            $moorings = M('ship_historical_sum')->getFieldByshipid($shipid, 'mooring');
+            if (empty($moorings)) {
+                $moorings = array();
+            } else {
+                $moorings = explode(',', $moorings);
+            }
+            //统计信息修改标志，如果为true会保存处理信息
+            $edit_sum_flag = false;
+            //如果原来的作业港口信息没有，则补充统计港口。将修改标志改为true用于激活保存
+            if (empty($self_personality['start']) or $self_personality['start'] == "") {
+                //去除首尾空格后，添加港口信息
+                if (trim($data['start']) != "") array_push($moorings, $data['start']);
+                $edit_sum_flag = true;
+            }
+            //同上
+            if (empty($self_personality['objective']) or $self_personality['objective'] == "") {
+                //去除首尾空格后，添加港口信息
+                if (trim($data['objective']) != "") array_push($moorings, $data['objective']);
+                $edit_sum_flag = true;
+            }
+
+            if ($edit_sum_flag) {
+                //去除重复项
+                $moorings = array_unique($moorings);
+                $moorings = implode(',', $moorings);
+                // 修改船舶统计停泊港
+                M('ship_historical_sum')->where(array('shipid' => $shipid))->save(array('mooring' => $moorings));
+            }
+
+            // 获取公司pdf方法名
+            $firm = new \Common\Model\FirmModel();
+            $firmmsg = $firm
+                ->alias('f')
+                ->field('f.personality')
+                ->join('left join user u on u.firmid = f.id')
+                ->where(array('u.id' => $uid))
+                ->find();
+            if ($firmmsg !== false and !empty($firmmsg['personality'])) {
+                //用于合并之前的个性化字段信息
+                $person = new \Common\Model\PersonalityModel();
+                $where = array(
+                    'id' => array('in', json_decode($firmmsg['personality'], true))
+                );
+
+                $personality = array();
+                $person_arr = $person->field('name')->where($where)->select();
+
+                //组装公司个性化字段
+                foreach ($person_arr as $key => $value) {
+                    $personality[$value['name']] = "";
+                }
+                //组装原个性化字段信息
+                foreach ($self_personality as $key1 => $value1) {
+                    if (isset($personality[$key1])) {
+                        $personality[$key1] = $value1;
+                    }
+                }
+                //组装提交的个性化字段信息
+                foreach ($data as $key2 => $value2) {
+                    if (isset($personality[$key2])) {
+                        $personality[$key2] = $value2;
+                    }
+                }
+            }
+
+            // 组装个性化数据
+            $arrange_data = $this->arrange_data($personality);
+
+
+            //只允许修改个性化字段
+            $data = array("personality" => $arrange_data['personality']);
+//            $union_array = json_decode($arrange_data['personality'],true);
+
+            //修改数据
+            $map = array(
+                'id' => $resultid
+            );
+            $msg = $this->editData($map, $data);
+            if ($msg !== false) {
+                //成功 1
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                    'msg' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['SUCCESS']],
+                    'resultid' => I('post.resultid')
+                );
+            } else {
+                //数据库连接错误   3
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                    'msg' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']],
+                );
+            }
         }
         return $res;
     }
@@ -481,6 +606,9 @@ class WorkModel extends BaseModel
             ->where($where)
             ->find();
         if ($msg !== false) {
+            if ($msg === null) {
+                return array();
+            }
             $data = M('fornt_img')
                 ->where(array('result_id' => $resultid, 'solt' => $msg['solt']))
                 ->select();
@@ -578,12 +706,49 @@ class WorkModel extends BaseModel
                     unset($msg[$key1]['houtemperature']);
                     unset($msg[$key1]['houdensity']);
                     $resultmsg['q'] = $msg[$key1];
-                } else {
+                } elseif ($value1['solt'] == '2') {
                     unset($msg[$key1]['qiantemperature']);
                     unset($msg[$key1]['qiandensity']);
                     $resultmsg['h'] = $msg[$key1];
                 }
             }
+
+            /**
+             * 如果没有创建对象，则生成一个空对象，防止APP报错
+             */
+            if (!isset($resultmsg['q'])) $resultmsg['q'] = array(
+                'forntleft' => '',
+                'forntright' => '',
+                'centerleft' => '',
+                'centerright' => '',
+                'afterleft' => '',
+                'afterright' => '',
+                'solt' => '1',
+                'qiantemperature' => '',
+                'qiandensity' => '',
+                'resultid' => $resultid,
+            );
+            if (!isset($resultmsg['h'])) $resultmsg['h'] = array(
+                'forntleft' => '',
+                'forntright' => '',
+                'centerleft' => '',
+                'centerright' => '',
+                'afterleft' => '',
+                'afterright' => '',
+                'solt' => '2',
+                'houtemperature' => '',
+                'houdensity' => '',
+                'resultid' => $resultid,
+            );
+
+            foreach ($resultmsg as $key3 => $value3) {
+                if ($value3['forntleft'] === null or $value3['forntleft'] == "") {
+                    $resultmsg[$key3]['is_fugai'] = false;
+                } else {
+                    $resultmsg[$key3]['is_fugai'] = true;
+                }
+            }
+
 
             //成功 1
             $res = array(
@@ -2288,6 +2453,28 @@ class WorkModel extends BaseModel
                     M()->startTrans();    //开启事物
                 }
 
+                /**
+                 * 表数据检测并补全
+                 */
+                //补充下一行
+                if ($data['ullage2'] == "") {
+                    //如果空高1落在空高刻度或者不等于0，则代表参数不正确，参数缺失，报错4
+                    if ($r['ullage'] != $data['ullage1']) return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "ullage2");
+                    $data['ullage2'] = $data['ullage1'];
+                    $data['value3'] = $data['value1'];
+                    $data['value4'] = $data['value2'];
+                } else {
+                    if ($data['value3'] == "") return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "value3");;
+                    if ($data['value4'] == "" and $data['draft2'] != "") return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "value4");;
+                }
+
+                //补充右列
+                if ($data['draft2'] == "") {
+                    $data['draft2'] = $data['draft1'];
+                    $data['value2'] = $data['value1'];
+                    $data['value4'] = $data['value3'];
+                }
+
                 $re = $resultrecord
                     ->where(array('id' => $r['id']))
                     ->save($data);
@@ -2919,6 +3106,14 @@ class WorkModel extends BaseModel
                 ->find();
 
             if (!empty($r)) {
+                //判断提交格式是否正确,自动补充
+                if ($data['ullage2'] == "") {
+                    //空高1不等于修正后空高，空高2不能为空
+                    if ($r['correntkong'] != $data['ullage1']) return array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'type' => "ullage2");
+                    $data['ullage2'] = $data['ullage1'];
+                    $data['capacity2'] = $data['capacity1'];
+                }
+
                 $datam = array(
                     'xiuullage1' => $data['ullage1'],
                     'xiuullage2' => $data['ullage2'],
@@ -3404,6 +3599,8 @@ class WorkModel extends BaseModel
         } else {
             $personality = json_encode($personality, JSON_UNESCAPED_UNICODE);
         }
+        \Think\Log::record("\r\n \r\n $personality \r\n \r\n ", "DEBUG", true);
+
         $res = $data;
         $res['personality'] = $personality;
         return $res;
@@ -3709,8 +3906,6 @@ class WorkModel extends BaseModel
             'total' => $msg['weight'],
             'is_have_data' => $is_have_data
         );
-
-        \Think\Log::record("\r\n \r\n return: \r\n \r\n " . json_encode($res), "DEBUG", true);
 
         return $res;
     }

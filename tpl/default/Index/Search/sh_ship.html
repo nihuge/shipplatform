@@ -1,0 +1,43 @@
+<extend name="Public:base" />
+<block name='title'>查询系统</block>
+<block name='navhover3'>dropbtnhover</block>
+<block name="center">
+    <link rel="stylesheet" href="__INDEX_CSS__/liquid.css">
+    <script src="__INDEX_JS__/jquery-1.9.1.min.js"></script> 
+    <script src="__INDEX_JS__/jquery.raty.js"></script>
+    <div style="background-color: #f2f2f2;padding: 6px 30px;">
+        <div class='nav'>
+            查询系统>船舶列表 
+        </div>
+    </div>
+    <div class='xia'>
+        <table id="customers">
+            <tr>
+                <th>船舶名称</th>
+                <th>船舶自重</th>
+                <th>船舶主装货物</th>
+                <th>垂线间距</th>
+                <th>制造单位</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id="v">
+            <?php static $xu = 1;?>
+            <tr>
+                <td>{$v['shipname']}</td>
+                <td>{$v['weight']}</td>
+                <td>{$v['goodsname']}</td>
+	            <td>{$v['lbp']}</td>
+	            <td>{$v['make']}</td>
+
+	            <td>
+	            	<a href="__CONTROLLER__/sh_shipmsg/shipid/{$v['id']}" class='aa2'>详情</a>
+                </td>
+            </tr>
+            <?php $xu++;?>	
+        	</volist>
+            <tr style="background-color: #fff;">
+            	<td colspan="7" style="border-right: 0px;">{$page}</td>
+            </tr>
+        </table>
+    </div>
+</block>

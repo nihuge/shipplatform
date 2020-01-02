@@ -17,9 +17,7 @@ header("Access-Control-Allow-Origin: *");
  */
 function getMiddleValue($Cbig, $Csmall, $Xbig, $Xsmall, $X)
 {
-//    $this->function_remark .= "\r\n进入插值计算函数：round(($Cbig - ($Csmall)), 3) / ($Xbig - ($Xsmall)) * ($X - ($Xsmall)) + $Csmall ，\r\n";
     $suanfa = round(($Cbig - ($Csmall)), 3) / ($Xbig - ($Xsmall)) * ($X - ($Xsmall)) + $Csmall;
-//    $this->function_remark .= '\r\n得出结果为：' . $suanfa . '\r\n';
     return $suanfa;
 }
 
