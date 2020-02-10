@@ -259,6 +259,7 @@ class LoginController extends Controller
      */
     public function automatic_evaluation()
     {
+        #todo 加入评价系统
         // 获取所有已签字、未评价的作业
         $visa = M('electronic_visa');
         $where_1['r.grade1'] = 0;

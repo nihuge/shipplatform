@@ -78,4 +78,22 @@ class CabinModel extends BaseModel
             ->select();
         return $cabinlist;
     }
+
+    /**
+     * 根据船ID获取各个舱的经验底量
+     */
+    public function get_cabins_base_volume($shipid)
+    {
+        $cabin_base_volume = $this
+            ->field('id,base_volume as volume_sum,base_count,cabinname')
+            ->where(array('shipid' => $shipid))
+            ->select();
+
+        foreach ($cabin_base_volume as $k=>$v){
+            //获取平均值
+            $cabin_base_volume[$k]['base_volume'] = $v['volume_sum']/($v['base_count']>0?$v['base_count']:1);
+        }
+
+        return $cabin_base_volume;
+    }
 }

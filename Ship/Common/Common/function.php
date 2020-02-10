@@ -333,7 +333,7 @@ function corrent($midu, $wendu)
     } else {
         $vc = 1.0108020095 - 7.2343515319 * 0.0001 * $wendu + 2.1996598346 * 0.0000001 * ($wendu * $wendu);
     }
-    return round($vc, 4);
+    return round($vc, 5);
 }
 
 /**
@@ -344,7 +344,7 @@ function corrent($midu, $wendu)
  */
 function expand($a, $b)
 {
-    $a = round((1 + 0.000012 * ($a) * (($b) - 20)), 6);
+    $a = round((1 + 0.000012 * ($a) * (($b) - 20)), 5);
     return eval("return $a;");
 }
 
@@ -1423,7 +1423,7 @@ function createQRcode($save_path, $qr_data = 'xiehzong', $qr_level = 'L', $qr_si
 function getReportErCode($result_id, $user_id)
 {
     $sign = reportCodeEncode($result_id, $user_id);
-    $url = "https://wxshiptest.xzitc.com/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $url = "https://www.newcip.com/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 
@@ -1450,7 +1450,7 @@ function shGetReportErCode($result_id, $user_id)
 {
     $sign = shReportCodeEncode($result_id, $user_id);
 
-    $url = "https://wxship.xzitc.com/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $url = "https://www.newcip.com/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看评论</title>
+    <style type="text/css">
+        *{
+            margin:0;padding:0;
+            -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+            -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+            -webkit-tap-highlight-color: rgba(210,210,210,0.35); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+            -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+        }
+        body{font-family:"微软雅黑";font-size:12px;}
+        ul,li{list-style:none;}
+        .ylcon{width:100%;min-width:320px;}
+        .tit{height:26px;line-height:26px;padding:0px 15px;position:relative;font-size:15px;color:#aaa;border-bottom:3px solid rgba(0, 0, 0, 0.4);font-size: 20px;}
+
+        .story{border-bottom:1px solid #cecece;padding:0 15px 3px;position:relative;}
+        .story_t{font-size:1.2em;color:rgba(0,0,0,1);padding-top:5px;padding-bottom:2px;}
+        .story_m{color:rgba(110,110,110,1);line-height:21px;word-break:break-all;word-wrap:break-word;overflow:hidden;font-size:1.2em;padding:2px 0;}
+        .story_time{color:rgba(154,154,154,1);padding:2px 0;font-size: 13px;}
+        .story_hf{background:rgb(245,245,245);font-size:1.2em;border:1px solid rgba(204,204,204,0.2);border-radius:2px;color:rgba(110,110,110,1);padding:4px;margin-bottom:5px;}
+        .opbtn{position:absolute;top: 0;right: 0;font-size: 15px;}
+        .fgf{border-bottom:1px dashed #cecece;}
+    </style>
+    <link rel="stylesheet" type="text/css" href="__INDEX_CSS__/page.css">
+</head>
+<body>
+<div class="ylcon">
+    <p class="tit">
+        所有留言
+    </p>
+    <div id="messDivId">
+        <volist name="data" id="v">
+        <div class="story">
+            <div class="opbtn">航次：{$v['personality']['voyage']}</div>
+            <p class="story_time">{$v['time1']} (检验员评价)</p>
+            <p class="story_t">{$v['firmname']}：{$v['username']}</p>
+            <p class="story_m">基础评分：{$v['grade1_str']}</p>
+            <p class="story_m">计量标准评分：{$v['measure_standard1_str']}</p>
+            <p class="story_m">安全标准评分：{$v['security1_str']}</p>
+            <p class="story_hf">{$v['evaluate1']}</p>
+            <div class="fgf"></div>
+            <p class="story_time">{$v['time2']} (船方评价)</p>
+            <p class="story_t">{$ship_firm_name}</p>
+            <p class="story_m">基础评分：{$v['grade2_str']}</p>
+            <p class="story_m">计量标准评分：{$v['measure_standard2_str']}</p>
+            <p class="story_m">安全标准评分：{$v['security2_str']}</p>
+            <p class="story_hf">{$v['evaluate2']}</p>
+        </div>
+        </volist>
+
+<!--        <div class="story">-->
+<!--            <div class="opbtn">航次：V1823</div>-->
+<!--            <p class="story_t">怜星</p>-->
+<!--            <p class="story_time">2015/07/12 20:48</p>-->
+<!--            <p class="story_m">我想问最近最火的tfboys呢他们的八卦呢我想问最近最火的tfboys呢,他们的八卦呢我想问最近最火的tfboys呢？！他们的八卦呢？！</p>-->
+<!--            <p class="story_hf">@剑花烟雨:的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契</p>-->
+<!--        </div>-->
+<!--        <div class="story">-->
+<!--            <div class="opbtn"></div>-->
+<!--            <p class="story_t">怜星</p>-->
+<!--            <p class="story_time">2015/07/12 20:48</p>-->
+<!--            <p class="story_m">我想问最近最火的tfboys呢他们的八卦呢我想问最近最火的tfboys呢,他们的八卦呢我想问最近最火的tfboys呢？！他们的八卦呢？！</p>-->
+<!--            <p class="story_hf">@剑花烟雨:的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契的是相对无言眼波如流的默契</p>-->
+<!--        </div>-->
+    </div>
+</div>
+{$page}
+</body>
+</html>
