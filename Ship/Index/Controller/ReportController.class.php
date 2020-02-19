@@ -352,9 +352,9 @@ class ReportController extends Controller
 
 
         // 你的 APPID AK SK
-        $APP_ID = '18037745';
-        $API_KEY = 'nsc7qNv6ZTa6pFChL1dEMqEG';
-        $SECRET_KEY = 'Ci9MZ8Q8QXBf4ap916D0M8eRCxGCNLep';
+        $APP_ID = '180';
+        $API_KEY = '';//自己填
+        $SECRET_KEY = '';
         $img = file_get_contents($img_dir);
         $Ocr = new \AipOcr($APP_ID, $API_KEY, $SECRET_KEY);
         $option = array(
