@@ -230,7 +230,9 @@ class ShipController extends AdminBaseController
                 exit;
             }
 
+
             $data['img'] = I('post.img');
+
             // p($data);die;
             $data['expire_time'] = strtotime(I('post.expire_time'));
             // 判断船舶是否存在
@@ -326,6 +328,9 @@ class ShipController extends AdminBaseController
             $shipmsg = $ship
                 ->where(array('id' => I('get.id')))
                 ->find();
+            if (is_Domain()) {
+                $shipmsg['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $shipmsg['img']);
+            }
             if (!empty($shipmsg['tripbystern'])) {
                 $kedu = json_decode($shipmsg['tripbystern'], true);
             } else {

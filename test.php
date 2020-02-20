@@ -7,7 +7,10 @@
 //    )
 //    );
 //print_r(array_combine($a1,$a2));
-
+// 设置页面编码
+header("Content-type:text/html;charset=utf-8");
+//设置时区
+date_default_timezone_set('Asia/Shanghai');
 /**
  * PHP 汉字转拼音 [包含20902个基本汉字+5059生僻字]
  * @author 楼教主(cik520@qq.com)
@@ -56,7 +59,7 @@
 //    pinyin('不允许中文以外的字符', 'first', '', '');
 //}
 
-echo number_format(microtime(1) - $start_time, 6);
+//echo number_format(microtime(1) - $start_time, 6);
 
 
 /**
@@ -114,3 +117,6 @@ echo number_format(microtime(1) - $start_time, 6);
 //
 //    return rtrim($rs, ' ');
 //}
+$histtory_res = array('table_accuracy'=>2);
+
+echo $histtory_res['table_accuracy']>0?($histtory_res['table_accuracy']<1.5?"偏小":($histtory_res['table_accuracy']==1.5?"正常":"偏大")):"无反馈";

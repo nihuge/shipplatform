@@ -109,6 +109,12 @@ $error_code_result = array(
     'CAN_NOT_EDIT_NOT_WORK' => 2028,   // 不可以更改不作业的数据
     'WORK_COMPLETE' => 2029,   // 作业已完成
     'PERSON_INCOMPLETE' => 2030,   // 个性化字段不完整，请补充完整个性化字段
+    'EVALUATE_ADD_FALL' => 2031,   // 评价记录添加失败
+    'EVALUATE_EDIT_FALL' => 2032,   // 评价记录修改失败
+    'RESULT_DELETED' => 2033,   //该作业已被软删除不可以操作
+    'RESULT_FINISHED' => 2034,   //该作业已结束不可以操作
+    'UNFINISH_PRE_RESULT' => 2035,   // 未结束上一个作业
+    'UNFINISH_TO_MUCH' => 2036,   // 未结束的作业太多
 );
 define('error_code_result', json_encode($error_code_result));
 
@@ -143,5 +149,11 @@ $error_code_result_zh = array( // /提示信息需要对应修改
     2028 => '不可以更改不作业的数据',
     2029 => '作业已完成',
     2030 => '个性化字段不完整，请补充完整个性化字段',
+    2031 => '评价记录添加失败',
+    2032 => '评价记录修改失败',
+    2033 => '该作业已被软删除不可以操作',
+    2034 => '该作业已结束不可以操作',
+    2035 => '未结束上一个作业',
+    2036 => '未结束的作业太多',
 );
 define('error_code_result_zh', json_encode($error_code_result_zh));

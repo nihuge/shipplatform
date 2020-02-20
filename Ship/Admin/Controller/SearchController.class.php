@@ -287,16 +287,96 @@ class SearchController extends AdminBaseController
             $resultCount = $work->editData($where, array('del_sign' => 2));
             if ($resultCount > 0) {
                 //如果影响行数大于0
-//                $resultmsg = $work
-//                    ->where(array('id' => $resultid))
-//                    ->find();
-//                $user = new \Common\Model\UserModel();
-//                $firmid = $user->getFieldById($resultmsg['uid'], 'firmid');
 
-                //消除对应的作业计数
-//                M('firm_historical_sum')->where(array('firmid' => $firmid))->setDec('num');
-//                M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('num');
-//                M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('num');
+                /*
+                 * 将统计内容相应的减去
+                 */
+                $resultmsg = $work
+                    ->alias('r')
+                    ->field('r.uid,r.weight,r.shipid,r.finish_sign,e.measure_standard1,e.measure_standard2,e.table_accuracy,e.security1,e.grade1,e.operater1,e.grade2,e.operater2,r.count_sign')
+                    ->join('left join evaluation as e on e.result_id=r.id')
+                    ->where(array('r.id' => $resultid))
+                    ->find();
+
+                $ship = new \Common\Model\ShipFormModel();
+                $cb_firmid = $ship->getFieldById($resultmsg['shipid'], 'firmid');
+                $user = new \Common\Model\UserModel();
+                $jy_firmid = $user->getFieldById($resultmsg['uid'], 'firmid');
+                $result_weight = abs($resultmsg['weight']);
+
+                //判断状态是否结束和计算出了重量，如果结束了并且计算出了重量则减去重量
+                if ($resultmsg['finish_sign'] == 1 and $result_weight > 0) {
+                    //减去船舶公司的总重和总作业次数
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('weight', $result_weight);
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('num');
+                    //减去船的总重和总作业次数
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('weight', $result_weight);
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('num');
+                    //减去检验公司的总重和总作业次数
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('weight', $result_weight);
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('num');
+                    //减去检验员的总重和总作业次数
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('weight', $result_weight);
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('num');
+                }
+
+
+                //判断检验公司是否评价过
+                if ($resultmsg['grade1'] > 0) {
+                    //检验人员如果评价过，则相应的减去船公司和船的统计数值,减去船公司的
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('grade', $resultmsg['grade1']);
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('grade_num');
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('measure_standard', $resultmsg['measure_standard1']);
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('measure_num');
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('security', $resultmsg['security1']);
+                    M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setDec('security_num');
+                    //减去船的统计数据
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('grade', $resultmsg['grade1']);
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('grade_num');
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('measure_standard', $resultmsg['measure_standard1']);
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('measure_num');
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('security', $resultmsg['security1']);
+                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setDec('security_num');
+                }
+
+                //判断船方是否评价过
+                if ($resultmsg['grade2'] > 0) {
+                    //船方如果评价过，则相应的减去检验公司和检验员的统计数值,减去检验公司的
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('grade', $resultmsg['grade2']);
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('grade_num');
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('measure_standard', $resultmsg['measure_standard2']);
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('measure_num');
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('security', $resultmsg['security2']);
+                    M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setDec('security_num');
+                    //减去检验员的统计数据
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('grade', $resultmsg['grade2']);
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('grade_num');
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('measure_standard', $resultmsg['measure_standard2']);
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('measure_num');
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('security', $resultmsg['security2']);
+                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setDec('security_num');
+                }
+
+                //判断该作业的经验底量和舱容反馈是否被纳入了统计
+                if($resultmsg['count_sign'] == 1){
+                    //如果被纳入了统计则减去对应的信息
+                    $resultlist = new \Common\Model\ResultlistModel();
+                    $cabin = new \Common\Model\CabinModel();
+                    $bottom_list = $resultlist->get_base_volume_list($resultid);
+
+                    //计入统计
+                    if ($resultmsg['table_accuracy'] > 0) {
+                        $ship->where(array('shipid' => $resultmsg['shipid']))->setDec('table_accuracy', $resultmsg['table_accuracy']);
+                        $ship->where(array('shipid' => $resultmsg['shipid']))->setDec('accuracy_num');
+                    }
+
+                    foreach ($bottom_list as $value) {
+                        $cabin->where(array('id' => $value['cabinid']))->setDec('base_volume', $value['standardcapacity']);
+                        $cabin->where(array('id' => $value['cabinid']))->setDec('base_num');
+                    }
+                }
+
+
 
                 $this->ajaxReturn(array('code' => 1, 'msg' => '删除成功'));
             } else {
@@ -327,17 +407,92 @@ class SearchController extends AdminBaseController
                 );
                 $resultCount = $work->editData($where, array('del_sign' => 1));
                 if ($resultCount > 0) {
-                    //如果影响行数大于0
-                    /*$resultmsg = $work
-                        ->where(array('id' => $resultid))
+                    /*
+                     * 将统计内容相应的恢复
+                     */
+                    $resultmsg = $work
+                        ->alias('r')
+                        ->field('r.uid,r.weight,r.shipid,r.finish_sign,e.measure_standard1,e.measure_standard2,e.table_accuracy,e.security1,e.grade1,e.operater1,e.grade2,e.operater2,r.count_sign')
+                        ->join('left join evaluation as e on e.result_id=r.id')
+                        ->where(array('r.id' => $resultid))
                         ->find();
-                    $user = new \Common\Model\UserModel();
-                    $firmid = $user->getFieldById($resultmsg['uid'], 'firmid');
 
-                    //恢复作业计数
-                    M('firm_historical_sum')->where(array('firmid' => $firmid))->setInc('num');
-                    M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('num');
-                    M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('num');*/
+                    $ship = new \Common\Model\ShipFormModel();
+                    $cb_firmid = $ship->getFieldById($resultmsg['shipid'], 'firmid');
+                    $user = new \Common\Model\UserModel();
+                    $jy_firmid = $user->getFieldById($resultmsg['uid'], 'firmid');
+                    $result_weight = abs($resultmsg['weight']);
+
+                    //判断状态是否结束，如果结束了则加上重量
+                    if ($resultmsg['finish_sign'] == 1 and $result_weight > 0) {
+                        //恢复船舶公司的总重和总作业次数
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('weight', $result_weight);
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('num');
+                        //恢复船的总重和总作业次数
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('weight', $result_weight);
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('num');
+                        //恢复检验公司的总重和总作业次数
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('weight', $result_weight);
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('num');
+                        //恢复检验员的总重和总作业次数
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('weight', $result_weight);
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('num');
+                    }
+
+                    //判断检验公司是否评价过
+                    if ($resultmsg['grade1'] > 0) {
+                        //检验人员如果评价过，则相应的恢复船公司和船的统计数值,恢复船公司的
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('grade', $resultmsg['grade1']);
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('grade_num');
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('measure_standard', $resultmsg['measure_standard1']);
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('measure_num');
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('security', $resultmsg['security1']);
+                        M('firm_historical_sum')->where(array('firmid' => $cb_firmid))->setInc('security_num');
+                        //恢复船的统计数据
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('grade', $resultmsg['grade1']);
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('grade_num');
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('measure_standard', $resultmsg['measure_standard1']);
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('measure_num');
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('security', $resultmsg['security1']);
+                        M('ship_historical_sum')->where(array('shipid' => $resultmsg['shipid']))->setInc('security_num');
+                    }
+
+                    //判断船方是否评价过
+                    if ($resultmsg['grade2'] > 0) {
+                        //船方如果评价过，则相应的恢复检验公司和检验员的统计数值,恢复检验公司的统计数据
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('grade', $resultmsg['grade2']);
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('grade_num');
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('measure_standard', $resultmsg['measure_standard2']);
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('measure_num');
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('security', $resultmsg['security2']);
+                        M('firm_historical_sum')->where(array('firmid' => $jy_firmid))->setInc('security_num');
+                        //恢复检验员的统计数据
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('grade', $resultmsg['grade2']);
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('grade_num');
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('measure_standard', $resultmsg['measure_standard2']);
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('measure_num');
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('security', $resultmsg['security2']);
+                        M('user_historical_sum')->where(array('userid' => $resultmsg['uid']))->setInc('security_num');
+                    }
+
+                    //判断该作业的经验底量和舱容反馈是否被纳入了统计
+                    if($resultmsg['count_sign'] == 1 and $resultmsg['finish_sign'] == 1){
+                        //如果被纳入了统计则恢复对应的信息
+                        $resultlist = new \Common\Model\ResultlistModel();
+                        $cabin = new \Common\Model\CabinModel();
+                        $bottom_list = $resultlist->get_base_volume_list($resultid);
+
+                        //计入统计
+                        if ($resultmsg['table_accuracy'] > 0) {
+                            $ship->where(array('shipid' => $resultmsg['shipid']))->setInc('table_accuracy', $resultmsg['table_accuracy']);
+                            $ship->where(array('shipid' => $resultmsg['shipid']))->setInc('accuracy_num');
+                        }
+
+                        foreach ($bottom_list as $value) {
+                            $cabin->where(array('id' => $value['cabinid']))->setInc('base_volume', $value['standardcapacity']);
+                            $cabin->where(array('id' => $value['cabinid']))->setInc('base_num');
+                        }
+                    }
 
                     $this->ajaxReturn(array('code' => 1, 'msg' => '恢复成功'));
                 } else {
@@ -364,12 +519,13 @@ class SearchController extends AdminBaseController
             );
             $resultCount = $work->where($where)->count();
             if ($resultCount > 0) {
+                M()->startTrans();   // 开启事物
                 //如果该作业状态为已删除
-
                 $resultlist = new \Common\Model\ResultlistModel();
                 $forntrecord = M("forntrecord");
                 $resultrecord = M("resultrecord");
                 $forntImg = M("fornt_img");
+                $evaluation = M("evaluation");
 
                 $where1 = array(
                     'resultid' => $resultid
@@ -420,12 +576,19 @@ class SearchController extends AdminBaseController
                     ->where($where2)
                     ->delete();
 
-                if ($result6 !== false and $result5 !== false and $result4 !== false and $result3 !== false
+                //删除签名信息
+                $result7 = $evaluation
+                    ->where($where2)
+                    ->delete();
+
+                if ($result7 !== false and $result6 !== false and $result5 !== false and $result4 !== false and $result3 !== false
                     and $result2 !== false and $result1 !== false) {
+                    M()->commit();
                     $this->ajaxReturn(array('code' => 1, 'msg' => '彻底删除成功'));
                 } else {
-                    $this->ajaxReturn(array('code' => 2, 'msg' => '彻底删除作业时有部分数据删除失败，请联系技术', 'result1' => $result1, 'result2' => $result2,
-                        'result3' => $result3, 'result4' => $result4, 'result5' => $result5, 'result6' => $result6));
+                    M()->rollback();
+                    $this->ajaxReturn(array('code' => 2, 'msg' => '彻底删除作业失败，请联系技术', 'result1' => $result1, 'result2' => $result2,
+                        'result3' => $result3, 'result4' => $result4, 'result5' => $result5, 'result6' => $result6, 'result7' => $result7));
                 }
             } else {
                 $this->ajaxReturn(array('code' => 11, 'msg' => '该数据未找到或者不是删除状态，请确认后重试'));
@@ -614,7 +777,7 @@ class SearchController extends AdminBaseController
         if ($qianprocess == null and $list['qianprocess'] != "") {
             $this->redirect('Search/process', array('resultid' => $resultid), 0, "正在跳转到旧版计算过程界面");
         }
-        if ($houprocess == null and $list['houprocess'] != ""){
+        if ($houprocess == null and $list['houprocess'] != "") {
             $this->redirect('Search/process', array('resultid' => $resultid), 0, "正在跳转到旧版计算过程界面");
         }
 

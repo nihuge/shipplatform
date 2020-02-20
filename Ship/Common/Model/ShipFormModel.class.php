@@ -2,8 +2,6 @@
 
 namespace Common\Model;
 
-use Common\Model\BaseModel;
-
 /**
  * 船Model
  * */
@@ -742,4 +740,19 @@ sql;
         }
         return 1;
     }
+
+    /**
+     * 获取船的舱容表偏大偏小信息
+     */
+    public function get_ship_table_accuracy($shipid)
+    {
+        $ship_history = M("ship_historical_sum");
+        $histtory_res = $ship_history->field('table_accuracy as accuracy_sum,accuracy_num')->where(array('shipid' => $shipid))->count();
+        //舱容表偏大偏小的平均值
+        $histtory_res['table_accuracy'] = $histtory_res['accuracy_sum'] / ($histtory_res['accuracy_num'] > 0 ? $histtory_res['accuracy_num'] : 1);
+        //舱容表偏大偏小的评价
+        $histtory_res['table_message'] = $histtory_res['table_accuracy'] > 0 ? ($histtory_res['table_accuracy'] < 1.5 ? "偏小" : ($histtory_res['table_accuracy'] == 1.5 ? "正常" : "偏大")) : "无反馈";
+        return $histtory_res;
+    }
+
 }

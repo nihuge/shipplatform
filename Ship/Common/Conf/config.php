@@ -32,9 +32,9 @@ return array(
         'DB_TYPE'   =>'mysqli',
         'DB_HOST'   =>'127.0.0.1',
 //        'DB_NAME'   =>'shipplatform2',  // 数据库名
-        'DB_NAME'   =>'shipplatform_online',  // 数据库名
+        'DB_NAME'   =>'shiplatform_online',  // 数据库名
         'DB_USER'   =>'root',  //账号
-        'DB_PWD'    =>'000000', //密码
+        'DB_PWD'    =>'root', //密码
         // 'DB_NAME'   =>'shipplatform',  // 数据库名
         // 'DB_USER'   =>'ship_platform',  //账号
         // 'DB_PWD'    =>'ship_user_2018', //密码
@@ -48,4 +48,6 @@ return array(
     'TMPL_ACTION_SUCCESS'=>'./tpl/default/Index/Public/dis_success.html', 
     'TMPL_ACTION_ERROR'=>'./tpl/default/Index/Public/dis_error.html',
 
+    /**************************计量设置*******************************/
+    'BASE_JUDGMENT_CRITERIA'=>0.2    //系统判断底量的阈值标准
 );

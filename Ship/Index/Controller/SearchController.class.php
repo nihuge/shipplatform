@@ -610,7 +610,7 @@ class SearchController extends IndexBaseController
     {
         $id = I('get.shipid');
         $data = $this->shipdb
-            ->field('s.shipname,s.type,s.weight,h.grade,s.img,s.make,s.shibie_num,s.cabinnum,h.mooring,h.weight as weights,h.num,f.firmname,s.firmid')
+            ->field('s.shipname,s.type,s.weight,h.grade,s.img,s.make,s.shibie_num,s.cabinnum,h.mooring,h.weight as weights,h.num,h.grade_num,h.measure_standard,h.measure_num,h.security,h.security_num,f.firmname,s.firmid')
             ->alias('s')
             ->where(array('s.id' => $id))
             ->join('left join ship_historical_sum h on h.shipid = s.id')
@@ -618,12 +618,51 @@ class SearchController extends IndexBaseController
             ->find();
         $data['mooring_num'] = count(explode(',', $data['mooring']));
 
+        //基础评分
+        $grade_pre = $data['grade'] / ($data['grade_num'] < 1 ? 1 : $data['grade_num']) / 5 * 100;
+        $data['grade_title'] = $grade_pre . "%";
+        if ($grade_pre == 0) {
+            $data['grade_title'] = "暂无评价";
+        } elseif ($grade_pre < 33.3) {
+            $data['grade_title'] = "较差";
+        } elseif ($grade_pre < 66.6) {
+            $data['grade_title'] = "中等";
+        } elseif ($grade_pre <= 100) {
+            $data['grade_title'] = "很好";
+        }
+
+        //计量规范评分
+        $measure_per = $data['measure_standard'] / ($data['measure_num'] < 1 ? 1 : $data['measure_num']) / 3 * 100;
+        $data['measure_title'] = $measure_per . "%";
+        if ($measure_per == 0) {
+            $data['measure_title'] = "暂无评价";
+        } elseif ($measure_per < 33.3) {
+            $data['measure_title'] = "差";
+        } elseif ($measure_per < 66.6) {
+            $data['measure_title'] = "中";
+        } elseif ($measure_per <= 100) {
+            $data['measure_title'] = "好";
+        }
+
+        //安全评分
+        $security_per = $data['security'] / ($data['security_num'] < 1 ? 1 : $data['security_num']) / 3 * 100;
+        $data['security_title'] = $security_per . "%";
+        if ($security_per == 0) {
+            $data['security_title'] = "暂无评价";
+        } elseif ($security_per < 33.3) {
+            $data['security_title'] = "差";
+        } elseif ($security_per < 66.6) {
+            $data['security_title'] = "中";
+        } elseif ($security_per <= 100) {
+            $data['security_title'] = "好";
+        }
         /**
          * 处理域名访问无法获取用户上传图片的问题
          */
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
+        $data['id'] = $id;
 
         $assign = array(
             'data' => $data
@@ -649,6 +688,7 @@ class SearchController extends IndexBaseController
             ->where(array('shipid' => $id, 'del_sign' => 1))
             ->count();
 
+
         /**
          * 处理域名访问无法获取用户上传图片的问题
          */
@@ -670,7 +710,7 @@ class SearchController extends IndexBaseController
     {
         $id = intval(I('get.shipid'));
         $data = $this->shipdb
-            ->field('s.id,s.shipname,s.type,s.weight,h.grade,s.img,s.make,s.shibie_num,s.cabinnum,h.mooring,h.weight as weights,h.num,f.firmname,s.firmid')
+            ->field('s.id,s.shipname,s.type,s.weight,h.grade,s.img,s.make,s.shibie_num,s.cabinnum,h.mooring,h.weight as weights,h.num,h.grade_num,h.measure_standard,h.measure_num,h.security,h.security_num,f.firmname,s.firmid,h.table_accuracy as accuracy_sum,h.accuracy_num')
             ->alias('s')
             ->where(array('s.id' => $id))
             ->join('left join ship_historical_sum h on h.shipid = s.id')
@@ -678,11 +718,56 @@ class SearchController extends IndexBaseController
             ->find();
         $data['mooring_num'] = count(explode(',', $data['mooring']));
 
+
+        $grade_pre = $data['grade'] / ($data['grade_num'] < 1 ? 1 : $data['grade_num']) / 5 * 100;
+        if ($grade_pre == 0) {
+            $data['grade_title'] = "暂无评价";
+        } elseif ($grade_pre < 33.3) {
+            $data['grade_title'] = "较差";
+        } elseif ($grade_pre < 66.6) {
+            $data['grade_title'] = "中等";
+        } elseif ($grade_pre <= 100) {
+            $data['grade_title'] = "很好";
+        }
+
+        $measure_per = $data['measure_standard'] / ($data['measure_num'] < 1 ? 1 : $data['measure_num']) / 3 * 100;
+        if ($measure_per == 0) {
+            $data['measure_title'] = "暂无评价";
+        } elseif ($measure_per < 33.3) {
+            $data['measure_title'] = "差";
+        } elseif ($measure_per < 66.6) {
+            $data['measure_title'] = "中";
+        } elseif ($measure_per <= 100) {
+            $data['measure_title'] = "好";
+        }
+
+        $security_per = $data['security'] / ($data['security_num'] < 1 ? 1 : $data['security_num']) / 3 * 100;
+        if ($security_per == 0) {
+            $data['security_title'] = "暂无评价";
+        } elseif ($security_per < 33.3) {
+            $data['security_title'] = "差";
+        } elseif ($security_per < 66.6) {
+            $data['security_title'] = "中";
+        } elseif ($security_per <= 100) {
+            $data['security_title'] = "好";
+        }
+
+        $accuracy_per = $data['table_accuracy'] = $data['accuracy_sum'] / ($data['accuracy_num'] > 0 ? $data['accuracy_num'] : 1)/3*100;
+        if ($data['accuracy_num'] == 0) {
+            $data['accuracy_title'] = "暂无评价";
+        } elseif ($accuracy_per < 50) {
+            $data['accuracy_title'] = "平均偏小";
+        } elseif ($accuracy_per == 50) {
+            $data['accuracy_title'] = "平均正常";
+        } elseif ($accuracy_per > 50) {
+            $data['accuracy_title'] = "平均偏大";
+        }
+
         /**
          * 处理域名访问无法获取用户上传图片的问题
          */
         if (is_Domain()) {
-            $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+            $data['img'] = preg_replace("/^\/shipPlatform[\d]?[^\/]*(\S+)/", "$1", $data['img']);
         }
 
         // 获取最近作业的20条数据
@@ -703,6 +788,8 @@ class SearchController extends IndexBaseController
             }
             $voyage[] = $personality['voyage'];
         }
+
+        $data['id'] = $id;
         $assign = array(
             'data' => $data,
             'cha' => $cha,
@@ -1189,5 +1276,144 @@ class SearchController extends IndexBaseController
         );
         $this->assign($assign);
         $this->display();
+    }
+
+    /**
+     * 获取船舶评论
+     */
+    public function get_ship_evaluation()
+    {
+        $ship_id = intval(I('param.shipid'));
+
+        $ship = new \Common\Model\ShipFormModel();
+        $ship_firm_info = $ship
+            ->alias('s')
+            ->field('f.firmname')
+            ->join('left join firm as f on s.firmid=f.id')
+            ->where(array('s.id' => $ship_id))
+            ->find();
+
+        $result = new \Common\Model\WorkModel();
+        $where = array(
+            'e.ship_id' => $ship_id,
+            'r.del_sign' => 1,//选取未被删除的作业才行
+            'r.finish_sign' => 1,//作业必须结束了才显示
+            '_complex' => array(array('e.grade1' => array('GT', 0)), array('e.grade2' => array('GT', 0)), '_logic' => 'or')//检验员或者船方评价过才显示
+        );
+
+        $result_evaluation_count = $result
+            ->alias('r')
+            ->field('r.personality,e.*,u.username,f.firmname')
+            ->join('left join evaluation as e on r.id=e.result_id')
+            ->join('left join user as u on u.id=r.uid')
+            ->join('left join firm as f on f.id=u.firmid')
+            ->where($where)
+            ->count();
+        // 分页
+        $page = new \Org\Nx\Page($result_evaluation_count, 10);
+        $result_evaluation_info = $result
+            ->alias('r')
+            ->field('r.personality,e.*,u.username,f.firmname')
+            ->join('left join evaluation as e on r.id=e.result_id')
+            ->join('left join user as u on u.id=r.uid')
+            ->join('left join firm as f on f.id=u.firmid')
+            ->where($where)
+            ->limit($page->firstRow, $page->listRows)
+            ->select();
+
+        foreach ($result_evaluation_info as $key => $value) {
+            //转换日期和个性化信息
+            $result_evaluation_info[$key]['time1'] = date('Y-m-d H:i:s', $value['time1']);
+            $result_evaluation_info[$key]['time2'] = date('Y-m-d H:i:s', $value['time2']);
+            $result_evaluation_info[$key]['personality'] = json_decode($value['personality'], true);
+            //将评分转换为可视化字符,检验员标准评分
+            if ($result_evaluation_info[$key]['evaluate1'] == "") $result_evaluation_info[$key]['evaluate1'] = "用户未填写评论";
+            if ($result_evaluation_info[$key]['evaluate2'] == "") $result_evaluation_info[$key]['evaluate2'] = "用户未填写评论";
+
+            if ($result_evaluation_info[$key]['grade1'] == 0) {
+                $result_evaluation_info[$key]['grade1_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < $result_evaluation_info[$key]['grade1']) {
+                        $result_evaluation_info[$key]['grade1_str'] .= "★";
+                    } else {
+                        $result_evaluation_info[$key]['grade1_str'] .= "☆";
+                    }
+                }
+            }
+            //船方标准评分
+            if ($result_evaluation_info[$key]['grade2'] == 0) {
+                $result_evaluation_info[$key]['grade2_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < $result_evaluation_info[$key]['grade2']) {
+                        $result_evaluation_info[$key]['grade2_str'] .= "★";
+                    } else {
+                        $result_evaluation_info[$key]['grade2_str'] .= "☆";
+                    }
+                }
+            }
+
+
+            //检验员计量标准评分
+            if ($result_evaluation_info[$key]['measure_standard1'] == 0) {
+                $result_evaluation_info[$key]['measure_standard1_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < $result_evaluation_info[$key]['measure_standard1']) {
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "★";
+                    } else {
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "☆";
+                    }
+                }
+            }
+            //船方计量标准评分
+            if ($result_evaluation_info[$key]['measure_standard2'] == 0) {
+                $result_evaluation_info[$key]['measure_standard2_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 3; $i++) {
+                    if ($i < $result_evaluation_info[$key]['measure_standard2']) {
+                        $result_evaluation_info[$key]['measure_standard2_str'] .= "♦ ";
+                    } else {
+                        $result_evaluation_info[$key]['measure_standard2_str'] .= "♢ ";
+                    }
+                }
+            }
+
+            //检验员计量标准评分
+            if ($result_evaluation_info[$key]['security1'] == 0) {
+                $result_evaluation_info[$key]['security1_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < $result_evaluation_info[$key]['security1']) {
+                        $result_evaluation_info[$key]['security1_str'] .= "★";
+                    } else {
+                        $result_evaluation_info[$key]['security1_str'] .= "☆";
+                    }
+                }
+            }
+            //船方计量标准评分
+            if ($result_evaluation_info[$key]['security2'] == 0) {
+                $result_evaluation_info[$key]['security2_str'] = "暂未评分";
+            } else {
+                for ($i = 0; $i < 3; $i++) {
+                    if ($i < $result_evaluation_info[$key]['security2']) {
+                        $result_evaluation_info[$key]['security2_str'] .= "♦ ";
+                    } else {
+                        $result_evaluation_info[$key]['security2_str'] .= "♢ ";
+                    }
+                }
+            }
+
+        }
+
+        $as_data = array(
+            'data' => $result_evaluation_info,
+            'ship_firm_name' => $ship_firm_info['firmname'],
+            'page' => $page->show(),
+        );
+        $this->assign($as_data);
+        $this->display();
+
     }
 }

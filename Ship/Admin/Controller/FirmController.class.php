@@ -177,6 +177,11 @@ class FirmController extends AdminBaseController
                 ->where($where)
                 ->find();
             if (!empty($data) and $data !== false) {
+                if (is_Domain()) {
+                    $data['logo'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['logo']);
+                    $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+                    $data['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['logo']);
+                }
                 $assign = array(
                     'data' => $data
                 );
@@ -201,7 +206,6 @@ class FirmController extends AdminBaseController
                 $this->error('账号不能含有特殊字符');
                 exit;
             }
-
             $pwd = "000000";
             $data = I('post.');
             $data['pwd'] = encrypt($pwd);    //加密
