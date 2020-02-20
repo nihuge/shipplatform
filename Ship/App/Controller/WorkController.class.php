@@ -2567,712 +2567,717 @@ class WorkController extends AppBaseController
 
                                 // 判断电子签证是否存在
                                 $count = M('electronic_visa')
-                                    ->where(array('resultid' => intval(I('post.resultid'))))
+                                    ->where(array('resultid' => $result_id))
                                     ->count();
                                 if ($count >= 1) {
                                     // 电子签证已存在。删除原先数据
                                     M('electronic_visa')
-                                        ->where(array('resultid' => intval(I('post.resultid'))))->delete();
+                                        ->where(array('resultid' => $result_id))->delete();
                                     unlink($count['img']);
                                 } else {
-                                    //查找该用户上一个记录
+                                    $count_where = array(
+                                        'uid' => $uid,
+                                        'finish_sign' => 1,
+                                        'count_sign' => 0,
+                                        'del_sign' => 1,//不统计已删除的作业
+                                        'id' => array('LT', $result_id),
+                                    );
+                                    //查找该用户未被统计的记录
                                     $pre_result_status = $result
-                                        ->field('id,finish_sign,shipid,count_sign')
-                                        ->where(array('uid' => $uid))
+                                        ->field('id,finish_sign,shipid')
+                                        ->where($count_where)
                                         ->order('id desc')
-                                        ->limit('1,1')
                                         ->select();
-                                    //如果结束了，这次作业变成结束状态
-                                    if ($pre_result_status[0]['finish_sign'] == 1) {
-                                        //如果统计过了，则跳过此次统计
-                                        if ($pre_result_status[0]['count_sign'] == 0) {
-                                            //开始统计上一个作业的经验底量
-                                            $resultlist = new \Common\Model\ResultlistModel();
-                                            $cabin = new \Common\Model\CabinModel();
-                                            $ship = new \Common\Model\ShipFormModel();
-                                            $evaluate = M('evaluation');
-                                            $bottom_list = $resultlist->get_base_volume_list($pre_result_status[0]['id']);
-                                            $map = array('result_id' => $pre_result_status[0]['id']);
-                                            // 获取作业的舱容表准确度评价
-                                            $table_accuracy = $evaluate->field('table_accuracy')->where($map)->find();
+                                    $resultlist = new \Common\Model\ResultlistModel();
+                                    $cabin = new \Common\Model\CabinModel();
+                                    $evaluate = M('evaluation');
+                                    //逐个统计
+                                    foreach ($pre_result_status as $k => $v) {
+                                        //开始统计作业的经验底量
+                                        $bottom_list = $resultlist->get_base_volume_list($v['id']);
 
-                                            //计入统计
-                                            if ($table_accuracy['table_accuracy'] > 0) {
-                                                $ship->where(array('shipid' => $pre_result_status[0]['shipid']))->setInc('table_accuracy', $table_accuracy['table_accuracy']);
-                                                $ship->where(array('shipid' => $pre_result_status[0]['shipid']))->setInc('accuracy_num');
-                                            }
+                                        $map = array('result_id' => $v['id']);
+                                        // 获取作业的舱容表准确度评价
+                                        $table_accuracy = $evaluate->field('table_accuracy')->where($map)->find();
 
-                                            foreach ($bottom_list as $value) {
-                                                $cabin->where(array('id' => $value['cabinid']))->setInc('base_volume', $value['standardcapacity']);
-                                                $cabin->where(array('id' => $value['cabinid']))->setInc('base_num');
-                                            }
-
-                                            $pre_count_result = $result->editData(array('id' => $pre_result_status[0]['id']), array('count_sign' => 1));
-                                        } else {
-                                            $pre_count_result = true;
+                                        //计入统计
+                                        if ($table_accuracy['table_accuracy'] > 0) {
+                                            M('ship_historical_sum')->where(array('shipid' => $v['shipid']))->setInc('table_accuracy', $table_accuracy['table_accuracy']);
+                                            M('ship_historical_sum')->where(array('shipid' => $v['shipid']))->setInc('accuracy_num');
                                         }
 
-                                        //添加当前作业结束标志，上一个作业统计完成标志
-                                        $finish_result = $result->editData(array('id' => $result_id), array('finish_sign' => 1));
+                                        foreach ($bottom_list as $value) {
+                                            $cabin->where(array('id' => $value['cabinid']))->setInc('base_volume', $value['standardcapacity']);
+                                            $cabin->where(array('id' => $value['cabinid']))->setInc('base_count');
+                                        }
+                                        $pre_count_result = $result->editData(array('id' => $v['id']), array('count_sign' => 1));
                                         //如果更改失败,回档，删除上传的图片，报错数据库错误 3
-                                        if ($finish_result === false or $pre_count_result === false) {
+                                        if ($pre_count_result === false) {
                                             M()->rollback();
                                             unlink($res_h ['file']);
                                             exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
                                         }
-
-                                    } else {
-                                        //查找该用户共有几个作业
-                                        $result_counts = $result
-                                            ->where(array('uid' => $uid))
-                                            ->count();
-                                        //如果有两个作业，不允许结束
-                                        if($result_counts >1){
-                                            //如果上一个作业没有结束，则不允许结束。并且删除上传的图片，报错未结束上一次的作业 2035
-                                            M()->rollback();
-                                            unlink($res_h ['file']);
-                                            exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['UNFINISH_PRE_RESULT'])));
-                                        }else{
-                                            //否则允许结束
-                                            //添加当前作业结束标志，上一个作业统计完成标志
-                                            $finish_result = $result->editData(array('id' => $result_id), array('finish_sign' => 1));
-                                            //如果更改失败,回档，删除上传的图片，报错数据库错误 3
-                                            if ($finish_result === false) {
-                                                M()->rollback();
-                                                unlink($res_h ['file']);
-                                                exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
-                                            }
-
-                                        }
-
                                     }
-                                }
-                                $img = $res_h ['file'];
-                                // 新增电子签证
-                                $data = array(
-                                    'resultid' => intval(I('post.resultid')),
-                                    'img' => $img,
-                                );
-                                $arr = M('electronic_visa')->add($data);
-                                if ($arr) {
-                                    // 作业数据汇总
-                                    $result = new \Common\Model\WorkModel();
-                                    $res1 = $result->weight(I('post.resultid'));
-                                    if ($res1['code'] == '1') {
-                                        M()->commit();
-                                        //成功 1
-                                        $res = array(
-                                            'code' => $this->ERROR_CODE_COMMON['SUCCESS']
-                                        );
-                                    } else {
+
+                                    //添加当前作业结束标志
+                                    $finish_result = $result->editData(array('id' => $result_id), array('finish_sign' => 1));
+                                    //如果更改失败,回档，删除上传的图片，报错数据库错误 3
+                                    if ($finish_result === false) {
                                         M()->rollback();
-                                        // 其它错误  2
-                                        $res = array(
-                                            'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
-                                        );
+                                        unlink($res_h ['file']);
+                                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
                                     }
+
+
+                                }
+                            $img = $res_h ['file'];
+                            // 新增电子签证
+                            $data = array(
+                                'resultid' => intval(I('post.resultid')),
+                                'img' => $img,
+                            );
+                            $arr = M('electronic_visa')->add($data);
+                            if ($arr) {
+                                // 作业数据汇总
+                                $result = new \Common\Model\WorkModel();
+                                $res1 = $result->weight($result_id);
+                                if ($res1['code'] == '1') {
+                                    M()->commit();
+                                    //成功 1
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS']
+                                    );
                                 } else {
                                     M()->rollback();
-                                    //上传失败 1
+                                    // 其它错误  2
                                     $res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR']
+                                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
                                     );
                                 }
+                            } else {
+                                M()->rollback();
+                                //上传失败 1
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR']
+                                );
                             }
-                        } else {
-                            //不允许其他人操作 2024
-                            $res = array(
-                                'code' => $this->ERROR_CODE_RESULT['OTHERS_OPERATE']
-                            );
                         }
+                    }else {
+                        //不允许其他人操作 2024
+                        $res = array(
+                            'code' => $this->ERROR_CODE_RESULT['OTHERS_OPERATE']
+                        );
                     }
-                } else {
-                    // 电子签证不能为空
-                    $res = array(
-                        'code' => $this->ERROR_CODE_RESULT['NEED_IMG']
-                    );
                 }
             } else {
-                // 错误信息返回码
-                $res = $msg1;
-            }
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
-                'data' => I('post.')
-            );
-        }
-        echo jsonreturn($res);
-    }
-
-
-    public function test_count()
-    {
-        $resultlist = new \Common\Model\ResultlistModel();
-        die(jsonreturn($resultlist->get_base_volume_list(I('post.id'))));
-    }
-
-    /**
-     * 获取作业评价
-     * @param int uid 用户id
-     * @param string imei 标识
-     * @param int resultid 作业ID
-     * @return array
-     * @return array code
-     * @return array content 双方评价内容
-     * @return array coun
-     */
-    public function getEvaluate()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                // 判断作业是否完成----电子签证
-                $coun = M('electronic_visa')
-                    ->where(array('resultid' => intval(I('post.resultid'))))
-                    ->count();
-                if ($coun > 0) {
-                    // 获取作业的数据：操作人、作业ID、登录人的公司类型、作业的船舶ID
-                    //获取水尺数据
-                    $where = array(
-                        'r.id' => I('post.resultid')
-                    );
-//                    $result = new \Common\Model\WorkModel();
-                    $evaluate = M("evaluation");
-                    //查询作业列表
-                    $list = $evaluate
-                        ->field('e.result_id as id,e.uid,e.ship_id as shipid,f.firmtype as ffirmtype,e.grade1,e.grade2,e.evaluate1,e.evaluate2')
-                        ->alias('e')
-                        ->join('left join ship s on e.ship_id=s.id')
-                        ->join('left join user u on e.uid = u.id')
-                        ->join('left join firm f on u.firmid = f.id')
-                        ->where($where)
-                        ->find();
-                    // 获取当前登陆用户的公司类型
-                    $a = $user
-                        ->field('f.firmtype')
-                        ->alias('u')
-                        ->join('left join firm f on u.firmid = f.id')
-                        ->where(array('u.id' => intval(I('post.uid'))))
-                        ->find();
-                    $list['firmtype'] = $a['firmtype'];
-
-                    $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                        'content' => $list,
-                        'coun' => $coun
-                    );
-                } else {
-                    // 错误信息返回码
-                    $res = $msg1;
-                }
-            } else {
-                // 作业尚未完成，不可以评价  2019
+                // 电子签证不能为空
                 $res = array(
-                    'code' => $this->ERROR_CODE_RESULT['NOT_EVAL']
+                    'code' => $this->ERROR_CODE_RESULT['NEED_IMG']
                 );
             }
         } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            // 错误信息返回码
+            $res = $msg1;
         }
-        echo jsonreturn($res);
-    }
+    } else
+{
+    //参数不正确，参数缺失    4
+$res = array(
+'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+'data' => I('post.')
+);
+}
 
-    /**
-     * 作业评价
-     * @param int uid 用户id
-     * @param string imei 标识
-     * @param int id 作业ID
-     * @param int shipid 船舶ID
-     * @param int grade 分数
-     * @param int firmtype 公司类型
-     * @param int content 评价内容
-     * @param int operater 作业操作人
-     * @return array
-     * @return array code
-     */
-    public function evaluate()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.grade') and I('post.measure') and I('post.security')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                // 判断是否打分
-                if (intval(I('post.grade')) == 0) {
-                    $this->error('请评分！');
-                } else {
-                    $id = intval(I('post.resultid'));
-                    $result = new \Common\Model\WorkModel();
-                    $result_info = $result->field('shipid,del_sign')->where(array('id' => $id))->find();
-                    //如果作业被删除了，不可以操作 2033
-                    if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-                    //过滤传入值
-                    $operater = intval(I('post.operater'));
-                    $shipid = $result_info['shipid'];
-                    $grade = intval(I('post.grade', 5));
-//                    $firmtype = intval(I('post.firmtype'));
-                    $content = I('post.content', '');
-                    $firm = new \Common\Model\FirmModel();
-                    $firmtype = $firm->getFieldById($msg1['content'], 'firmtype');
-                    $measure = I('post.measure', 3); //计量规范，默认好评
-                    $security = I('post.security', 3); //安全规范，默认好评
+echo jsonreturn($res);
+}
 
-                    //构建参数传输给模型
-                    $data = array(
-                        'uid' => $operater,
-                        'id' => $id,
-                        'shipid' => $shipid,
-                        'grade' => $grade,
-                        'content' => $content,
-                        'operater' => I('post.uid'),
-                        'firmtype' => $firmtype,
-                        'measure' => $measure,
-                        'security' => $security,
-                    );
 
-                    $res = $result->evaluate($data);
+public
+function test_count()
+{
+    $resultlist = new \Common\Model\ResultlistModel();
+    die(jsonreturn($resultlist->get_base_volume_list(I('post.id'))));
+}
 
-                }
+/**
+ * 获取作业评价
+ * @param int uid 用户id
+ * @param string imei 标识
+ * @param int resultid 作业ID
+ * @return array
+ * @return array code
+ * @return array content 双方评价内容
+ * @return array coun
+ */
+public
+function getEvaluate()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            // 判断作业是否完成----电子签证
+            $coun = M('electronic_visa')
+                ->where(array('resultid' => intval(I('post.resultid'))))
+                ->count();
+            if ($coun > 0) {
+                // 获取作业的数据：操作人、作业ID、登录人的公司类型、作业的船舶ID
+                //获取水尺数据
+                $where = array(
+                    'r.id' => I('post.resultid')
+                );
+//                    $result = new \Common\Model\WorkModel();
+                $evaluate = M("evaluation");
+                //查询作业列表
+                $list = $evaluate
+                    ->field('e.result_id as id,e.uid,e.ship_id as shipid,f.firmtype as ffirmtype,e.grade1,e.grade2,e.evaluate1,e.evaluate2')
+                    ->alias('e')
+                    ->join('left join ship s on e.ship_id=s.id')
+                    ->join('left join user u on e.uid = u.id')
+                    ->join('left join firm f on u.firmid = f.id')
+                    ->where($where)
+                    ->find();
+                // 获取当前登陆用户的公司类型
+                $a = $user
+                    ->field('f.firmtype')
+                    ->alias('u')
+                    ->join('left join firm f on u.firmid = f.id')
+                    ->where(array('u.id' => intval(I('post.uid'))))
+                    ->find();
+                $list['firmtype'] = $a['firmtype'];
+
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                    'content' => $list,
+                    'coun' => $coun
+                );
             } else {
                 // 错误信息返回码
                 $res = $msg1;
             }
         } else {
-            //参数不正确，参数缺失    4
+            // 作业尚未完成，不可以评价  2019
             $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                'code' => $this->ERROR_CODE_RESULT['NOT_EVAL']
             );
         }
-        echo jsonreturn($res);
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
-    /**
-     * 获取调整用的舱详细信息
-     */
-    public function adjust_cabin_list()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $work = new \Common\Model\WorkModel();
-                //成功 1
-                $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                $res['code'] = 1;
+/**
+ * 作业评价
+ * @param int uid 用户id
+ * @param string imei 标识
+ * @param int id 作业ID
+ * @param int shipid 船舶ID
+ * @param int grade 分数
+ * @param int firmtype 公司类型
+ * @param int content 评价内容
+ * @param int operater 作业操作人
+ * @return array
+ * @return array code
+ */
+public
+function evaluate()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.grade') and I('post.measure') and I('post.security')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            // 判断是否打分
+            if (intval(I('post.grade')) == 0) {
+                $this->error('请评分！');
             } else {
-                // 错误信息返回码
-                $res = $msg1;
-            }
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }
-
-    /**
-     * 调整舱信息
-     */
-    /*public function adjust_cabin()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')
-            and I('post.cabinid') and I('post.shipid') and I('post.ullage')
-            and I('post.solt') and I('post.temperature')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $data = I('post.');
-                if (judgeTwoString($data)) {
-
-                    $work = new \Common\Model\WorkModel();
-                    $msg = $work->adjust_cabin($data);
-                    if ($msg['code'] == 1) {
-                        //成功 1
-                        $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                        $res['code'] = 1;
-                        $res['remark'] = 'adjust';
-                    } else {
-                        $res = $msg;
-                    }
-                } else {
-                    //不可以出现特殊字符，错误5
-                    $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL']
-                    );
-                }
-            } else {
-                // 错误信息返回码
-                $res = $msg1;
-            }
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }*/
-
-    /**
-     * 批量调整有表船舱信息
-     */
-    public function adjust_cabins()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')
-            and I('post.shipid') and I('post.solt') and I('post.data') and I('post.reason')) {
-
-            $result_id = intval(I('post.shipid'));
-            $reason = intval(I('post.reason'));
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $work = new \Common\Model\WorkModel();
-                $result_info = $work->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
+                $id = intval(I('post.resultid'));
+                $result = new \Common\Model\WorkModel();
+                $result_info = $result->field('shipid,del_sign')->where(array('id' => $id))->find();
                 //如果作业被删除了，不可以操作 2033
                 if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-                //如果作业结束了，不可以操作 2034
-                if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+                //过滤传入值
+                $operater = intval(I('post.operater'));
+                $shipid = $result_info['shipid'];
+                $grade = intval(I('post.grade', 5));
+//                    $firmtype = intval(I('post.firmtype'));
+                $content = I('post.content', '');
+                $firm = new \Common\Model\FirmModel();
+                $firmtype = $firm->getFieldById($msg1['content'], 'firmtype');
+                $measure = I('post.measure', 3); //计量规范，默认好评
+                $security = I('post.security', 3); //安全规范，默认好评
 
-                $other = I('post.');
-                /*and I('post.ullage')
-                 and I('post.temperature') and I('post.cabinid')*/
-                unset($other['data']);
-                $data = I('post.data');
+                //构建参数传输给模型
+                $data = array(
+                    'uid' => $operater,
+                    'id' => $id,
+                    'shipid' => $shipid,
+                    'grade' => $grade,
+                    'content' => $content,
+                    'operater' => I('post.uid'),
+                    'firmtype' => $firmtype,
+                    'measure' => $measure,
+                    'security' => $security,
+                );
 
-                //不能有特殊字符
-                if (judgeTwoString($data) and judgeTwoString($other)) {
+                $res = $result->evaluate($data);
 
-                    //判断是有表船还是无表船
-                    $ship = new \Common\Model\ShipFormModel();
-                    $is_have_data = $ship->is_have_data(I('post.shipid'));
+            }
+        } else {
+            // 错误信息返回码
+            $res = $msg1;
+        }
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
+    }
+    echo jsonreturn($res);
+}
 
-                    if ($is_have_data !== 'y') {
-                        $need_adjust = array();
-                        //开启事务
-                        M()->startTrans();
-                        //提交调整的舱大于0才记录原重量和舱容反馈
-                        if (count($data) > 0) {
-                            $weights = $work->field('old_weight,weight')->where(array('id' => $result_id))->find();
-                            $weight_data = array(
-                                'adjust_reason' => $reason
-                            );
-                            //判断是否存在原先总重，如果不存在则保存当前总重量
-                            if ($weights['old_weight'] == 0) {
-                                $weight_data['old_weight'] = $weights['weight'];
+/**
+ * 获取调整用的舱详细信息
+ */
+public
+function adjust_cabin_list()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $work = new \Common\Model\WorkModel();
+            //成功 1
+            $res = $work->get_cabins_weight(trimall(I('post.resultid')));
+            $res['code'] = 1;
+        } else {
+            // 错误信息返回码
+            $res = $msg1;
+        }
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
+    }
+    echo jsonreturn($res);
+}
+
+/**
+ * 调整舱信息
+ */
+/*public function adjust_cabin()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid')
+        and I('post.cabinid') and I('post.shipid') and I('post.ullage')
+        and I('post.solt') and I('post.temperature')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $data = I('post.');
+            if (judgeTwoString($data)) {
+
+                $work = new \Common\Model\WorkModel();
+                $msg = $work->adjust_cabin($data);
+                if ($msg['code'] == 1) {
+                    //成功 1
+                    $res = $work->get_cabins_weight(trimall(I('post.resultid')));
+                    $res['code'] = 1;
+                    $res['remark'] = 'adjust';
+                } else {
+                    $res = $msg;
+                }
+            } else {
+                //不可以出现特殊字符，错误5
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL']
+                );
+            }
+        } else {
+            // 错误信息返回码
+            $res = $msg1;
+        }
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
+    }
+    echo jsonreturn($res);
+}*/
+
+/**
+ * 批量调整有表船舱信息
+ */
+public function adjust_cabins()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid')
+        and I('post.shipid') and I('post.solt') and I('post.data') and I('post.reason')) {
+
+        $result_id = intval(I('post.resultid'));
+        $reason = intval(I('post.reason'));
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $work = new \Common\Model\WorkModel();
+            $result_info = $work->field('del_sign,finish_sign')->where(array('id' => $result_id))->find();
+            //如果作业被删除了，不可以操作 2033
+            if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
+            //如果作业结束了，不可以操作 2034
+            if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+
+            $other = I('post.');
+            /*and I('post.ullage')
+             and I('post.temperature') and I('post.cabinid')*/
+            unset($other['data']);
+            $data = I('post.data');
+
+            //不能有特殊字符
+            if (judgeTwoString($data) and judgeTwoString($other)) {
+
+                //判断是有表船还是无表船
+                $ship = new \Common\Model\ShipFormModel();
+                $is_have_data = $ship->is_have_data(I('post.shipid'));
+
+                if ($is_have_data !== 'y') {
+                    $need_adjust = array();
+                    //开启事务
+                    M()->startTrans();
+                    //提交调整的舱大于0才记录原重量和舱容反馈
+                    if (count($data) > 0) {
+                        $weights = $work->field('old_weight,weight')->where(array('id' => $result_id))->find();
+                        $weight_data = array(
+                            'adjust_reason' => $reason
+                        );
+                        //判断是否存在原先总重，如果不存在则保存当前总重量
+                        if ($weights['old_weight'] == 0) {
+                            $weight_data['old_weight'] = $weights['weight'];
+                        }
+                        $result = $work->editData(array('id' => $result_id), $weight_data);
+                        //如果选择了舱容表偏大偏小，计入评价表内的舱容反馈，等待统计
+                        if ($reason > 0 and $reason <= 3) {
+                            //防止错选，可以更正为0
+                            if($reason == 3){
+                                $reason =0;
                             }
-                            $result = $work->editData(array('id' => $result_id), $weight_data);
-                            //如果选择了舱容表偏大偏小，计入评价表内的舱容反馈，等待统计
-                            if ($reason > 0 and $reason < 3) {
-                                $evaluate = M('evaluation');
-                                $evaluate->where(array('result_id' => $result_id))->save(array('table_accuracy' => $reason));
-                            }
-
-                            //如果保存失败则rollback并且返回数据库错误 3
-                            if ($result === false) {
-                                M()->rollback();
-                                exit(jsonreturn(array(
-                                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
-                                )));
-                            }
+                            $evaluate = M('evaluation');
+                            $evaluate->where(array('result_id' => $result_id))->save(array('table_accuracy' => $reason));
                         }
 
-                        foreach ($data as $key => $value) {
-                            $value['resultid'] = $other['resultid'];
-                            $value['solt'] = $other['solt'];
-                            $value['shipid'] = $other['shipid'];
-                            if (isset($value['cabinid']) and $value['cabinid'] !== ''
-                                and isset($value['ullage']) and $value['ullage'] !== ''
-                                and isset($value['temperature']) and $value['temperature'] !== '') {
-                                /*
-                                 * 空高、液深限制：0.001
-                                 * 温度限制：0.1
-                                 */
-                                $value['ullage'] = round($value['ullage'], 3);
-                                $value['sounding'] = round($value['sounding'], 3);
-                                $value['temperature'] = round($value['temperature'], 1);
+                        //如果保存失败则rollback并且返回数据库错误 3
+                        if ($result === false) {
+                            M()->rollback();
+                            exit(jsonreturn(array(
+                                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                            )));
+                        }
+                    }
+
+                    foreach ($data as $key => $value) {
+                        $value['resultid'] = $other['resultid'];
+                        $value['solt'] = $other['solt'];
+                        $value['shipid'] = $other['shipid'];
+                        if (isset($value['cabinid']) and $value['cabinid'] !== ''
+                            and isset($value['ullage']) and $value['ullage'] !== ''
+                            and isset($value['temperature']) and $value['temperature'] !== '') {
+                            /*
+                             * 空高、液深限制：0.001
+                             * 温度限制：0.1
+                             */
+                            $value['ullage'] = round($value['ullage'], 3);
+                            $value['sounding'] = round($value['sounding'], 3);
+                            $value['temperature'] = round($value['temperature'], 1);
 
 //                            exit(jsonreturn($value));
-                                $msg = $work->adjust_nodata_cabin($value);
-                                if ($msg['code'] != 1) {
-                                    //如果发生错误，回档期间发生的所有修改并且退出
-                                    M()->rollback();
-                                    $res = $msg;
-                                    exit(jsonreturn($res));
-                                } else {
-                                    if ($msg['adjust']) {
-                                        $need_adjust[] = $value['cabinid'];
-                                    }
-                                }
-                            } else {
-                                //参数不全 4
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-                                );
+                            $msg = $work->adjust_nodata_cabin($value);
+                            if ($msg['code'] != 1) {
+                                //如果发生错误，回档期间发生的所有修改并且退出
+                                M()->rollback();
+                                $res = $msg;
                                 exit(jsonreturn($res));
-                            }
-                        }
-
-                        //提交事务
-                        M()->commit();
-
-                        //成功 1
-                        $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                        $res['code'] = 1;
-                        $res['adjustlist'] = $need_adjust;
-                        $res['remark'] = 'adjust';
-                    } else {
-                        //开启事务
-                        M()->startTrans();
-                        foreach ($data as $key => $value) {
-                            $value['resultid'] = $other['resultid'];
-                            $value['solt'] = $other['solt'];
-                            $value['shipid'] = $other['shipid'];
-                            if (isset($value['cabinid']) and $value['cabinid'] !== ''
-                                and isset($value['ullage']) and $value['ullage'] !== ''
-                                and isset($value['temperature']) and $value['temperature'] !== '') {
-                                /*
-                                 * 空高、液深限制：0.001
-                                 * 温度限制：0.1
-                                 */
-                                $value['ullage'] = round($value['ullage'], 3);
-                                $value['sounding'] = round($value['sounding'], 3);
-                                $value['temperature'] = round($value['temperature'], 1);
-                                $msg = $work->adjust_cabin($value, 'P');
-                                if ($msg['code'] != 1) {
-                                    //如果发生错误，回档期间发生的所有修改并且退出
-                                    M()->rollback();
-                                    $res = $msg;
-                                    exit(jsonreturn($res));
-                                }
                             } else {
-                                //参数不全 4
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-                                );
-                                exit(jsonreturn($res));
+                                if ($msg['adjust']) {
+                                    $need_adjust[] = $value['cabinid'];
+                                }
                             }
+                        } else {
+                            //参数不全 4
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                            );
+                            exit(jsonreturn($res));
                         }
-                        //提交事务
-                        M()->commit();
-                        //成功 1
-                        $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                        $res['code'] = 1;
-                        $res['remark'] = 'adjust';
-
                     }
+
+                    //提交事务
+                    M()->commit();
+
+                    //成功 1
+                    $res = $work->get_cabins_weight(trimall(I('post.resultid')));
+                    $res['code'] = 1;
+                    $res['adjustlist'] = $need_adjust;
+                    $res['remark'] = 'adjust';
                 } else {
-                    //不可以出现特殊字符，错误5
-                    $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL']
-                    );
+                    //开启事务
+                    M()->startTrans();
+                    //提交调整的舱大于0才记录原重量和舱容反馈
+                    if (count($data) > 0) {
+                        $weights = $work->field('old_weight,weight')->where(array('id' => $result_id))->find();
+                        $weight_data = array(
+                            'adjust_reason' => $reason
+                        );
+                        //判断是否存在原先总重，如果不存在则保存当前总重量
+                        if ($weights['old_weight'] == 0) {
+                            $weight_data['old_weight'] = $weights['weight'];
+                        }
+                        $result = $work->editData(array('id' => $result_id), $weight_data);
+                        //如果选择了舱容表偏大偏小，计入评价表内的舱容反馈，等待统计
+                        if ($reason > 0 and $reason < 3) {
+                            $evaluate = M('evaluation');
+                            $evaluate->where(array('result_id' => $result_id))->save(array('table_accuracy' => $reason));
+                        }
+
+                        //如果保存失败则rollback并且返回数据库错误 3
+                        if ($result === false) {
+                            M()->rollback();
+                            exit(jsonreturn(array(
+                                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                            )));
+                        }
+                    }
+                    foreach ($data as $key => $value) {
+                        $value['resultid'] = $other['resultid'];
+                        $value['solt'] = $other['solt'];
+                        $value['shipid'] = $other['shipid'];
+                        if (isset($value['cabinid']) and $value['cabinid'] !== ''
+                            and isset($value['ullage']) and $value['ullage'] !== ''
+                            and isset($value['temperature']) and $value['temperature'] !== '') {
+                            /*
+                             * 空高、液深限制：0.001
+                             * 温度限制：0.1
+                             */
+                            $value['ullage'] = round($value['ullage'], 3);
+                            $value['sounding'] = round($value['sounding'], 3);
+                            $value['temperature'] = round($value['temperature'], 1);
+                            $msg = $work->adjust_cabin($value, 'P');
+                            if ($msg['code'] != 1) {
+                                //如果发生错误，回档期间发生的所有修改并且退出
+                                M()->rollback();
+                                $res = $msg;
+                                exit(jsonreturn($res));
+                            }
+                        } else {
+                            //参数不全 4
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                            );
+                            exit(jsonreturn($res));
+                        }
+                    }
+                    //提交事务
+                    M()->commit();
+                    //成功 1
+                    $res = $work->get_cabins_weight(trimall(I('post.resultid')));
+                    $res['code'] = 1;
+                    $res['remark'] = 'adjust';
+
                 }
             } else {
-                // 错误信息返回码
-                $res = $msg1;
+                //不可以出现特殊字符，错误5
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['NOT_SPECIAL']
+                );
             }
         } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            // 错误信息返回码
+            $res = $msg1;
         }
-        echo jsonreturn($res);
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
-    /**
-     * 批量计算
-     * @param int cabinid 舱ID
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param float sounding 实高
-     * @param float ullage 空高
-     * @param varchar temperature 温度
-     * @param int solt 1:作业前；2:作业后
-     * @param varchar imei 标识
-     * @param int shipid 船ID
-     * @param float altitudeheight 基准高度
-     * @param string qufen diliang:底量计算 rongliang:容量计算
-     * @param int quantity 1：计算底量；2：不计算底量
-     * @param int is_pipeline 是否包含管线 1：是；2：否
-     * @param varchar soundingfile 实高图片
-     * @param varchar ullagefile 空高图片
-     * @param varchar temperaturefile 温度图片
-     * @return @param array
-     * @return @param code
-     */
-    public function batch_reckon()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')
-            and I('post.shipid') and I('post.qufen') and I('post.is_fugai')
-            and I('post.is_pipeline') and I('post.quantity') and I('post.data')) {
-            $user = new \Common\Model\UserModel();
-            //判断用户状态、是否到期、标识比对
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $datas = I('post.data');
-                $ship = new \Common\Model\ShipFormModel();
-                $result = new \Common\Model\WorkModel();
-                $resultlist = new \Common\Model\ResultlistModel();
-                $cabin = new \Common\Model\CabinModel();
-                $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
-                //如果作业被删除了，不可以操作 2033
-                if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-                //如果作业结束了，不可以操作 2034
-                if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+/**
+ * 批量计算
+ * @param int cabinid 舱ID
+ * @param int uid 用户ID
+ * @param int resultid 计量ID
+ * @param float sounding 实高
+ * @param float ullage 空高
+ * @param varchar temperature 温度
+ * @param int solt 1:作业前；2:作业后
+ * @param varchar imei 标识
+ * @param int shipid 船ID
+ * @param float altitudeheight 基准高度
+ * @param string qufen diliang:底量计算 rongliang:容量计算
+ * @param int quantity 1：计算底量；2：不计算底量
+ * @param int is_pipeline 是否包含管线 1：是；2：否
+ * @param varchar soundingfile 实高图片
+ * @param varchar ullagefile 空高图片
+ * @param varchar temperaturefile 温度图片
+ * @return @param array
+ * @return @param code
+ */
+public
+function batch_reckon()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')
+        and I('post.shipid') and I('post.qufen') and I('post.is_fugai')
+        and I('post.is_pipeline') and I('post.quantity') and I('post.data')) {
+        $user = new \Common\Model\UserModel();
+        //判断用户状态、是否到期、标识比对
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $datas = I('post.data');
+            $ship = new \Common\Model\ShipFormModel();
+            $result = new \Common\Model\WorkModel();
+            $resultlist = new \Common\Model\ResultlistModel();
+            $cabin = new \Common\Model\CabinModel();
+            $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
+            //如果作业被删除了，不可以操作 2033
+            if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
+            //如果作业结束了，不可以操作 2034
+            if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
 
 
-                /*and I('post.cabinid') and I('post.altitudeheight')
-                and I('post.qufen') and I('post.quantity')
-                and I('post.is_pipeline')*/
+            /*and I('post.cabinid') and I('post.altitudeheight')
+            and I('post.qufen') and I('post.quantity')
+            and I('post.is_pipeline')*/
 
-                M()->startTrans();    //开启事物
+            M()->startTrans();    //开启事物
+
+            /*
+             * 检查是否有被删除的舱，如果有，服务器也删除
+             */
+            $list_where = array('resultid' => intval(I('post.resultid')), 'solt' => intval(I('post.solt')));
+            $old_cabins_data = $resultlist->field('cabinid')->where($list_where)->select();
+            //需要删除的舱数据列表
+            $n_del_list = array();
+            $up_list = array();
+
+            //对比舱，判断哪些需要删除
+            foreach ($datas as $key_1 => $data_1) {
+                $up_list[] = $data_1['cabinid'];
+            }
+
+            foreach ($old_cabins_data as $key_2 => $data_2) {
+                if (!in_array($data_2['cabinid'], $up_list)) {
+                    $n_del_list[] = $data_2['cabinid'];
+                }
+            }
+
+            if (count($n_del_list) > 0) {
+                $list_where['cabinid'] = array('in', $n_del_list);
+                $del_list_result = $resultlist->where($list_where)->delete();
+                $del_record_result = M('resultrecord')->where($list_where)->delete();
+                if ($del_list_result === false or $del_record_result === false) {
+                    //如果删除失败了，回档并且返回数据库错误 3
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
+                }
+                //先不提交，其他情况如果出现问题则全部回档。由最后的一个步骤提交
+            }
+
+
+            foreach ($datas as $key => $data) {
+                $data['uid'] = I('post.uid');
+                $data['imei'] = I('post.imei');
+                $data['resultid'] = I('post.resultid');
+                $data['solt'] = I('post.solt');
+                $data['shipid'] = I('post.shipid');
+                $data['qufen'] = I('post.qufen');
+                $data['is_fugai'] = I('post.is_fugai');
+                $data['is_pipeline'] = I('post.is_pipeline');
+                $data['quantity'] = I('post.quantity');
+                $data['is_work'] = 1;
+
+                $cabin_name = "";
+
+                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+
+                //检查参数是否缺失
+                if (!isset($data['ullage']) or $data['ullage'] === ''
+                    or !isset($data['cabinid']) or $data['cabinid'] === ''
+                    or !isset($data['altitudeheight']) or $data['altitudeheight'] === ''
+                    or !isset($data['temperature']) or $data['temperature'] === ''
+                    or !isset($data['sounding']) or $data['sounding'] === ''
+                ) {
+
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
+
+                }
 
                 /*
-                 * 检查是否有被删除的舱，如果有，服务器也删除
+                 * 空高、液深限制：0.001
+                 * 温度限制：0.1
                  */
-                $list_where = array('resultid' => intval(I('post.resultid')), 'solt' => intval(I('post.solt')));
-                $old_cabins_data = $resultlist->field('cabinid')->where($list_where)->select();
-                //需要删除的舱数据列表
-                $n_del_list = array();
-                $up_list = array();
+                $data['ullage'] = round($data['ullage'], 3);
+                $data['sounding'] = round($data['sounding'], 3);
+                $data['temperature'] = round($data['temperature'], 1);
 
-                //对比舱，判断哪些需要删除
-                foreach ($datas as $key_1 => $data_1) {
-                    $up_list[] = $data_1['cabinid'];
+
+                // 安卓端基准高度在计算底量书底量计算时提交错误
+                $suanfa = $ship
+                    // ->where(array('id'=>$data['shipid']))
+                    ->getFieldById($data['shipid'], 'suanfa');
+                if ($data['qufen'] == 'diliang' && ($suanfa == 'c' || $suanfa == 'd')) {
+                    $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
+
+                } else {
+                    $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
                 }
 
-                foreach ($old_cabins_data as $key_2 => $data_2) {
-                    if (!in_array($data_2['cabinid'], $up_list)) {
-                        $n_del_list[] = $data_2['cabinid'];
-                    }
-                }
-
-                if (count($n_del_list) > 0) {
-                    $list_where['cabinid'] = array('in', $n_del_list);
-                    $del_list_result = $resultlist->where($list_where)->delete();
-                    $del_record_result = M('resultrecord')->where($list_where)->delete();
-                    if ($del_list_result === false or $del_record_result === false) {
-                        //如果删除失败了，回档并且返回数据库错误 3
-                        M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
-                    }
-                    //先不提交，其他情况如果出现问题则全部回档。由最后的一个步骤提交
-                }
-
-
-                foreach ($datas as $key => $data) {
-                    $data['uid'] = I('post.uid');
-                    $data['imei'] = I('post.imei');
-                    $data['resultid'] = I('post.resultid');
-                    $data['solt'] = I('post.solt');
-                    $data['shipid'] = I('post.shipid');
-                    $data['qufen'] = I('post.qufen');
-                    $data['is_fugai'] = I('post.is_fugai');
-                    $data['is_pipeline'] = I('post.is_pipeline');
-                    $data['quantity'] = I('post.quantity');
-                    $data['is_work'] = 1;
-
-                    $cabin_name = "";
-
-                    $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
-
-                    //检查参数是否缺失
-                    if (!isset($data['ullage']) or $data['ullage'] === ''
-                        or !isset($data['cabinid']) or $data['cabinid'] === ''
-                        or !isset($data['altitudeheight']) or $data['altitudeheight'] === ''
-                        or !isset($data['temperature']) or $data['temperature'] === ''
-                        or !isset($data['sounding']) or $data['sounding'] === ''
-                    ) {
-
-                        M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
-
-                    }
-
-                    /*
-                     * 空高、液深限制：0.001
-                     * 温度限制：0.1
-                     */
-                    $data['ullage'] = round($data['ullage'], 3);
-                    $data['sounding'] = round($data['sounding'], 3);
-                    $data['temperature'] = round($data['temperature'], 1);
-
-
-                    // 安卓端基准高度在计算底量书底量计算时提交错误
-                    $suanfa = $ship
-                        // ->where(array('id'=>$data['shipid']))
-                        ->getFieldById($data['shipid'], 'suanfa');
-                    if ($data['qufen'] == 'diliang' && ($suanfa == 'c' || $suanfa == 'd')) {
-                        $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
-
-                    } else {
-                        $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
-                    }
-
-                    //根据作业状态、作业ID、舱id判断作业是否重复
-                    $where3 = array(
-                        'solt' => $data['solt'],
-                        'cabinid' => $data['cabinid'],
-                        'resultid' => $data['resultid'],
+                //根据作业状态、作业ID、舱id判断作业是否重复
+                $where3 = array(
+                    'solt' => $data['solt'],
+                    'cabinid' => $data['cabinid'],
+                    'resultid' => $data['resultid'],
+                );
+                $r = $resultlist
+                    ->where($where3)
+                    ->count();
+                if ($r > 0 and I('post.is_fugai') == 'N') {
+                    //作业重复 2003
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
                     );
-                    $r = $resultlist
-                        ->where($where3)
-                        ->count();
-                    if ($r > 0 and I('post.is_fugai') == 'N') {
-                        //作业重复 2003
-                        $res = array(
-                            'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
-                        );
-                        M()->rollback();
-                        $res['cabinname'] = $cabin_name;
+                    M()->rollback();
+                    $res['cabinname'] = $cabin_name;
 
-                        exit(jsonreturn($res));
-                    } else {
-                        // 允许重复
-                        if (I('post.solt') == '2') {
-                            //如果是舱作业后数据，判断该舱是否有作业前数据
-                            $where = array(
-                                'solt' => '1',
-                                'cabinid' => $data['cabinid'],
-                                'resultid' => $data['resultid']
+                    exit(jsonreturn($res));
+                } else {
+                    // 允许重复
+                    if (I('post.solt') == '2') {
+                        //如果是舱作业后数据，判断该舱是否有作业前数据
+                        $where = array(
+                            'solt' => '1',
+                            'cabinid' => $data['cabinid'],
+                            'resultid' => $data['resultid']
+                        );
+                        $arr = $resultlist
+                            ->where($where)
+                            ->count();
+                        if ($arr != 1) {
+                            //没有作业前数据 2008
+                            $res = array(
+                                'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
                             );
-                            $arr = $resultlist
-                                ->where($where)
-                                ->count();
-                            if ($arr != 1) {
-                                //没有作业前数据 2008
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
-                                );
-                                M()->rollback();
-                                $res['cabinname'] = $cabin_name;
-                                exit(jsonreturn($res));
-                            } else {
-                                //判断空高是否在基准高度与0之内
-                                if ($data['ullage'] >= 0 and $data['ullage'] <= $data['altitudeheight']) {
-                                    $res = $result->reckon($data);
-                                } else {
-                                    //空高有误 2009
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
-                                    );
-                                    M()->rollback();
-                                    $res['cabinname'] = $cabin_name;
-                                    exit(jsonreturn($res));
-                                }
-                            }
+                            M()->rollback();
+                            $res['cabinname'] = $cabin_name;
+                            exit(jsonreturn($res));
                         } else {
                             //判断空高是否在基准高度与0之内
                             if ($data['ullage'] >= 0 and $data['ullage'] <= $data['altitudeheight']) {
@@ -3284,338 +3289,302 @@ class WorkController extends AppBaseController
                                 );
                                 M()->rollback();
                                 $res['cabinname'] = $cabin_name;
-
                                 exit(jsonreturn($res));
                             }
                         }
-
-                        // 计算成功记录数据
-                        if ($res['code'] == '1') {
-                            //判断数据是否已记录
-                            $map = array(
-                                'solt' => $data['solt'],
-                                'cabinid' => $data['cabinid'],
-                                'resultid' => $data['resultid'],
-                                'is_work' => 1,
+                    } else {
+                        //判断空高是否在基准高度与0之内
+                        if ($data['ullage'] >= 0 and $data['ullage'] <= $data['altitudeheight']) {
+                            $res = $result->reckon($data);
+                        } else {
+                            //空高有误 2009
+                            $res = array(
+                                'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
                             );
+                            M()->rollback();
+                            $res['cabinname'] = $cabin_name;
 
-                            $num = M('resultrecord')->where($map)->count();
-                            if ($num > 0) {
-                                M('resultrecord')->where($map)->save($data);
-                            } else {
-                                M('resultrecord')->add($data);
-                            }
+                            exit(jsonreturn($res));
+                        }
+                    }
+
+                    // 计算成功记录数据
+                    if ($res['code'] == '1') {
+                        //判断数据是否已记录
+                        $map = array(
+                            'solt' => $data['solt'],
+                            'cabinid' => $data['cabinid'],
+                            'resultid' => $data['resultid'],
+                            'is_work' => 1,
+                        );
+
+                        $num = M('resultrecord')->where($map)->count();
+                        if ($num > 0) {
+                            M('resultrecord')->where($map)->save($data);
+                        } else {
+                            M('resultrecord')->add($data);
                         }
                     }
                 }
-            } else {
-                // 未到期/状态禁止/标识错误
-                $res = $msg1;
             }
         } else {
-            //参数不正确，参数缺失	5
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            // 未到期/状态禁止/标识错误
+            $res = $msg1;
         }
-        echo jsonreturn($res);
+    } else {
+        //参数不正确，参数缺失	5
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
 
-    /**
-     * 记录测量数据
-     * @param int cabinid 舱ID
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param float sounding 实高
-     * @param float ullage 空高
-     * @param varchar temperature 温度
-     * @param int solt 1:作业前；2:作业后
-     * @param varchar imei 标识
-     * @param int shipid 船ID
-     * @param float altitudeheight 基准高度
-     * @param qufen diliang:底量计算 rongliang:容量计算
-     * @param int quantity 1：计算底量；2：不计算底量
-     * @param int is_pipeline 是否有管线 1：有；2：没有；
-     * @param varcher is_fugai 是否覆盖  Y:覆盖；N：不覆盖
-     * @return @param array
-     * @return @param code
-     * */
-    public function batch_measure()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid')
-            and I('post.solt') and I('post.shipid') and I('post.qufen')
-            and I('post.quantity') and I('post.is_pipeline') and I('post.is_fugai')) {
+/**
+ * 记录测量数据
+ * @param int cabinid 舱ID
+ * @param int uid 用户ID
+ * @param int resultid 计量ID
+ * @param float sounding 实高
+ * @param float ullage 空高
+ * @param varchar temperature 温度
+ * @param int solt 1:作业前；2:作业后
+ * @param varchar imei 标识
+ * @param int shipid 船ID
+ * @param float altitudeheight 基准高度
+ * @param qufen diliang:底量计算 rongliang:容量计算
+ * @param int quantity 1：计算底量；2：不计算底量
+ * @param int is_pipeline 是否有管线 1：有；2：没有；
+ * @param varcher is_fugai 是否覆盖  Y:覆盖；N：不覆盖
+ * @return @param array
+ * @return @param code
+ * */
+public
+function batch_measure()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid')
+        and I('post.solt') and I('post.shipid') and I('post.qufen')
+        and I('post.quantity') and I('post.is_pipeline') and I('post.is_fugai')) {
 
-            $user = new \Common\Model\UserModel();
-            $uid = I('post.uid');
-            // 判断用户状态、是否到期、标识比对
-            $msg1 = $user->is_judges($uid, I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $ship = new \Common\Model\ShipFormModel();
-                $cabin = new \Common\Model\CabinModel();
-                $resultlist = new \Common\Model\ResultlistModel();
-                $resultrecord = M('resultrecord');
-                $result = new \Common\Model\WorkModel();
-                $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
-                //如果作业被删除了，不可以操作 2033
-                if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-                //如果作业结束了，不可以操作 2034
-                if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+        $user = new \Common\Model\UserModel();
+        $uid = I('post.uid');
+        // 判断用户状态、是否到期、标识比对
+        $msg1 = $user->is_judges($uid, I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $ship = new \Common\Model\ShipFormModel();
+            $cabin = new \Common\Model\CabinModel();
+            $resultlist = new \Common\Model\ResultlistModel();
+            $resultrecord = M('resultrecord');
+            $result = new \Common\Model\WorkModel();
+            $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
+            //如果作业被删除了，不可以操作 2033
+            if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
+            //如果作业结束了，不可以操作 2034
+            if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
 
 
-                $datas = I('post.data');
+            $datas = I('post.data');
 
-                $shipmsg = $ship
-                    ->field('suanfa')
-                    ->where(array('id' => I('post.shipid')))
-                    ->find();
+            $shipmsg = $ship
+                ->field('suanfa')
+                ->where(array('id' => I('post.shipid')))
+                ->find();
 
-                /*and I('post.cabinid')
-                and I('post.sounding') !== null and I('post.ullage') !== null
-                and I('post.temperature') !== null and I('post.altitudeheight') !== null*/
+            /*and I('post.cabinid')
+            and I('post.sounding') !== null and I('post.ullage') !== null
+            and I('post.temperature') !== null and I('post.altitudeheight') !== null*/
 
-                M()->startTrans();
+            M()->startTrans();
+
+            /*
+             * 检查是否有被删除的舱，如果有，服务器也删除
+             */
+            $list_where = array('resultid' => intval(I('post.resultid')), 'solt' => intval(I('post.solt')));
+            $old_cabins_data = $resultlist->field('cabinid')->where($list_where)->select();
+            //需要删除的舱数据列表
+            $n_del_list = array();
+            $up_list = array();
+
+            //对比舱，判断哪些需要删除
+            foreach ($datas as $key_1 => $data_1) {
+                $up_list[] = $data_1['cabinid'];
+            }
+
+            foreach ($old_cabins_data as $key_2 => $data_2) {
+                if (!in_array($data_2['cabinid'], $up_list)) {
+                    $n_del_list[] = $data_2['cabinid'];
+                }
+            }
+            //如果有需要删除的舱
+            if (count($n_del_list) > 0) {
+                $list_where['cabinid'] = array('in', $n_del_list);
+                $del_list_result = $resultlist->where($list_where)->delete();
+                $del_record_result = M('resultrecord')->where($list_where)->delete();
+                if ($del_list_result === false or $del_record_result === false) {
+                    //如果删除失败了，回档并且返回数据库错误 3
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
+                }
+                //先不提交，其他情况如果出现问题则全部回档。由最后的一个步骤提交
+            }
+
+
+            foreach ($datas as $key => $data) {
+                //初始化记录录入过程
+                $process = array();
+                $cabin_name = "";
+
+                //赋值通用数据
+                $data['resultid'] = intval(I('post.resultid'));
+                $data['solt'] = intval(I('post.solt'));
+                $data['shipid'] = intval(I('post.shipid'));
+                $data['qufen'] = intval(I('post.qufen'));
+                $data['quantity'] = I('post.quantity');
+                $data['is_pipeline'] = intval(I('post.is_pipeline'));
+                $data['is_fugai'] = I('post.is_fugai');
+                $data['is_work'] = 1;
+
+                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+
+                //检查参数是否缺失
+                if (!isset($data['ullage']) or $data['ullage'] === ""
+                    or !isset($data['cabinid']) or $data['cabinid'] === ""
+                    or !isset($data['altitudeheight']) or $data['altitudeheight'] === ""
+                    or !isset($data['temperature']) or $data['temperature'] === ""
+                    or !isset($data['sounding']) or $data['sounding'] === ""
+                ) {
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
+                }
 
                 /*
-                 * 检查是否有被删除的舱，如果有，服务器也删除
+                 * 空高、液深限制：0.001
+                 * 温度限制：0.1
                  */
-                $list_where = array('resultid' => intval(I('post.resultid')), 'solt' => intval(I('post.solt')));
-                $old_cabins_data = $resultlist->field('cabinid')->where($list_where)->select();
-                //需要删除的舱数据列表
-                $n_del_list = array();
-                $up_list = array();
+                $data['ullage'] = round($data['ullage'], 3);
+                $data['sounding'] = round($data['sounding'], 3);
+                $data['temperature'] = round($data['temperature'], 1);
 
-                //对比舱，判断哪些需要删除
-                foreach ($datas as $key_1 => $data_1) {
-                    $up_list[] = $data_1['cabinid'];
+
+                // 安卓端基准高度在计算底量书底量计算时提交错误
+                if ($data['qufen'] == 'diliang' && ($shipmsg['suanfa'] == 'c' || $shipmsg['suanfa'] == 'd')) {
+                    $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
+                } else {
+                    $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
                 }
-
-                foreach ($old_cabins_data as $key_2 => $data_2) {
-                    if (!in_array($data_2['cabinid'], $up_list)) {
-                        $n_del_list[] = $data_2['cabinid'];
-                    }
-                }
-                //如果有需要删除的舱
-                if (count($n_del_list) > 0) {
-                    $list_where['cabinid'] = array('in', $n_del_list);
-                    $del_list_result = $resultlist->where($list_where)->delete();
-                    $del_record_result = M('resultrecord')->where($list_where)->delete();
-                    if ($del_list_result === false or $del_record_result === false) {
-                        //如果删除失败了，回档并且返回数据库错误 3
-                        M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'])));
-                    }
-                    //先不提交，其他情况如果出现问题则全部回档。由最后的一个步骤提交
-                }
-
-
-                foreach ($datas as $key => $data) {
-                    //初始化记录录入过程
-                    $process = array();
-                    $cabin_name = "";
-
-                    //赋值通用数据
-                    $data['resultid'] = intval(I('post.resultid'));
-                    $data['solt'] = intval(I('post.solt'));
-                    $data['shipid'] = intval(I('post.shipid'));
-                    $data['qufen'] = intval(I('post.qufen'));
-                    $data['quantity'] = I('post.quantity');
-                    $data['is_pipeline'] = intval(I('post.is_pipeline'));
-                    $data['is_fugai'] = I('post.is_fugai');
-                    $data['is_work'] = 1;
-
-                    $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
-
-                    //检查参数是否缺失
-                    if (!isset($data['ullage']) or $data['ullage'] === ""
-                        or !isset($data['cabinid']) or $data['cabinid'] === ""
-                        or !isset($data['altitudeheight']) or $data['altitudeheight'] === ""
-                        or !isset($data['temperature']) or $data['temperature'] === ""
-                        or !isset($data['sounding']) or $data['sounding'] === ""
-                    ) {
-                        M()->rollback();
-                        exit(jsonreturn(array('code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], 'cabinname' => $cabin_name)));
-                    }
-
-                    /*
-                     * 空高、液深限制：0.001
-                     * 温度限制：0.1
-                     */
-                    $data['ullage'] = round($data['ullage'], 3);
-                    $data['sounding'] = round($data['sounding'], 3);
-                    $data['temperature'] = round($data['temperature'], 1);
-
-
-                    // 安卓端基准高度在计算底量书底量计算时提交错误
-                    if ($data['qufen'] == 'diliang' && ($shipmsg['suanfa'] == 'c' || $shipmsg['suanfa'] == 'd')) {
-                        $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'dialtitudeheight');
-                    } else {
-                        $data['altitudeheight'] = $cabin->getFieldById($data['cabinid'], 'altitudeheight');
-                    }
-                    //判断空高是否在基准高度与0之内
-                    if ($data['ullage'] < 0 or $data['ullage'] > $data['altitudeheight']) {
-                        //空高有误 2009
-                        $res = array(
-                            'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
-                        );
-                        M()->rollback();
-                        $res['cabinname'] = $cabin_name;
-                        exit(jsonreturn($res));
-                    }
-
-                    // 查找数据条件
-                    $where = array(
-                        'resultid' => $data['resultid'],
-                        'cabinid' => $data['cabinid'],
-                        'solt' => $data['solt'],
+                //判断空高是否在基准高度与0之内
+                if ($data['ullage'] < 0 or $data['ullage'] > $data['altitudeheight']) {
+                    //空高有误 2009
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
                     );
+                    M()->rollback();
+                    $res['cabinname'] = $cabin_name;
+                    exit(jsonreturn($res));
+                }
 
-                    //获取原来的计算过程,没有就初始化
-                    $old_process = $resultrecord->field('process')->where($where)->find();
-                    if ($old_process !== false) {
-                        $process = json_decode($old_process['process'], true);
-                        if ($process == null) {
-                            $process = array();
-                        }
+                // 查找数据条件
+                $where = array(
+                    'resultid' => $data['resultid'],
+                    'cabinid' => $data['cabinid'],
+                    'solt' => $data['solt'],
+                );
+
+                //获取原来的计算过程,没有就初始化
+                $old_process = $resultrecord->field('process')->where($where)->find();
+                if ($old_process !== false) {
+                    $process = json_decode($old_process['process'], true);
+                    if ($process == null) {
+                        $process = array();
                     }
+                }
 
-                    $bilge_stock = '';
-                    $pipeline_stock = '';
-                    $soltType = '';
+                $bilge_stock = '';
+                $pipeline_stock = '';
+                $soltType = '';
 
-                    //将某些变量格式化，方便读取计算过程,格式化是否有底量
-                    if ($data['quantity'] == "1") {
-                        $bilge_stock = 'true';
-                    } else {
-                        $bilge_stock = 'false';
-                    }
+                //将某些变量格式化，方便读取计算过程,格式化是否有底量
+                if ($data['quantity'] == "1") {
+                    $bilge_stock = 'true';
+                } else {
+                    $bilge_stock = 'false';
+                }
 
-                    //格式化是否有管线容量
-                    if ($data['is_pipeline'] == "1") {
-                        $pipeline_stock = 'true';
-                    } else {
-                        $pipeline_stock = 'false';
-                    }
+                //格式化是否有管线容量
+                if ($data['is_pipeline'] == "1") {
+                    $pipeline_stock = 'true';
+                } else {
+                    $pipeline_stock = 'false';
+                }
 
-                    //格式化作业状态
-                    if ($data['solt'] == "1") {
-                        $soltType = '作业前';
-                    } else {
-                        $soltType = '作业后';
-                    }
+                //格式化作业状态
+                if ($data['solt'] == "1") {
+                    $soltType = '作业前';
+                } else {
+                    $soltType = '作业后';
+                }
 
 //                    $process .= "Received meansure_value:\r\n\tullage=" . $data['ullage'] . ", sounding=" . $data['sounding'] . ", cabin_temperature=" . $data['temperature'] . ", soltType=," . $soltType . "\r\n\taltitudeheight=" . $data['altitudeheight'] . ", table_used=" . $data['qufen'] . ", bilge_stock=" . $bilge_stock . ", pipeline_stock=" . $pipeline_stock . ",\r\n";
-                    $process['ullage'] = $data['ullage'];
-                    $process['sounding'] = $data['sounding'];
-                    $process['Cabin_temperature'] = $data['temperature'];
-                    $process['method'] = $soltType;
-                    $process['altitudeheight'] = $data['altitudeheight'];
-                    $process['table_used'] = $data['qufen'];
-                    $process['bilge_stock'] = $bilge_stock;
-                    $process['pipeline_stock'] = $pipeline_stock;
+                $process['ullage'] = $data['ullage'];
+                $process['sounding'] = $data['sounding'];
+                $process['Cabin_temperature'] = $data['temperature'];
+                $process['method'] = $soltType;
+                $process['altitudeheight'] = $data['altitudeheight'];
+                $process['table_used'] = $data['qufen'];
+                $process['bilge_stock'] = $bilge_stock;
+                $process['pipeline_stock'] = $pipeline_stock;
 
 
-                    // 获取作业记录数据个数
-                    $rrecord = $resultrecord
-                        ->where($where)
-                        ->count();
+                // 获取作业记录数据个数
+                $rrecord = $resultrecord
+                    ->where($where)
+                    ->count();
 
-                    $rlist = $resultlist->where($where)->count();
-                    if ($rrecord > 0 and I('post.is_fugai') == 'N') {
-                        // 作业记录存在且不覆盖
-                        // 作业重复 2003
-                        $res = array(
-                            'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
+                $rlist = $resultlist->where($where)->count();
+                if ($rrecord > 0 and I('post.is_fugai') == 'N') {
+                    // 作业记录存在且不覆盖
+                    // 作业重复 2003
+                    $res = array(
+                        'code' => $this->ERROR_CODE_RESULT['IS_REPEAT']
+                    );
+                    M()->rollback();
+                    $res['cabinname'] = $cabin_name;
+
+                    exit(jsonreturn($res));
+                } elseif ($rrecord > 0 and I('post.is_fugai') == 'Y') {
+                    // 作业数据记录存在并且覆盖数据
+                    // 允许覆盖
+                    if (I('post.solt') == '2') {
+                        //如果是舱作业后数据，判断该舱是否有作业前数据
+                        $where = array(
+                            'solt' => '1',
+                            'cabinid' => $data['cabinid'],
+                            'resultid' => $data['resultid']
                         );
-                        M()->rollback();
-                        $res['cabinname'] = $cabin_name;
 
-                        exit(jsonreturn($res));
-                    } elseif ($rrecord > 0 and I('post.is_fugai') == 'Y') {
-                        // 作业数据记录存在并且覆盖数据
-                        // 允许覆盖
-                        if (I('post.solt') == '2') {
-                            //如果是舱作业后数据，判断该舱是否有作业前数据
-                            $where = array(
-                                'solt' => '1',
-                                'cabinid' => $data['cabinid'],
-                                'resultid' => $data['resultid']
+                        $arr = $resultlist
+                            ->where($where)
+                            ->count();
+
+                        if ($arr != 1) {
+                            //没有作业前数据 2008
+                            $res = array(
+                                'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
                             );
+                            M()->rollback();
+                            $res['cabinname'] = $cabin_name;
 
-                            $arr = $resultlist
-                                ->where($where)
-                                ->count();
-
-                            if ($arr != 1) {
-                                //没有作业前数据 2008
-                                $res = array(
-                                    'code' => $this->ERROR_CODE_RESULT['NO_QIAN_CABIN']
-                                );
-                                M()->rollback();
-                                $res['cabinname'] = $cabin_name;
-
-                                exit(jsonreturn($res));
-                            } else {
-                                $data['process'] = json_encode($process);
-                                //作业后数据修改
-                                $where['solt'] = '2';
-                                $id = $resultrecord
-                                    ->where($where)
-                                    ->save($data);
-
-
-                                if ($id !== false) {
-                                    $resultdata = array(
-                                        'ullage' => $data['ullage'],
-                                        'sounding' => $data['sounding'],
-                                        'temperature' => $data['temperature'],
-                                        'is_work' => 1
-                                    );
-
-                                    if ($rlist > 0) {
-                                        $resultr = $resultlist->editData($where, $resultdata);
-                                    } else {
-                                        $resultdata['resultid'] = $data['resultid'];
-                                        $resultdata['cabinid'] = $data['cabinid'];
-                                        $resultdata['solt'] = $data['solt'];
-
-                                        $resultr = $resultlist->addData($resultdata);
-                                    }
-
-                                    if ($resultr === false) {
-                                        //其他错误
-                                        $res = array(
-                                            'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-                                            'sign' => 6,
-                                        );
-                                        M()->rollback();
-                                        $res['cabinname'] = $cabin_name;
-
-                                        exit(jsonreturn($res));
-                                    }
-                                    /*$res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                        'suanfa' => $shipmsg['suanfa']
-                                    );*/
-                                } else {
-                                    //其他错误
-                                    $res = array(
-                                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-                                        'sign' => 1,
-                                    );
-                                    M()->rollback();
-                                    $res['cabinname'] = $cabin_name;
-
-                                    exit(jsonreturn($res));
-                                }
-                            }
+                            exit(jsonreturn($res));
                         } else {
                             $data['process'] = json_encode($process);
-                            // 修改作业前数据
+                            //作业后数据修改
+                            $where['solt'] = '2';
                             $id = $resultrecord
                                 ->where($where)
                                 ->save($data);
+
+
                             if ($id !== false) {
                                 $resultdata = array(
                                     'ullage' => $data['ullage'],
@@ -3627,14 +3596,12 @@ class WorkController extends AppBaseController
                                 if ($rlist > 0) {
                                     $resultr = $resultlist->editData($where, $resultdata);
                                 } else {
-
                                     $resultdata['resultid'] = $data['resultid'];
                                     $resultdata['cabinid'] = $data['cabinid'];
                                     $resultdata['solt'] = $data['solt'];
 
                                     $resultr = $resultlist->addData($resultdata);
                                 }
-
 
                                 if ($resultr === false) {
                                     //其他错误
@@ -3647,15 +3614,15 @@ class WorkController extends AppBaseController
 
                                     exit(jsonreturn($res));
                                 }
-//                                $res = array(
-//                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-//                                    'suanfa' => $shipmsg['suanfa']
-//                                );
+                                /*$res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                    'suanfa' => $shipmsg['suanfa']
+                                );*/
                             } else {
                                 //其他错误
                                 $res = array(
                                     'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-                                    'sign' => 2,
+                                    'sign' => 1,
                                 );
                                 M()->rollback();
                                 $res['cabinname'] = $cabin_name;
@@ -3663,12 +3630,12 @@ class WorkController extends AppBaseController
                                 exit(jsonreturn($res));
                             }
                         }
-
-                    } elseif ($rrecord == 0) {
+                    } else {
                         $data['process'] = json_encode($process);
-                        // 没有记录作业数据，新增作业记录数据
+                        // 修改作业前数据
                         $id = $resultrecord
-                            ->add($data);
+                            ->where($where)
+                            ->save($data);
                         if ($id !== false) {
                             $resultdata = array(
                                 'ullage' => $data['ullage'],
@@ -3688,6 +3655,7 @@ class WorkController extends AppBaseController
                                 $resultr = $resultlist->addData($resultdata);
                             }
 
+
                             if ($resultr === false) {
                                 //其他错误
                                 $res = array(
@@ -3699,17 +3667,52 @@ class WorkController extends AppBaseController
 
                                 exit(jsonreturn($res));
                             }
-
-                            /*$res = array(
-                                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                'suanfa' => $shipmsg['suanfa']
-                            );*/
-
+//                                $res = array(
+//                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+//                                    'suanfa' => $shipmsg['suanfa']
+//                                );
                         } else {
-                            //其他错误 2
+                            //其他错误
                             $res = array(
                                 'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-                                'sign' => 3,
+                                'sign' => 2,
+                            );
+                            M()->rollback();
+                            $res['cabinname'] = $cabin_name;
+
+                            exit(jsonreturn($res));
+                        }
+                    }
+
+                } elseif ($rrecord == 0) {
+                    $data['process'] = json_encode($process);
+                    // 没有记录作业数据，新增作业记录数据
+                    $id = $resultrecord
+                        ->add($data);
+                    if ($id !== false) {
+                        $resultdata = array(
+                            'ullage' => $data['ullage'],
+                            'sounding' => $data['sounding'],
+                            'temperature' => $data['temperature'],
+                            'is_work' => 1
+                        );
+
+                        if ($rlist > 0) {
+                            $resultr = $resultlist->editData($where, $resultdata);
+                        } else {
+
+                            $resultdata['resultid'] = $data['resultid'];
+                            $resultdata['cabinid'] = $data['cabinid'];
+                            $resultdata['solt'] = $data['solt'];
+
+                            $resultr = $resultlist->addData($resultdata);
+                        }
+
+                        if ($resultr === false) {
+                            //其他错误
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                'sign' => 6,
                             );
                             M()->rollback();
                             $res['cabinname'] = $cabin_name;
@@ -3717,146 +3720,30 @@ class WorkController extends AppBaseController
                             exit(jsonreturn($res));
                         }
 
+                        /*$res = array(
+                            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                            'suanfa' => $shipmsg['suanfa']
+                        );*/
+
                     } else {
-                        //其他错误  2
+                        //其他错误 2
                         $res = array(
                             'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-                            'sign' => 4,
+                            'sign' => 3,
                         );
                         M()->rollback();
                         $res['cabinname'] = $cabin_name;
 
                         exit(jsonreturn($res));
                     }
-                }
-
-                M()->commit();
-                $res = array(
-                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                    'suanfa' => $shipmsg['suanfa']
-                );
-
-
-            } else {
-                //未到期/状态禁止/标识错误
-                $res = $msg1;
-            }
-        } else {
-//            \Think\Log::record(json_encode(I("post."),true), "DEBUG", true);
-
-            //参数不正确，参数缺失	4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }
-
-
-    /**
-     * 批量录入书本数据
-     * @param int cabinid 舱ID
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param int shipid 船ID
-     * @param int solt 1:作业前；2:作业后
-     * @param string imei 标识
-     * @param float ullage1 空高1
-     * @param float ullage2 空高2
-     * @param float draft1 吃水差1
-     * @param float draft2 吃水差2
-     * @param float value1 值1
-     * @param float value2 值2
-     * @param float value3 值3
-     * @param float value4 值4
-     * @return @param code
-     * @return @param suanfa 算法
-     * @return @param correntkong 修正后空高
-     * */
-    public function batch_bookdata()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
-            $result = new \Common\Model\WorkModel();
-            $cabin = new \Common\Model\CabinModel();
-
-            $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
-            //如果作业被删除了，不可以操作 2033
-            if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-            //如果作业结束了，不可以操作 2034
-            if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
-
-            $uid = I('post.uid');
-            $imei = I('post.imei');
-            $resultid = I('post.resultid');
-            $solt = I('post.solt');
-            $shipid = I('post.shipid');
-            $datas = I('post.data');
-
-            M()->startTrans();
-            //初始化修正后空高
-            $correntKong = array();
-            //吃水差刻度是否有过值的记录
-            $draftFlag = true;
-            //数组第一个key
-            $firstKey = -1;
-
-            foreach ($datas as $key => $data) {
-                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
-
-                /**
-                 * 该部分验证刻度2的数据是否是全空或者全满
-                 */
-                if ($data['draft2'] == "") {
-                    //如果刻度2没有填写，但是填写了刻度2所在列的值，说明是不对的,报错4，参数缺失
-                    if ($data['value2'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
-                    if ($data['value4'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
-                    if ($firstKey == -1) {
-                        $draftFlag = false;
-                        $firstKey = $key;
-                    } else {
-                        //如果第一个舱已经有了数据，后面的舱没有数据，说明数据没有全空或者全满，报错4，参数缺失
-                        if ($draftFlag === true) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "draft2")));
-                    }
-                } else {
-                    //如果刻度2写了，但是没填写刻度2所在列的值，说明是不对的,报错4，参数缺失
-                    if ($data['value2'] == "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
-                    if ($data['value4'] == "" and $data['ullage2'] != "") {
-                        exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
-                    }
-                    if ($firstKey == -1) {
-                        $draftFlag = true;
-                        $firstKey = $key;
-                    } else {
-                        //如果第一个舱没有数据，后面的舱却有了数据，说明数据没有全空或者全满，报错4，参数缺失
-                        if ($draftFlag === false) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $firstKey, "type" => "draft2")));
-                    }
-                }
-
-
-                //允许出现部分数据不填写，校验后不填写的数据自动补全
-                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['draft1'] !== '' and $data['value1'] !== '') {
-                    $data['resultid'] = $resultid;
-                    $data['uid'] = $uid;
-                    $data['imei'] = $imei;
-                    $data['solt'] = $solt;
-                    $data['shipid'] = $shipid;
-                    $res = $result->reckon1($data, 'b');
-
-                    if ($res['code'] != 1) {
-                        M()->rollback();
-                        $res['cabinname'] = $cabin_name;
-                        $res['index'] = $key;
-                        exit(jsonreturn($res));
-                    } else {
-                        $correntKong[] = array('cabinid' => $data['cabinid'], 'correntkong' => $res['correntkong']);
-                    }
 
                 } else {
-                    M()->rollback();
-                    //参数不正确，参数缺失    4
+                    //其他错误  2
                     $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                        'sign' => 4,
                     );
+                    M()->rollback();
                     $res['cabinname'] = $cabin_name;
 
                     exit(jsonreturn($res));
@@ -3865,182 +3752,320 @@ class WorkController extends AppBaseController
 
             M()->commit();
             $res = array(
-                'correntkong' => $correntKong,
                 'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                'suanfa' => $res['suanfa'],
+                'suanfa' => $shipmsg['suanfa']
             );
+
+
         } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            //未到期/状态禁止/标识错误
+            $res = $msg1;
         }
-        echo jsonreturn($res);
+    } else {
+//            \Think\Log::record(json_encode(I("post."),true), "DEBUG", true);
+
+        //参数不正确，参数缺失	4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
 
-    /**
-     * 批量录入书本容量数据
-     * @param int cabinid 舱ID
-     * @param int uid 用户ID
-     * @param int resultid 计量ID
-     * @param int shipid 船ID
-     * @param int solt 1:作业前；2:作业后
-     * @param varchar imei 标识
-     * @param correntkong 修正后空高
-     * @param float ullage1 空高1
-     * @param float ullage2 空高2
-     * @param float capacity1 值1
-     * @param float capacity2 值2
-     * @return @param code
-     * */
-    public function batch_capacitydata()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
-            $result = new \Common\Model\WorkModel();
-            $cabin = new \Common\Model\CabinModel();
-            $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
-            //如果作业被删除了，不可以操作 2033
-            if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
-            //如果作业结束了，不可以操作 2034
-            if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+/**
+ * 批量录入书本数据
+ * @param int cabinid 舱ID
+ * @param int uid 用户ID
+ * @param int resultid 计量ID
+ * @param int shipid 船ID
+ * @param int solt 1:作业前；2:作业后
+ * @param string imei 标识
+ * @param float ullage1 空高1
+ * @param float ullage2 空高2
+ * @param float draft1 吃水差1
+ * @param float draft2 吃水差2
+ * @param float value1 值1
+ * @param float value2 值2
+ * @param float value3 值3
+ * @param float value4 值4
+ * @return @param code
+ * @return @param suanfa 算法
+ * @return @param correntkong 修正后空高
+ * */
+public
+function batch_bookdata()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
+        $result = new \Common\Model\WorkModel();
+        $cabin = new \Common\Model\CabinModel();
 
-            $uid = I('post.uid');
-            $imei = I('post.imei');
-            $resultid = I('post.resultid');
-            $solt = I('post.solt');
-            $shipid = I('post.shipid');
-            $datas = I('post.data');
-            M()->startTrans();
+        $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
+        //如果作业被删除了，不可以操作 2033
+        if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
+        //如果作业结束了，不可以操作 2034
+        if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
 
-            foreach ($datas as $key => $data) {
+        $uid = I('post.uid');
+        $imei = I('post.imei');
+        $resultid = I('post.resultid');
+        $solt = I('post.solt');
+        $shipid = I('post.shipid');
+        $datas = I('post.data');
 
-                $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
-                if ($data['cabinid'] and $data['ullage1'] !== '' and $data['capacity1'] !== '') {
-                    $data['resultid'] = $resultid;
-                    $data['uid'] = $uid;
-                    $data['imei'] = $imei;
-                    $data['solt'] = $solt;
-                    $data['shipid'] = $shipid;
+        M()->startTrans();
+        //初始化修正后空高
+        $correntKong = array();
+        //吃水差刻度是否有过值的记录
+        $draftFlag = true;
+        //数组第一个key
+        $firstKey = -1;
 
+        foreach ($datas as $key => $data) {
+            $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
 
-                    $res = $result->capacityreckon($data, 'b');
-
-                    if ($res['code'] != 1) {
-                        M()->rollback();
-                        $res['cabinname'] = $cabin_name;
-                        $res['index'] = $key;
-                        exit(jsonreturn($res));
-                    }
+            /**
+             * 该部分验证刻度2的数据是否是全空或者全满
+             */
+            if ($data['draft2'] == "") {
+                //如果刻度2没有填写，但是填写了刻度2所在列的值，说明是不对的,报错4，参数缺失
+                if ($data['value2'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
+                if ($data['value4'] != "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
+                if ($firstKey == -1) {
+                    $draftFlag = false;
+                    $firstKey = $key;
                 } else {
+                    //如果第一个舱已经有了数据，后面的舱没有数据，说明数据没有全空或者全满，报错4，参数缺失
+                    if ($draftFlag === true) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "draft2")));
+                }
+            } else {
+                //如果刻度2写了，但是没填写刻度2所在列的值，说明是不对的,报错4，参数缺失
+                if ($data['value2'] == "") exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value2")));
+                if ($data['value4'] == "" and $data['ullage2'] != "") {
+                    exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $key, "type" => "value4")));
+                }
+                if ($firstKey == -1) {
+                    $draftFlag = true;
+                    $firstKey = $key;
+                } else {
+                    //如果第一个舱没有数据，后面的舱却有了数据，说明数据没有全空或者全满，报错4，参数缺失
+                    if ($draftFlag === false) exit(jsonreturn(array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "cabinname" => $cabin_name, "index" => $firstKey, "type" => "draft2")));
+                }
+            }
+
+
+            //允许出现部分数据不填写，校验后不填写的数据自动补全
+            if ($data['cabinid'] and $data['ullage1'] !== '' and $data['draft1'] !== '' and $data['value1'] !== '') {
+                $data['resultid'] = $resultid;
+                $data['uid'] = $uid;
+                $data['imei'] = $imei;
+                $data['solt'] = $solt;
+                $data['shipid'] = $shipid;
+                $res = $result->reckon1($data, 'b');
+
+                if ($res['code'] != 1) {
                     M()->rollback();
-                    //参数不正确，参数缺失    4
-                    $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-                    );
+                    $res['cabinname'] = $cabin_name;
+                    $res['index'] = $key;
+                    exit(jsonreturn($res));
+                } else {
+                    $correntKong[] = array('cabinid' => $data['cabinid'], 'correntkong' => $res['correntkong']);
+                }
+
+            } else {
+                M()->rollback();
+                //参数不正确，参数缺失    4
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                );
+                $res['cabinname'] = $cabin_name;
+
+                exit(jsonreturn($res));
+            }
+        }
+
+        M()->commit();
+        $res = array(
+            'correntkong' => $correntKong,
+            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+            'suanfa' => $res['suanfa'],
+        );
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
+    }
+    echo jsonreturn($res);
+}
+
+
+/**
+ * 批量录入书本容量数据
+ * @param int cabinid 舱ID
+ * @param int uid 用户ID
+ * @param int resultid 计量ID
+ * @param int shipid 船ID
+ * @param int solt 1:作业前；2:作业后
+ * @param varchar imei 标识
+ * @param correntkong 修正后空高
+ * @param float ullage1 空高1
+ * @param float ullage2 空高2
+ * @param float capacity1 值1
+ * @param float capacity2 值2
+ * @return @param code
+ * */
+public
+function batch_capacitydata()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt') and I('post.shipid') and I('post.data')) {
+        $result = new \Common\Model\WorkModel();
+        $cabin = new \Common\Model\CabinModel();
+        $result_info = $result->field('del_sign,finish_sign')->where(array('id' => intval(I('post.resultid'))))->find();
+        //如果作业被删除了，不可以操作 2033
+        if ($result_info['del_sign'] == 2) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_DELETED'])));
+        //如果作业结束了，不可以操作 2034
+        if ($result_info['finish_sign'] == 1) exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['RESULT_FINISHED'])));
+
+        $uid = I('post.uid');
+        $imei = I('post.imei');
+        $resultid = I('post.resultid');
+        $solt = I('post.solt');
+        $shipid = I('post.shipid');
+        $datas = I('post.data');
+        M()->startTrans();
+
+        foreach ($datas as $key => $data) {
+
+            $cabin_name = $cabin->getFieldById($data['cabinid'], 'cabinname');
+            if ($data['cabinid'] and $data['ullage1'] !== '' and $data['capacity1'] !== '') {
+                $data['resultid'] = $resultid;
+                $data['uid'] = $uid;
+                $data['imei'] = $imei;
+                $data['solt'] = $solt;
+                $data['shipid'] = $shipid;
+
+
+                $res = $result->capacityreckon($data, 'b');
+
+                if ($res['code'] != 1) {
+                    M()->rollback();
                     $res['cabinname'] = $cabin_name;
                     $res['index'] = $key;
                     exit(jsonreturn($res));
                 }
-            }
-            M()->commit();
-
-        } else {
-            //参数不正确，参数缺失    4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
-        }
-        echo jsonreturn($res);
-    }
-
-    /**
-     * 批量获取无表船 纵倾修正表数据
-     * @param int uid 用户ID
-     * @param string imei 用户ID
-     */
-    public function get_book_datas()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $work = new \Common\Model\WorkModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $res = array();
-                $res['msg'] = $work->get_book_data(I('post.resultid'), I('post.solt'));
-                $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
-                $res['chishui'] = $res['msg']['chishui'];
-                unset($res['msg']['chishui']);
             } else {
-                //未到期/状态禁止/标识错误
-                $res = $msg1;
+                M()->rollback();
+                //参数不正确，参数缺失    4
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+                );
+                $res['cabinname'] = $cabin_name;
+                $res['index'] = $key;
+                exit(jsonreturn($res));
             }
-        } else {
-            //参数不正确，参数缺失	4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
         }
-        echo jsonreturn($res);
+        M()->commit();
+
+    } else {
+        //参数不正确，参数缺失    4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
+
+/**
+ * 批量获取无表船 纵倾修正表数据
+ * @param int uid 用户ID
+ * @param string imei 用户ID
+ */
+public
+function get_book_datas()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $work = new \Common\Model\WorkModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $res = array();
+            $res['msg'] = $work->get_book_data(I('post.resultid'), I('post.solt'));
+            $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+            $res['chishui'] = $res['msg']['chishui'];
+            unset($res['msg']['chishui']);
+        } else {
+            //未到期/状态禁止/标识错误
+            $res = $msg1;
+        }
+    } else {
+        //参数不正确，参数缺失	4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
+    }
+    echo jsonreturn($res);
+}
 
 
-    /**
-     * 批量获取无表船 容量表数据
-     */
-    public function get_capacity_datas()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $work = new \Common\Model\WorkModel();
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $res = array();
-                $res['msg'] = $work->get_capacity_data(I('post.resultid'), I('post.solt'));
-                $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
-            } else {
-                //未到期/状态禁止/标识错误
-                $res = $msg1;
-            }
+/**
+ * 批量获取无表船 容量表数据
+ */
+public
+function get_capacity_datas()
+{
+    if (I('post.uid') and I('post.imei') and I('post.resultid') and I('post.solt')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $work = new \Common\Model\WorkModel();
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $res = array();
+            $res['msg'] = $work->get_capacity_data(I('post.resultid'), I('post.solt'));
+            $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
         } else {
-            //参数不正确，参数缺失	4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            //未到期/状态禁止/标识错误
+            $res = $msg1;
         }
-        echo jsonreturn($res);
+    } else {
+        //参数不正确，参数缺失	4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
-    /**
-     * 批量获取无表船 容量表数据
-     */
-    public function get_ship_base_info()
-    {
-        if (I('post.uid') and I('post.imei') and I('post.shipid')) {
-            //判断用户状态、是否到期、标识比对
-            $user = new \Common\Model\UserModel();
-            $ship = new \Common\Model\ShipFormModel();
-            $cabin = new \Common\Model\CabinModel();
-            $shipid = intval(I('post.shipid'));
-            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
-            if ($msg1['code'] == '1') {
-                $res = array();
-                $res['table_accuracy'] = $ship->get_ship_table_accuracy($shipid);
-                $res['base_volume'] = $cabin->get_cabins_base_volume($shipid);
-                $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
-            } else {
-                //未到期/状态禁止/标识错误
-                $res = $msg1;
-            }
+/**
+ * 批量获取无表船 容量表数据
+ */
+public
+function get_ship_base_info()
+{
+    if (I('post.uid') and I('post.imei') and I('post.shipid')) {
+        //判断用户状态、是否到期、标识比对
+        $user = new \Common\Model\UserModel();
+        $ship = new \Common\Model\ShipFormModel();
+        $cabin = new \Common\Model\CabinModel();
+        $shipid = intval(I('post.shipid'));
+        $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+        if ($msg1['code'] == '1') {
+            $res = array();
+            $res['table_accuracy'] = $ship->get_ship_table_accuracy($shipid);
+            $res['base_volume'] = $cabin->get_cabins_base_volume($shipid);
+            $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
         } else {
-            //参数不正确，参数缺失	4
-            $res = array(
-                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
-            );
+            //未到期/状态禁止/标识错误
+            $res = $msg1;
         }
-        echo jsonreturn($res);
+    } else {
+        //参数不正确，参数缺失	4
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+        );
     }
+    echo jsonreturn($res);
+}
 
 }

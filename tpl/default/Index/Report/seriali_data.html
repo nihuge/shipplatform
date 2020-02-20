@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>识别结果序列化</title>
+    <link rel="stylesheet" href="__INDEX_CSS__/login.css">
+    <script src="__INDEX_JS__/jquery1.8.3.min.js" type="text/javascript"></script>
+    <script src="__INDEX_STATIC__/layer/layer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="__INDEX_CSS__/base.css">
+    <!-- 分野分页样式 -->
+    <link rel="stylesheet" type="text/css" href="__INDEX_CSS__/page.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css">
+    <script src="__PUBLIC__/laydate/laydate.js"></script>
+    <script src="__PUBLIC__/layui/layui.all.js"></script>
+
+    <style>
+        .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
+    </style>
+</head>
+<body>
+<h2>空高：{$ullage}</h2><br/>
+<h2>吃水差：{$draft}</h2>
+<table id="customers">
+    <volist name="table" id="v" key="row">
+        <tr>
+            <volist name="v" id="v1" key="column">
+                <if condition="(($row eq $ullage_up or $row eq $ullage_down) or $row eq 2) && (($column eq $draft_up or $column eq $draft_down) or $column eq 1) && ($column neq 1 or $row neq 2)">
+                    <td height="20px" style="border: red solid 4px;text-align: center;color: red" width="150px">{$v1}</td>
+                    <else/>
+                    <td height="20px" style="border: #3F4E54 solid 2px;text-align: center" width="150px">{$v1}</td>
+
+                </if>
+            </volist>
+        </tr>
+    </volist>
+    <tr style="background-color: #fff;">
+        <td colspan="8" style="border-right: 0px;">{$page}</td>
+    </tr>
+</table>
+</body>
+</html>

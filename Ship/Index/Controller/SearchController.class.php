@@ -752,7 +752,7 @@ class SearchController extends IndexBaseController
             $data['security_title'] = "好";
         }
 
-        $accuracy_per = $data['table_accuracy'] = $data['accuracy_sum'] / ($data['accuracy_num'] > 0 ? $data['accuracy_num'] : 1)/3*100;
+        $accuracy_per = $data['accuracy_sum'] / ($data['accuracy_num'] > 0 ? $data['accuracy_num'] : 1)/3*100;
         if ($data['accuracy_num'] == 0) {
             $data['accuracy_title'] = "暂无评价";
         } elseif ($accuracy_per < 50) {
@@ -1359,11 +1359,11 @@ class SearchController extends IndexBaseController
             if ($result_evaluation_info[$key]['measure_standard1'] == 0) {
                 $result_evaluation_info[$key]['measure_standard1_str'] = "暂未评分";
             } else {
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     if ($i < $result_evaluation_info[$key]['measure_standard1']) {
-                        $result_evaluation_info[$key]['measure_standard1_str'] .= "★";
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "♦ ";
                     } else {
-                        $result_evaluation_info[$key]['measure_standard1_str'] .= "☆";
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "♢";
                     }
                 }
             }
@@ -1384,11 +1384,11 @@ class SearchController extends IndexBaseController
             if ($result_evaluation_info[$key]['security1'] == 0) {
                 $result_evaluation_info[$key]['security1_str'] = "暂未评分";
             } else {
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     if ($i < $result_evaluation_info[$key]['security1']) {
-                        $result_evaluation_info[$key]['security1_str'] .= "★";
+                        $result_evaluation_info[$key]['security1_str'] .= "♦ ";
                     } else {
-                        $result_evaluation_info[$key]['security1_str'] .= "☆";
+                        $result_evaluation_info[$key]['security1_str'] .= "♢";
                     }
                 }
             }

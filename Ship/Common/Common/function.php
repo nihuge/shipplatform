@@ -1207,6 +1207,12 @@ function csicpdf($data = '')
     } else {
 
     }
+    $ercode_style = "display: none;";
+
+
+    if($data['content']['finish_sign']==1){
+        $ercode_style = "";
+    }
 
     //模板样式
     $html1 = '
@@ -1222,8 +1228,10 @@ function csicpdf($data = '')
     <img src="http://121.41.22.2/shipPlatform/Upload/logo/csic_logo.png" style="display:inline-block;">
     </td>
     <td align="center">
+    <div style="'.$ercode_style.'">
     <img style="width: 80px;height: 80px;" width="80px" height="80px"  src="' . getReportErCode($data['content']['id'], $data['content']['uid']) . '"/>
     <br/>扫描上方二维码验真伪
+    </div>
     </td>
     </tr>
     </table>

@@ -221,6 +221,9 @@ class UserModel extends BaseModel
                     }
 
                     if ($this->editData($map, $data) !== false) {
+                        //自动评价
+                        $result = new \Common\Model\WorkModel();
+                        $result->automatic_evaluation();
                         //成功 1
                         $res = array(
                             'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
@@ -344,7 +347,18 @@ class UserModel extends BaseModel
      */
     public function adddatas($data)
     {
-        $pwd = "000000";
+        //如果不指定密码，默认密码6个0
+        if(!isset($data['pwd'])){
+            $pwd = "000000";
+        }else{
+            if($data['pwd'] == ''){
+                //密码为空也不行
+                $pwd = "000000";
+            }else{
+                $pwd = $data['pwd'];
+            }
+        }
+
         $data['pwd'] = encrypt($pwd);   //加密
         // 判断是否提交操作权限，查询权限在新增的时候与操作权限一样
         if ($data['operation_jur']) {
@@ -408,6 +422,21 @@ class UserModel extends BaseModel
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 获取用户名的长度限制
+     * @return int $length 限制的长度
+     */
+    public function getUserMaxLength(){
+        foreach ($this->_validate as $v){
+            if('title'==$v[0] and isset($v[4])){
+                if('length'==$v[4]){
+                    $length = explode(',',$v[1]);
+                    return $length[1];
+                }
+            }
         }
     }
 }

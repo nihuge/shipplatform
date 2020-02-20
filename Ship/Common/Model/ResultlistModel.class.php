@@ -33,7 +33,8 @@ class ResultlistModel extends BaseModel
         $count_where = array(
             'resultid'=>$resultid,
             'is_work'=>array(array('NEQ',2),array('EXP','is null'),'or'),//不统计不作业的舱数据
-            'ullage'=>array('ELT',$threshold),//只获取空高低于一定阈值的舱数据，算作底量
+            'sounding'=>array('ELT',$threshold),//只获取实高低于一定阈值的舱数据，算作底量
+            'standardcapacity'=>array('GT',0),//只有体积大于0才有统计意义
         );
 
         return  $this

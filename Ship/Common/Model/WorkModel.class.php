@@ -2,9 +2,6 @@
 
 namespace Common\Model;
 
-use Common\Model\BaseModel;
-use Think\Think;
-
 /**
  * 作业Model
  *
@@ -478,7 +475,7 @@ class WorkModel extends BaseModel
                 $resultrecord = M('resultrecord');
                 $resultmsg = $resultlist
                     ->alias('re')
-                    ->field('re.*,c.cabinname,c.pipe_line')
+                    ->field('re.*,c.cabinname,c.pipe_line,c.base_volume as base_sum,c.base_count')
                     ->join('left join cabin c on c.id = re.cabinid')
                     ->where($where1)
                     ->order('re.solt asc,re.cabinid asc')
@@ -499,6 +496,8 @@ class WorkModel extends BaseModel
                     $v['soundingimg'] = array();
                     $v['temperatureimg'] = array();
                     $v['expand'] = round($v['expand'], 5);
+                    $v['base_volume'] = $v['base_sum']/($v['base_count']>0?$v['base_count']:1);//计算平均经验底量
+                    $v['base_title']=$v['base_count']>0?"作业".$v['base_count']."次，经验底量".$v['base_volume']."m³":"暂无统计";
                     unset($v['process']);
                     // 获取作业照片
                     $listimg = M('resultlist_img')
@@ -3627,13 +3626,14 @@ class WorkModel extends BaseModel
         // 根据公司类型区分修改内容
         if ($data['firmtype'] == '1') {
             // 修改作业评价
+
             $da = array(
                 'grade1' => $data['grade'],
                 'evaluate1' => $data['content'],
                 'operater1' => $data['operater'],
                 'measure_standard1' => $data['measure'],
                 'security1' => $data['security'],
-                'time1'=>time(),
+                'time1' => time(),
             );
             $re = $evaluate->where($map)->save($da);
             if ($re !== false) {
@@ -3704,7 +3704,7 @@ class WorkModel extends BaseModel
                 'operater2' => $data['operater'],
                 'measure_standard2' => $data['measure'],
                 'security2' => $data['security'],
-                'time2'=>time(),
+                'time2' => time(),
             );
             $re = $evaluate->where($map)->save($da);
             if ($re !== false) {
@@ -3776,84 +3776,108 @@ class WorkModel extends BaseModel
 
 
     /**
-     * 自动评价机制，调用该程序自动检测和评价所有未被评价的作业
+     * 调用时自动评价所有
      */
     public function automatic_evaluation()
     {
-        #todo 加入评价系统
-        // 获取所有创建时间超过10天并且检验员或者船方未评价的作业
-        $expire_time = strtotime('-10 day', time());//获取十天前的时间戳
+        // 获取所有10天前未评价的作业
         $evaluate = M('evaluation');
-        $where_1['r.grade1'] = 0;
-        $where_2['r.grade2'] = 0;
+        $ship = new \Common\Model\ShipFormModel();
+
+        $where_1 = array(
+            'e.grade1' => 0,
+            'e.grade2' => 0,
+            '_logic' => 'or'
+        );
+        $where_2 = array(
+            'r.time' => array('LT', strtotime('-10 day', time()))
+        );
         $where_main['_complex'] = array(
             $where_1,
             $where_2,
-            '_logic' => 'or'
         );
         $rlist = $evaluate
-            ->field('r.id,r.time,r.grade1,r.grade2,r.uid,r.shipid')
+            ->field('r.id,r.shipid')
             ->alias('e')
             ->where($where_main)
-            ->join('right join result r on r.id = e.resultid')
+            ->join('right join result r on r.id = e.result_id')
             ->select();
-        $result = new \Common\Model\ResultModel();
         $res = array('code' => 1);
         foreach ($rlist as $key => $value) {
-            // 获取当前作业新建时间的后10天
-            $time = strtotime('+10 day', $value['time']);
-            $nowtime = time();
-            if ($time < $nowtime) {
+
+            // 检验
+            $data1 = array(
+                'uid' => $value['uid'],
+                'id' => $value['id'],
+                'shipid' => $value['shipid'],
+                'grade' => 5,
+                'firmtype' => 1,
+                'content' => '默认好评',
+                'operater' => $value['uid'],
+                'measure' => 3,
+                'security' => 3,
+            );
+//            $data1 = array(
+//                'uid' => $value['uid'],
+//                'id' => $value['id'],
+//                'shipid' => $value['shipid'],
+//                'grade' => 5,
+//                'firmtype' => 1,
+//                'content' => '默认好评',
+//                'operater' => $value['uid']
+//            );
+
+            $ship_user_info = $ship->get_ship_auto_account($value['shipid']);
+            // 船舶
+            $data2 = array(
+                'uid' => $value['uid'],
+                'id' => $value['id'],
+                'shipid' => $value['shipid'],
+                'grade' => 5,
+                'firmtype' => 2,
+                'content' => '默认好评',
+                'operater' => $ship_user_info['id'],
+                'measure' => 3,
+                'security' => 3,
+            );
+
+            // 船舶
+//            $data2 = array(
+//                'uid' => $value['uid'],
+//                'id' => $value['id'],
+//                'shipid' => $value['shipid'],
+//                'grade' => 5,
+//                'firmtype' => 2,
+//                'content' => '默认好评',
+//                'operater' => -1
+//            );
+
+            // 当前时间大于作业后0天，启动自动评价
+            if ($value['grade1'] == '0' && $value['grade2'] == '0') {
+                // 两边 都没有评价
                 // 检验
-                $data1 = array(
-                    'uid' => $value['uid'],
-                    'id' => $value['id'],
-                    'shipid' => $value['shipid'],
-                    'grade' => 5,
-                    'firmtype' => 1,
-                    'content' => '默认好评',
-                    'operater' => $value['uid']
-                );
-                // 船舶
-                $data2 = array(
-                    'uid' => $value['uid'],
-                    'id' => $value['id'],
-                    'shipid' => $value['shipid'],
-                    'grade' => 5,
-                    'firmtype' => 2,
-                    'content' => '默认好评',
-                    'operater' => -1
-                );
-
-                // 当前时间大于作业后0天，启动自动评价
-                if ($value['grade1'] == '0' && $value['grade2'] == '0') {
-                    // 两边 都没有评价
-                    // 检验
-                    $res1 = $result->evaluate($data1);
-                    if ($res1['code'] != '1') {
-                        break;//终止循环
-                    }
-
-                    // 船舶
-                    $res2 = $result->evaluate($data2);
-                    if ($res2['code'] != '1') {
-                        break;//终止循环
-                    }
-                } else if ($value['grade1'] != '0' && $value['grade2'] == '0') {
-                    // 船驳公司评价
-                    $res = $result->evaluate($data2);
-                    if ($res['code'] != '1') {
-                        break;//终止循环
-                    }
-                } else if ($value['grade1'] == '0' && $value['grade2'] != '0') {
-                    // 检验公司评价
-                    $data = $data1;
-                    $res = $result->evaluate($data1);
-                    if ($res['code'] != '1') {
-                        break;//终止循环
-                    }
+                $res1 = $this->evaluate($data1);
+                if ($res1['code'] != '1') {
+                    break;//终止循环
                 }
-
+                // 船舶
+                $res2 = $this->evaluate($data2);
+                if ($res2['code'] != '1') {
+                    break;//终止循环
+                }
+            } else if ($value['grade1'] != '0' && $value['grade2'] == '0') {
+                // 船驳公司评价
+                $res = $this->evaluate($data2);
+                if ($res['code'] != '1') {
+                    break;//终止循环
+                }
+            } else if ($value['grade1'] == '0' && $value['grade2'] != '0') {
+                // 检验公司评价
+                $data = $data1;
+                $res = $this->evaluate($data1);
+                if ($res['code'] != '1') {
+                    break;//终止循环
+                }
             }
         }
 

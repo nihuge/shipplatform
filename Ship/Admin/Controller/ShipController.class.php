@@ -130,9 +130,27 @@ class ShipController extends AdminBaseController
 
 
                     $res = $ship->addData($data);
-                    if ($res) {
+                    //如果船舶创建成功
+                    if ($res !== false) {
                         // 新增船舶创建表、添加船舶历史数据汇总初步
                         $ship->createtable($data['suanfa'], $data['shipname'], $res, $data['kedu'], $data['kedu1']);
+                        //判断公司有无管理员账户，如果没有管理员账户，则不创建
+                        $user = new \Common\Model\UserModel();
+                        $firm_admin  = $user->field('id')->where(array('firmid'=>$data['firmid'],'pid'=>0))->find();
+                        //管理员数等于1,开始创建账号,账号名为船名各字的首字母+船的全拼，如果超出字符限制，则裁剪至字符
+                        if($firm_admin['id'] > 0){
+                            $user_data = array(
+                                'title'=>substr(pinyin($data['shipname'],'first').pinyin($data['shipname']),0,$user->getUserMaxLength()),
+                                'username'=>$data['shipname'],
+                                'pwd'=>time(),//第一次的密码随机，如果用户需要登陆直接重置就好了
+                                'firmid'=>$data['firmid'],
+                                'pid'=>$firm_admin['id'],
+                                'operation_jur'=>array($res),//将这个船的权限加入到自己的账号中
+                                'look_other'=>2,//可以看所有公司的作业记录
+                            );
+                            //创建用户,不考虑是否创建成功，创建失败也不回档。如果创建失败自动评价时使用-1
+                            $user->adddatas($user_data);
+                        }
                         $this->success('添加成功', U('index'));
                     } else {
                         $this->error('添加失败');

@@ -15,6 +15,7 @@ class LoginController extends Controller
     public function login()
     {
         if (IS_POST) {
+            $result = new \Common\Model\WorkModel();
             //判断用户名不能含有特殊字符
             $res_s = judgeOneString(I('post.title'));
             if ($res_s == true) {
@@ -52,7 +53,7 @@ class LoginController extends Controller
                 if ($msg['code'] == '1') {
                     $_SESSION['user_info'] = $arr;
                     // 自动评价
-                    $arr1 = $this->automatic_evaluation();
+                    $arr1 = $result->automatic_evaluation();
                     $this->success('登陆成功', U('Index/index'));
                 } else if ($msg['code'] == '1009') {
                     $_SESSION['user_info'] = $arr;
