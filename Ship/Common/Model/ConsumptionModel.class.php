@@ -130,6 +130,7 @@ class ConsumptionModel extends BaseModel
 	    			'uid'		=>	$uid,
 	    			'time'		=>	time()
 	    		);
+	    		if($type !== 1) $data['type']=2;
 	    		if (!$this->create($data)){
 				    // 如果创建失败 表示验证没有通过 输出错误提示信息
 				    // $this->error($cabin->getError());

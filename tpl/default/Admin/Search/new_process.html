@@ -276,7 +276,7 @@
                     <if condition="$k eq 1">
                         <span class="sj5">round((纵倾值2下空高1对应的值-纵倾值2下空高2对应的值),3)/(空高1-空高2)*(测量空高-空高2)+纵倾值2下空高2对应的值</span>
                         <br>
-                        <span class="sj5">=round(({$v['trim_table']['Cab']}-{$v['trim_table']['Cbb']}),3)/({$v['trim_table']['Ua']}-{$v['trim_table']['Ub']})*({$v['ullage']}-{$v['trim_table']['Ub']})+{$v['trim_table']['Cbb']}</span>
+                        <span class="sj5">=round((({$v['trim_table']['Cab']})-({$v['trim_table']['Cbb']})),3)/(({$v['trim_table']['Ua']})-({$v['trim_table']['Ub']}))*(({$v['ullage']})-({$v['trim_table']['Ub']}))+({$v['trim_table']['Cbb']})</span>
                         <br>
                         <span class="sj5">={$vv['interpolation_calculation_result']}</span>
                         <br>

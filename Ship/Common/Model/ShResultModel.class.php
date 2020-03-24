@@ -78,10 +78,10 @@ class ShResultModel extends BaseModel
                 $id = $this->addData($data);
                 if ($id) {
                     // 作业扣费
-                    $consump = new \Common\Model\ShConsumptionModel();
+                    $consump = new \Common\Model\ConsumptionModel();
 
                     //这里加上扣费区分，散货船扣费时，标注是散货
-                    $arr = $consump->buckleMoney($uid, $firmid, $id);
+                    $arr = $consump->buckleMoney($uid, $firmid, $id,2);
                     if ($arr['code'] == '1') {
                         #todo 添加船舶统计停泊港功能，自动添加公司，用户，船的历史作业次数。
                         // 扣费成功

@@ -1,0 +1,220 @@
+<extend name="Public:base"/>
+<block name="title">数据导入</block>
+<block name="navtitle">
+    <li class="active">
+        数据导入
+    </li>
+    <li class="active">
+        无表船数据导入
+    </li>
+</block>
+<block name="activeopen41">class="active open"</block>
+<block name="active_watchless_upload">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <form action="__ACTION__" method="post" enctype="multipart/form-data">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover"
+                   style='width:500px;margin:auto auto;text-align: center;'>
+
+                <tr>
+                    <td style="width:80px;">船&nbsp;&nbsp;&nbsp;&nbsp;舶</td>
+                    <td>
+                        <select name="shipid" id="shipid" required class="col-xs-10 col-sm-5">
+                            <option value="">--选择船--</option>
+                            <volist name="shiplist" id="v">
+                                <option id="shipid_{$v['id']}" value="{$v['id']}">{$v['shipname']}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>数据类别</td>
+                    <td id="tname" style="text-align: left">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>船&nbsp;&nbsp;&nbsp;&nbsp;舱</td>
+                    <td>
+                        <select name="cabinid" id="cabinid" required class="col-xs-10 col-sm-5">
+                            <option value="">--选择舱--</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <!--                <tr>-->
+                <!--                    <td>上传文件</td>-->
+                <!--                    <td>-->
+                <!--                        <input type="file" name="file">-->
+                <!--                    </td>-->
+                <!--                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="2">-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+            </table>
+
+        <br>
+        <div style="width: 80px;height: 60px;margin: 0 auto"><input type="submit" value="上传" class="btn btn-primary"></div>
+        <br>
+        <br>
+        <table id='presence' class="table table-striped table-bordered table-hover"
+               style='table-layout:fixed;margin:0 auto;text-align: center;'>
+        </table>
+        </form>
+    </div>
+    <script type="text/javascript">
+
+        var column_num = 0;
+
+        /*
+        封装
+         */
+
+        //设置cookie
+        function setCookie(key, value, t) {
+            var oDate = new Date();
+            oDate.setDate(oDate.getDate() + t);
+            document.cookie = key + "=" + value + "; expires=" + oDate.toDateString();
+        }
+
+        //获取cookie
+        function getCookie(key) {
+            var arr1 = document.cookie.split("; ");//由于cookie是通过一个分号+空格的形式串联起来的，所以这里需要先按分号空格截断,变成[name=Jack,pwd=123456,age=22]数组类型；
+            for (var i = 0; i < arr1.length; i++) {
+                var arr2 = arr1[i].split("=");//通过=截断，把name=Jack截断成[name,Jack]数组；
+                if (arr2[0] == key) {
+                    return decodeURI(arr2[1]);
+                }
+            }
+            return '';
+
+        }
+
+        //封装一个移除cookie的函数
+        function removeCookie(key) {
+            setCookie(key, "", -1);//把cookie设置为过期
+
+        }
+
+
+        $('document').ready(function () {
+            var shipid = getCookie('upload_shipid');
+            var tname_value = getCookie('upload_tname');
+            var cabinid = getCookie('upload_cabinid');
+
+            //下拉获取cang,单选获取表
+            $("select[name=shipid]").change(function () {
+                if ($(this).children().is(':selected')) {
+                    var id = $(this).val();
+                    if (id !== '') {
+                        var edc = $("#cabinid");
+                        var tname = $("#tname");
+                        $.ajax({
+                            url: "{:U('Upload/formless_cabin_op')}",
+                            data: 'shipid=' + id,
+                            type: 'post',
+                            async: false,
+                            dataType: 'html',
+                            success: function (res) {
+                                // console.log(res);
+                                var d = '';
+                                d = eval("(" + res + ")");
+                                if (d.code != 0) {
+                                    layer.alert(d.msg, function (index) {
+                                        layer.close(index);
+                                        window.open(d.url, "blank");
+                                    });
+
+                                }
+
+                                edc.html(d.sc);  //下拉赋值
+                                tname.html(d.tname);  //单选赋值
+                                // $("#presence").html(d.presence);  //单选赋值
+
+                                if (tname_value !== '') {
+                                    $("[name='tname'][value='" + tname_value + "']").prop("checked", "checked");
+                                }
+
+                                if (cabinid !== '') {
+                                    $("select[name=cabinid]").val(cabinid);
+                                }
+
+                                //下拉获取cang,单选获取表
+                                $("select[name=cabinid],input[name=tname]").change(function () {
+                                        let cabinid = $('select[name=cabinid]').val();
+                                        let shipid = $("select[name=shipid]").val();
+                                        let tname = $('input:radio[name="tname"]:checked').val();
+                                        let pre = $("#presence");
+                                        if (cabinid !== '' && tname !== null) {
+
+                                            $.ajax({
+                                                url: "{:U('Upload/get_cum_table')}",
+                                                data: {shipid: shipid, tname: tname},
+                                                type: 'post',
+                                                async: false,
+                                                dataType: 'html',
+                                                success: function (res) {
+                                                    // console.log(res);
+                                                    var d = '';
+                                                    d = eval("(" + res + ")");
+                                                    if (d.code != 0) {
+                                                        layer.alert(d.msg, function (index) {
+                                                            layer.close(index);
+                                                            if(d.url !== ""){
+                                                                window.open(d.url, "blank");
+                                                            }
+                                                        });
+                                                    }
+                                                    pre.html(d.tvalue);  //表格构建
+                                                }
+                                            });
+                                        }else {
+                                            pre.html("")//重置表格
+                                        }
+                                });
+                            }
+                        });
+                    } else {
+                        var edc = $("#cabinid");
+                        edc.html('<option value="">--选择舱--</option>');
+                    }
+                } else {
+                    var edc = $("#cabinid");
+                    edc.empty();
+                }
+            });
+
+            if (shipid !== "") {
+                $('#shipid').val(shipid);
+                console.log(123);
+                $("select[name=shipid]").change();
+            }
+
+            //下拉获取cang,单选获取表
+            $("select[name=cabinid]").change(function () {
+
+            });
+
+        });
+
+        function isJSON(str) {
+            if (typeof str == 'string') {
+                try {
+                    var obj = JSON.parse(str);
+                    if (typeof obj == 'object' && obj) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                } catch (e) {
+                    console.log('error：' + str + '!!!' + e);
+                    return false;
+                }
+            }
+            console.log('It is not a string!')
+            return false;
+        }
+    </script>
+</block>

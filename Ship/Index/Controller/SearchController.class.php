@@ -203,7 +203,7 @@ class SearchController extends IndexBaseController
      */
     public function getShip()
     {
-        if (IS_AJAX) {
+//        if (IS_AJAX) {
             $page = I('post.pageNum');//当前页
             $where = '1 and del_sign=1';
             if ($_POST['strin'] != '') {
@@ -251,7 +251,7 @@ class SearchController extends IndexBaseController
 
             $arr['list'] = $list;
             $this->ajaxReturn($arr);
-        }
+//        }
     }
 
 
@@ -260,7 +260,7 @@ class SearchController extends IndexBaseController
      */
     public function getShShip()
     {
-        if (IS_AJAX) {
+//        if (IS_AJAX) {
             $page = I('post.pageNum');//当前页
             $where = '1 and del_sign=1';
             if ($_POST['strin'] != '') {
@@ -295,7 +295,7 @@ class SearchController extends IndexBaseController
 
             $arr['list'] = $list;
             $this->ajaxReturn($arr);
-        }
+//        }
     }
 
     /**

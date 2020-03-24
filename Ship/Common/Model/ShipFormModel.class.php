@@ -74,7 +74,7 @@ class ShipFormModel extends BaseModel
                         } else {
                             $list[$key]['expired'] = true;
                         }
-                        $accuracy_per= $value['accuracy_sum'] / ($value['accuracy_num'] > 0 ? $value['accuracy_num'] : 1)/3*100;
+                        $accuracy_per = $value['accuracy_sum'] / ($value['accuracy_num'] > 0 ? $value['accuracy_num'] : 1) / 3 * 100;
                         $list[$key]['table_accuracy'] = $value['accuracy_sum'] / ($value['accuracy_num'] > 0 ? $value['accuracy_num'] : 1);
                         if ($value['accuracy_num'] == 0) {
                             $list[$key]['accuracy_title'] = "暂无评价";
@@ -213,6 +213,13 @@ class ShipFormModel extends BaseModel
                     ->field('id,shipname')
                     ->where(array('firmid' => $value['id'], "del_sign" => 1))
                     ->select();
+                /*                foreach ($res[$key]['shiplist'] as $k=>$v){
+                                    if($this->is_have_data($v['id'])=='y'){
+                                        $res['dataship'][] = $v['shipname'];
+                                    }else{
+                                        $res['nodataship'][] = $v['shipname'];
+                                    }
+                                }*/
             }
         } else {
             $res = array();
@@ -394,7 +401,7 @@ class ShipFormModel extends BaseModel
                                 M()->commit();
                                 $res = array(
                                     'code' => $this->ERROR_CODE_RESULT['EXCEED_NUM'],
-                                    'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXCEED_NUM']]
+                                    'error' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXCEED_NUM']]
                                 );
                             } else {
                                 // 修改公司的操作/查询权限 
@@ -464,7 +471,7 @@ class ShipFormModel extends BaseModel
                                     //数据库连接错误   3
                                     $res = array(
                                         'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                                        'msg' => $this->ERROR_CODE_COMMON[$this->ERROR_CODE_COMMON['DB_ERROR']]
+                                        'error' => $this->ERROR_CODE_COMMON[$this->ERROR_CODE_COMMON['DB_ERROR']]
                                     );
                                 }
                             }
@@ -473,28 +480,28 @@ class ShipFormModel extends BaseModel
                             //数据库连接错误   3
                             $res = array(
                                 'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                                'msg' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]
+                                'error' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]
                             );
                         }
                     } else {
                         //船舶已存在   2014
                         $res = array(
                             'code' => $this->ERROR_CODE_RESULT['HAVE_SHIP'],
-                            'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
+                            'error' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
                         );
                     }
                 } else {
                     //用户对该公司没有操作权限   1014
                     $res = array(
                         'code' => $this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM'],
-                        'msg' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM']]
+                        'error' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM']]
                     );
                 }
             } else {
                 //用户不是管理员   1015
                 $res = array(
                     'code' => $this->ERROR_CODE_USER['USER_NOT_ADMIN'],
-                    'msg' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_ADMIN']]
+                    'error' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_ADMIN']]
                 );
             }
         }
@@ -816,4 +823,66 @@ sql;
         return $user_info;
     }
 
+    /**
+     * 上传舱容表
+     */
+    public function up_table($uid, $type, $shipname)
+    {
+        M()->startTrans();
+        $ship_review = M('table_review');
+        $data = array(
+            'uid' => $uid,
+            'type' => $type,
+            'shipname' => $shipname,
+            'time' => time(),
+        );
+        $id = $ship_review->add($data);
+        if ($id === false) {
+            M()->rollback();
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+            );
+        } else {
+            M()->commit();
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'review_id' => $id,
+            );
+        }
+        return $res;
+    }
+
+    /**
+     * 更新船舶的纵倾修正状态
+     */
+    public function updata_data_ship()
+    {
+        /**
+         * 获取公司下的所有船列表
+         * */
+        M()->startTrans();
+        $res = $this
+            ->field('id')
+            ->select();
+        foreach ($res as $k => $v) {
+            $data_ship = $this->is_have_data($v['id']);
+            $data_ship = $data_ship == "" ? "n" : $data_ship;
+            $data = array(
+                'data_ship' => $data_ship
+            );
+            $map = array(
+                'id' => $v['id']
+            );
+            $res[$v['id']] = $data;
+            $result = $this->editData($map, $data);
+            if ($result === false) {
+                M()->rollback();
+                //数据库错误
+                return array('code'=>$this->ERROR_CODE_COMMON['DB_ERROR'],'error'=>$this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]);
+            }
+        }
+        M()->commit();
+        $res['code']=$this->ERROR_CODE_COMMON['SUCCESS'];
+        return $res;
+    }
 }

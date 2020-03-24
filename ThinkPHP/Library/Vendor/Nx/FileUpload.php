@@ -52,7 +52,7 @@ class FileUpload
      * @param int 是否取文件原始名称
      * @return
      * */
-    function uploadFile($fileInfo, $path = './Upload', $flag = true, $allowExt = array('jpeg', 'jpg', 'png', 'gif'), $maxSize = 209715200, $is_chong = '')
+    function uploadFile($fileInfo, $path = './Upload', $flag = true, $allowExt = array('jpeg', 'jpg', 'png', 'gif'), $maxSize = 41943040, $is_chong = '')
     {
         $res = array();
         //判断错误号

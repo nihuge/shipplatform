@@ -1,3 +1,4 @@
 /Runtime/
 /databak/
 *.log
+/Ship/Common/Conf/config.php

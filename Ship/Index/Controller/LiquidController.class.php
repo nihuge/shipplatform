@@ -102,7 +102,7 @@ class LiquidController extends IndexBaseController
             ->count();
 
         // 分页
-        $page = new \Org\Nx\Page($count, 20);
+//        $page = new \Org\Nx\Page($count, 20);
 
         $list = $this->db
             ->field('r.personality,r.time,r.weight,s.shipname,r.id,f.id as firmid,f.firmtype,r.uid,r.grade1,r.grade2,r.shipid')
@@ -111,7 +111,7 @@ class LiquidController extends IndexBaseController
             ->join('left join user u on u.id=r.uid')
             ->join('left join firm f on f.id = u.firmid')
             ->where($where)
-            ->limit($page->firstRow, $page->listRows)
+//            ->limit($page->firstRow, $page->listRows)
             ->order('r.id desc')
             ->select();
 
@@ -192,7 +192,7 @@ class LiquidController extends IndexBaseController
             'listship' => $listship,
             'list' => $list,
             'personalitylist' => $personalitylist,
-            'page' => $page->show()
+//            'page' => $page->show()
         );
         $this->assign($assign);
         $this->display();
@@ -203,7 +203,7 @@ class LiquidController extends IndexBaseController
      */
     public function addresult()
     {
-        if (I('post.shipid')) {
+        if (I('post.shipid') and I('post.voyage')) {
             //添加数据
             $data = I('post.');
             $data['time'] = time();
@@ -211,15 +211,72 @@ class LiquidController extends IndexBaseController
             // 验证通过 可以进行其他数据操作
             $res = $this->db->addResult($data, $_SESSION['user_info']['id']);
             if ($res['code'] == '1') {
-                echo ajaxReturn(array("state" => 1, 'message' => "成功"));
+                echo ajaxReturn(array("code" => 1, 'message' => "成功"));
             } else {
-                echo ajaxReturn(array("state" => $res['code'], 'message' => $res['msg']));
+                echo ajaxReturn(array("code" => $res['code'], 'error' => $res['msg']));
             }
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "船名为必填项"));
+            echo ajaxReturn(array("code" => 2, 'error' => "船名为必填项"));
         }
     }
 
+//    /**
+//     * 判断作业是否开始,没开始返回作业内容
+//     */
+//    public function is_start()
+//    {
+//        //判断指令有没有作业，
+//        $rl = new \Common\Model\ResultlistModel();
+//        $re = $rl->where(array('resultid' => I('post.resultid')))->count();
+//        if ($re > 0) {
+//            echo ajaxReturn(array("state" => 2, 'message' => "该指令已作业，不能修改!"));
+//        } else {
+//            //获取用户的船舶列表id
+//            $user = new \Common\Model\UserModel();
+//            $usermsg = $user->getUserOperationSeach($_SESSION['user_info']['id']);
+//
+//            $ship = new \Common\Model\ShipModel();
+//            $shiplist = $ship
+//                ->field('id,shipname')
+//                ->where(array('id' => array('IN', $usermsg['operation_jur_array'])))
+//                ->order('shipname asc')
+//                ->select();
+//
+//            //获取作业信息
+//            $msg = $this->db
+//                ->where(array('id' => I('post.resultid')))->find();
+//            $personalitymsg = json_decode($msg['personality'], true);
+//
+//            // 获取公司个性化字段
+//            $firm = new \Common\Model\FirmModel();
+//            $personality_id = $firm->getFieldById($usermsg['firmid'], 'personality');
+//            $personality_id = json_decode($personality_id, true);
+//            $personalitylist = array();
+//            $person = new \Common\Model\PersonalityModel();
+//            foreach ($personality_id as $key => $value) {
+//                $personalitylist[] = $person
+//                    ->field('name,title')
+//                    ->where(array('id' => $value))
+//                    ->find();
+//            }
+//            $string = "<input type='hidden' name='id' id='id1' value='" . I('post.resultid') . "'><li><label>船名：</label><p><select name='shipid' id='shipid1' class=''><option value=''>请选择船名</option>";
+//            foreach ($shiplist as $key => $value) {
+//                if ($value['id'] == $msg['shipid']) {
+//                    $select = "selected";
+//                } else {
+//                    $select = '';
+//                }
+//                $string .= "<option value='" . $value['id'] . "' " . $select . ">" . $value['shipname'] . "</option>";
+//            }
+//            $string .= "</select></p></li>";
+//
+//            foreach ($personalitylist as $key => $v) {
+//                $string .= "<li><label>" . $v['title'] . "：</label><p><input type='text'  type='text' name='" . $v['name'] . "' placeholder='请输入" . $v['title'] . "' class='i-box' id='" . $v['name'] . "1' value='" . $personalitymsg[$v['name']] . "'/></p></li>";
+//                // $string .= "<input type='text' name='".."' placeholder='请输入"$v['title']"'    ";
+//            }
+//            echo ajaxReturn(array("state" => 1, 'message' => "成功", 'content' => $string));
+//        }
+//    }
     /**
      * 判断作业是否开始,没开始返回作业内容
      */
@@ -229,7 +286,7 @@ class LiquidController extends IndexBaseController
         $rl = new \Common\Model\ResultlistModel();
         $re = $rl->where(array('resultid' => I('post.resultid')))->count();
         if ($re > 0) {
-            echo ajaxReturn(array("state" => 2, 'message' => "该指令已作业，不能修改!"));
+            echo ajaxReturn(array("code" => 2, 'message' => "该指令已作业，不能修改!"));
         } else {
             //获取用户的船舶列表id
             $user = new \Common\Model\UserModel();
@@ -259,22 +316,24 @@ class LiquidController extends IndexBaseController
                     ->where(array('id' => $value))
                     ->find();
             }
-            $string = "<input type='hidden' name='id' id='id1' value='" . I('post.resultid') . "'><li><label>船名：</label><p><select name='shipid' id='shipid1' class=''><option value=''>请选择船名</option>";
-            foreach ($shiplist as $key => $value) {
-                if ($value['id'] == $msg['shipid']) {
-                    $select = "selected";
-                } else {
-                    $select = '';
-                }
-                $string .= "<option value='" . $value['id'] . "' " . $select . ">" . $value['shipname'] . "</option>";
-            }
-            $string .= "</select></p></li>";
+//            foreach ($shiplist as $key => $value) {
+//                if ($value['id'] == $msg['shipid']) {
+//                    $select = "selected";
+//                } else {
+//                    $select = '';
+//                }
+//            }
 
-            foreach ($personalitylist as $key => $v) {
-                $string .= "<li><label>" . $v['title'] . "：</label><p><input type='text'  type='text' name='" . $v['name'] . "' placeholder='请输入" . $v['title'] . "' class='i-box' id='" . $v['name'] . "1' value='" . $personalitymsg[$v['name']] . "'/></p></li>";
+//            foreach ($personalitylist as $key => $v) {
+//                $string .= "<li><label>" . $v['title'] . "：</label><p><input type='text'  type='text' name='" . $v['name'] . "' placeholder='请输入" . $v['title'] . "' class='i-box' id='" . $v['name'] . "1' value='" . $personalitymsg[$v['name']] . "'/></p></li>";
                 // $string .= "<input type='text' name='".."' placeholder='请输入"$v['title']"'    ";
-            }
-            echo ajaxReturn(array("state" => 1, 'message' => "成功", 'content' => $string));
+//            }
+            $assign = array(
+                'personalitymsg' =>$personalitymsg,
+                'personalitylist' =>$personalitylist,
+                'shiplist' =>$shiplist,
+            );
+            echo ajaxReturn(array("code" => 1, 'message' => "成功", 'content' => $assign));
         }
     }
 
@@ -283,18 +342,18 @@ class LiquidController extends IndexBaseController
      */
     public function editresult()
     {
-        if (I('post.shipid')) {
+        if (I('post.shipid') and I('post.id') and I('post.voyage')) {
             //添加数据
             $data = I('post.');
             $data['resultid'] = I('post.id');
             $res = $this->db->editResult($data);
             if ($res['code'] == '1') {
-                echo ajaxReturn(array("state" => 1, 'message' => "成功"));
+                echo ajaxReturn(array("code" => 1, 'message' => "成功"));
             } else {
-                echo ajaxReturn(array("state" => $res['code'], 'message' => $res['msg']));
+                echo ajaxReturn(array("code" => $res['code'], 'message' => $res['msg']));
             }
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "船名为必填项"));
+            echo ajaxReturn(array("code" => 2, 'message' => "船名为必填项"));
         }
     }
 

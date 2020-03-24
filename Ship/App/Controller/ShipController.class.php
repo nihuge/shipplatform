@@ -190,9 +190,7 @@ class ShipController extends AppBaseController
                             'ship_id' => $res_s['content']['shipid']
                         );
                     } else {
-                        $res = array(
-                            'code' => $res_s['code'],
-                        );
+                        $res = $res_s;
                     }
                 }
             } else {
@@ -417,5 +415,36 @@ class ShipController extends AppBaseController
             }
         }
         echo jsonreturn($res);
+    }
+
+    /**
+     * 上传舱容表
+     */
+    public function table_review(){
+        if (I('post.uid') and I('post.imei') and I('post.shipname') and I('post.type')) {
+            $uid = intval(trimall(I('uid')));
+            $imei = trimall(I('imei'));
+            $shipname = trimall(I('shipname'));
+            $type = intval(trimall(I('type')));
+            $user = new \Common\Model\UserModel();
+            $msg =$user->is_judges($uid,$imei);
+            if($msg['code'] == 1){
+                $res = $this->db->up_table($uid,$type,$shipname);
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+//
+//    public function
+
+    public function allship(){
+        echo jsonreturn($this->db->getShipList(21,1));
     }
 }

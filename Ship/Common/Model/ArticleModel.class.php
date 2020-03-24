@@ -123,7 +123,7 @@ class ArticleModel extends BaseModel
             $list[$k]['pic_path']=D('ArticlePic')->getDataByAid($v['aid']);
             $v['content']=preg_ueditor_image_path($v['content']);
             $list[$k]['content']=htmlspecialchars($v['content']);
-            $list[$k]['url']=U('Index/article/',array('aid'=>$v['aid']));
+            $list[$k]['url']=U('Article/msg',array('aid'=>$v['aid']));
         }
         $data=array(
             'page'=>$page,

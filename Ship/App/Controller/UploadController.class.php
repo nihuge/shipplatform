@@ -3,7 +3,6 @@
 namespace APP\Controller;
 
 use Common\Controller\AppBaseController;
-use mysql_xdevapi\Exception;
 
 /**
  * 上传照片控制器
@@ -45,6 +44,9 @@ class UploadController extends AppBaseController
         }
     }
 
+    /**
+     * 上传液货船舶复核照片
+     */
     public function upload_ship_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.id') and I('get.shipid')) {
@@ -167,6 +169,9 @@ class UploadController extends AppBaseController
         exit(jsonreturn($res));
     }
 
+    /**
+     * 上传液货船舶舯舱的复核照片
+     */
     public function upload_cabin_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.id') and I('get.shipid')) {
@@ -208,7 +213,7 @@ class UploadController extends AppBaseController
                                     'cabin_picture' => 2,
                                     'data_status' => 2,
                                 );
-                            }else{
+                            } else {
                                 $review_data = array(
                                     'cabin_picture' => 2
                                 );
@@ -289,7 +294,9 @@ class UploadController extends AppBaseController
         exit(jsonreturn($res));
     }
 
-
+    /**
+     * 上传散货船舶的复核照片
+     */
     public function upload_sh_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.id') and I('get.shipid')) {
@@ -405,6 +412,9 @@ class UploadController extends AppBaseController
         exit(jsonreturn($res));
     }
 
+    /**
+     * 上传创建液货船的复核照片
+     */
     public function create_ship_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.shipid')) {
@@ -513,6 +523,9 @@ class UploadController extends AppBaseController
         exit(jsonreturn($res));
     }
 
+    /**
+     * 上传创建液货船中舱的复核照片
+     */
     public function create_cabin_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.shipid')) {
@@ -621,6 +634,9 @@ class UploadController extends AppBaseController
         exit(jsonreturn($res));
     }
 
+    /**
+     * 上传创建散货船的复核照片
+     */
     public function create_sh_img()
     {
         if (I('get.uid') and I('get.imei') and I('get.shipid')) {
@@ -705,6 +721,261 @@ class UploadController extends AppBaseController
                         //审核已结束或ID不正确 2025
                         $res = array(
                             'code' => $this->ERROR_CODE_RESULT['REVIEW_OVER'],
+                        );
+                    }
+                } else {
+                    //上传图片失败，因为没有图片上传 9
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                        'msg' => "需要上传一个图片"
+                    );
+                }
+
+            } else {
+                // 错误信息返回码
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+
+    /**
+     * 上传公司认领文件
+     */
+    public function claimed_file()
+    {
+        if (I('get.uid') and I('get.imei') and I('get.review_id')) {
+            $user = new \Common\Model\UserModel();
+            $msg1 = $user->is_judges(I('get.uid'), I('get.imei'));
+            if ($msg1['code'] == '1') {
+                $res = array(
+                    'code' => $this->ERROR_CODE_RESULT['STATUS_CANNOT_NORMAL']
+                );
+            } elseif ($msg1['code'] == $this->ERROR_CODE_USER['NOT_FIRM']) {
+                //只有未完善公司信息的账号可以上传
+                $review_id = trimall(I('get.review_id'));
+                //初始化文件上传类
+                vendor("Nx.FileUpload");
+                $Upload = new \FileUpload();
+                $file_info = $Upload->getFiles();
+                if (count($file_info) > 0) {
+                    //判断此ID是否是正确的审核ID
+                    $firm_review = M('firm_review');
+                    $review_where = array(
+                        'id' => $review_id,
+                    );
+
+                    $review_msg = $firm_review->where($review_where)->find();
+                    //判断此id是否还未审核,未审核可以上传，否则不行
+                    if ($review_msg['result'] == 1) {
+                        if ($review_msg['file_count'] + 1 <= 10) {
+                            $res = $Upload->uploadFile($file_info[0], './Upload/review', false, array('pdf', 'xls', 'xlsx', 'docx', 'doc'));
+                            if ($res['mes'] == "上传成功") {
+
+                                //将上传的图片路径放入数据库
+                                $path = $res['dest'];
+                                $files_path = M("files_path");
+                                $data = array(
+                                    'type_id' => $review_id,
+                                    'path' => $path,
+                                    'type' => 1,
+                                    'file_name' => $file_info[0]['name'],
+                                );
+
+                                M()->startTrans();
+                                if (!$files_path->create($data)) {
+                                    // 如果创建失败 表示验证没有通过 输出错误提示信息
+                                    // $this->error($statistics->getError());
+                                    //数据库连接错误   3
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                        'msg' => $files_path->getError()
+                                    );
+                                } else {
+                                    try {
+                                        //添加数据
+                                        $result = $files_path->add($data);
+                                    } catch (\Exception $e) {
+                                        //回档
+                                        M()->rollback();
+                                        //数据库错误   3
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                            'msg' => $e->getMessage()
+                                        );
+                                        exit(jsonreturn($res));
+                                    }
+
+                                    if ($result !== false) {
+                                        $firm_review->where($review_where)->setInc('file_count');//文件数量+1
+                                        //提交
+                                        M()->commit();
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                            'msg' => $res['mes'],
+                                            'path' => $path
+                                        );
+                                    } else {
+                                        //回档
+                                        M()->rollback();
+                                        //数据库错误   3
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                        );
+                                    }
+                                }
+                            } else {
+                                //上传图片失败，返回报错原因 9
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                                    'msg' => $res['mes'],
+                                );
+                            }
+                        } else {
+                            //审核文件数量超出 2040
+                            $res = array(
+                                'code' => $this->ERROR_CODE_RESULT['REVIEW_FILE_EXCEED']
+                            );
+                        }
+                    } else {
+                        //审核已结束或ID不正确 2039
+                        $res = array(
+                            'code' => $this->ERROR_CODE_RESULT['REVIEW_RESULT_ERROR'],
+                        );
+                    }
+                } else {
+                    //上传图片失败，因为没有图片上传 9
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                        'msg' => "需要上传一个图片"
+                    );
+                }
+
+            } else {
+                // 错误信息返回码
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+
+    /**
+     * 上传舱容表认领文件 完整上传限制为文档，部分上传限制为图片
+     */
+    public function table_file()
+    {
+        if (I('get.uid') and I('get.imei') and I('get.review_id')) {
+            $user = new \Common\Model\UserModel();
+            $msg1 = $user->is_judges(I('get.uid'), I('get.imei'));
+            if ($msg1['code'] == '1') {
+                //只有未完善公司信息的账号可以上传
+                $review_id = trimall(I('get.review_id'));
+                //初始化文件上传类
+                vendor("Nx.FileUpload");
+                $Upload = new \FileUpload();
+                $file_info = $Upload->getFiles();
+                if (count($file_info) > 0) {
+                    //判断此ID是否是正确的审核ID
+                    $firm_review = M('table_review');
+                    $review_where = array(
+                        'id' => $review_id,
+                    );
+
+                    $review_msg = $firm_review->where($review_where)->find();
+                    //判断此id是否还未审核,未审核可以上传，否则不行
+                    if ($review_msg['result'] == 1) {
+                        if ($review_msg['file_count'] + 1 <= 10) {
+                            //判断用户选择的是完整上传还是部分上传
+                            if($review_msg['type'] == 1){
+                                //大小限制50M，不检测是否是图片，类型限制文档
+                                $res = $Upload->uploadFile($file_info[0], './Upload/review', false, array('pdf', 'xls', 'xlsx', 'docx', 'doc'));
+                            }else{
+                                //大小限制50M，检测是否是图片，类型限制图片
+                                $res = $Upload->uploadFile($file_info[0], './Upload/review');
+                            }
+
+                            if ($res['mes'] == "上传成功") {
+                                //将上传的图片路径放入数据库
+                                $path = $res['dest'];
+                                $files_path = M("files_path");
+                                $data = array(
+                                    'type_id' => $review_id,
+                                    'path' => $path,
+                                    'type' => 2,
+                                    'file_name' =>$file_info[0]['name'],
+                                );
+
+                                M()->startTrans();
+                                if (!$files_path->create($data)) {
+                                    // 如果创建失败 表示验证没有通过 输出错误提示信息
+                                    // $this->error($statistics->getError());
+                                    //数据库连接错误   3
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                        'msg' => $files_path->getError()
+                                    );
+                                } else {
+                                    try {
+                                        //添加数据
+                                        $result = $files_path->add($data);
+                                    } catch (\Exception $e) {
+                                        //回档
+                                        M()->rollback();
+                                        //数据库错误   3
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                            'msg' => $e->getMessage()
+                                        );
+                                        exit(jsonreturn($res));
+                                    }
+
+                                    if ($result !== false) {
+                                        $firm_review->where($review_where)->setInc('file_count');//文件数量+1
+                                        //提交
+                                        M()->commit();
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                            'msg' => $res['mes'],
+                                            'path' => $path
+                                        );
+                                    } else {
+                                        //回档
+                                        M()->rollback();
+                                        //数据库错误   3
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                        );
+                                    }
+                                }
+                            } else {
+                                //上传图片失败，返回报错原因 9
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                                    'msg' => $res['mes'],
+                                );
+                            }
+                        } else {
+                            //审核文件数量超出 2040
+                            $res = array(
+                                'code' => $this->ERROR_CODE_RESULT['REVIEW_FILE_EXCEED']
+                            );
+                        }
+                    } else {
+                        //审核已结束或ID不正确 2039
+                        $res = array(
+                            'code' => $this->ERROR_CODE_RESULT['REVIEW_RESULT_ERROR'],
                         );
                     }
                 } else {

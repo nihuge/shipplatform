@@ -1194,7 +1194,7 @@ function csicpdf($data = '')
         $pan1 .= $data['content']['username'];
     } else {
         if (!empty($data['content']['eimg'])) {
-            $pan1 .= '<img src="' . $data['content']['eimg'] . '" style="height: 70px;width:180px">';
+            $pan1 .= '<img src="' . $data['content']['eimg'] . '" style="height: 60px;width:180px">';
         }
     }
 
@@ -1332,7 +1332,8 @@ function csicpdf($data = '')
             <td colspan="2">' . $data['content']['weight'] . '</td>
         </tr>
     </table>
-    <h3></h3>
+    <br/>
+    <br>
     <table border="0" cellspacing="0" cellpadding="0" width="1000px">
         <tr>
             <th  width="125px">图表编号：</th>
@@ -1348,12 +1349,6 @@ function csicpdf($data = '')
         <tr>
             <th width="50px" align="left" class="ju02">备注：</th>
             <th width="950px" colspan=5 style="border-bottom:solid 1px black;">' . $data['content']['remark'] . '</th>
-        </tr>
-        <tr>
-            <th colspan="6" style="border-bottom:solid 1px black;height:30px;width:100%">&nbsp;</th>
-        </tr>
-        <tr>
-            <th colspan=6>&nbsp;</th>
         </tr>
         <tr>
             <th colspan=6>&nbsp;</th>
@@ -1720,4 +1715,31 @@ function is_Domain()
     $url_arr = $_SERVER['HTTP_HOST'];
     \Think\Log::record("\r\n \r\n [domain] " . $url_arr . "\r\n \r\n" . !preg_match('/^\d+\.\d+\.\d+\.\d+$/', $url_arr), "DEBUG", true);
     return !preg_match('/^\d+\.\d+\.\d+\.\d+$/', $url_arr);
+}
+
+/**
+ * 获取用户IP
+ */
+function getUserIp()
+{
+    if ($_SERVER["HTTP_CLIENT_IP"] && strcasecmp($_SERVER["HTTP_CLIENT_IP"], "unknown")) {
+        $ip = $_SERVER["HTTP_CLIENT_IP"];
+    } else {
+        if ($_SERVER["HTTP_X_FORWARDED_FOR"] && strcasecmp($_SERVER["HTTP_X_FORWARDED_FOR"], "unknown")) {
+            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        } else {
+            if ($_SERVER["REMOTE_ADDR"] && strcasecmp($_SERVER["REMOTE_ADDR"], "unknown")) {
+                $ip = $_SERVER["REMOTE_ADDR"];
+            } else {
+                if (isset ($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'],
+                        "unknown")
+                ) {
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                } else {
+                    $ip = "unknown";
+                }
+            }
+        }
+    }
+    return ($ip);
 }

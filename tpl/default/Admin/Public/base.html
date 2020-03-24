@@ -303,6 +303,32 @@
                 <b class="arrow"></b>
                 </li>
 
+                <li
+                <block name="active35"></block>
+                >
+                <a href="{:U('Review/claimed_firm_index')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    公司认领审核
+                    <if condition="$review_count_arr['firm_review_count'] gt 0">
+                        <span class="layui-badge">{$review_count_arr['firm_review_count']}</span>
+                    </if>
+                </a>
+                <b class="arrow"></b>
+                </li>
+
+                <li
+                <block name="active36"></block>
+                >
+                <a href="{:U('Review/table_review_index')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    舱容表上传审核
+                    <if condition="$review_count_arr['table_review_count'] gt 0">
+                        <span class="layui-badge">{$review_count_arr['table_review_count']}</span>
+                    </if>
+                </a>
+                <b class="arrow"></b>
+                </li>
+
             </ul>
             </li>
 
@@ -365,16 +391,36 @@
             </a>
             </li>
 
+
+            <li
+            <block name="activeopen41"></block>
+            >
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-cloud-upload"></i>
+                <span class="menu-text">数据导入</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
             <li
             <block name="active8"></block>
             >
             <a href="{:U('Upload/index')}">
-                <i class="menu-icon fa fa-cloud-upload"></i>
-                <span class="menu-text"> 数据导入 </span>
+                <i class="menu-icon fa fa-caret-right"></i>
+                <span class="menu-text"> 有表船数据导入 </span>
             </a>
             </li>
-
-
+            <b class="arrow"></b>
+                <li
+                <block name="active_watchless_upload"></block>
+                >
+                <a href="{:U('Upload/formless_upload')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> 无表船数据导入 </span>
+                </a>
+                </li>
+            </ul>
+            </li>
             <li
             <block name="activeopen31"></block>
             >
@@ -405,7 +451,6 @@
                 </li>
             </ul>
             </li>
-
 
             <li
             <block name="active9"></block>

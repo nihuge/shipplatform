@@ -183,6 +183,9 @@ class SearchController extends AdminBaseController
                         $gxinfo['houxgx'] += $xgx;
                     }
                 }
+                $v['volume'] = sprintf("%1\$.6f", $v['volume']);
+                $v['expand'] = sprintf("%1\$.6f", $v['expand']);
+                $v['standardcapacity'] =sprintf("%1\$.3f", $v['standardcapacity']);
 
 
                 /**

@@ -54,6 +54,11 @@ $error_code_user = array(
     'USER_NOT_OPERATION_FIRM' => 1014,   // 用户对该公司没有操作权限
     'USER_NOT_ADMIN' => 1015,   // 用户不是管理员
     'FIRM_NOT_ENOUGH' => 1016,   // 用户所属公司权限不足
+    'PHONE_ERROR' => 1017,   // 手机号格式错误
+    'SMS_SEND_FALL' => 1018,   // 短信发送失败
+    'SMS_REQUEST_OFTEN' => 1019,   // 短信发送过于频繁
+    'VERIFY_CODE_ERROR' => 1020,   // 验证码错误
+    'PHONE_REPEAT' => 1021,   // 手机号已被注册
 );
 define('error_code_user', json_encode($error_code_user));
 
@@ -74,6 +79,11 @@ $error_code_user_zh = array( // /提示信息需要对应修改
     1014 => '用户对该公司没有操作权限',
     1015 => '用户不是管理员',
     1016 => '用户所属公司权限不足',
+    1017 => '手机号格式错误',
+    1018 => '短信发送失败',
+    1019 => '短信发送过于频繁',
+    1020 => '验证码错误',
+    1021 => '手机号已被注册',
 );
 define('error_code_user_zh', json_encode($error_code_user_zh));
 
@@ -115,6 +125,12 @@ $error_code_result = array(
     'RESULT_FINISHED' => 2034,   //该作业已结束不可以操作
     'UNFINISH_PRE_RESULT' => 2035,   // 未结束上一个作业
     'UNFINISH_TO_MUCH' => 2036,   // 未结束的作业太多
+    'FIRM_EXISTS' => 2037,   // 公司名已存在
+    'FIRM_CLAIMING' => 2038,   // 公司正在被认领或已被认领，无法继续认领
+    'REVIEW_RESULT_ERROR' => 2039,   // 正在审核或已结束无法继续上传图片
+    'REVIEW_FILE_EXCEED' => 2040,   // 审核文件数量超出
+    'STATUS_CANNOT_NORMAL' => 2041,   // 用户状态不能是正常状态
+    'CANNOT_CREATE_MULTIPLE_REVIEWS' => 2042,   // 用户不可以创建多个审核
 );
 define('error_code_result', json_encode($error_code_result));
 
@@ -155,5 +171,11 @@ $error_code_result_zh = array( // /提示信息需要对应修改
     2034 => '该作业已结束不可以操作',
     2035 => '未结束上一个作业',
     2036 => '未结束的作业太多',
+    2037 => '公司名已存在',
+    2038 => '公司正在被认领或已被认领，无法继续认领',
+    2039 => '正在审核或已结束无法继续上传图片',
+    2040 => '审核文件数量超出',
+    2041 => '用户状态不能是正常状态',
+    2042 => '用户不可以创建多个审核',
 );
 define('error_code_result_zh', json_encode($error_code_result_zh));

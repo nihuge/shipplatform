@@ -229,6 +229,13 @@ class ShShipModel extends BaseModel
 
                         $s = $this->addData($data);
                         if ($s) {
+                            // 添加船舶历史数据汇总初步
+                            $arr = array('shipid' => $s);
+                            // 判断船历史统计数据是否存在
+                            $cc = M('sh_ship_historical_sum')->where($arr)->count();
+                            if ($cc == 0) {
+                                M('sh_ship_historical_sum')->add($arr);
+                            }
                             /*                            // 新增船舶创建表、添加船舶历史数据汇总初步
                                                         $this->createtable($data['suanfa'], $data['shipname'], $s);
 
@@ -520,9 +527,7 @@ sql;
         $arr = array('shipid' => $shipid);
         // 判断船历史统计数据是否存在
         $cc = M('ship_historical_sum')->where($arr)->count();
-        if ($cc > 0) {
-
-        } else {
+        if ($cc == 0) {
             M('ship_historical_sum')->add($arr);
         }
         return 1;

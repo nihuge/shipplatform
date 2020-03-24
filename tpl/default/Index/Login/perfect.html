@@ -7,31 +7,9 @@
     		<form method="post" action="__ACTION__">
                 <table>
                     <tr>
-                        <td colspan="2" style="text-align: left;font-weight: bold;font-size: 20px;">完善个人信息</td>
-                    </tr>
-                    <tr>
-                        <td>用&nbsp;户&nbsp;名</td>
-                        <td>
-                            <input type="text" name="username" required maxlength="45"  placeholder="请输入用户名"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>联系电话</td>
-                        <td>
-                            <input type="text" name="phone1" required maxlength="45"  placeholder="请输入联系电话"/>
-                        </td>
-                    </tr>
-                    <tr>
                         <td colspan="2" style="text-align: left;font-weight: bold;font-size: 20px;">完善公司信息</td>
                     </tr>
-    	            <tr>
-    	                <td style="width: 120px;">公司logo</td>
-    	                <td>
-    	                    <img class="normalFace" src="__INDEX_IMAGE__/noimg.png" onclick="fileSelect();" style='width: 80px;height: 70px;'>
-    	                    <input type="file" name="photo" id="photo" value='' class="filepath" style="display:none;">
-    	                    <input type="text" name="logo" id="logo" value='' style="display:none;">
-    	                </td>
-    	            </tr>
+
     	            <tr>
     	                <td>公司名称</td>
     	                <td>
@@ -47,44 +25,32 @@
     	                    </select>
     	                </td>
     	            </tr>
-    	            <tr>
-    	                <td>公司地址</td>
-    	                <td>
-    	                    <input type="text" name="location" required maxlength="45"  placeholder="请输入公司地址"/>
-    	                </td>
-    	            </tr>
-    	            <tr>
-    	                <td>公司简介</td>
-    	                <td>
-    	                    <input type="text" name="content" required maxlength="150" placeholder="请输入公司简介"/>
-    	                </td>
-    	            </tr>
-    	            <tr>
-    	                <td>联&nbsp;系&nbsp;&nbsp;人</td>
-    	                <td>
-    	                    <input type="text" name="people" required maxlength="10" placeholder="请输入联系人"/>
-    	                </td>
-    	            </tr>
-    	            <tr>
-    	                <td>联系电话</td>
-    	                <td>
-    	                    <input type="text" name="phone" required maxlength="16" placeholder="请输入联系电话"/>
-    	                </td>
-    	            </tr>
-    	            <tr>
-                    	<td>社会信用代码</td>
-    	                <td>
-    	                    <input type="text" name="shehuicode" required maxlength="50" placeholder="请输入社会信用代码"/>
-    	                </td>
-    	            </tr>
-    	            <tr>
-    	                <td>信用代码图片</td>
-    	                <td>
-    	                    <img class="normalFace" src="__INDEX_IMAGE__/noimg.png" onclick="fileSelect1();" style='width: 150px;height: 110px;'>
-    	                    <input type="file" name="photo1" id="photo1" value='' class="filepath1" style="display:none;">
-    	                    <input type="text" name="img" id="img" value='' style="display:none;">
-    	                </td>
-    	            </tr>
+    	            <!--<tr>-->
+                    	<!--<td>社会信用代码</td>-->
+    	                <!--<td>-->
+    	                    <!--<input type="text" name="shehuicode" required maxlength="50" placeholder="请输入社会信用代码"/>-->
+    	                <!--</td>-->
+    	            <!--</tr>-->
+    	            <!--<tr>-->
+    	                <!--<td>信用代码图片</td>-->
+    	                <!--<td>-->
+    	                    <!--<img class="normalFace" src="__INDEX_IMAGE__/noimg.png" onclick="fileSelect1();" style='width: 150px;height: 110px;'>-->
+    	                    <!--<input type="file" name="photo1" id="photo1" value='' class="filepath1" style="display:none;">-->
+    	                    <!--<input type="text" name="img" id="img" value='' style="display:none;">-->
+    	                <!--</td>-->
+    	            <!--</tr>-->
+					<tr>
+						<td>联系人</td>
+						<td>
+							<input type="text" name="people" required maxlength="50" placeholder="请输入联系人姓名"/>
+						</td>
+					</tr>
+					<tr>
+						<td>联系电话</td>
+						<td>
+							<input type="text" name="phone" required maxlength="16" placeholder="请输入联系人电话">
+						</td>
+					</tr>
     	            <tr>
     	                <td colspan=2>
     	                    <input type="submit" name="sub" value="提交" class="btn-primary" >
