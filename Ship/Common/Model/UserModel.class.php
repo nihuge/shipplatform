@@ -42,6 +42,8 @@ class UserModel extends BaseModel
         $firm = new \Common\Model\FirmModel();
         foreach ($userlist as $key => $value) {
             $userlist[$key]['firmname'] = $firm->getFieldById($value['firmid'], 'firmname');
+            $userlist[$key]['login_time'] = $value['login_time']>0?"登录时间：".date('Y-m-d H:i:s',$value['login_time'])."，<br/>登录城市：".$value['login_city']:"暂无记录";
+            $userlist[$key]['login_date'] = $value['login_time']>0?date('Y-m-d',$value['login_time']):"暂无记录";
         }
         return $userlist;
     }
@@ -63,6 +65,8 @@ class UserModel extends BaseModel
                 $field = 'status,imei,firmid';
             } elseif ($miniprogram == "sh") {
                 $field = 'status,shimei as imei,firmid';
+            }elseif ($miniprogram == "hy") {
+                $field = 'status,hyimei as imei,firmid';
             } else {
                 $field = 'status,imei,firmid';
             }
@@ -74,12 +78,20 @@ class UserModel extends BaseModel
         $umsg = $this
             ->field($field)
             ->where(array('id' => ":id"))
-            ->bind(array(':id' => trimall($uid)))
+            ->bind(array(':id' => intval($uid)))
             ->find();
         if ($umsg['imei'] == $imei) {
             // 判断公司状态
             $firm = new \Common\Model\FirmModel();
             $a = $firm->is_status($umsg['firmid']);
+            //如果验证通过，则记录使用时间和ip
+            $login_data = array(
+                'login_time'=>time(),
+                'login_ip'=>get_client_ip()
+            );
+            $this->editData(array('id'=>intval($uid)),$login_data);
+//            $this->setInc('login_num');
+
             if ($a['code'] == '1') {
                 if ($umsg['status'] == '1') {
                     //成功 1
@@ -183,11 +195,13 @@ class UserModel extends BaseModel
             'u.phone' => ":title",
             '_logic' => "or",
         );
+
         //根据用户名与密码匹配查询
         $where = array(
             '_complex' => $map,
             'u.pwd' => ":pwd"
         );
+
         $bind = array(
             ":title" => $title,
             ":pwd" => encrypt($pwd),
@@ -204,6 +218,15 @@ class UserModel extends BaseModel
         if ($arr != '') {
             // 判断用户状态
             if ($arr['status'] == '1') {
+                //如果账号密码正确，则记录成一次登录
+                $ip = get_client_ip();
+                $login_data = array(
+                    'login_time'=>time(),
+                    'login_ip'=>$ip,
+                    'login_city'=>getCity($ip),
+                );
+                $this->editData(array('id'=>$arr['id']),$login_data);
+                $this->setInc('login_num');
                 // 判断公司状态
                 $firm = new \Common\Model\FirmModel();
                 $firmStatus = $firm->is_status($arr['firmid']);
@@ -222,8 +245,16 @@ class UserModel extends BaseModel
                             $data = array('imei' => $imei);
                         } elseif ($miniprogram == "sh") {
                             $data = array('shimei' => $imei);
+                        }elseif ($miniprogram == "hy") {
+                            $data = array('hyimei' => $imei);
                         } else {
+                            $miniprogram = "yc";
                             $data = array('imei' => $imei);
+                        }
+                        //尝试获取用户各个小程序的openid,如果获取到了放入数据库
+                        $open_msg = $this->getOpenId($imei,$miniprogram);
+                        if($open_msg['code'] == $this->ERROR_CODE_COMMON['SUCCESS']){
+                            $data[$miniprogram."open_id"]=$open_msg['content']['openid'];
                         }
                     } else {
                         $data = array('imei' => $imei);
@@ -267,12 +298,22 @@ class UserModel extends BaseModel
                                 $data = array('imei' => $imei);
                             } elseif ($miniprogram == "sh") {
                                 $data = array('shimei' => $imei);
+                            } elseif ($miniprogram == "hy") {
+                                $data = array('hyimei' => $imei);
                             } else {
+                                $miniprogram = "yc";
                                 $data = array('imei' => $imei);
+                            }
+
+                            //尝试获取用户各个小程序的openid,如果获取到了放入数据库
+                            $open_msg = $this->getOpenId($imei,$miniprogram);
+                            if($open_msg['code'] == $this->ERROR_CODE_COMMON['SUCCESS']){
+                                $data[$miniprogram."open_id"]=$open_msg['openid'];
                             }
                         } else {
                             $data = array('imei' => $imei);
                         }
+
                         if ($this->editData($map, $data) !== false) {
                             if($arr['reg_status'] == 3){
                                 $review = M('firm_review')->field('remark')->where(array('uid'=>$arr['id']))->order('time desc')->find();
@@ -298,6 +339,43 @@ class UserModel extends BaseModel
             //用户名或密码错误  1001
             $res = array(
                 'code' => $this->ERROR_CODE_USER['USER_NOT_EXIST']
+            );
+        }
+        return $res;
+    }
+
+
+    /**
+     * 获取用户的openid
+     * @param $js_code
+     * @param $mini_code
+     * @return array
+     */
+    public function getOpenId($js_code,$mini_code)
+    {
+        $wx_conf = C('WX_CONFIG.APP_INFO');
+        $appid = $wx_conf[$mini_code]['APPID'];
+        $appsecret = $wx_conf[$mini_code]['APPSECRET'];
+
+        if ($js_code) {
+            $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $appid . "&secret=" . $appsecret . "&js_code=" . $js_code . "&grant_type=authorization_code";
+            $result = curldo($url);
+            if ($result['code'] == 1) {
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                    'content' => json_decode($result['content'],true),
+                );
+                \Think\Log::record("\r\n \r\n [ trans!!! ] ".json_encode($res)." \r\n \r\n ", "DEBUG", true);
+//                echo $result['content'];
+            } else {
+                $res = array(
+                    'code' => $result['code'],
+                    'error' => $result['error'],
+                );
+            }
+        } else {
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
             );
         }
         return $res;
@@ -420,6 +498,8 @@ class UserModel extends BaseModel
             $data['operation_jur'] = '';
         }
 
+        $data['reg_time']= time();//记录注册时间
+
         if (!$this->create($data)) {
             //对data数据进行验证
             $msg = $this->getError();
@@ -464,14 +544,19 @@ class UserModel extends BaseModel
     {
         $where = array(
             "id" => ":uid",
-            'firm_id' => ":firm_id"
+            'firm_id' => ":firmid"
         );
+
         $bind = array(
-            ":uid" => intval($uid),
-            ":firm_id" => intval($firm_id),
+            ":uid" => array($uid,\PDO::PARAM_INT),
+            ":firmid" => array($firm_id,\PDO::PARAM_INT),
         );
+
+//        exit(json_encode($bind).json_encode($where));
+
+
         $u_res = $this->field("pid")->where($where)->bind($bind)->find();
-        if ($u_res['pid'] === 0) {
+        if (intval($u_res['pid']) === 0) {
             return true;
         } else {
             return false;
@@ -511,5 +596,39 @@ class UserModel extends BaseModel
         } else {
             return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR']);
         }
+    }
+
+    /**
+     * 已登录状态下获取用户的open_id
+     */
+    public function getUserOpenId($uid)
+    {
+
+        $userid = intval($uid);
+        $user = new \Common\Model\UserModel();
+
+        if (I('post.miniprogram') or I('get.miniprogram')) {
+            $miniprogram = trimall(I('post.miniprogram') ? I('post.miniprogram') : I('get.miniprogram'));
+            if ($miniprogram == "cb") {
+                $field = 'cbopen_id as open_id';
+            } elseif ($miniprogram == "yc") {
+                $field = 'ycopen_id as open_id';
+            } elseif ($miniprogram == "sh") {
+                $field = 'shopen_id as open_id';
+            }elseif ($miniprogram == "hy") {
+                $field = 'hyopen_id as open_id';
+            } else {
+                $field = 'hyopen_id as open_id';
+            }
+        } else {
+            $field = 'hyopen_id as open_id';
+        }
+
+        $result = $user->getFieldById($userid,$field);
+        return array(
+            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+            'openid' => $result,
+            'miniprogram' => $miniprogram
+        );
     }
 }

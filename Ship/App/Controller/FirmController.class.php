@@ -106,8 +106,8 @@ class FirmController extends AppBaseController
                     $data['firmtype'] = 2;
                     //默认默认合同号，标注为小程序创建
                     $data['number'] = "miniapp" . time();
-                    //默认可以建10条船
-                    $data['limit'] = 10;
+                    //默认可以建30条船
+                    $data['limit'] = 30;
                     //去除无用字段
                     unset($data['uid']);
                     unset($data['imei']);
@@ -321,8 +321,8 @@ class FirmController extends AppBaseController
             $data['membertype'] = 1;
             //默认默认合同号，标注为小程序创建
             $data['number'] = "miniapp_perfect_" . time();
-            //默认可以建10条船
-            $data['limit'] = 10;
+            //默认可以建30条船
+            $data['limit'] = 30;
 //            $data['people'] = "未填写";
 //            $data['phone'] = "未填写";
             $firm = new \Common\Model\FirmModel();
@@ -337,49 +337,79 @@ class FirmController extends AppBaseController
                 // 验证通过 可以进行其他数据操作
                 $res = $firm->addData($data);
                 if ($res !== false) {
-                    $da = array(
-                        'firmid' => $res
+                    $where1 = array(
+                        'id' => $res
                     );
-                    $uid = I('post.uid');
-                    $map = array(
-                        'id' => $uid
+                    //查询公司当前权限信息
+                    $firmtype = $firm
+                        ->field('firm_jur')
+                        ->where($where1)
+                        ->find();
+                    //添加该公司对应的公司权限
+                    $firm_jur_arr = explode(',', $firmtype['firm_jur']);
+                    $firm_jur_arr[] = $res;
+                    $firm_jur_str = implode(',', $firm_jur_arr);
+                    $data_f = array(
+                        'firm_jur' => $firm_jur_str,
                     );
-                    $user = new \Common\Model\UserModel();
-                    if (!$user->create($da)) {
-                        M()->rollback();
-                        //数据库错误	3
-                        $res = array(
-                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                            'msg'=>$user->getError()
+                    $res_f = $firm->editData($where1, $data_f);
+                    if ($res_f !== false) {
+                        // 添加公司历史数据汇总初步
+                        $arr = array('firmid' => $res);
+                        M('firm_historical_sum')->add($arr);
+                        //开始修改用户信息
+                        $da = array(
+                            'firmid' => $res
                         );
-                    } else {
-                        // 修改用户信息
-                        $resu = $user->editData($map, $da);
-                        if ($resu !== false) {
-                            M()->commit();
-                            // 添加公司历史数据汇总初步
-                            $arr = array('firmid' => $da['firmid']);
-                            M('firm_historical_sum')->add($arr);
-                            //设置用户状态为已读
-//                            $user
+                        $uid = I('post.uid');
+                        $map = array(
+                            'id' => $uid
+                        );
 
-                            //成功
-                            $res = array(
-                                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                'content'=>array(
-                                    'firmid'=>$da['firmid'],
-                                    'firmtype'=>I('post.firmtype'),
-                                )
-                            );
-                        } else {
+                        $user = new \Common\Model\UserModel();
+                        if (!$user->create($da)) {
                             M()->rollback();
                             //数据库错误	3
                             $res = array(
                                 'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                                'msg' => $user->getDbError(),
+                                'msg' => $user->getError()
                             );
+                        } else {
+                            // 修改用户信息
+                            $resu = $user->editData($map, $da);
+                            if ($resu !== false) {
+                                M()->commit();
+                                // 添加公司历史数据汇总初步
+                                $arr = array('firmid' => $da['firmid']);
+                                M('firm_historical_sum')->add($arr);
+                                //设置用户状态为已读
+//                            $user
+
+                                //成功
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                    'content' => array(
+                                        'firmid' => $da['firmid'],
+                                        'firmtype' => I('post.firmtype'),
+                                    )
+                                );
+                            } else {
+                                M()->rollback();
+                                //数据库错误	3
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                                    'msg' => $user->getDbError(),
+                                );
+                            }
                         }
+                    } else {
+                        //修改失败,错误11
+                        $res = array(
+                            'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
+                            'massage' => '修改失败',
+                        );
                     }
+
                 } else {
                     M()->rollback();
                     //数据库错误	3
@@ -442,10 +472,16 @@ class FirmController extends AppBaseController
                     @mkdir($fileDir, 0777, true);                  //==>图片读写权限，一般都是最大：0777
                 }
                 $img = base64_upload(I('img'), $fileDir);
-
-                $uid = I('post.uid');
-                $firm = new \Common\Model\FirmModel();
-                $res = $firm->claimed_firm($uid, $firmname, $shehuicode, $img['file']);
+                if ($img['code'] == 0) {
+                    $uid = I('post.uid');
+                    $firm = new \Common\Model\FirmModel();
+                    $res = $firm->claimed_firm($uid, $firmname, $shehuicode, $img['file']);
+                } else {
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['ERROR_DATA'],
+                        'error' => $img['msg']
+                    );
+                }
             } elseif ($msg['code'] == '1') {
                 $res = array('code' => $this->ERROR_CODE_RESULT['STATUS_CANNOT_NORMAL']);
             } else {
@@ -461,16 +497,111 @@ class FirmController extends AppBaseController
         echo jsonreturn($res);
     }
 
+
+    /**
+     * 追加复核船信息通知
+     */
+    public function add_firm_review_notice()
+    {
+        if (I('post.uid') and I('post.imei') and I('post.review_id')) {
+            $uid = intval(trimall(I('uid')));
+            $imei = trimall(I('imei'));
+            $review_id = intval(trimall(I('post.review_id')));
+
+            $user = new \Common\Model\UserModel();
+            $msg = $user->is_judges($uid, $imei);
+            if ($msg['code'] == 1) {
+                $user_info = $user->getUserOpenId($uid);
+                $where = array(
+                    'id' => $review_id
+                );
+                $data = array(
+                    'open_id' => $user_info['open_id']
+                );
+                $firm_review = M("firm_review");
+                $result = $firm_review->where($where)->save($data);
+                if ($result !== false) {
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['SUCCESS']
+                    );
+                } else {
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                        'error' => $firm_review->getDbError(),
+                    );
+                }
+            } else {
+                $res = $msg;
+            }
+        } else {
+            //缺少参数
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
     /**
      * 认证公司，认证后的公司无法被认领
      */
-    public function legalize_firm(){
-        $firm_id = I('post.firm_id');
+    public function legalize_firm()
+    {
         $uid = I('post.uid');
         $imei = I('post.imei');
         $code = I('post.code');
-        $img = I('post.img');
-        #todo 只有管理员能够认正
+//        $img = I('post.img');
 
+        $user = new \Common\Model\UserModel();
+        $msg = $user->is_judges($uid, $imei);
+        if ($uid and $imei and $code) {
+            if ($msg['code'] == 1) {
+                vendor("Nx.FileUpload");
+                $Upload = new \FileUpload();
+                $file_info = $Upload->getFiles();
+                if (count($file_info) > 0) {
+                    //判断是不是公司管理员只有管理员能够认正
+                    if ($user->checkAdmin($uid, $msg['content'])) {
+                        $res = $Upload->uploadFile($file_info[0], './Upload/review');
+                        if ($res['mes'] == "上传成功") {
+                            //将上传的图片路径放入数据库
+                            $img = $res['dest'];
+                            $firm = new \Common\Model\FirmModel();
+                            $res = $firm->legalize_firm($uid, $code, $img);
+                        }else{
+                            //上传图片失败，返回报错原因 9
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                                'error' => $res['mes'],
+                            );
+                        }
+                    } else {
+                        //用户不是管理员，无权限认证 1015
+                        $res = array(
+                            'code' => $this->ERROR_CODE_USER['USER_NOT_ADMIN']
+                        );
+                    }
+                } else {
+                    //上传图片失败，因为没有图片上传 9
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],
+                        'error' => "需要上传一个图片"
+                    );
+                }
+            } else {
+                $res = $msg;
+            }
+        } else {
+            //缺少参数
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+            );
+        }
+
+        //如果发生错误记录到日志
+        if ($res['code'] != $this->ERROR_CODE_COMMON['SUCCESS']) {
+            \Think\Log::record("\r\n \r\n [ request!!! ]  uid:$uid\r\n  imei:$imei\r\n  code:$code\r\n img:$img\r\n \r\n ", "DEBUG", true);
+        }
+        exit(jsonreturn($res));
     }
 }

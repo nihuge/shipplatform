@@ -3,19 +3,10 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="3cd46ade-c9b5-4b12-acdc-43c94a68ed89" name="ship" url="http://121.41.22.2">
-        <fileTransfer host="121.41.22.2" port="21" rootFolder="/default/shipPlatformTest">
+        <fileTransfer rootFolder="/default/shipPlatform" host="121.41.22.2" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="21" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="d3050f1a-aab1-4218-a21c-1d70f7bb4aaf" name="testServer" url="http://mc.0csy.com">
-        <fileTransfer host="mc.0csy.com" port="21">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="21" />
         </fileTransfer>
       </webServer>
     </option>

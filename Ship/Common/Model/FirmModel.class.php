@@ -188,7 +188,7 @@ class FirmModel extends BaseModel
         if ($firmtype == '2') {
             // 获取该公司下的所有液货船
             $shiplist = $ship
-                ->field('id,shipname')
+                ->field('id,shipname,data_ship')
                 ->where(array('firmid' => $firmid, "del_sign" => 1))
                 ->select();
 
@@ -199,6 +199,7 @@ class FirmModel extends BaseModel
                 ->select();
 
             $firmname = $this->getFieldById($firmid, 'firmname');
+
             $res[] = array(
                 'id' => $firmid,
                 'firmname' => $firmname,
@@ -218,7 +219,7 @@ class FirmModel extends BaseModel
                 ->select();
             foreach ($res as $key => $value) {
                 $res[$key]['shiplist'] = $ship
-                    ->field('id,shipname')
+                    ->field('id,shipname,data_ship')
                     ->where(array('firmid' => $value['id'], "del_sign" => 1))
                     ->select();
 
@@ -399,6 +400,7 @@ class FirmModel extends BaseModel
         return $res;
     }
 
+
     /**
      * 认证公司，认证后的公司无法被认领
      */
@@ -406,19 +408,22 @@ class FirmModel extends BaseModel
     {
         //开始事务
         M()->startTrans();
-
         $user = new \Common\Model\UserModel();
-        $firm_id = $user->getFieldById($uid, 'firmid');
+        $user_msg = $user->field('firmid,pid')->where(array('id'=>$uid))->find();
+        $firm_id = $user_msg['firmid'];
 
         #todo 完善代码，社会信用代码和图片不要放在firm表，放在firm_review表，这样的话可以多个用户同时申请一个公司
         $map = array(
             'id' => $firm_id,
         );
-        $firm_claimed_status = $this->field('legalize_img,legalize_code')->where($map)->find();
-        if ($firm_claimed_status['legalize_img'] == "" and $firm_claimed_status['legalize_code'] == "") {
+
+        $firm_claimed_status = $this->field('legalize_img,legalize_code,claimed')->where($map)->find();
+        if ($firm_claimed_status['legalize_img'] == "" and $firm_claimed_status['legalize_code'] == "" and $firm_claimed_status['claimed']==0) {
             $data = array(
                 'legalize_code' => $shehuicode,
                 'legalize_img' => $img,
+                'claimed' => 1,
+                'legalize_time' => time(),
             );
 
             //将提交的社会信用代码放入
@@ -435,7 +440,7 @@ class FirmModel extends BaseModel
                 M()->commit();
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                    'review_id' => $firm_id
+                    'firm_id' => $firm_id
                 );
             }
         } else {

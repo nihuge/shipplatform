@@ -36,7 +36,7 @@ class WorkController extends AppBaseController
             //判断用户状态、公司状态、标识比对
             $msg = $user->is_judges($uid, I('post.imei'));
             if ($msg['code'] == '1') {
-                $where = '1 and r.del_sign=1';
+                $where = '1 and r.del_sign=1 and r.oil_type=1';
                 // 根据用户id获取可以查询的船列表
                 $msg = $user->getUserOperationSeach($uid);
 
@@ -240,7 +240,10 @@ class WorkController extends AppBaseController
      */
     public function addresult()
     {
-        if (I('post.uid') and I('post.shipid') and I('post.imei')) {
+        if (I('post.uid') and I('post.shipid') and I('post.imei') and I('post.voyage')) {
+            $oil_type = I('post.oil_type',1);
+            //不同的油品类型不可以互相使用接口,报错2043
+            if($oil_type !=1 ) exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OIL_TYPE_ERROR'])));
             $user = new \Common\Model\UserModel();
             //判断用户状态、公司状态、标识比对
             $msg = $user->is_judges(I('post.uid'), I('post.imei'));
@@ -305,6 +308,9 @@ class WorkController extends AppBaseController
     public function later_edit_result()
     {
         if (I('post.uid') and I('post.resultid') and I('post.imei') and I('post.start') != null and I('post.objective') != null) {
+            $oil_type = I('post.oil_type',1);
+            //不同的油品类型不可以互相使用接口,报错2043
+            if($oil_type !=1 ) exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OIL_TYPE_ERROR'])));
             $user = new \Common\Model\UserModel();
             //判断用户状态、公司状态、标识比对
             $msg = $user->is_judges(I('post.uid'), I('post.imei'));
@@ -444,6 +450,9 @@ class WorkController extends AppBaseController
     public function editresult()
     {
         if (I('post.uid') and I('post.shipid') and I('post.imei') and I('post.resultid')) {
+            $oil_type = I('post.oil_type',1);
+            //不同的油品类型不可以互相使用接口,报错2043
+            if($oil_type !=1 ) exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OIL_TYPE_ERROR'])));
             $user = new \Common\Model\UserModel();
             //判断用户状态、公司状态、标识比对
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
@@ -2325,7 +2334,7 @@ class WorkController extends AppBaseController
                 $msg = $user
                     ->alias('u')
                     ->field('u.id,u.imei,u.firmid,f.firmtype')
-                    ->where(array('u.id' => I('post.uid')))
+                    ->where(array('u.id' => intval(I('post.uid'))))
                     ->join('left join firm f on f.id=u.firmid')
                     ->find();
                 $firm = new \Common\Model\FirmModel();
@@ -2569,7 +2578,7 @@ class WorkController extends AppBaseController
      */
     public function electronic_visa()
     {
-        if (I('post.resultid') and I('post.img') and I('uid') and I('imei')) {
+        if (I('post.resultid') and I('post.img') and I('post.uid') and I('post.imei')) {
             //判断用户状态、是否到期、标识比对
             $user = new \Common\Model\UserModel();
             $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
@@ -3055,7 +3064,7 @@ class WorkController extends AppBaseController
 
                         //成功 1
                         $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                        $res['code'] = 1;
+                        $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
                         $res['adjustlist'] = $need_adjust;
                         $res['remark'] = 'adjust';
                     } else {
@@ -3119,7 +3128,7 @@ class WorkController extends AppBaseController
                         M()->commit();
                         //成功 1
                         $res = $work->get_cabins_weight(trimall(I('post.resultid')));
-                        $res['code'] = 1;
+                        $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
                         $res['remark'] = 'adjust';
 
                     }
@@ -4126,6 +4135,4 @@ class WorkController extends AppBaseController
         }
         echo jsonreturn($res);
     }
-
-
 }

@@ -27,7 +27,10 @@ class ShipController extends IndexBaseController
         $user = new \Common\Model\UserModel();
         $uid = $_SESSION['user_info']['id'];
         $usermsg = $user
-            ->where(array('id' => $uid))
+            ->alias('u')
+            ->field('u.*,f.firm_jur')
+            ->join('left join firm f on f.id = u.firmid')
+            ->where(array('u.id' => $uid))
             ->find();
         if ($usermsg !== false or $usermsg['firmid'] !== '') {
             // 获取公司操作权限船舶
@@ -40,13 +43,13 @@ class ShipController extends IndexBaseController
                 'id' => array('in', $operation_jur),
                 'del_sign' => 1
             );
-            $count = $this->db->where($where)->count();
-            // 分页
-            $page = new \Org\Nx\Page($count, 20);
+//            $count = $this->db->where($where)->count();
+//            // 分页
+//            $page = new \Org\Nx\Page($count, 20);
 
             $list = $this->db
                 ->where($where)
-                ->limit($page->firstRow, $page->listRows)
+//                ->limit($page->firstRow, $page->listRows)
                 ->order('id desc')
                 ->select();
 
@@ -87,12 +90,13 @@ class ShipController extends IndexBaseController
                 } else {
                     $list[$k1]['status'] = "";
                 }
+                $list[$k1]['is_lock'] = $this->db->is_lock($v1['id']);
             }
 
 
             if ($firmmsg['firmtype'] == '1') {
                 // 检验公司获取所有的船公司
-                $firmlist = $firm->field('id,firmname')->where(array('firmtype' => '2'))->select();
+                $firmlist = $firm->field('id,firmname')->where(array('firmtype' => '2','id'=>array('in',explode(',',$usermsg['firm_jur']))))->select();
             } else {
                 // 船舶公司获取本公司
                 $firmlist = $firm->field('id,firmname')->where(array('id' => $usermsg['firmid']))->select();
@@ -102,7 +106,7 @@ class ShipController extends IndexBaseController
                 'list' => $list,
                 'shiplist' => $shiplist,
                 'firmlist' => $firmlist,
-                'page' => $page->show()
+//                'page' => $page->show()
             );
             $this->assign($assign);
             $this->display();
@@ -293,10 +297,10 @@ class ShipController extends IndexBaseController
             /**
              * 查找船的作业次数
              */
-            $work = new \Common\Model\WorkModel();
-            $res_count = $work->where(array('shipid' => $data['id']))->count();
+//            $work = new \Common\Model\WorkModel();
+//            $res_count = $work->where(array('shipid' => $data['id']))->count();
 
-            $old_info = $this->db->field('shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
+            $old_info = $this->db->field('is_lock,shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
 
             //验证船名是否和已有的船名重复
             $name_count = $this->db->where(array('shipname' => $data['shipname'], 'id' => array('neq', $data['id'])))->count();
@@ -311,7 +315,7 @@ class ShipController extends IndexBaseController
                 exit(ajaxReturn(array("code" => 4, 'message' => "舱总数不可以被减少")));
             }
 
-            if ($res_count > 1 or $old_info['review'] == 3) {
+            if ($old_info['is_lock'] == 1) {
 
                 //开始对比数据差异，获取更改的数据
                 unset($old_info['review']);

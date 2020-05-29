@@ -43,6 +43,13 @@ class CabinModel extends BaseModel
                 ->where($where)
                 ->order('order_number asc,id asc')
                 ->select();
+
+            foreach($list as $key=>$value){
+                if(!$value['dialtitudeheight']){
+                    $list[$key]['dialtitudeheight'] = $value['altitudeheight'];
+                }
+            }
+
             if ($list !== false) {
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],

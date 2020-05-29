@@ -61,12 +61,12 @@ class WorkModel extends BaseModel
     {
         $datas = $data;
         //判断船驳舱容表时间是否到期
-        $ship = new \Common\Model\ShipModel();
+        $ship = new \Common\Model\ShipFormModel();
 //        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
 //        if ($expire_time > time()) {
         //判断相同船是否有相同的航次
         $result = new \Common\Model\ResultModel();
-        $v = trimall(I('post.voyage'));
+        $v = trimall($datas['voyage']);
         $voyage = '"voyage":"' . $v . '"';
         $where = array(
             'shipid' => intval(I('post.shipid')),
@@ -119,12 +119,12 @@ class WorkModel extends BaseModel
                     if ($arr['code'] == '1') {
                         // 扣费成功
                         // 根据船ID获取是否底量字段
-                        $ship = new \Common\Model\ShipModel();
                         $shipmsg = $ship
                             ->field('is_diliang,suanfa')
                             ->where(array('id' => $data['shipid']))
                             ->find();
                         $is_have_data = $ship->is_have_data($data['shipid']);
+
                         if (isset($datas['start']) || isset($datas['objective'])) {
                             // 获取船舶原始起始点、终点港原来的统计停泊港
                             $moorings = M('ship_historical_sum')->getFieldByshipid($data['shipid'], 'mooring');
@@ -149,6 +149,8 @@ class WorkModel extends BaseModel
                         M('user_historical_sum')->where(array('userid' => $uid))->setInc('num');
                         M('ship_historical_sum')->where(array('shipid' => $data['shipid']))->setInc('num');
 
+                        //更新船舶的锁定状态
+                        $ship->updata_lock_ship($data['shipid']);
 
                         M()->commit();
                         //成功 1
@@ -278,7 +280,6 @@ class WorkModel extends BaseModel
                 'msg' => $this->getError()
             );
         } else {
-
             $resultid = intval($data['resultid']);
             $shipid = intval($data['shipid']);
             $uid = intval($data['uid']);
@@ -417,7 +418,9 @@ class WorkModel extends BaseModel
                 ->join('left join electronic_visa e on e.resultid = r.id')
                 ->where($where)
                 ->find();
+            $list['add_weight'] = sprintf("%1\$.3f", $list['add_weight']);
             $list['weight'] = sprintf("%1\$.3f", abs($list['weight']));
+            $list['final_weight'] = sprintf("%1\$.3f", abs($list['weight'] + $list['add_weight']));
             $list['qiantotal'] = sprintf("%1\$.3f", abs($list['qiantotal']));
             $list['houtotal'] = sprintf("%1\$.3f", abs($list['houtotal']));
             // 获取水尺照片
@@ -523,14 +526,15 @@ class WorkModel extends BaseModel
                      */
                     //初始化修正后管线容量
                     $xgx = 0;
+                    //保留原始的作业
+                    $v['new_standardcapacity'] = $v['standardcapacity'];
                     //如果需要单列管线的同时，舱容表不包含管线且当前检验管线内有货。报告时货物容量减去管线容量
                     if ($gxtype == "y" and $list['is_guanxian'] == 2 and $recordmsg['is_pipeline'] == 1) {
                         // 计算修正后管道容量   管道容量*体积*膨胀
                         $xgx = round($v['pipe_line'] * $v['volume'] * $v['expand'], 3);
                         //作业舱容量减去管线容量
                         $v['cabinweight'] -= $v['pipe_line'];
-                        //保留原始的作业
-                        $v['new_standardcapacity'] = $v['standardcapacity'];
+
                         //作业前舱容量减去修正后管线容量
                         $v['standardcapacity'] -= $xgx;
 
@@ -551,8 +555,8 @@ class WorkModel extends BaseModel
                     $v['volume'] = sprintf("%1\$.4f", $v['volume']);
                     $v['expand'] = sprintf("%1\$.6f", $v['expand']);
                     $v['listcorrection'] = sprintf("%1\$.3f", $v['listcorrection']);
-                    $v['cabinweight'] =  sprintf("%1\$.3f",$v['cabinweight']);
-                    $v['ullage'] =  sprintf("%1\$.3f",$v['ullage']);
+                    $v['cabinweight'] = sprintf("%1\$.3f", $v['cabinweight']);
+                    $v['ullage'] = sprintf("%1\$.3f", $v['ullage']);
 
 
                     $v['qufen'] = $recordmsg['qufen'];
@@ -588,10 +592,10 @@ class WorkModel extends BaseModel
                     $a[] = $value;
                 }
 
-                $gxinfo['qiangx'] =sprintf("%1\$.3f",$gxinfo['qiangx']);
-                $gxinfo['qianxgx'] =sprintf("%1\$.3f",$gxinfo['qianxgx']);
-                $gxinfo['hougx'] =sprintf("%1\$.3f",$gxinfo['hougx']);
-                $gxinfo['houxgx'] =sprintf("%1\$.3f",$gxinfo['houxgx']);
+                $gxinfo['qiangx'] = sprintf("%1\$.3f", $gxinfo['qiangx']);
+                $gxinfo['qianxgx'] = sprintf("%1\$.3f", $gxinfo['qianxgx']);
+                $gxinfo['hougx'] = sprintf("%1\$.3f", $gxinfo['hougx']);
+                $gxinfo['houxgx'] = sprintf("%1\$.3f", $gxinfo['houxgx']);
 
                 //成功	1
                 $res = array(
@@ -809,10 +813,10 @@ class WorkModel extends BaseModel
         if ($msg1['code'] == '1') {
             $ship = new \Common\Model\ShipFormModel();
             if ($datas['solt'] == '1') {
-                $result_msg = $this->field('qianprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $result_msg = $this->field('qianprocess,shipid,oil_type')->where(array("id" => $datas['resultid']))->find();
                 $this->process = json_decode($result_msg['qianprocess'], true);
             } elseif ($datas['solt'] == '2') {
-                $result_msg = $this->field('houprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $result_msg = $this->field('houprocess,shipid,oil_type')->where(array("id" => $datas['resultid']))->find();
                 $this->process = json_decode($result_msg['houprocess'], true);
             }
 
@@ -949,6 +953,9 @@ class WorkModel extends BaseModel
                 $data1['houprocess'] = json_encode($this->process);
             }
 
+
+
+
             // 判断水尺数据是否存在 添加/修改数据
             $map = array(
                 'solt' => $datas['solt'],
@@ -1057,6 +1064,95 @@ class WorkModel extends BaseModel
             $res = $msg1;
         }
         return $res;
+    }
+
+    /**
+     * 获取20℃下的体积修正系数
+     * @param float $P15 15℃的标准温度
+     * @param float $oilTemperature 油温，测量空高时，油体的温度
+     * @param float $Alpha 油品Alpha
+     * @param float $P20 20℃的标准温度
+     * @return float|int
+     */
+    function getVcf20($P15,$oilTemperature,$oilType,$P20){
+        $deltaT = $oilTemperature-15;
+        $Alpha = $this->getAlpha($oilType,$P15);
+        return $P15*exp(-1*$Alpha*$deltaT*(1+0.8*$Alpha*$deltaT))/$P20;
+    }
+
+    /**
+     * 获取20℃下的标准密度
+     * @param float $P15 15℃的标准温度
+     * @param float $Alpha 油品Alpha
+     * @return float|int
+     */
+    function getP20($P15,$oilType){
+        return $P15*exp(-1*($this->getAlpha($oilType,$P15))*5*(1+0.8*($this->getAlpha($oilType,$P15))*5));
+    }
+
+    /**
+     * 迭代算法获取15℃下的标准密度
+     * @param float $density 实际密度
+     * @param float $Alpha 油的Alpha
+     * @param float $obTemperature 测量密度时的视温度
+     */
+    function iterativeCalculation($density,$obTemperature,$oilType,$cp15){
+        $deltaT = $obTemperature-15;
+        $P = $density;
+        for($i=0;$i<=999;$i++){
+            $Alpha = $this->getAlpha($oilType,$P);
+            //exp函数为自然对数  exp(2)=e的二次方
+            $P15=$density/exp((-1*$Alpha*$deltaT)*(1+0.8*$Alpha*$deltaT));
+            //如果差值小于阈值，退出循环
+            if(abs($P-$P15)<0.000001) break;
+            //否则将结果代入density继续参与计算
+            $P=$P15;
+        }
+//        echo "迭代算法循环了：".($i+1)."次，P15为".$P15."<br/>";
+        return $P15;
+    }
+
+
+    /**
+     * 获取视密度修正系数
+     * @param float $obTemperature 视温度
+     * @param float $t 希望修正到的标准温度
+     * @return float|int
+     */
+    function getApparentDensityCorrectionFactor($obTemperature,$t){
+        return 1-2.3*0.00001*($obTemperature-$t)-2*0.00000001*pow(($obTemperature-$t),2);
+    }
+
+    /**
+     * 根据密度获取不同油品的Alpha
+     * @param int $oilType 油类型，2：原油，3：石油产品，4：润滑油
+     * @param float $density 油品密度 t/m³
+     */
+    function getAlpha($oilType,$density){
+        //初始化,默认为0
+        $k0 = 0;
+        $k1 = 0;
+        $A = 0;
+        if($oilType == 2){
+            $k0 = 613.9723;
+        }elseif ($oilType == 3){
+            if($density<=770.3){
+                $k0 = 346.4228;
+                $k1 = 0.4388;
+            }elseif ($density>770.3 && $density<=787.5){
+                $k0 = 2680.3206;
+                $A = -0.00336312;
+            }elseif ($density>787.5 && $density<=838.3){
+                $k0 = 594.5418;
+            }elseif ($density>838.3 && $density<=1163.5){
+                $k0 = 186.9696;
+                $k1 = 0.4862;
+            }
+        }elseif ($oilType == 4){
+            $k1 = 0.6278;
+        }
+        //返回算法
+        return $k0/($density*$density) + $k1/$density + $A;
     }
 
     /**
@@ -2795,7 +2891,7 @@ class WorkModel extends BaseModel
                     'value3' => $data['value3'],
                     'value4' => $data['value4'],
                 );
-                $this->adjust_cumulative_trim_data($data['resultid'], $data['solt'], $data['cabinid'],$r['qufen'] ,$cumluative_trim_data);
+                $this->adjust_cumulative_trim_data($data['resultid'], $data['solt'], $data['cabinid'], $r['qufen'], $cumluative_trim_data);
 
                 // writeLog($msg);
                 switch ($shipmsg['suanfa']) {
@@ -3076,7 +3172,7 @@ class WorkModel extends BaseModel
                         /*
                          * 查询累积数据
                          */
-                        $capacity_data = $this->get_cumulative_capacity_data($data['cabinid'], floatval($xiukong),$r['qufen']);
+                        $capacity_data = $this->get_cumulative_capacity_data($data['cabinid'], floatval($xiukong), $r['qufen']);
 
                         //如果查询到数据，合并需要存入的累积数据，等待下一次查询
                         if (false !== $capacity_data) {
@@ -3415,7 +3511,7 @@ class WorkModel extends BaseModel
                         'capacity1' => $dt2['capacity'],
                         'capacity2' => $dt1['capacity'],
                     );
-                    $this->adjust_cumulative_capacity_data($data['resultid'], $data['solt'], $data['cabinid'], $cumluative_capacity_data,$r['qufen']);
+                    $this->adjust_cumulative_capacity_data($data['resultid'], $data['solt'], $data['cabinid'], $cumluative_capacity_data, $r['qufen']);
 
 
                     //作业前作业后区分是否计算总货重
@@ -3594,6 +3690,7 @@ class WorkModel extends BaseModel
                 unset($data[$value]);
             }
         }
+
         // 航次
         // if (isset($data['voyage'])) {
         //     $personality['voyage'] = $data['voyage'];
@@ -4078,9 +4175,13 @@ class WorkModel extends BaseModel
         $resultlist = new \Common\Model\ResultlistModel();
         // 根据计量ID获取密度，
         $msg = $this
-            ->field('houdensity,qiandensity,houtotal,qiantotal,weight,shipid')
+            ->field('houdensity,qiandensity,houtotal,qiantotal,weight,shipid,add_weight')
             ->where(array('id' => $resultid))
             ->find();
+
+        $msg['add_weight'] = sprintf("%1\$.3f", $msg['add_weight']);
+        $msg['weight'] = sprintf("%1\$.3f", abs($msg['weight']));
+        $msg['final_weight'] = abs($msg['weight'] + $msg['add_weight']);
 
         //不作业的舱纳入统计
         $list_qian_where = array(
@@ -4127,10 +4228,11 @@ class WorkModel extends BaseModel
             'qiantotal' => $msg['qiantotal'],
             'shipid' => $msg['shipid'],
             'houtotal' => $msg['houtotal'],
+            'add_weight' => $msg['add_weight'],
             'total' => $msg['weight'],
+            'final_weight' => $msg['final_weight'],
             'is_have_data' => $is_have_data
         );
-
         return $res;
     }
 
@@ -4294,7 +4396,7 @@ class WorkModel extends BaseModel
             'r.is_work' => 1,
         );
         $ship = new \Common\Model\ShipFormModel();
-        $suanfa = $ship->getFieldById($shipid,'suanfa');
+        $suanfa = $ship->getFieldById($shipid, 'suanfa');
 
         $res = $result_record
             ->alias('r')
@@ -4329,7 +4431,7 @@ class WorkModel extends BaseModel
             $record_arr = $this->field('houchi as chishui,shipid')->where(array('id' => $resultid))->find();
         }
         $ship = new \Common\Model\ShipFormModel();
-        $suanfa = $ship->getFieldById($record_arr['shipid'],'suanfa');
+        $suanfa = $ship->getFieldById($record_arr['shipid'], 'suanfa');
 
         $where = array(
             'r.resultid' => $resultid,
@@ -4454,7 +4556,6 @@ class WorkModel extends BaseModel
             $trim_where['value2'] = floatval($trim_data['value2']);
             $trim_where['value3'] = floatval($trim_data['value3']);
             $trim_where['value4'] = floatval($trim_data['value4']);
-
 
 
             $data_count = $cumulative_trim_data->where($trim_where)->count();
@@ -4639,7 +4740,7 @@ class WorkModel extends BaseModel
      * @param bool $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
      * @return array|bool
      */
-    public function get_cumulative_capacity_data($cabinid, $ullage,$book, $fullsearch = false)
+    public function get_cumulative_capacity_data($cabinid, $ullage, $book, $fullsearch = false)
     {
         $cumulative_capacity_data = M('cumulative_capacity_data');
         $capacity_where = array(
@@ -4671,5 +4772,7 @@ class WorkModel extends BaseModel
             return false;
         }
     }
+
+
 }
 

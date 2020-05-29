@@ -277,6 +277,7 @@ class LiquidController extends IndexBaseController
 //            echo ajaxReturn(array("state" => 1, 'message' => "成功", 'content' => $string));
 //        }
 //    }
+
     /**
      * 判断作业是否开始,没开始返回作业内容
      */

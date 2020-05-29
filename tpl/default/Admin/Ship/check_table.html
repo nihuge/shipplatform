@@ -1,0 +1,392 @@
+<extend name="Public:base"/>
+<block name="title">船管理</block>
+<block name="navtitle">
+    <li class="active">
+        船舶管理
+    </li>
+    <li class="active">
+        油船管理
+    </li>
+</block>
+<block name="activeopen21">class="active open"</block>
+<block name="active6">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <div class="layui-tab" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <!--				{$suanfa}-->
+                <if condition="$suanfa eq 'a'">
+                    <li class="layui-this">容量书容量表</li>
+                    <elseif condition="$suanfa eq 'b'"/>
+                    <li class="layui-this">容量书纵倾修正表</li>
+                    <li>容量书容量表</li>
+                    <elseif condition="$suanfa eq 'c'"/>
+                    <li class="layui-this">容量书纵倾修正表</li>
+                    <li>容量书容量表</li>
+                    <li>底量书纵倾修正表</li>
+                    <li>底量书容量表</li>
+                    <elseif condition="$suanfa eq 'd'"/>
+                    <li class="layui-this">容量书容量表</li>
+                    <li>底量书容量表</li>
+                </if>
+            </ul>
+            <div class="layui-tab-content">
+
+                <if condition="$suanfa eq 'a'">
+                    <div class="layui-tab-item layui-show">
+                        <volist name="rongliang.rongliang" id="v">
+                            <div style="margin-top: 25px;text-align: center"  id="rongliang_rongliang_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="rongliang.kedu" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="rongliang.kedu" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+
+                    <elseif condition="$suanfa eq 'b'"/>
+                    <div class="layui-tab-item layui-show">
+                        <volist name="rongliang.zx" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="rongliang_zx_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="rongliang.kedu" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="rongliang.kedu" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <volist name="rongliang.rongliang" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="rongliang_rongliang_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th>容量</th>
+                                    <th>厘米容量</th>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td>{$v1['capacity']}</td>
+                                        <td>{$v1['diff']}</td>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+
+                    <elseif condition="$suanfa eq 'c'"/>
+                    <div class="layui-tab-item layui-show">
+                        <volist name="rongliang.zx" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="rongliang_zx_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="rongliang.kedu" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="rongliang.kedu" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <volist name="rongliang.rongliang" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="rongliang_rongliang_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th>容量</th>
+                                    <th>厘米容量</th>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td>{$v1['capacity']}</td>
+                                        <td>{$v1['diff']}</td>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <volist name="diliang.zx" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="diliang_zx_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="diliang.kedu1" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="diliang.kedu1" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <volist name="diliang.rongliang" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="diliang_rongliang_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-4" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th>容量</th>
+                                    <th>厘米容量</th>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td>{$v1['capacity']}</td>
+                                        <td>{$v1['diff']}</td>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+                    <elseif condition="$suanfa eq 'd'"/>
+                    <div class="layui-tab-item layui-show">
+                        <volist name="rongliang.zx" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="rongliang_zx_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="rongliang.kedu" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="rongliang.kedu" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <volist name="diliang.zx" id="v">
+                            <div style="margin-top: 25px;text-align: center" id="diliang_zx_{$v.cabinid}"><span
+                                    style="font-size: large;font-weight: bolder">{$v.cabinname}</span></div>
+                            <hr>
+                            <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--								<th>排序</th>-->
+                                    <th>实高</th>
+                                    <th>空高</th>
+                                    <th></th>
+                                    <volist name="diliang.kedu1" id="vo">
+                                        <th>{$vo}</th>
+                                    </volist>
+                                </tr>
+                                </thead>
+                                <volist name="v.list" id="v1">
+                                    <tr align='center'>
+                                        <!--									<td> <input class="input-text" style="width:40px;height:25px;" type="text" name="{$v['id']}" value="{$v['order_number']}"></td>-->
+                                        <td>{$v1['sounding']}</td>
+                                        <td>{$v1['ullage']}</td>
+                                        <td></td>
+                                        <foreach name="diliang.kedu1" item="vo1111" key="k">
+                                            <td>{$v1[$k]}</td>
+                                        </foreach>
+                                    </tr>
+                                </volist>
+                            </table>
+                        </volist>
+                    </div>
+                </if>
+                <!--				<div class="layui-tab-item layui-show">内容1</div>-->
+                <!--				<div class="layui-tab-item">内容2</div>-->
+                <!--				<div class="layui-tab-item">内容3</div>-->
+                <!--				<div class="layui-tab-item">内容4</div>-->
+                <!--				<div class="layui-tab-item">内容5</div>-->
+            </div>
+        </div>
+
+        <script>
+            //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+            layui.use(['element','layer'], function () {
+                var element = layui.element;
+                var layer = layui.layer;
+                var $ = layui.jquery
+                var cabin_tree = {:json_encode($cabin_tree)};
+                var suanfa = "{$suanfa}";
+                var content = "            <ul class=\"site-dir layui-layer-wrap\" id='mulu_nav' style=\"display: block;text-align: center\">\n";
+                if(suanfa == "a"){
+                    for(let i in cabin_tree){
+                        content += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_rongliang_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                    }
+                }else if(suanfa == "b"){
+                    for(let i in cabin_tree){
+                        content += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_zx_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                    }
+                }else if(suanfa == "c"){
+                    for(let i in cabin_tree){
+                        content += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_zx_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                    }
+                }else if(suanfa == "d"){
+                    for(let i in cabin_tree){
+                        content += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_zx_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                    }
+                }
+
+                content+="</ul>";
+
+                layer.open({
+                    type: 1,
+                    title: "舱号指引",
+                    shade: 0,
+                    offset: 'r',
+                    content: content //这里content是一个普通的String
+                });
+
+                element.on('tab(docDemoTabBrief)', function(data){
+                    let type = this.innerHTML;
+                    let new_c = "";
+                    if(type == "容量书纵倾修正表"){
+                        for(let i in cabin_tree){
+                            new_c += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_zx_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                        }
+                    }else if(type == "容量书容量表"){
+                        for(let i in cabin_tree){
+                            new_c += "<li style=\"margin-top: 12px\"><a href=\"#rongliang_rongliang_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                        }
+                    }else if(type == "底量书纵倾修正表"){
+                        for(let i in cabin_tree){
+                            new_c += "<li style=\"margin-top: 12px\"><a href=\"#diliang_zx_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                        }
+                    }else if(type == "底量书容量表"){
+                        for(let i in cabin_tree){
+                            new_c += "<li style=\"margin-top: 12px\"><a href=\"#diliang_rongliang_"+cabin_tree[i].id+"\"><cite>"+cabin_tree[i].cabinname+"</cite></a></li>";
+                        }
+                    }
+
+                    $("#mulu_nav").html(new_c)
+                    // layer.msg('切到到了'+ data.index + '：' + this.innerHTML);
+                });
+
+
+                //…
+            });
+        </script>
+    </div>
+</block>

@@ -228,10 +228,10 @@ class ShShipController extends AppBaseController
                             $res_count = $work->where(array('shipid' => $data['id']))->count();
 
                             //去除多余的0，防止验证差异时出错
-                            $old_info = $this->db->field('shipname,cabinnum,0+cast(lbp as char) as lbp,0+cast(df as char) as df,0+cast(da as char) as da,0+cast(dm as char) as dm,weight,0+cast(ptwd as char) as ptwd,expire_time,review')->where($map)->find();
+                            $old_info = $this->db->field('is_lock,shipname,cabinnum,0+cast(lbp as char) as lbp,0+cast(df as char) as df,0+cast(da as char) as da,0+cast(dm as char) as dm,weight,0+cast(ptwd as char) as ptwd,expire_time,review')->where($map)->find();
 
 
-                            if ($res_count > 1 or $old_info['review'] == 2) {
+                            if ($old_info['is_lock'] == 1) {
 
                                 /**
                                  * 开始对比数据差异，获取更改的数据
@@ -368,5 +368,49 @@ class ShShipController extends AppBaseController
             }
         }
         echo jsonreturn($res);
+    }
+
+
+    /**
+     * 追加复核船信息通知
+     */
+    public function add_edit_review_notice(){
+        if (I('post.uid') and I('post.imei') and I('post.review_id')){
+            $uid = intval(trimall(I('uid')));
+            $imei = trimall(I('imei'));
+            $review_id = intval(trimall(I('post.review_id')));
+
+            $user = new \Common\Model\UserModel();
+            $msg =$user->is_judges($uid,$imei);
+            if($msg['code'] == 1){
+                $user_info =$user->getUserOpenId($uid);
+                $where = array(
+                    'id'=>$review_id
+                );
+                $data = array(
+                    'open_id'=>$user_info['open_id']
+                );
+                $sh_review = M("sh_review");
+                $result = $sh_review->where($where)->save($data);
+                if($result !== false){
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['SUCCESS']
+                    );
+                }else{
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['DB_ERROR'],
+                        'error'=>$sh_review->getDbError(),
+                    );
+                }
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //缺少参数
+            $res = array(
+                'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+            );
+        }
+        exit(jsonreturn($res));
     }
 }

@@ -33,17 +33,43 @@ define('BIND_MODULE', 'App');
  * | 业务控制器。
  * |
  * | 如果给三通公司新增操作员请在sanTongUid数组内增加该操作员的UID
+ * |
+ * |
+ * | 还要判断传输过来的业务类型，油船用OilWork控制器
+ * | $oc_type
+ * | 1：沥青
+ * | 2：原油
+ * | 3：石油产品
+ * | 4：润滑油
+ * |
  * +----------------------------------------------------------------------
  * |                                            ——马金虎
  * +----------------------------------------------------------------------
  */
 
 $sanTongUid = array(1, 2, 8);
-if (strtolower($_GET['c']) == "result") {
-    if (!in_array($_POST['uid'], $sanTongUid)) {
-        define('BIND_CONTROLLER', 'Work');
+if (!in_array($_POST['uid'], $sanTongUid)) {
+    /**
+     * $oc_type
+     * 1:沥青
+     * 2：原油
+     * 3：石油产品
+     * 4：润滑油
+     */
+    $oc_type = isset($_GET['oc_type'])?$_GET['oc_type']:1;
+    $oc_type = $oc_type<1?1:$oc_type;
+//    exit($oc_type);
+    if($oc_type ==2){
+        if(strtolower($_GET['c']) == "result"||strtolower($_GET['c']) == "work"){
+            define('BIND_CONTROLLER', 'OilWork');
+        }
+    }elseif($oc_type ==1){
+        if (strtolower($_GET['c']) == "result") {
+            define('BIND_CONTROLLER', 'Work');
+        }
     }
 }
+
 
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';

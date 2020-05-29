@@ -72,7 +72,6 @@
     <script type="text/javascript">
 
 
-
         /*
         封装
          */
@@ -104,8 +103,6 @@
         }
 
 
-
-
         $('document').ready(function () {
             var shipid = getCookie('upload_shipid');
             var tname_value = getCookie('upload_tname');
@@ -134,11 +131,19 @@
                                 $("#presence").html(d.presence);  //单选赋值
 
                                 if (tname_value !== '') {
-                                    $("[name='tname'][value='"+tname_value+"']").prop("checked", "checked");
+                                    $("[name='tname'][value='" + tname_value + "']").prop("checked", "checked");
                                 }
 
-                                if(cabinid !== ''){
+                                if (cabinid !== '') {
                                     $("select[name=cabinid]").val(cabinid);
+                                    let cabin_length = $("select[name=cabinid]")[0].options.length;
+                                    let cab_index = $("select[name=cabinid]").prop('selectedIndex');
+                                    if (cab_index + 1 >= cabin_length) {
+                                        $('select[name=cabinid]')[0].selectedIndex = 0
+                                    } else {
+                                        console.log(cab_index);
+                                        $('select[name=cabinid]')[0].selectedIndex = cab_index + 1
+                                    }
                                 }
                             }
                         });

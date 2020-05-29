@@ -26,7 +26,7 @@ class ConsumptionModel extends BaseModel
         array('username','1,11','操作人名长度不能超过11个字符',0,'length'),// 存在验证
         array('number','1,39','充值单号长度不能超过39个字符',0,'length'),// 存在验证
         array('time','1,11','时间长度不能超过11个字符',0,'length'),
-        array('contractnumber','1,25','合同编号长度不能超过25个字符',0,'length'),
+        array('contractnumber','1,50','合同编号长度不能超过50个字符',0,'length'),
         // 判断是否为正整数
         array('firmid','number','公司ID不是正整数',0),
         array('uid','number','用户ID不是正整数',0),
@@ -60,8 +60,8 @@ class ConsumptionModel extends BaseModel
 				// 判断余额是否够
 				// 余额+信用额
 				$sum = $firmmsg['balance']+$firmmsg['creditline'];
-				// 判断额度是否小于等于0或者额度小于消费标准
-				if ($sum > '0' and $sum>=$firmmsg['service']) {
+				// 判断额度是否小于0或者额度小于消费标准
+				if ($sum >= 0 and $sum>=$firmmsg['service']) {
 					$data = $firmmsg;
 					// 获取扣费后余额（余额-扣费标准）
 					$data['deductions'] = $firmmsg['balance']-$firmmsg['service'];

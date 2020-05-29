@@ -174,14 +174,12 @@ class ShShipController extends IndexBaseController
                         /**
                          * 查找船的作业次数
                          */
-                        $work = new \Common\Model\ShResultModel();
-                        $res_count = $work->where(array('shipid' => $data['id']))->count();
 
                         //去除多余的0，防止验证差异时出错
-                        $old_info = $this->db->field('shipname,cabinnum,0+cast(lbp as char) as lbp,0+cast(df as char) as df,0+cast(da as char) as da,0+cast(dm as char) as dm,weight,0+cast(ptwd as char) as ptwd,expire_time,review')->where($map)->find();
+                        $old_info = $this->db->field('is_lock,shipname,cabinnum,0+cast(lbp as char) as lbp,0+cast(df as char) as df,0+cast(da as char) as da,0+cast(dm as char) as dm,weight,0+cast(ptwd as char) as ptwd,expire_time,review')->where($map)->find();
 
 
-                        if ($res_count > 1 or $old_info['review'] == 2) {
+                        if ($old_info['is_lock'] == 2) {
 
                             /**
                              * 开始对比数据差异，获取更改的数据

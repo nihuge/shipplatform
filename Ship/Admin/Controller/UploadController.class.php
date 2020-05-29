@@ -132,6 +132,9 @@ class UploadController extends AdminBaseController
                     if ($count1 == $total) {
                         $model->commit();
                         $this->success('导入成功');
+                        //每次导入成功以后更新一次船的有表无表状态
+                        $ship = new \Common\Model\ShipFormModel();
+                        $ship->updata_one_ship(intval(I('post.shipid')));
                     } else {
                         $model->rollback();
                         $this->error('拥有重复数据');
@@ -601,4 +604,464 @@ class UploadController extends AdminBaseController
             echo false;
         }
     }
+
+    /**
+     * 通过TXT上传舱容表
+     * @param $shipid
+     * @param $qufen
+     */
+    public function up_txt()
+    {
+//        $shipid,$qufen,$trim_kedu
+        if(IS_POST){
+            if ($_FILES['file']['tmp_name'] and I('post.shipid')) {
+//            $file_path = "./Upload/txt/rongliang.txt";
+                $file_path = $_FILES['file']['tmp_name'];
+                $shipid = intval(I('post.shipid'));
+                $qufen = I('post.qufen');
+
+                $cabin = new \Common\Model\CabinModel();
+                $ship = new \Common\Model\ShipFormModel();
+                $cabins_info = $cabin->field('id,cabinname')->where(array('shipid' => $shipid))->select();
+//                $ship_info = $ship->field('suanfa,is_diliang,tripbystern,trimcorrection,trimcorrection1,tankcapacityshipid,rongliang,zx,rongliang_1,zx_1')->where(array('id' => $shipid))->find();
+
+                $list_data = $this->read_list_data($file_path,$cabins_info);
+                $ship_info = $this->auto_create_list_table($shipid,$list_data['list_kedu'],$qufen);
+
+
+                switch ($ship_info['suanfa']) {
+                    case 'a':
+                        $trim_kedu = $ship_info['tripbystern'];
+                        $table_name_1 = $ship_info['tankcapacityshipid'];
+                        $table_name_2 = "";
+                        break;
+                    case 'b':
+                        $trim_kedu = $ship_info['trimcorrection'];
+                        $table_name_1 = $ship_info['zx'];
+                        $table_name_2 = $ship_info['rongliang'];
+                        $table_name_3 = $ship_info['zx'];
+                        break;
+                    case 'c':
+                        if ($qufen == 'diliang') {
+                            $trim_kedu = $ship_info['trimcorrection1'];
+                            $table_name_1 = $ship_info['zx_1'];
+                            $table_name_2 = $ship_info['rongliang_1'];
+                        } else {
+                            $trim_kedu = $ship_info['trimcorrection'];
+                            $table_name_1 = $ship_info['zx'];
+                            $table_name_2 = $ship_info['rongliang'];
+                        }
+                        break;
+                    case 'd':
+                        if ($qufen == 'diliang') {
+                            $trim_kedu = $ship_info['trimcorrection1'];
+                            $table_name_1 = $ship_info['zx_1'];
+                            $table_name_2 = "";
+                        } else {
+                            $trim_kedu = $ship_info['trimcorrection'];
+                            $table_name_1 = $ship_info['zx'];
+                            $table_name_2 = "";
+                        }
+                        break;
+                }
+//        echo "kedu:".$trim_kedu . "   table1：" .$table1. " table2：".$table2." <br/>";
+                //        array_merge_recursive($a, $b);
+                M()->startTrans();
+                if ($table_name_1 != "") {
+                    $table1 = M($table_name_1);
+                    $trim = $this->read_trim_data($trim_kedu, $file_path, $cabins_info);
+//                        exit(json_encode($trim));
+                    foreach ($trim as $value) {
+                        if ($table1->addAll($value['tirm_data']) === false) {
+                            M()->rollback();
+                            $this->error("数据库1插入错误".json_encode($value['tirm_data']));
+                        };
+                    }
+                }
+
+                if ($table_name_2 != "") {
+                    $table2 = M($table_name_2);
+                    $ca = $this->read_ca_data($file_path, $cabins_info);
+//                    exit(json_encode($ca));
+                    foreach ($ca as $value1) {
+//                        exit($table2->fetchSql(true)->add($value1['ca_data'][0]));
+                        if ($table2->addAll($value1['ca_data']) === false) {
+                            M()->rollback();
+                            $this->error("数据库2插入错误".$table2->getDbError());
+                        };
+                    }
+                }
+
+                if ($table_name_3 != "") {
+                    $table3 = M($table_name_3);
+                    foreach ($list_data['data'] as $value1) {
+                        //横倾修正表，录入时不报错,防止影响正常的纵倾修正表录入业务
+                        @$table3->addAll($value1['list_data']);
+                    }
+                }
+                M()->commit();
+                $ship->updata_one_ship($shipid);
+                $this->success('导入成功');
+            }else{
+                $this->error("请上传文件或者选择表单内的选项");
+            }
+        }else{
+            //获取船列表
+            $ship = new \Common\Model\ShipModel();
+            $shiplist = $ship
+                ->field('id,shipname,data_ship,suanfa')
+                ->order('shipname asc')
+                ->select();
+            $this->assign('shiplist', $shiplist);
+            $this->display();
+        }
+    }
+
+    /**
+     * 正则匹配文本内的纵倾修正表数据并返回
+     * @param $trim_kedu
+     * @param $file_path
+     * @return array
+     */
+    function read_trim_data($trim_kedu, $file_path, $cabins_info)
+    {
+        //        https://regex101.com/r/ozVP4k/2 纵倾修正表正则视图
+
+        $orgin_txt = file_get_contents($file_path);
+        $orgin_txt = preg_replace("/[\r\n]{2}/", "\r\n", $orgin_txt);
+
+//        dump($orgin_txt);
+//        $re = '/[\-\ ]+\s?Page\s([\d]+)[\-\ ]+\s+有效期至([\S]+)\s*?纵 倾 修 正 表\s*?实 高\s*?Sounding\s*?\(m\)\s*?空 高 纵倾值\（艉吃水\－艏吃水\）\s*?Ullage\s*?\(m\)\s*?Trim\[draft aft\(stern\)\- draft forward\(bow\)\]\s*?\[([^\]]+)\] Trim Correction Table ([\S]+) ([A-Za-z0-9]+)\s*?[\(m\) ]+\s*?([\-\.m 0-9]+)\s*?[\* \r\n]+([0-9\.\- \r\n]+)有效期/m';
+        $re = '/[\-\ ]+\s?Page\s([\d]+)[\-\ ]+\s+有效期至([\S]+)\s*?纵 倾 修 正 表\s*?实 高\s*?Sounding\s*?\(m\)\s*?空 高 纵倾值\（艉吃水\－艏吃水\）\s*?Ullage\s*?\(m\)\s*?Trim\[draft aft\(stern\)\- draft forward\(bow\)\]\s*?\[([^\]]+)\] Trim Correction Table ([\S]+) ([A-Za-z0-9]+)\s*?[\(m\) ]+\s*?([\-\.m 0-9]+)\s*?[\* \r\n]+[\s\S]*?([0-9\.\- \r\n]+)[\s\S]*?有效期/m';
+        preg_match_all($re, $orgin_txt, $matches, PREG_SET_ORDER, 0);
+//        exit(jsonreturn($matches));
+        $res = array();
+        $trim_kedu = json_decode($trim_kedu, true);
+        foreach ($matches as $key => $value) {
+            $data = array();
+            //处理页数编号等信息
+//            echo "第".$value[1]."页 ， 有效期：".$value[2]."， 舱号：".$value[3].", 船名：".$value[4]."，书编号：".$value[5]."<br/>";
+            $data['page'] = $value[1];
+            $data['expire'] = $value[2];
+            $data['cabin_name'] = preg_replace("/[左右]+污油舱 /", "", $value[3]);
+            $data['ship_name'] = $value[4];
+            $data['book_number'] = $value[5];
+            $cabin_id = 0;
+            foreach ($cabins_info as $v11) {
+                if ( trimall($data['cabin_name']) == trimall($v11['cabinname'])){
+                    $cabin_id = $v11['id'];
+                }
+            }
+            if ($cabin_id == 0) continue;
+            //开始分开吃水刻度
+            $kedu = explode('m ', $value[6]);
+            $kedu[count($kedu) - 1] = str_replace("m", "", $kedu[count($kedu) - 1]);
+//            print_r($kedu);
+            $data['kedu'] = $kedu;
+//            echo "<table style='text-align: center' border='1px solid'>";
+//            echo "<thead><th>实高</th><th>空高</th>";
+//            foreach ($kedu as $k=>$v){
+//                echo "<th>".$v."</th>";
+//            }
+//            echo "</thead>";
+//            echo "<tbody>";
+            $data_row = explode("\r\n", $value[7]);
+//            array_pop($data_row);
+            $data['tirm_data'] = array();
+            foreach ($data_row as $k1 => $v1) {
+                $qian = array(" ", "　","   ", "    ",'-','0','.',"\r","\n");
+                $hou = array("", "", "", "", "","","","","");
+                if(str_replace($qian, $hou, $v1)=="") continue;
+                $data_cloumn = explode(" ", $v1);
+                $data_cloumn[count($data_cloumn) - 1] = preg_replace("/[\r\n]+/", "", $data_cloumn[count($data_cloumn) - 1]);
+
+                $td = array('sounding' => preg_replace("/\s+/", "", $data_cloumn[0]), 'ullage' => preg_replace("/\s+/", "", $data_cloumn[1]), 'cabinid' => $cabin_id);
+                $i = 0;
+//                print_r($trim_kedu);
+                foreach ($trim_kedu as $k2 => $v2) {
+                    $td["$k2"] =$data_cloumn[$i + 2];
+                    $i++;
+                }
+
+                array_push($data['tirm_data'], $td);
+//                foreach ($data_cloumn as $k2=>$v2){
+//                    echo "<td>".$v2."</td>";
+//                }
+//                echo "</tr>";
+            }
+            array_push($res, $data);
+//            echo "</tbody>";
+//            echo "</table>";
+//            $ullage =
+//            echo "<br/>";
+        }
+        return $res;
+//        exit(json_encode($res));
+    }
+
+    /**
+     * 正则匹配文本内的容量表数据并返回
+     * @param $file_path
+     */
+    function read_ca_data($file_path, $cabins_info)
+    {
+//        https://regex101.com/r/y0rt5d/4 容量表正则视图
+        $orgin_txt = file_get_contents($file_path);
+        $orgin_txt = preg_replace("/[\r\n]{2}/", "\r\n", $orgin_txt);
+//        exit($orgin_txt);
+        //        dump($orgin_txt);
+//        $re = '/[\-]+\s+Page\s+([\d]+)[\-]+\s+有效期至([\S]+)\s*?容 量 表\s*?[\S\s]*?\[([\S \.]+)\] Tank Capacity Table ([\S]+)\s*?([a-zA-Z0-9]+)\s*?[\S\s]*?有效期至([\S]*?)！ Valid until ([\S ,\.]+)\s*?\- [\d]+ \-[\* \r\n]+([\d\. \r\n]+)/m';
+//        $re = '/[\-]{23}\s+Page\s+([\d]+)[\-]{23}\s+有效期至([\S]+)\s*?容 量 表\s*?[\S\s]*?\[([\S \.]+)\] Tank Capacity Table ([\S]+)\s*?([a-zA-Z0-9]+)\s*?[\S\s]*?有效期至([\S]*?)！ Valid until ([\S ,\.]+)\s*?\- [\d]+ \-[\* \r\n]+((?:[\d\. \-]+[\r\n]+)+)/m';
+//        $re = '/[\-]{23}\s+Page\s+([\d]+)[\-]{23}\s+有效期至([\S]+)\s*?容 量 表\s*?[\S\s]*?\[([\S \.]+)\] Tank Capacity Table ([\S]+)\s*?([a-zA-Z0-9]+)\s*?[\S\s]*?有效期至([\S]*?)！ Valid until ([\S ,\.]+)\s*?\- [\d]+ \-[\* \r\n]+(?:\d+\.\d{3} \d+\.\d{3} [\D]+ [\D]+[\r\n]+)*?((?:\d+\.\d{3} \d+\.\d{3} \d+\.\d{3} [\d\.\-]+[\r\n]+)+)/m';
+        $re = '/[\-]{23}\s+Page\s+([\d]+)[\-]{23}\s+有效期至([\S]+)\s*?容 量 表\s*?[\S\s]*?\[([\S \.]+)\] Tank Capacity Table ([\S]+)\s*?([a-zA-Z0-9]+)\s*?[\S\s]*?有效期至([\S]*?)！ Valid until ([\S ,\.]+)\s*?\- [\d]+ \-[\* \r\n]+(?:\d+\.\d{3} \d+\.\d{3} [\D]+ [\D]+[\r\n]+)*?((?:\d+\.\d{3} \d+\.\d{3} \d+\.\d{3} [\d\.\-]+|[\r\n]+)+)/m';
+        preg_match_all($re, $orgin_txt, $matches, PREG_SET_ORDER, 0);
+//        exit(jsonreturn($matches));
+
+        $res = array();
+        foreach ($matches as $key => $value) {
+            $data = array();
+            //处理页数编号等信息
+//            echo "第" . $value[1] . "页 ， 有效期：" . $value[2] . "， 舱号：" . $value[3] . ", 船名：" . $value[4] . "，书编号：" . $value[5] . "<br/>";
+            $data['page'] = $value[1];
+            $data['expire'] = $value[2];
+            $data['cabin_name'] = $value[3];
+            $data['ship_name'] = $value[4];
+            $data['book_number'] = $value[5];
+            $cabin_id = 0;
+            foreach ($cabins_info as $v11) {
+                if (trimall($data['cabin_name']) == trimall($v11['cabinname'])) {
+                    $cabin_id = $v11['id'];
+                }
+            }
+            if ($cabin_id == 0) continue;
+//            echo "<table style='text-align: center' border='1px solid'>";
+//            echo "<thead><th>实高</th><th>空高</th><th>容量</th><th>厘米容量</th>";
+//            foreach ($kedu as $k=>$v){
+//                echo "<th>".$v."</th>";
+//            }
+//            echo "</thead>";
+//            echo "<tbody>";
+            $data_row = explode("\r\n", $value[8]);
+//            array_pop($data_row);
+            $data['ca_data'] = array();
+//            array_pop($data_row);
+            foreach ($data_row as $k1 => $v1) {
+                $qian = array(" ", "　","   ", "    ",'-','0','.',"\r","\n");
+                $hou = array("", "", "", "", "","","","","");
+                if(str_replace($qian, $hou, $v1)=="") continue;
+                $data_cloumn = explode(" ", $v1);
+                $data_cloumn[count($data_cloumn) - 1] = str_replace("\r", "", $data_cloumn[count($data_cloumn) - 1]);
+
+                $td = array('sounding' => preg_replace("/\s+/", "", $data_cloumn[0]), 'ullage' =>  preg_replace("/\s+/", "", $data_cloumn[1]), 'capacity' =>  preg_replace("/\s+/", "", $data_cloumn[2]), 'diff' =>  preg_replace("/\s+/", "", preg_replace("/\-+/", "0.000",$data_cloumn[3])), 'cabinid' => $cabin_id);
+
+//                print_r($trim_kedu);
+//                foreach ($trim_kedu as $k2 => $v2) {
+//                    $td["$k2"] = $data_cloumn[$i+2];
+//                    $i++;
+//                }
+//                echo "<tr>";
+                array_push($data['ca_data'], $td);
+//                foreach ($data_cloumn as $k2 => $v2) {
+//                    echo "<td>" . $v2 . "</td>";
+//                }
+//                echo "</tr>";
+            }
+            array_push($res, $data);
+//            echo "</tbody>";
+//            echo "</table>";
+//            $ullage =
+//            echo "<br/>";
+        }
+//        exit(json_encode($res));
+        return $res;
+    }
+
+    /**
+     * 匹配横倾修正表
+     */
+//    public function read_list_data(){
+    function read_list_data($file_path,$cabins_info){
+//        $orgin_txt = file_get_contents($file_path);
+        $orgin_txt = file_get_contents("./Upload/txt/dayang28_rong.txt");
+        $re = '/\-{23}\s*?Page\s*?(\d+)\-{23}\s*?有效期至[\d年月日]+\s*?横 倾 修 正 表[\s\S]*?\[([左右]+\.\d+\s?(?:[PS]+\.\d+))\]\s*?LIST CORRECTION TABLE\s*?[\S]+\s*?[A-Za-z0-9]+[\s\S]*?左 倾 List to Port 右 倾 List to Starb\'d \*\s*?[\*\s]+((?:[\d°\.]+\s*?\(mm\)\s+)+)[\S\s]*?([0-9\.\- \r\n]+)[\s\S]*?有效期/m';
+        preg_match_all($re, $orgin_txt, $matches, PREG_SET_ORDER, 0);
+//        exit(json_encode($matches));
+        $res = array('data'=>array());
+        $list_kedu_arr = explode("\r\n", preg_replace("/[\r\n]{2,6}/m", "\r\n", $matches[0][3]));
+        $list_kedu = array();
+        $kedu_num = 1;
+        $pre_kedu = 180;//是否需要变成负数
+        for ($i = 0; $i < count($list_kedu_arr); $i += 2) {
+            if ($list_kedu_arr[$i] != "") {
+                $listValue = preg_replace("/°/", "", $list_kedu_arr[$i]);
+                if ($pre_kedu - $listValue > 0) $listValue *= -1;//如果上一个数减当前数是正数则变为负数
+//                echo $pre_kedu."<br/>";
+//                echo $listValue;
+                $list_kedu['listvalue' . $kedu_num] = $listValue;
+                $pre_kedu = abs($listValue);//赋值上一个数
+                $kedu_num++;
+            }
+        }
+        $res['list_kedu'] = $list_kedu;
+
+//        exit(jsonreturn($list_kedu));
+//        $res['list_kedu'] = $list_kedu;
+        foreach ($matches as $key => $value) {
+            $data = array();
+            //处理页数编号等信息
+//            echo "第".$value[1]."页 ， 有效期：".$value[2]."， 舱号：".$value[3].", 船名：".$value[4]."，书编号：".$value[5]."<br/>";
+            $data['page'] = $value[1];
+            $data['cabin_name'] = preg_replace("/[左右]+污油舱 /", "", $value[2]);
+            $cabin_id = 0;
+            foreach ($cabins_info as $v11) {
+                if (trimall($data['cabin_name']) == $v11['cabinname']) {
+                    $cabin_id = $v11['id'];
+                }
+            }
+            if ($cabin_id == 0) continue;
+
+
+            $data_row = explode("\r\n", $value[4]);
+//            array_pop($data_row);
+            $data['list_data'] = array();
+            foreach ($data_row as $k1 => $v1) {
+                $qian = array(" ", "　", "   ", "    ", '-', '0', '.');
+                $hou = array("", "", "", "", "", "", "");
+                if (str_replace($qian, $hou, $v1) == "") continue;
+                $data_cloumn = explode(" ", $v1);
+                $data_cloumn[count($data_cloumn) - 1] = str_replace("\r", "", $data_cloumn[count($data_cloumn) - 1]);
+
+                $td = array('sounding' => $data_cloumn[0], 'ullage' => $data_cloumn[1], 'cabinid' => $cabin_id);
+                $i = 0;
+//                print_r($trim_kedu);
+                foreach ($list_kedu as $k2 => $v2) {
+                    $td["$k2"] = $data_cloumn[$i + 2];
+                    $i++;
+                }
+                array_push($data['list_data'], $td);
+//                foreach ($data_cloumn as $k2=>$v2){
+//                    echo "<td>".$v2."</td>";
+//                }
+//                echo "</tr>";
+            }
+            array_push($res['data'], $data);
+//            echo "</tbody>";
+//            echo "</table>";
+//            $ullage =
+//            echo "<br/>";
+        }
+        return $res;
+    }
+
+    function auto_create_list_table($shipid, $kedu, $qufen)
+    {
+        $ship = new \Common\Model\ShipFormModel();
+        $where = array('id' => $shipid);
+        $ship_info = $ship->field('shipname,suanfa,heelingcorrection,heelingcorrection1,hx,hx_1')->where($where)->find();
+//        $isTable = M()->query('SHOW TABLES LIKE "user"');
+//        if($isTable){
+//            echo '表存在';
+//        }else{
+//            echo '表不存在';
+//        }
+        if ($ship_info['suanfa'] == 'b' and $ship_info['hx'] == "") {
+            $hxname = 'tablelistcorrectionzi' . time() . chr(rand(97, 122));
+            $shipname = $ship_info['name'];
+            // 确定刻度
+
+            $str = '';
+            foreach ($kedu as $key => $value) {
+                $str .= "`" . $key . "` int(11) DEFAULT NULL COMMENT '横倾值" . $value . "°',";
+            }
+
+            $sql1 = <<<sql
+CREATE TABLE `${hxname}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
+  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
+  ${str}
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}横倾表';
+sql;
+            M()->execute($sql1);
+            if (!empty($kedu)) {
+                $kedu = json_encode($kedu, JSON_UNESCAPED_UNICODE);
+            } else {
+                $kedu = '';
+            }
+
+            $datas = array(
+                'hx' => $hxname,
+                'heelingcorrection' => $kedu
+            );
+
+        }elseif ($ship_info['suanfa'] == 'c'){
+            $datas = array();
+            $time = time() . chr(rand(97, 122));
+            if($ship_info['hx'] == ""){
+                $hxname = 'tablelistcorrectionzi' . $time."_1";
+                $shipname = $ship_info['name'];
+                // 确定刻度
+
+                $str = '';
+                foreach ($kedu as $key => $value) {
+                    $str .= "`" . $key . "` int(11) DEFAULT NULL COMMENT '横倾值" . $value . "°',";
+                }
+                $sql1 = <<<sql
+CREATE TABLE `${hxname}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
+  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
+  ${str}
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}横倾表';
+sql;
+                M()->execute($sql1);
+                if (!empty($kedu)) {
+                    $kedu_str = json_encode($kedu, JSON_UNESCAPED_UNICODE);
+                } else {
+                    $kedu_str = '';
+                }
+
+                $datas['hx'] =  $hxname;
+                $datas['heelingcorrection'] = $kedu_str;
+            }
+
+
+            if($ship_info['hx_1'] == ""){
+                $hxname = 'tablelistcorrectionzi' . $time."_2";
+                $shipname = $ship_info['name'];
+                // 确定刻度
+
+                $str = '';
+                foreach ($kedu as $key => $value) {
+                    $str .= "`" . $key . "` int(11) DEFAULT NULL COMMENT '横倾值" . $value . "°',";
+                }
+                $sql1 = <<<sql
+CREATE TABLE `${hxname}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
+  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
+  ${str}
+  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}横倾表';
+sql;
+                M()->execute($sql1);
+                if (!empty($kedu)) {
+                    $kedu_str = json_encode($kedu, JSON_UNESCAPED_UNICODE);
+                } else {
+                    $kedu_str = '';
+                }
+
+                $datas['hx_1'] =  $hxname;
+                $datas['heelingcorrection1'] = $kedu_str;
+            }
+        }
+        $ship->editData($where, $datas);
+        return $ship->field('suanfa,is_diliang,tripbystern,trimcorrection,trimcorrection1,heelingcorrection,heelingcorrection1,tankcapacityshipid,rongliang,zx,hx,rongliang_1,zx_1,hx_1')->where(array('id' => $shipid))->find();
+    }
+
 }

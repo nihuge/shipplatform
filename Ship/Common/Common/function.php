@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header("Content-type:text/html;charset=utf-8");
 /**
  * 公共函数库
@@ -461,12 +461,12 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
     $pdf->setPrintHeader(false);
     // 设置页眉显示的内容
     // $pdf->SetHeaderData('', 60, '', '（本单证版权归中理检验公司所有，由南京携众提供技术支持。）', array(0,64,255), array(0,64,128));
-    $pdf->SetHeaderData('logo.png', 30, 'Helloweba.com', '致力于WEB前端技术在中国的应用',
-        array(0, 64, 255), array(0, 64, 128));
+//    $pdf->SetHeaderData('logo.png', 30, 'Helloweba.com', '致力于WEB前端技术在中国的应用',
+//        array(0, 64, 255), array(0, 64, 128));
     // 设置页眉字体
     $pdf->setHeaderFont(Array('dejavusans', '', '12'));
     // 页眉距离顶部的距离
-    $pdf->SetHeaderMargin('5');
+    $pdf->SetHeaderMargin('1');
     // 是否显示页脚
     $pdf->setPrintFooter(false);
     // 设置页脚显示的内容
@@ -474,15 +474,20 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
     // 设置页脚的字体
     $pdf->setFooterFont(Array('dejavusans', '', '10'));
     // 设置页脚距离底部的距离
-    $pdf->SetFooterMargin('10');
+    $pdf->SetFooterMargin('1');
     // 设置默认等宽字体
     $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+    //设置单元格的边距：
+//    $pdf->setCellPaddings(15, 15, 15, 15);
     // 设置行高
-    $pdf->setCellHeightRatio(1);
+    $pdf->setCellHeightRatio(1.2);
+    //设置单行单元格：
+//    $pdf->Cell(150, 150, 'test', 10, 10, 'C');
+
     // 设置左、上、右的间距
-    $pdf->SetMargins('10', '2', '10');
+    $pdf->SetMargins('10', '0', '10');
     // 设置是否自动分页  距离底部多少距离时分页
-    $pdf->SetAutoPageBreak(TRUE, '15');
+    $pdf->SetAutoPageBreak(true, '1');
     // 设置图像比例因子
     $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
     if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
@@ -494,10 +499,8 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
     $pdf->SetFont('droidsansfallback', '', 11);
     //新增一个页面 
     $pdf->AddPage('L', 'A4');
-
     // 区分打印的模板
     $html1 = $functionname['pdf']($data);
-
     //内容写入PDF
     $pdf->writeHTMLCell(0, 0, '', '', $html1, 0, 1, 0, true, '', true);
     //输出
@@ -514,7 +517,8 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
  *
  * @return string
  */
-function imgToBase64($img_file) {
+function imgToBase64($img_file)
+{
 
     $img_base64 = '';
     if (file_exists($img_file)) {
@@ -529,11 +533,14 @@ function imgToBase64($img_file) {
             $content = fread($fp, $filesize);
             $file_content = chunk_split(base64_encode($content)); // base64编码
             switch ($img_info[2]) {           //判读图片类型
-                case 1: $img_type = "gif";
+                case 1:
+                    $img_type = "gif";
                     break;
-                case 2: $img_type = "jpg";
+                case 2:
+                    $img_type = "jpg";
                     break;
-                case 3: $img_type = "png";
+                case 3:
+                    $img_type = "png";
                     break;
             }
 
@@ -554,6 +561,12 @@ function imgToBase64($img_file) {
  */
 function curldo($url, $type = 0, $data = "")
 {
+    //数组形式自动构建数据
+    if (is_array($data))
+    {
+        $data = http_build_query($data, null, '&');
+    }
+
     // 1. 初始化
     $ch = curl_init();
     //设置获取的信息以文件流的形式返回，而不是直接输出。
@@ -1165,11 +1178,50 @@ function csicpdf($data = '')
 {
     static $t = '';
     // $count = $data["resultmsg"];
-    for ($i = 0; $i < 13; $i++) {
-        $t .= "<tr style='valign:middle;height:30px;'>
-                <td style='height:20px;width:100px;'>{$data["resultmsg"][$i][0]['cabinname']}</td>
-                <td>{$data["resultmsg"][$i][0]['temperature']}</td>
+    $tls = C('TLS',null,'https://');
+    $domain = C('DOMAIN',null,"www.ciplat.com");
+    $count = count($data["resultmsg"]);
+    $enter1 = "<h4></h4>";
+    $enter2 = "<br/>";
+    $enter = "<tr>
+            <th colspan=6>&nbsp;</th>
+        </tr>";
+
+    if ($count > 12) {
+        for ($i = 0; $i < 16; $i++) {
+            $t .= "<tr style='valign:middle;line-height: 100%;'>
+                <td style='width:100px;'>{$data["resultmsg"][$i][0]['cabinname']}</td>
+                <td >{$data["resultmsg"][$i][0]['temperature']}</td>
+                <td >{$data["resultmsg"][$i][0]['ullage']}</td>
+                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>":"")."
+                <td >{$data["resultmsg"][$i][0]['listcorrection']}</td>
+                <td>{$data["resultmsg"][$i][0]['correntkong']}</td>
+                <td>{$data["resultmsg"][$i][0]['cabinweight']}</td>
+                <td>{$data["resultmsg"][$i][0]['volume']}</td>
+                <td>{$data["resultmsg"][$i][0]['expand']}</td>
+                <td>{$data["resultmsg"][$i][0]['standardcapacity']}</td>
+                <td></td>
+                <td>{$data["resultmsg"][$i][1]['temperature']}</td>
+                <td>{$data["resultmsg"][$i][1]['ullage']}</td>
+                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>":"")."
+                <td>{$data["resultmsg"][$i][1]['listcorrection']}</td>
+                <td>{$data["resultmsg"][$i][1]['correntkong']}</td>
+                <td>{$data["resultmsg"][$i][1]['cabinweight']}</td>
+                <td>{$data["resultmsg"][$i][1]['volume']}</td>
+                <td>{$data["resultmsg"][$i][1]['expand']}</td>
+                <td>{$data["resultmsg"][$i][1]['standardcapacity']}</td>
+        </tr>";
+        }
+        $enter = "";
+        $enter1 = "";
+        $enter2 = "";
+    } else {
+        for ($i = 0; $i < 12; $i++) {
+            $t .= "<tr style='line-height: 100%;'>
+                <td style='valign:middle;width:100px;'>{$data["resultmsg"][$i][0]['cabinname']}</td>
+                <td >{$data["resultmsg"][$i][0]['temperature']}</td>
                 <td>{$data["resultmsg"][$i][0]['ullage']}</td>
+                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>":"")."
                 <td>{$data["resultmsg"][$i][0]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][0]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][0]['cabinweight']}</td>
@@ -1179,6 +1231,7 @@ function csicpdf($data = '')
                 <td></td>
                 <td>{$data["resultmsg"][$i][1]['temperature']}</td>
                 <td>{$data["resultmsg"][$i][1]['ullage']}</td>
+                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>":"")."
                 <td>{$data["resultmsg"][$i][1]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][1]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][1]['cabinweight']}</td>
@@ -1186,6 +1239,7 @@ function csicpdf($data = '')
                 <td>{$data["resultmsg"][$i][1]['expand']}</td>
                 <td>{$data["resultmsg"][$i][1]['standardcapacity']}</td>
         </tr>";
+        }
     }
 
     // 签名判断 
@@ -1210,7 +1264,7 @@ function csicpdf($data = '')
     $ercode_style = "display: none;";
 
 
-    if($data['content']['finish_sign']==1){
+    if ($data['content']['finish_sign'] == 1) {
         $ercode_style = "";
     }
 
@@ -1222,21 +1276,24 @@ function csicpdf($data = '')
     <meta charset="UTF-8">
 </head>
 <body>
+    
     <table border="0" cellspacing="0" cellpadding="0" width="1000px">
     <tr>
-    <td style="width:600px;">
-    <img src="http://121.41.22.2/shipPlatform/Upload/logo/csic_logo.png" style="display:inline-block;">
+    <td style="width:300px;">
+    <br/>
+    <br/>
+    <img width="240px" height="50px" src="'.$tls.$domain.'/Upload/logo/csic_logo.png" style="display:inline-block;">
     </td>
-    <td align="center">
-    <div style="'.$ercode_style.'">
-    <img style="width: 80px;height: 80px;" width="80px" height="80px"  src="' . getReportErCode($data['content']['id'], $data['content']['uid']) . '"/>
+    <td align="center" valign="bottom" style="width:450px;"><br/><br/><br/><h2 align="center">计重记录单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+    <td align="center" style="width:200px;">
+    <div style="' . $ercode_style . '">
+    <img style="width: 80px;height: 80px;" width="70px" height="70px"  src="' . getReportErCode($data['content']['id'], $data['content']['uid']) . '"/>
     <br/>扫描上方二维码验真伪
     </div>
     </td>
     </tr>
     </table>
     <h4></h4>
-    <h2 align="center">计重记录单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
     <table border="0" cellspacing="0" cellpadding="0" width="1000px">
         <tr>
             <th width="45px">船名：</th>
@@ -1250,7 +1307,7 @@ function csicpdf($data = '')
             <th  width="45px">编号：</th>
             <th style="border-bottom:solid 1px black" align="center">' . $data['personality']['number'] . '</th>
         </tr>
-        <br/>
+        '.$enter2.'
         <tr>
             <th width="65px">&nbsp;起运港：</th>
             <th style="border-bottom:solid 1px black" width="150px" align="center">' . $data['personality']['start'] . '</th>
@@ -1262,7 +1319,7 @@ function csicpdf($data = '')
             <th style="border-bottom:solid 1px black"  align="center">' . $data['starttime'] . '</th>
         </tr>
     </table>
-    <h4></h4>
+    '.$enter1.'
     <table border="1" cellspacing="0" cellpadding="0" align="center" width="1050px">
         <tr>
             <th colspan="9" width="524px" style="height:17px"> &nbsp; &nbsp; &nbsp; &nbsp;首次检验&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;吃水差：' . $data['content']['qianchi'] . '</th>
@@ -1275,6 +1332,7 @@ function csicpdf($data = '')
             <th style="width:90px;padding:1px;">油舱名称</th>
             <th width="35px">温度</th>
             <th width="57px">空距<br>(米)</th>
+            '.($data['content']['oil_type']>1?"<th width='57px'>水深<br>(米)</th>":"").'
             <th width="57px">纵倾修正值(米)</th>
             <th width="57px">修正后空距(米)</th>
             <th width="57px">容量<br>(米 <sup>3</sup> )</th>
@@ -1284,6 +1342,7 @@ function csicpdf($data = '')
             <th width="2px"></th>
             <th width="35px">温度</th>
             <th width="57px">空距<br>(米)</th>
+            '.($data['content']['oil_type']>1?"<th width='57px'>水深<br>(米)</th>":"").'
             <th width="57px">纵倾修正值(米)</th>
             <th width="57px">修正后空距(米)</th>
             <th width="57px">容量<br>(米 <sup>3</sup> )</th>
@@ -1328,31 +1387,28 @@ function csicpdf($data = '')
             <td colspan="2">' . $data['content']['houtotal'] . '</td>
         </tr>
         <tr>
-            <td colspan="16" align="right" style="height:20px">&nbsp;货重(吨)</td>
-            <td colspan="2">' . $data['content']['weight'] . '</td>
+            <td colspan="12" align="right" style="height:20px">&nbsp;协议修重(吨)</td>
+            <td colspan="2">' . $data['content']['add_weight'] . '</td>
+            <td colspan="2" align="right" style="height:20px">&nbsp;货重(吨)</td>
+            <td colspan="2">' . $data['content']['final_weight'] . '</td>
         </tr>
     </table>
-    <br/>
-    <br>
-    <table border="0" cellspacing="0" cellpadding="0" width="1000px">
+    <br/><br/>
+    <table border="0" cellspacing="0" cellpadding="0" width="950px">
         <tr>
             <th  width="125px">图表编号：</th>
-            <th style="border-bottom:solid 1px black; width="305px" ">' . $data['content']['ship_number'] . '</th>
+            <th style="border-bottom:solid 1px black;" width="191px" >' . $data['content']['ship_number'] . '</th>
             <th  width="125px">&nbsp;&nbsp;温度计编号：</th>
-            <th style="border-bottom:solid 1px black; width="305px" ">' . $data['personality']['thermometer'] . '</th>
+            <th style="border-bottom:solid 1px black;" width="192px" >' . $data['personality']['thermometer'] . '</th>
             <th  width="125px">&nbsp;&nbsp;量油尺编号：</th>
-            <th style="border-bottom:solid 1px black; width="305px" ">' . $data['personality']['dipstick'] . '</th>
+            <th style="border-bottom:solid 1px black;" width="192px" >' . $data['personality']['dipstick'] . '</th>
         </tr>
-        <tr>
-            <th colspan=6>&nbsp;</th>
-        </tr>
+        '.$enter.'
         <tr>
             <th width="50px" align="left" class="ju02">备注：</th>
-            <th width="950px" colspan=5 style="border-bottom:solid 1px black;">' . $data['content']['remark'] . '</th>
+            <th width="900px" colspan=5 style="border-bottom:solid 1px black;">' . $data['content']['remark'] . '</th>
         </tr>
-        <tr>
-            <th colspan=6>&nbsp;</th>
-        </tr>
+        <br><br>
         <tr>
             <th width="60px" align="left" class="ju02">计量员：</th>
             <th width="205px" style="" colspan=2>
@@ -1426,7 +1482,9 @@ function createQRcode($save_path, $qr_data = 'xiehzong', $qr_level = 'L', $qr_si
 function getReportErCode($result_id, $user_id)
 {
     $sign = reportCodeEncode($result_id, $user_id);
-    $url = "https://www.newcip.com/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $tls = C('TLS',null,'https://');
+    $domain = c('DOMAIN',null,"www.ciplat.com");
+    $url = $tls.$domain."/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 
@@ -1452,8 +1510,9 @@ function reportCodeEncode($result_id, $user_id)
 function shGetReportErCode($result_id, $user_id)
 {
     $sign = shReportCodeEncode($result_id, $user_id);
-
-    $url = "https://www.newcip.com/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $tls = c('TLS',null,"https://");
+    $domain = c('DOMAIN',null,"www.ciplat.com");
+    $url = $tls.$domain."/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 
@@ -1742,4 +1801,53 @@ function getUserIp()
         }
     }
     return ($ip);
+}
+
+
+/**
+ * 简略正文信息，超出的部分用...代替
+ * @param $text
+ * @param $length
+ * @param string $replace
+ * @param string $encoding
+ * @return string
+ */
+function substr_format($text, $length, $replace='..', $encoding='UTF-8')
+{
+    if ($text && mb_strlen($text, $encoding)>$length)
+    {
+        return mb_substr($text, 0, $length, $encoding).$replace;
+    }
+    return $text;
+}
+
+/**
+ * 获取 IP  地理位置
+ * 百度地图IP接口
+ * @Return: array
+ */
+function getCity($ip)
+{
+    $ch = curl_init();
+
+    $url = "http://api.map.baidu.com/location/ip?ip={$ip}&ak=sHhZHsFNfhSPGa1rqhG4H5n2l1oSFSsc";
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    //参数为1表示传输数据，为0表示直接输出显示。
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    //参数为0表示不带头文件，为1表示带头文件
+    curl_setopt($ch, CURLOPT_HEADER,0);
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+    $output = curl_exec($ch);
+
+    curl_close($ch);
+
+    $output = json_decode($output,true);
+
+    return $output['content']['address_detail']['province'].$output['content']['address_detail']['city'];
+
 }

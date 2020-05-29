@@ -13,6 +13,10 @@
     <div class="page-container">
         <div class="col-sm-12">
             <div id="dropdown14" class="tab-pane">
+                <div style="text-align: right">
+                <button type="button" class="btn btn-warning" onclick="check_type('n')">快速选择无表船</button>
+                <button type="button" class="btn btn-info " onclick="check_type('y')">快速选择有表船</button>
+                </div>
                 <table id="sample-table-3" class="table table-striped table-bordered table-hover" style='margin:auto auto;text-align: center;'>
                     <form action="__ACTION__" method="post">
                     <input type="hidden" name="id" value="{$data['id']}"/>
@@ -33,7 +37,7 @@
                                             <!--船列表-->
                                             <foreach name="v['shiplist']" item="value">
                                                 <label>
-                                                    <input class="ace ace-checkbox-2" type="checkbox"  name="operation_jur[]" value="{$value['id']}" {:in_array($value['id'],$data['operation_jur']) ? 'checked':''}  onclick='checka(this)'/>
+                                                    <input class="ace ace-checkbox-2" type="checkbox" data-ship="{$value['data_ship']}"  name="operation_jur[]" value="{$value['id']}" {:in_array($value['id'],$data['operation_jur']) ? 'checked':''}  onclick='checka(this)'/>
                                                     <span class="lbl"> {$value['shipname']}</span>
                                                 </label>
                                             </foreach>
@@ -74,6 +78,7 @@
         </div>
     </div>
     <script type="text/javascript">
+
         function checkAll(obj) {
             $(obj).parents('.b-group').eq(0).find("input[type='checkbox']").prop('checked', $(obj).prop('checked'));
         }
@@ -82,5 +87,19 @@
                 var ul = $(obj).parents('.b-group').eq(0).find("input[type='checkbox']").eq(0).prop('checked', $(obj).prop('checked'));
             }
         }
+
+        function check_type(data_ship) {
+            $("input[type='checkbox'][name='operation_jur\[\]']").prop('checked',false)
+            $("[data-ship='"+data_ship+"']").each(
+                function () {
+                    // checka($(this))
+                    $(this).prop('checked',true);
+                    checka($(this))
+                    console.log($(this))
+                }
+            );
+        }
+
+
     </script>
 </block>

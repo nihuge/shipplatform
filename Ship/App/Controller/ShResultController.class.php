@@ -405,6 +405,78 @@ class ShResultController extends AppBaseController
     }
 
 
+    /**
+     * 补充更新常数
+     */
+    public function add_constant(){
+        //判断前左、右是否有
+        $fwater_weight = round((float)I('post.fwater_weight',0),5);//存储淡水量
+        $sewage_weight = round((float)I('post.sewage_weight',0),5);//存储污水量
+        $fuel_weight = round((float)I('post.fuel_weight',0),5);//存储燃油量
+        $other_weight = round((float)I('post.other_weight',0),5);//存储其他货物重量
+        if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if ($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
+                $data = array(
+                    'fwater_weight'=>$fwater_weight,
+                    'sewage_weight'=>$sewage_weight,
+                    'fuel_weight'=>$fuel_weight,
+                    'other_weight'=>$other_weight,
+                    'resultid'=>I('post.resultid'),
+                    'solt'=>I('post.solt'),
+                );
+                $res = $result->add_constant($data);
+            }else {
+                // 错误信息
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+    /**
+     * 查看常数
+     */
+    public function get_constant(){
+        if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if ($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
+                $data = array(
+                    'resultid'=>I('post.resultid'),
+                    'solt'=>I('post.solt'),
+                );
+                $res = $result->add_constant($data);
+            }else {
+                // 错误信息
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+
 
     /**
      * 照片文件上传
@@ -1077,7 +1149,7 @@ class ShResultController extends AppBaseController
 
 
                     $value['volume'] = round((float)$value['volume'], 5);
-                    $value['density'] = round((float)$value['density'], 5);
+                    $value['density'] = $value['density'] !== null? round((float)$value['density'], 5):1;
                     $value['weight'] = round((float)$value['volume'] * (float)$value['density'], 5);
 //                    $process .= $value['cabinname'] . ": \r\n volume=" . $value['volume'] . ",density=" . $value['density'] . ",weight=" . $value['volume'] . "*" . $value['density'] . "=" . $value['weight'] . " \r\n";
                     $process['cabin'][] = array(
@@ -1089,7 +1161,7 @@ class ShResultController extends AppBaseController
                     );
 
 
-                    if ($value['weight'] !== null and $value['volume'] !== null and $value['density'] !== null and $value['sounding'] !== null) {
+                    if ($value['weight'] !== null and $value['volume'] !== null and $value['sounding'] !== null) {
                         // 对数据进行验证
                         if (!$resultlist->create($value)) {
                             M()->rollback();

@@ -24,12 +24,20 @@
                 </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label style="color: #858585;">船名：<input style="border:1px solid #D5D5D5;height: 30px;"
                                                          id="form-field-input-1" name="shipname"></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除状态：<select name="del_sign"
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                船舶数据有无：<select name="is_have_data"
+                             style='width:130px;text-align: center'>
+                <option value="">--选择有无表船--</option>
+                <option value="y">有表船</option>
+                <option value="n">无表船</option>
+            </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除状态：<select name="del_sign"
                                                                        style='width:130px;text-align: center'>
                 <option value="">--选择删除状态--</option>
                 <option value="1">未删除</option>
                 <option value="2">已删除</option>
             </select>
+
                 <button class="btn btn-sm btn-primary">查询</button>
             </form>
         </div>
@@ -46,6 +54,7 @@
                 <th>船名</th>
                 <th>所属公司</th>
                 <th>编号</th>
+                <th>数据状态</th>
                 <th>舱总数</th>
                 <th>操作</th>
             </tr>
@@ -56,12 +65,21 @@
                     <td>{$v['shipname']}</td>
                     <td>{$v['firmname']}</td>
                     <td>{$v['number']}</td>
+                    <td>{$v['data_ship']=="y"?"有表船":"无表船"} | <span  onclick="reverse_lock({$v['id']})" style="cursor: pointer;color: {$v['is_lock']==1?'blue':'red'}">{$v['is_lock']==1?"被锁定":"未锁定"}</span></td>
                     <td><a href="{:U('Cabin/index',array('shipid'=>$v['id']))}">{$v['cabinnum']} <span
                             class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a></td>
                     <td>
                         <a href="{:U('Ship/edit',array('id'=>$v['id']))}">修改</a>
                         &nbsp;/&nbsp;
                         <a href="{:U('Ship/sort',array('id'=>$v['id']))}">舱名排序</a>
+                        <if condition="$v['data_ship'] eq 'y'">
+                             /
+<!--                            <ul class="layui-nav">-->
+<!--                                <li class="layui-nav-item">-->
+                                    <a href="{:U('Ship/check_table',array('shipid'=>$v['id']))}">校验</a>
+<!--                                </li>-->
+<!--                            </ul>-->
+                        </if>
                         &nbsp;/&nbsp;
                         <if condition="$v['del_sign'] eq 1">
                             <a href="javascript:;" onclick="delShip({$v['id']})" style="color:#3ca0fe">删除</a>
@@ -76,10 +94,15 @@
                 </tr>
             </volist>
             <tr>
-                <td colspan=6 class="pages">{$page}</td>
+                <td colspan=7 class="pages">{$page}</td>
             </tr>
         </table>
         <script type="text/javascript">
+            layui.use('element',function(){
+                var element = layui.element;
+
+                //…
+            });
             function delShip(shipid) {
                 layer.confirm('您确定要删除船舶吗？', {
                     btn: ['确定', '取消'] //按钮
@@ -104,6 +127,28 @@
 
                     });
                 })
+            }
+
+            function reverse_lock(shipid) {
+                $.ajax({
+                    url: "{:U('Ship/reverse_lock')}",
+                    type: "POST",
+                    data: {
+                        shipid: shipid
+                    },
+                    success: function (data) {
+                        if (data.code == 1) {
+                            //刷新
+                            location.reload()
+                        } else {
+                            layer.msg(data.error, {
+                                icon: 5
+                            });
+                        }
+
+                    }
+
+                });
             }
 
             function recoverShip(shipid) {

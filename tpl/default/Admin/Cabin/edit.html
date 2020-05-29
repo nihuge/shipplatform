@@ -16,16 +16,13 @@
             <input type="hidden" name="id" value="{$msg['id']}">
             <tr>
                 <td>所属船</td>
-                <td>
-                    <select class=" col-xs-10 col-sm-5" id="form-field-select-1" name="shipid" required>
+                <td align="left">
+                        <input type="hidden" name="shipid" value="{$msg['shipid']}">
                         <volist name="shiplist" id="v">
-                            <option value="{$v['id']}" 
                             <if condition="$msg['shipid'] == $v['id']">
-                                selected
+                                <span style="font-family: 'Microsoft YaHei', sans-serif;font-weight: bolder" >{$v['shipname']}</span>
                             </if>
-                             >{$v['shipname']}</option>
                         </volist>
-                    </select>
                 </td>
             </tr>
             <tr>

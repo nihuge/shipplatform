@@ -22,6 +22,10 @@ class LoginController extends Controller
                 $this->error('数据不能含有特殊字符');
                 exit;
             }
+            if(!I('post.pwd')){
+                $this->error('密码不能为空');
+                exit;
+            }
             $map = array(
                 'u.title' => ":title",
                 'u.phone' => ":title",
@@ -48,6 +52,15 @@ class LoginController extends Controller
                 ->find();
 
             if ($arr['id'] != '') {
+                $ip = get_client_ip();
+                $login_data = array(
+                    'login_time'=>time(),
+                    'login_ip'=>$ip,
+                    'login_city'=>getCity($ip),
+                );
+                $user->editData(array('id'=>$arr['id']),$login_data);
+                $user->setInc('login_num');
+
                 //如果通过域名访问进来则去除最后一个开头的路径
                 /*                if (is_Domain()) {
                                     $arr['logo'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $arr['logo']);
@@ -64,7 +77,7 @@ class LoginController extends Controller
 //                    $this->success('登陆成功', U('Index/index'));
                 } else if ($msg['code'] == '1009') {
                     $_SESSION['user_info'] = $arr;
-                    $res = array('code' => 25565, 'error' => '请先完善公司信息', 'reg_status' => $msg['reg_status']);
+                    $res = array('code' => 1009, 'error' => '请先完善公司信息','content'=>$arr, 'reg_status' => $msg['reg_status']);
                     $this->ajaxReturn($res);
 //                    $this->error('请先完善公司信息', '', false, $msg['code']);
                 } else {
@@ -106,6 +119,9 @@ class LoginController extends Controller
                 $this->error('管理账号不能含有特殊字符');
                 exit;
             }
+            if(!(I('post.title') and I('post.username') and I('post.phone') and I('post.code') and I('post.pwd'))){
+                $this->error('字段不能为空');
+            }
 
             // 判断两个密码是否一致
             if (I('post.pwd') == I('post.pwd1')) {
@@ -128,7 +144,8 @@ class LoginController extends Controller
                         'firmid' => '',
                         'username' => I('post.username'),
                         'phone' => I('post.phone'),
-                        'pid' => '0'
+                        'pid' => '0',
+                        'reg_time' => time(),//注册时间
                     );
                     $uid = $user->addData($user_data);
                     if ($uid) {
@@ -270,7 +287,7 @@ class LoginController extends Controller
             if (!$_SESSION['user_info']['id']) {
                 $this->error('请先登录系统！', 'Login/login');
             }
-            if (I('post.shehuicode') and I('post.firmname') and I('post.img')) {
+            if (I('post.firmname') and I('post.people') and I('post.phone')) {
                 // 新增公司信息
                 $data = I('post.');
                 $logo = I('post.logo');
@@ -295,8 +312,10 @@ class LoginController extends Controller
                 $data['expire_time'] = strtotime("+10 year");
                 //默认会员费
                 $data['membertype'] = 1;
+                //默认默认合同号，标注为首页端创建
+                $data['number'] = "index_" . time();
                 //默认给5条船的数量
-                $data['limit'] = 5;
+                $data['limit'] = 30;
                 $firm = new \Common\Model\FirmModel();
                 // 对数据进行验证
                 if (!$firm->create($data)) {
@@ -306,35 +325,64 @@ class LoginController extends Controller
                     // 验证通过 可以进行其他数据操作
                     $res = $firm->addData($data);
                     if ($res !== false) {
-                        $da = array(
-                            'firmid' => $res
+                        $where1 = array(
+                            'id'=>$res
                         );
-                        $uid = $_SESSION['user_info']['id'];
-                        $map = array(
-                            'id' => $uid
+                        //查询公司当前权限信息
+                        $firmtype = $firm
+                            ->field('firm_jur')
+                            ->where($where1)
+                            ->find();
+                        //添加该公司对应的公司权限
+                        $firm_jur_arr = explode(',', $firmtype['firm_jur']);
+                        $firm_jur_arr[] = $res;
+                        $firm_jur_str = implode(',', $firm_jur_arr);
+                        $data_f = array(
+                            'firm_jur' => $firm_jur_str,
                         );
-                        $user = new \Common\Model\UserModel();
-                        if (!$user->create($da)) {
-                            M()->rollback();
-                            //对data数据进行验证
-                            $this->error($user->getError());
-                        } else {
-                            // 修改用户信息
-                            $resu = $user->editData($map, $da);
-                            if ($resu !== false) {
-                                M()->commit();
-                                $_SESSION['user_info']['firmid'] = $da['firmid'];
-
-                                // 添加公司历史数据汇总初步
-                                $arr = array('firmid' => $da['firmid']);
-                                M('firm_historical_sum')->add($arr);
-
-                                $this->success('完善信息成功', U('Index/index'));
-                            } else {
+                        $res_f = $firm->editData($where1, $data_f);
+                        if ($res_f !== false) {
+                            // 添加公司历史数据汇总初步
+                            $arr = array('firmid' => $res);
+                            M('firm_historical_sum')->add($arr);
+                            //更改用户信息
+                            $da = array(
+                                'firmid' => $res
+                            );
+                            $uid = $_SESSION['user_info']['id'];
+                            $map = array(
+                                'id' => $uid
+                            );
+                            $user = new \Common\Model\UserModel();
+                            if (!$user->create($da)) {
                                 M()->rollback();
-                                $this->error('个人信息修改失败');
+                                //对data数据进行验证
+                                $this->error($user->getError());
+                            } else {
+                                // 修改用户信息
+                                $resu = $user->editData($map, $da);
+                                if ($resu !== false) {
+                                    M()->commit();
+                                    $_SESSION['user_info']['firmid'] = $da['firmid'];
+
+                                    // 添加公司历史数据汇总初步
+                                    $arr = array('firmid' => $da['firmid']);
+                                    M('firm_historical_sum')->add($arr);
+
+                                    $this->success('完善信息成功', U('Index/index'));
+                                } else {
+                                    M()->rollback();
+                                    $this->error('个人信息修改失败');
+                                }
                             }
+                        } else {
+                            //修改失败,错误11
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['EDIT_FALL'],
+                                'massage' => '修改失败',
+                            );
                         }
+
                     } else {
                         M()->rollback();
                         $this->error('公司信息新增失败');
@@ -357,12 +405,16 @@ class LoginController extends Controller
      * */
     public function check_firm_name()
     {
-        if (!$_SESSION['user_info']['id']) {
-            $this->error('请先登录系统！', 'Login/login');
-        }
+//        if (!$_SESSION['user_info']['id']) {
+//            $this->error('请先登录系统！', 'Login/login');
+//        }
         $firm_name = I('post.name');
-        $firm = new \Common\Model\FirmModel();
-        $this->ajaxReturn($firm->check_name($firm_name));
+        if($firm_name){
+            $firm = new \Common\Model\FirmModel();
+            $this->ajaxReturn($firm->check_name($firm_name));
+        }else{
+            $this->error('缺少公司名');
+        }
     }
 
     /**
@@ -370,9 +422,9 @@ class LoginController extends Controller
      * */
     public function upload_ajax()
     {
-        if (!$_SESSION['user_info']['id']) {
-            $this->error('请先登录系统！', 'Login/login');
-        }
+//        if (!$_SESSION['user_info']['id']) {
+//            $this->error('请先登录系统！', 'Login/login');
+//        }
         $base64_image_content = $_POST['image'];
         $res = upload_ajax($base64_image_content);
         $res['code'] = $res['status'];
@@ -496,5 +548,21 @@ class LoginController extends Controller
         }
 
         return $res;
+    }
+
+    /**
+     * 重置注册通知
+     */
+    public function reset_status(){
+        if ($_SESSION['user_info']['id']) {
+            $uid = $_SESSION['user_info']['id'];
+            $user = new \Common\Model\UserModel();
+            $res = $user->reset_status(intval($uid));
+        }else{
+            $res = array(
+                'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        exit(jsonreturn($res));
     }
 }
