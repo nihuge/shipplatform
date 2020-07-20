@@ -387,9 +387,9 @@ class ReportController extends Controller
                 exit("共耗时：".number_format(microtime(1) - $start_time, 6)."秒<br/>图片参数：".json_encode($img_op->imageinfo));*/
 
         // 你的 APPID AK SK
-        $APP_ID = '18037745';
-        $API_KEY = 'nsc7qNv6ZTa6pFChL1dEMqEG';
-        $SECRET_KEY = 'Ci9MZ8Q8QXBf4ap916D0M8eRCxGCNLep';
+        $APP_ID = '180';
+        $API_KEY = '';//自己填
+        $SECRET_KEY = '';
         $img = file_get_contents($img_dir);
         $Ocr = new \AipOcr($APP_ID, $API_KEY, $SECRET_KEY);
         $option = array(
@@ -1116,7 +1116,6 @@ test_json;
         }
         return $res;
     }
-
 
     /**
      * 倒推计算上一条与下一条数据
