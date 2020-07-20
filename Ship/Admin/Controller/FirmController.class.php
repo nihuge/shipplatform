@@ -330,7 +330,7 @@ class FirmController extends AdminBaseController
                 }
             }
         } else {
-            $firmShipList = $firm->getShipList(I('get.id'), I('get.firmtype'));
+            $firmShipList = $firm->getAllShip();
             // 获取公司操作权限
             $data = $firm->getFirmOperationSearch(I('get.id'));
 

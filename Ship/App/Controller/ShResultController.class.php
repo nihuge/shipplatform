@@ -33,7 +33,6 @@ class ShResultController extends AppBaseController
                 // 根据用户id获取可以查询的船列表
                 $msg = $user->getUserOperationSeach($uid);
                 $where = '1';
-
                 if (I('post.search') != null) {
                     // 查询指令列表
                     if (I('post.shipname')) {
@@ -395,6 +394,129 @@ class ShResultController extends AppBaseController
             $data = I('post.');
             $res = $result->forntOperation1($data);
 
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+
+    /**
+     * 水尺录入(有表船)
+     * @param int uid 用户ID
+     * @param int resultid 计量ID
+     * @param string imei 标识
+     * @param float forntleft 前左
+     * @param float forntright 前右
+     * @param float centerleft 中左
+     * @param float centerright 中右
+     * @param float afterleft 后左
+     * @param float afterright 后右
+     * @param int solt 作业前/后状态 1：前 2：后
+     * @param string temperature 温度
+     * @param float(9,6) density 密度
+     * @return @param array
+     * @return @param code 返回码
+     */
+    public function DataFornt()
+    {
+        //判断前左、右是否有
+        if (I('post.forntleft') != null and I('post.forntright') != null
+            and I('post.afterleft') != null and I('post.afterright') != null
+            and I('post.centerleft') != null and I('post.centerright') != null
+            and I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.pwd')) {
+
+            $result = new \Common\Model\ShResultModel();
+            //如果作业已经结束则报错作业已完成 2029
+            if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
+            $data = I('post.');
+            $res = $result->forntOperation2($data);
+
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+
+    /**
+     * 补充更新常数
+     */
+    public function add_constant(){
+        //判断前左、右是否有
+        $fwater_weight = round((float)I('post.fwater_weight',0),5);//存储淡水量
+        $sewage_weight = round((float)I('post.sewage_weight',0),5);//存储污水量
+        $fuel_weight = round((float)I('post.fuel_weight',0),5);//存储燃油量
+        $other_weight = round((float)I('post.other_weight',0),5);//存储其他货物重量
+        if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if ($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
+                $data = array(
+                    'fwater_weight'=>$fwater_weight,
+                    'sewage_weight'=>$sewage_weight,
+                    'fuel_weight'=>$fuel_weight,
+                    'other_weight'=>$other_weight,
+                    'resultid'=>I('post.resultid'),
+                    'solt'=>I('post.solt'),
+                );
+                $res = $result->add_constant($data);
+            }else {
+                // 错误信息
+                $res = $msg1;
+            }
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
+    /**
+     * 查看常数
+     */
+    public function get_constant(){
+        if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei')) {
+            $user = new \Common\Model\UserModel();
+            //判断用户状态、是否到期、标识比对
+            $msg1 = $user->is_judges(I('post.uid'), I('post.imei'));
+            if ($msg1['code'] == '1') {
+                $solt = I('post.solt/d');
+                $result = new \Common\Model\ShResultModel();
+                //如果作业已经结束则报错作业已完成 2029
+                if ($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+                $where = array(
+                    'id'=>I('post.resultid')
+                );
+                if($solt == 1){
+                    $field = "id,qian_fwater_weight as fwater_weight,qian_sewage_weight as sewage_weight,qian_fuel_weight as fuel_weight,qian_other_weight as other_weight";
+                }else{
+                    $field = "id,hou_fwater_weight as fwater_weight,hou_sewage_weight as sewage_weight,hou_fuel_weight as fuel_weight,hou_other_weight as other_weight";
+                }
+//                $result->field($field)->where($where)->find();
+
+                $res = array(
+                    'code'=>$this->ERROR_CODE_COMMON['SUCCESS'],
+                    'data'=>$result->field($field)->where($where)->find(),
+                );
+            }else {
+                // 错误信息
+                $res = $msg1;
+            }
         } else {
             //参数不正确，参数缺失    4
             $res = array(
@@ -1003,6 +1125,7 @@ class ShResultController extends AppBaseController
         echo jsonreturn($res);
     }
 
+
     /**
      * 记录测量数据
      * @param int cabinid 舱ID
@@ -1010,15 +1133,15 @@ class ShResultController extends AppBaseController
      * @param int resultid 计量ID
      * @param float sounding 实高
      * @param float ullage 空高
-     * @param varchar temperature 温度
+     * @param float temperature 温度
      * @param int solt 1:作业前；2:作业后
-     * @param varchar imei 标识
+     * @param string imei 标识
      * @param int shipid 船ID
      * @param float altitudeheight 基准高度
-     * @param qufen diliang:底量计算 rongliang:容量计算
+     * @param string qufen diliang:底量计算 rongliang:容量计算
      * @param int quantity 1：计算底量；2：不计算底量
      * @param int is_pipeline 是否有管线 1：有；2：没有；
-     * @param varcher is_fugai 是否覆盖  Y:覆盖；N：不覆盖
+     * @param string is_fugai 是否覆盖  Y:覆盖；N：不覆盖
      * @return @param array
      * @return @param code
      * */
@@ -1077,7 +1200,7 @@ class ShResultController extends AppBaseController
 
 
                     $value['volume'] = round((float)$value['volume'], 5);
-                    $value['density'] = round((float)$value['density'], 5);
+                    $value['density'] = $value['density'] !== null? round((float)$value['density'], 5):1;
                     $value['weight'] = round((float)$value['volume'] * (float)$value['density'], 5);
 //                    $process .= $value['cabinname'] . ": \r\n volume=" . $value['volume'] . ",density=" . $value['density'] . ",weight=" . $value['volume'] . "*" . $value['density'] . "=" . $value['weight'] . " \r\n";
                     $process['cabin'][] = array(
@@ -1089,7 +1212,7 @@ class ShResultController extends AppBaseController
                     );
 
 
-                    if ($value['weight'] !== null and $value['volume'] !== null and $value['density'] !== null and $value['sounding'] !== null) {
+                    if ($value['weight'] !== null and $value['volume'] !== null and $value['sounding'] !== null) {
                         // 对数据进行验证
                         if (!$resultlist->create($value)) {
                             M()->rollback();
@@ -1402,6 +1525,33 @@ class ShResultController extends AppBaseController
         echo jsonreturn($res);
     }
 
+    /**
+     * 录入排水量表数据
+     *
+     */
+    public function NewBookDataTest()
+    {
+        if (I('post.uid') and I('post.imei') and I('post.resultid')
+            and I('post.solt') and I('post.shipid')
+            and I('post.d_up') !== null and I('post.d_down') !== null
+            and I('post.tpc_up') !== null and I('post.tpc_down') !== null
+            and I('post.ds_up') !== null and I('post.ds_down') !== null
+            and I('post.lca_up') !== null and I('post.lca_down') !== null
+            and I('post.mtc_up') !== null and I('post.mtc_down') !== null) {
+            $result = new \Common\Model\ShResultModel();
+            //如果作业已经结束则报错作业已完成 2029
+            if($result->checkFinish(I('post.resultid'))) exit(jsonreturn(array($this->ERROR_CODE_RESULT['WORK_COMPLETE'])));
+
+            $res = $result->reckon3(I('post.'));
+        } else {
+            //参数不正确，参数缺失    4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+
 
     /**
      * 根据用户ID获取可以操作的船所属公司
@@ -1536,9 +1686,9 @@ class ShResultController extends AppBaseController
 
     /**
      * 判断船舱容表是否到期
-     * @param int uid 用户id
-     * @param string imei 标识
-     * @param int shipid 船ID
+     * @param int $uid 用户id
+     * @param string $imei 标识
+     * @param int $shipid 船ID
      * @return array
      * @return array code
      */

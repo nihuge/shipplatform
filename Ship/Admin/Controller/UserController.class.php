@@ -22,7 +22,7 @@ class UserController extends AdminBaseController
         $count = $user
             ->where($where)
             ->count();
-        $per = 30;
+        $per = $count;
 
         if ($_GET['p']) {
             $p = $_GET['p'];
@@ -115,12 +115,12 @@ class UserController extends AdminBaseController
             } else {
                 $this->error('新增失败');
             }
-
         } else {
             // 根据firmid获取公司操作权限
             $firm = new \Common\Model\FirmModel();
+//            $user = new \Common\Model\UserModel();
             $firmmsg = $firm->getFirmOperationSearch(I('get.firmid'));
-
+//            $pid =
             // 获取公司下操作的船信息
             $ship = new \Common\Model\ShipModel();
             $where = array(
@@ -194,6 +194,7 @@ class UserController extends AdminBaseController
 
         }
     }
+
 
     /**
      * 修改用户操作权限
@@ -284,7 +285,7 @@ class UserController extends AdminBaseController
                             </tr><tr>
 table;
                 $ship_count = count($shiplist);
-                if($ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无液货船操作权限，请点击<a href='".U('firm/configOperator',array('id'=>$usermsg['firmid'],'firmtype'=>$firmmsg['firmtype']))."' style='color: #0d7bdc'>这里</a>配置权限</td>";
+                if ($ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无液货船操作权限，请点击<a href='" . U('firm/configOperator', array('id' => $usermsg['firmid'], 'firmtype' => $firmmsg['firmtype'])) . "' style='color: #0d7bdc'>这里</a>配置权限</td>";
 
                 foreach ($shiplist as $key => $value) {
                     $checked = "";
@@ -311,7 +312,7 @@ table;
                             </tr><tr>
 shtable;
                 $sh_ship_count = count($sh_shiplist);
-                if($sh_ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无散货船操作权限，请点击<a href='".U('firm/configOperator',array('id'=>$usermsg['firmid'],'firmtype'=>$firmmsg['firmtype']))."' style='color: #0d7bdc'>这里</a>配置权限</td>";
+                if ($sh_ship_count == 0) $txt .= "<td id=\"ajaxship\" colspan='3'>公司暂无散货船操作权限，请点击<a href='" . U('firm/configOperator', array('id' => $usermsg['firmid'], 'firmtype' => $firmmsg['firmtype'])) . "' style='color: #0d7bdc'>这里</a>配置权限</td>";
                 foreach ($sh_shiplist as $key1 => $value1) {
                     $sh_checked = "";
                     if (in_array($value1['id'], $sh_jurlist)) {
@@ -383,7 +384,7 @@ endhtml;
                 // 修改用户查询条件
                 $resu = $user->editData($map, $data);
                 if ($resu !== false) {
-                    $this->success('修改用户查询条件成功!', U('index'));
+                    $this->success('修改用户查询条件成功!', U('index',array('firmid'=>$user->getUserFirm(I('post.id')))));
                 } else {
                     $this->error("修改用户查询条件失败！");
                 }
@@ -448,6 +449,87 @@ endhtml;
                 echo ajaxReturn(array("state" => 2, 'msg' => "改变用户状态失败"));
             }
         }
+    }
+
+    /**
+     * 删除用户信息
+     * */
+    public function del()
+    {
+//        $firm = new \Common\Model\FirmModel();
+        $user = new \Common\Model\UserModel();
+        if (!(intval(I('get.id')))) $this->error("参数缺失");
+//        if (!(I('get.phone'))) $this->error("请输入手机号");
+        $user_id = intval(I('get.id'));
+        $phone = I('get.phone');
+        //获取用户信息
+        $usermsg = $user
+            ->field('id,title,username,phone,firmid,status,pid')
+            ->where(array('id' => $user_id))
+            ->find();
+        //获取用户所属公司下有多少名其他员工
+//            $usercount = $user->where(array('firmid' => $usermsg['firmid']))->count();
+
+//            $firm_status = $firm->field('del_sign')->where(array('id' => $usermsg['firmid']))->find();
+
+        //管理员不可以被删除
+        if ($usermsg['pid'] == 0) $this->ajaxReturn(array("code" => 3, 'error' => "不可以删除公司管理员"));
+        //正常状态不可以被删除
+        if ($usermsg['status'] != 2) $this->ajaxReturn(array("code" => 3, 'error' => "只允许删除被冻结的用户"));
+        //防止删错用户
+        if ($usermsg['phone'] != $phone) $this->ajaxReturn(array("code" => 4, 'error' => "手机号码不匹配，请检查是否删错用户"));
+        M()->commit();
+        $res_u = $user->where(array('id' => $user_id))->delete();
+        if ($res_u !== false) {
+            M()->commit();
+            $this->success('删除成功');
+        } else {
+            M()->rollback();
+            $this->error('删除失败，数据库错误 ' . $user->getDbError());
+        }
+        M()->rollback();
+        $this->error("未知错误");
+    }
+
+    /**
+     * 更换公司管理员
+     * */
+    public function change_admin()
+    {
+//        $firm = new \Common\Model\FirmModel();
+        $user = new \Common\Model\UserModel();
+        if (!(intval(I('get.id')))) $this->error("参数缺失");
+//        if (!(I('get.phone'))) $this->error("请输入手机号");
+        $user_id = intval(I('get.id'));
+        //获取用户信息
+        $usermsg = $user
+            ->field('id,firmid,status,pid')
+            ->where(array('id' => $user_id))
+            ->find();
+        //获取用户所属公司下有多少名其他员工
+//            $usercount = $user->where(array('firmid' => $usermsg['firmid']))->count();
+
+//            $firm_status = $firm->field('del_sign')->where(array('id' => $usermsg['firmid']))->find();
+
+        //管理员不可以更换给自己
+        if ($usermsg['pid'] == 0) $this->ajaxReturn(array("code" => 3, 'error' => "当前用户已经是管理员，无法更换"));
+        //冻结的用户不可以被更改
+//        if ($usermsg['status'] != 2) $this->ajaxReturn(array("code" => 3, 'error' => "被冻结的用户不可以被更换"));
+        //开始事务
+        M()->commit();
+        //先将被选择的用户改为管理员
+        $res_u = $user->editData(array('id' => $user_id), array('pid' => 0));
+        //然后将公司其他人的所属管理员改为被选择的用户
+        $res_f = $user->editData(array('id' => array('neq', $user_id), 'firmid' => $usermsg['firmid']), array('pid' => $user_id));
+        if ($res_u !== false and $res_f !== false) {
+            M()->commit();
+            $this->success('更换成功');
+        } else {
+            M()->rollback();
+            $this->error('更换失败，数据库错误，请联系管理员查看日志，最后一次错误信息：' . $user->getDbError());
+        }
+        M()->rollback();
+        $this->error("未知错误");
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Common\Model;
 
-use Common\Model\BaseModel;
-
 /**
  * 公司管理Model
  * */
@@ -16,7 +14,7 @@ class FirmModel extends BaseModel
         array('firmname', '', '公司名已经存在！', 0, 'unique', 3),
         // 不能为空
         array('firmname', 'require', '公司名称不能为空', 0),// 必须验证 不能为空
-        array('expire_time', 'require', '到期时间不能为空', 0),// 必须验证 不能为空
+//        array('expire_time', 'require', '到期时间不能为空', 0),// 必须验证 不能为空
         array('people', 'require', '联系人不能为空', 0),// 必须验证 不能为空
         array('phone', 'require', '联系电话不能为空', 0),// 必须验证 不能为空
         array('membertype', 'require', '会员标准不能为空', 0),// 必须验证 不能为空
@@ -29,6 +27,7 @@ class FirmModel extends BaseModel
         // array('type',array('月付','季付','年付'),'支付类型的范围不正确！',0,'in'), // 当值不为空的时候判断是否在一个范围内
         array('membertype', array('1', '2'), '会员费标准的范围不正确！', 0, 'in'), // 必须验证 判断是否在一个范围内
         array('firmtype', array('1', '2'), '公司类型的范围不正确！', 0, 'in'), // 必须验证 判断是否在一个范围内
+        array('claimed', array('1', '2'), '认领状态不正确！', 0, 'in'), // 必须验证 判断是否在一个范围内
         // 长度判断
         array('expire_time', '1,11', '到期时间长度不能超过11个字符', 0, 'length'),// 必须验证
         array('people', '1,10', '联系人长度不能超过10个字符', 0, 'length'),//必须验证
@@ -48,6 +47,7 @@ class FirmModel extends BaseModel
         array('service', 'integer', '服务费标准不是整数', 0),
         array('balance', 'integer', '账户余额不是整数', 0),
         array('limit', 'integer', '船舶限制个数不是整数', 0),
+        array('claimed', 'integer', '认领状态不是整数', 0),
     );
 
     /**
@@ -110,18 +110,18 @@ class FirmModel extends BaseModel
         if (!empty($status)) {
             // 根据公司会员费标准判断
             if ($status['membertype'] == '1') {
-                // 判断公司是否到期
-                if ($status['expire_time'] > time()) {
-                    //成功 1
-                    $res = array(
-                        'code' => $this->ERROR_CODE_COMMON['SUCCESS']
-                    );
-                } else {
-                    // 公司已到期 1005
-                    $res = array(
-                        'code' => $this->ERROR_CODE_USER['FIRM_EXPIRE']
-                    );
-                }
+//                // 判断公司是否到期
+//                if ($status['expire_time'] > time()) {
+                //成功 1
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS']
+                );
+//                } else {
+//                    // 公司已到期 1005
+//                    $res = array(
+//                        'code' => $this->ERROR_CODE_USER['FIRM_EXPIRE']
+//                    );
+//                }
 
             } elseif ($status['membertype'] == '2') {
                 $num = $status['creditline'] + $status['balance'];
@@ -173,8 +173,8 @@ class FirmModel extends BaseModel
     }
 
     /**
-     * 获取公司下的所有船列表
-     * @param int $firmid 公司id
+     * 获取公司下的所有船列表(区分检验公司和船公司)
+     * @param int    $firmid 公司id
      * @param string $firmtype 公司类型检验、船舶
      * */
     public function getShipList($firmid, $firmtype)
@@ -182,13 +182,13 @@ class FirmModel extends BaseModel
         $ship = new \Common\Model\ShipModel();
         $sh_ship = new \Common\Model\ShShipModel();
         $res = array();
-        if($this->where(array('id'=>$firmid,'firmtype'=>$firmtype))->count() < 1) return false;
+        if ($this->where(array('id' => $firmid, 'firmtype' => $firmtype))->count() < 1) return false;
 
         // 根据公司类型区分获取的船数据
         if ($firmtype == '2') {
             // 获取该公司下的所有液货船
             $shiplist = $ship
-                ->field('id,shipname')
+                ->field('id,shipname,data_ship')
                 ->where(array('firmid' => $firmid, "del_sign" => 1))
                 ->select();
 
@@ -199,6 +199,7 @@ class FirmModel extends BaseModel
                 ->select();
 
             $firmname = $this->getFieldById($firmid, 'firmname');
+
             $res[] = array(
                 'id' => $firmid,
                 'firmname' => $firmname,
@@ -218,7 +219,7 @@ class FirmModel extends BaseModel
                 ->select();
             foreach ($res as $key => $value) {
                 $res[$key]['shiplist'] = $ship
-                    ->field('id,shipname')
+                    ->field('id,shipname,data_ship')
                     ->where(array('firmid' => $value['id'], "del_sign" => 1))
                     ->select();
 
@@ -230,6 +231,42 @@ class FirmModel extends BaseModel
         }
 
         return $res;
+    }
+
+    /**
+     * 获取所有船列表
+     * @param int    $firmid 公司id
+     * @param string $firmtype 公司类型检验、船舶
+     * */
+    public function getAllShip()
+    {
+        $ship = new \Common\Model\ShipModel();
+        $sh_ship = new \Common\Model\ShShipModel();
+        $res = array();
+        // 获取所有的船舶公司的船
+        $where = array(
+            'firmtype' => '2',
+            "del_sign" => 1,
+        );
+        $res = $this
+            ->field('id,firmname')
+            ->where($where)
+            ->order('id asc')
+            ->select();
+        foreach ($res as $key => $value) {
+            $res[$key]['shiplist'] = $ship
+                ->field('id,shipname,data_ship')
+                ->where(array('firmid' => $value['id'], "del_sign" => 1))
+                ->select();
+
+            $res[$key]['sh_shiplist'] = $sh_ship
+                ->field('id,shipname')
+                ->where(array('firmid' => $value['id'], "del_sign" => 1))
+                ->select();
+        }
+
+        return $res;
+
     }
 
     /**
@@ -276,6 +313,177 @@ class FirmModel extends BaseModel
             $res = array(
                 'code' => $this->ERROR_CODE_USER['USER_NOT_FIRM']
             );
+        }
+        return $res;
+    }
+
+    /**
+     * 检查公司名称是否可注册
+     */
+    public function check_name($firm_name)
+    {
+        $user = new \Common\Model\UserModel();
+        $map = array(
+            'firmname' => $firm_name
+        );
+        $firm_msg = $this->field('id,firmtype,claimed,del_sign')->where($map)->find();
+        if (empty($firm_msg)) return array('code' => $this->ERROR_CODE_COMMON['SUCCESS']);
+        if ($firm_msg['firmtype'] == 1) {
+            $admin = $user->field('username')->where(array('firmid' => $firm_msg['id'], 'pid' => 0))->find();
+            return array('code' => $this->ERROR_CODE_RESULT['FIRM_EXISTS'], 'need_claimed' => 0, 'admin' => $admin['username']);
+        }
+        if ($firm_msg['firmtype'] == 2) {
+            if ($firm_msg['claimed'] == 1) {
+                return array('code' => $this->ERROR_CODE_RESULT['FIRM_CLAIMING']);
+            } elseif ($firm_msg['claimed'] == 2) {
+                $admin = $user->field('username')->where(array('firmid' => $firm_msg['id'], 'pid' => 0))->find();
+                return array('code' => $this->ERROR_CODE_RESULT['FIRM_EXISTS'], 'need_claimed' => 0, 'admin' => $admin['username']);
+            } elseif ($firm_msg['claimed'] == 0) {
+                return array('code' => $this->ERROR_CODE_RESULT['FIRM_EXISTS'], 'need_claimed' => 1);
+            }
+        }
+        return array('code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']);
+    }
+
+
+    /**
+     * 认领公司接口
+     */
+    public function claimed_firm($uid, $firm_name, $shehuicode, $img)
+    {
+        //开始事务
+        M()->startTrans();
+        //判断用户是否重复上传审核
+        $firm_review = M('firm_review');
+        $count_map = array(
+            'uid' => $uid,
+            'result' => array('neq', 3),//除了审核失败的，不允许再次提交审核
+        );
+        $count = $firm_review->where($count_map)->count();
+        if ($count > 0) {
+            // 用户不可以创建多个审核 2042
+            $res = array(
+                'code' => $this->ERROR_CODE_RESULT['CANNOT_CREATE_MULTIPLE_REVIEWS'],
+            );
+        } else {
+            if ($count !== false) {
+                #todo 完善代码，社会信用代码和图片不要放在firm表，放在firm_review表，这样的话可以多个用户同时申请一个公司
+                $map = array(
+                    'firmname' => $firm_name,
+                );
+                $firm_claimed_status = $this->field('claimed,claimed_code')->where($map)->find();
+                if ($firm_claimed_status['claimed'] == 0 and $firm_claimed_status['claimed_code'] == "") {
+                    $data = array(
+                        'claimed_code' => $shehuicode,
+                        'claimed_img' => $img,
+                        'time' => time(),
+                    );
+
+                    //将提交的社会信用代码放入
+                    $result = $this->editData($map, $data);
+                    //如果放入失败，回档
+                    if ($result === false) {
+                        //回档
+                        M()->rollback();
+                        $res = array(
+                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                        );
+                    } else {
+                        $frim_id = $this->getFieldByFirmname($firm_name, 'id');
+                        $review_data = array(
+                            'uid' => $uid,
+                            'firmid' => $frim_id,
+                            'time' => time(),
+                        );
+                        $review_id = $firm_review->add($review_data);
+                        if ($review_id !== false) {
+                            $user = new \Common\Model\UserModel();
+                            $user_data = array(
+                                'reg_status' => 1
+                            );
+                            $result3 = $user->editData(array('id' => $uid), $user_data);
+                            if ($result3 !== false) {
+                                M()->commit();
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                    'review_id' => $review_id
+                                );
+                            } else {
+                                M()->rollback();
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                                );
+                            }
+                        } else {
+                            M()->rollback();
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                            );
+                        }
+                    }
+                } else {
+                    M()->rollback();
+                    //公司正在认领或者已被认领无法继续 2038
+                    $res = array('code' => $this->ERROR_CODE_RESULT['FIRM_CLAIMING']);
+                }
+            } else {
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                );
+            }
+        }
+
+        return $res;
+    }
+
+
+    /**
+     * 认证公司，认证后的公司无法被认领
+     */
+    public function legalize_firm($uid, $shehuicode, $img)
+    {
+        //开始事务
+        M()->startTrans();
+        $user = new \Common\Model\UserModel();
+        $user_msg = $user->field('firmid,pid')->where(array('id' => $uid))->find();
+        $firm_id = $user_msg['firmid'];
+
+        #todo 完善代码，社会信用代码和图片不要放在firm表，放在firm_review表，这样的话可以多个用户同时申请一个公司
+        $map = array(
+            'id' => $firm_id,
+        );
+
+        $firm_claimed_status = $this->field('legalize_img,legalize_code,claimed')->where($map)->find();
+        if ($firm_claimed_status['legalize_img'] == "" and $firm_claimed_status['legalize_code'] == "" and $firm_claimed_status['claimed'] == 0) {
+            $data = array(
+                'legalize_code' => $shehuicode,
+                'legalize_img' => $img,
+                'claimed' => 1,
+                'legalize_time' => time(),
+                'legalize_uid' => $uid,
+            );
+
+            //将提交的社会信用代码放入
+            $result = $this->editData($map, $data);
+            //如果放入失败，回档
+            if ($result === false) {
+                //回档
+                M()->rollback();
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+                    'error' => $this->getDbError()
+                );
+            } else {
+                M()->commit();
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                    'firm_id' => $firm_id
+                );
+            }
+        } else {
+            M()->rollback();
+            //公司正在认领或者已被认领无法继续 2038
+            $res = array('code' => $this->ERROR_CODE_RESULT['FIRM_CLAIMING']);
         }
         return $res;
     }

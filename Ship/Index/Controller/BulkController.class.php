@@ -48,7 +48,7 @@ class BulkController extends IndexBaseController
 
         if ($msg['look_other'] == '1') {
             $where .= " and u.firmid='" . $msg['firmid'] . "'";
-        }elseif ($msg['look_other'] == '3') {
+        } elseif ($msg['look_other'] == '3') {
             $where .= " and u.id=$uid";
         }
 
@@ -251,12 +251,12 @@ class BulkController extends IndexBaseController
             // 验证通过 可以进行其他数据操作
             $res = $this->db->addResult($data, $_SESSION['user_info']['id']);
             if ($res['code'] == '1') {
-                echo ajaxReturn(array("state" => 1, 'message' => "成功"));
+                echo ajaxReturn(array("code" => 1, 'message' => "成功"));
             } else {
-                echo ajaxReturn(array("state" => $res['code'], 'message' => $res['msg']));
+                echo ajaxReturn(array("code" => $res['code'], 'message' => $res['msg']));
             }
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "船名为必填项"));
+            echo ajaxReturn(array("code" => 2, 'message' => "船名为必填项"));
         }
     }
 
@@ -266,11 +266,6 @@ class BulkController extends IndexBaseController
     public function is_start()
     {
         //获取用户的船舶列表id
-        $user = new \Common\Model\UserModel();
-//            $usermsg = $user->getUserOperationSeach($_SESSION['user_info']['id']);
-//        $uid = $_SESSION['user_info']['id'];
-//        $firmid = $user->getFieldById($uid, 'firmid');
-
         $ship = new \Common\Model\ShShipModel();
         $shiplist = $ship
             ->field('id,shipname')
@@ -282,18 +277,7 @@ class BulkController extends IndexBaseController
             ->where(array('id' => I('post.resultid')))->find();
         $personalitymsg = json_decode($msg['personality'], true);
 
-        // 获取公司个性化字段
-//            $firm = new \Common\Model\FirmModel();
-//            $personality_id = $firm->getFieldById($firmid, 'personality');
-//            $personality_id = json_decode($personality_id, true);
-        $personalitylist = array();
-//            $person = new \Common\Model\PersonalityModel();
-//            foreach ($personality_id as $key => $value) {
-//                $personalitylist[] = $person
-//                    ->field('name,title')
-//                    ->where(array('id' => $value))
-//                    ->find();
-//            }
+
         #todo 水尺计量的个性化字段是固定的，如果更改请同时更改此段代码
         $personalitylist = array(
             array(
@@ -329,30 +313,19 @@ class BulkController extends IndexBaseController
                 "title" => "委托方"
             ),
         );
-        $string = "";
         //判断指令有没有作业，
         $rl = M("sh_resultrecord");
         $re = $rl->where(array('resultid' => I('post.resultid')))->count();
+        $assign = array(
+            'personalitymsg' => $personalitymsg,
+            'personalitylist' => $personalitylist,
+            'shiplist' => $shiplist,
+            'message' => ''
+        );
         if ($re > 0) {
-            $string .= "<p style='text-align: center;color: red;font-weight: bolder;background-color: #f2f9ff;'>该作业已经开始检验，更改航次信息可能导致和检验报告不一致，平台不承担任何责任，请谨慎更改</p>";
+            $assign['message'] = '该作业已经开始检验，更改航次信息可能导致和检验报告不一致，平台不承担任何责任，请谨慎更改';
         }
-        $string .= "<input type='hidden' name='id' id='id1' value='" . I('post.resultid') . "'><li><label>船名：</label><p><select name='shipid' id='shipid1' class=''><option value=''>请选择船名</option>";
-        foreach ($shiplist as $key => $value) {
-            if ($value['id'] == $msg['shipid']) {
-                $select = "selected";
-            } else {
-                $select = '';
-            }
-            $string .= "<option value='" . $value['id'] . "' " . $select . ">" . $value['shipname'] . "</option>";
-        }
-        $string .= "</select></p></li>";
-
-        foreach ($personalitylist as $key => $v) {
-            $string .= "<li><label>" . $v['title'] . "：</label><p><input type='text'  type='text' name='" . $v['name'] . "' placeholder='请输入" . $v['title'] . "' class='i-box' id='" . $v['name'] . "1' value='" . $personalitymsg[$v['name']] . "'/></p></li>";
-            // $string .= "<input type='text' name='".."' placeholder='请输入"$v['title']"'    ";
-        }
-        echo ajaxReturn(array("state" => 1, 'message' => "成功", 'content' => $string));
-//        }
+        echo ajaxReturn(array("code" => 1, 'message' => "成功", 'content' => $assign));
     }
 
     /**
@@ -365,15 +338,15 @@ class BulkController extends IndexBaseController
             $data = I('post.');
             $data['resultid'] = intval(I('post.id'));
             //如果作业已经结束则报错作业已完成 2029
-            if($this->db->checkFinish($data['resultid'])) echo ajaxReturn(array("state" => 2029, 'message' => "作业已被结束"));
+            if ($this->db->checkFinish($data['resultid'])) echo ajaxReturn(array("code" => 2029, 'message' => "作业已被结束"));
             $res = $this->db->editResult($data);
             if ($res['code'] == '1') {
-                echo ajaxReturn(array("state" => 1, 'message' => "成功"));
+                echo ajaxReturn(array("code" => 1, 'message' => "成功"));
             } else {
-                echo ajaxReturn(array("state" => $res['code'], 'message' => $res['msg']));
+                echo ajaxReturn(array("code" => $res['code'], 'message' => $res['msg']));
             }
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "船名为必填项"));
+            echo ajaxReturn(array("code" => 2, 'message' => "船名为必填项"));
         }
     }
 
@@ -619,68 +592,65 @@ class BulkController extends IndexBaseController
     /**
      * 评价界面
      */
-    public function evaluate()
-    {
-        $uid = $_SESSION['user_info']['id'];
-        if (IS_POST) {
-            // 判断是否打分
-            $grade = I('post.grade');
-            if (empty($grade)) {
-                $this->error('请评分！');
-            }
-            $data = array(
-                'uid' => I('post.uid'),
-                'id' => I('post.id'),
-                'shipid' => I('post.shipid'),
-                'grade' => I('post.grade'),
-                'firmtype' => I('post.firmtype'),
-                'content' => I('post.content'),
-                'operater' => $uid
-            );
-            $res = $this->db->evaluate($data);
-            if ($res['code'] == '1') {
-                $this->success('评价成功');
-            } else {
-                $this->error($res['msg']);
-            }
-        } else {
-            // 判断作业是否完成----电子签证
-            $coun = M('electronic_visa')
-                ->where(array('resultid' => I('get.resultid')))
-                ->count();
-            if ($coun > 0) {
-                // 获取作业的数据：操作人、作业ID、登录人的公司类型、作业的船舶ID
-                $user = new \Common\Model\UserModel();
-                //获取水尺数据
-                $where = array(
-                    'r.id' => I('get.resultid')
-                );
-                //查询作业列表
-                $list = $this->db
-                    ->field('r.id,r.uid,r.shipid,f.firmtype as ffirmtype,r.grade1,r.grade2,r.evaluate1,r.evaluate2')
-                    ->alias('r')
-                    ->join('left join ship s on r.shipid=s.id')
-                    ->join('left join user u on r.uid = u.id')
-                    ->join('left join firm f on u.firmid = f.id')
-                    ->where($where)
-                    ->find();
-                // 获取当前登陆用户的公司类型
-                $a = $user
-                    ->field('f.firmtype')
-                    ->alias('u')
-                    ->join('left join firm f on u.firmid = f.id')
-                    ->where(array('u.id' => $uid))
-                    ->find();
-                $list['firmtype'] = $a['firmtype'];
-                $assign = array(
-                    'content' => $list,
-                    'coun' => $coun
-                );
-                $this->assign($assign);
-                $this->display();
-            } else {
-                $this->error('作业尚未完成，不可以评价', U('index'));
-            }
-        }
-    }
+//    public function evaluate()
+//    {
+//        $uid = $_SESSION['user_info']['id'];
+//        if (IS_POST) {
+//            // 判断是否打分
+//            $grade = I('post.grade');
+//            if (empty($grade)) {
+//                $this->error('请评分！');
+//            }
+//            $data = array(
+//                'uid' => I('post.uid'),
+//                'id' => I('post.id'),
+//                'shipid' => I('post.shipid'),
+//                'grade' => I('post.grade'),
+//                'firmtype' => I('post.firmtype'),
+//                'content' => I('post.content'),
+//                'operater' => $uid
+//            );
+//            $res = $this->db->evaluate($data);
+//            if ($res['code'] == '1') {
+//                $this->success('评价成功');
+//            } else {
+//                $this->error($res['msg']);
+//            }
+//        } else {
+//            // 判断作业是否完成----电子签证
+//            if ($this->db->checkFinish(I('get.resultid'))) {
+//                // 获取作业的数据：操作人、作业ID、登录人的公司类型、作业的船舶ID
+//                $user = new \Common\Model\UserModel();
+//                //获取水尺数据
+//                $where = array(
+//                    'r.id' => I('get.resultid')
+//                );
+//                //查询作业列表
+//                $list = $this->db
+//                    ->field('r.id,r.uid,r.shipid,f.firmtype as ffirmtype,r.grade1,r.grade2,r.evaluate1,r.evaluate2')
+//                    ->alias('r')
+//                    ->join('left join ship s on r.shipid=s.id')
+//                    ->join('left join user u on r.uid = u.id')
+//                    ->join('left join firm f on u.firmid = f.id')
+//                    ->where($where)
+//                    ->find();
+//                // 获取当前登陆用户的公司类型
+//                $a = $user
+//                    ->field('f.firmtype')
+//                    ->alias('u')
+//                    ->join('left join firm f on u.firmid = f.id')
+//                    ->where(array('u.id' => $uid))
+//                    ->find();
+//                $list['firmtype'] = $a['firmtype'];
+//                $assign = array(
+//                    'content' => $list,
+//                    'coun' => $coun
+//                );
+//                $this->assign($assign);
+//                $this->display();
+//            } else {
+//                $this->error('作业尚未完成，不可以评价', U('index'));
+//            }
+//        }
+//    }
 }

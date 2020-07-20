@@ -1,7 +1,7 @@
-<extend name="Public:base" />
+<extend name="Public:base"/>
 <block name="title">船舱管理</block>
 <block name="navtitle">
-	<li class="active">
+    <li class="active">
         船舱管理
     </li>
     <li class="active">
@@ -10,73 +10,121 @@
 </block>
 <block name="active7">class="active"</block>
 <block name="content">
-	<div class="page-container">
+    <div class="page-container">
         <div>
             <a href="{:U('Cabin/add')}" class="btn btn-primary">新增</a>
         </div>
         <h4></h4>
         <div>
-            <form action="__ACTION__" method="get">
-            	<input type="hidden" name="tname" value="{$tname}">
-            	<input type="hidden" name="c" value="Cabin">
-            	<input type="hidden" name="a" value="index">
-            	船名：<select name="shipid">
-            		<option value="">--全部--</option>
-            		<volist name="shiplist" id="v">
-            			<option value="{$v['id']}">{$v['shipname']}</option>
-            		</volist>
-            	</select>
-            	<input type="submit"  value="筛选" style="height:28px;width:80px">
+            <form action="__ACTION__" method="get" style="margin-top: 10px;" class="layui-form">
+                <input type="hidden" name="tname" value="{$tname}">
+                <input type="hidden" name="c" value="Cabin">
+                <input type="hidden" name="a" value="index">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">船名：</label>
+
+                        <div class="layui-inline">
+                            <select name="shipid" lay-search="" lay-verify="">
+                                <option value="">--全部--</option>
+                                <volist name="shiplist" id="v">
+                                    <option value="{$v['id']}">{$v['shipname']}</option>
+                                </volist>
+                            </select>
+                        </div>
+                        <div class="layui-inline" style="margin-top: 0px;">
+                            <input type="submit" class="layui-btn" value="筛选">
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <h4></h4>
-		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-			<thead>
-			<tr>
-				<th>船名</th>
-				<th>舱名</th>
-				<th>基准高度</th>
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>船名</th>
+                <th>舱名</th>
+                <th>基准高度</th>
                 <th>底量</th>
-				<!-- <th>底量</th> -->
-				<th>管线容量</th>
-				<th>操作</th>
-				<th>数据管理</th>
-			</tr>
-			</thead>
-			<volist name="data" id="v">
-				<tr align='center'>
-					<td>{$v['shipname']}</td>
-					<td>{$v['cabinname']}</td>
-					<td>{$v['altitudeheight']}</td>
+                <th>管线容量</th>
+                <th>基准高度(底)</th>
+                <th>底量(底)</th>
+                <th>操作</th>
+                <th>容量书管理</th>
+                <th>底量书管理</th>
+            </tr>
+            </thead>
+            <volist name="data" id="v">
+                <tr align='center'>
+                    <td>{$v['shipname']}</td>
+                    <td>{$v['cabinname']}</td>
+                    <td>{$v['altitudeheight']}</td>
                     <td>{$v['bottom_volume']}</td>
-					<!-- <td>{$v['bottom_volume_di']}</td> -->
-					<td>{$v['pipe_line']}</td>
-					<td>
+                    <td>{$v['pipe_line']}</td>
+                    <td>{$v['dialtitudeheight']}</td>
+                    <td>{$v['bottom_volume_di']}</td>
+                    <td>
                         <a href="{:U('Cabin/edit',array('id'=>$v['id']))}">修改</a>
                     </td>
                     <td>
-                    	<if condition="$v['tankcapacityshipid'] != null">
-                        	<a href="{:U('Tripbystern/zong',array('tname'=>$v['tankcapacityshipid'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量管理</a>
+                        <if condition="$v['zx'] != null">
+                            <a onmouseover="showAwesomeFontTips('{$v['zx_tip']}','#rong_zx_{$v['id']}')"
+                               onmouseout="hideAwesomeFontTips()" id="rong_zx_{$v['id']}"
+                               href="{:U('Zongxiu/zx',array('tname'=>$v['zx'],'cabinid'=>$v['id'],'cabinname'=>$v['cabinname'],'shipid'=>$v['shipid']))}">纵修表</a>
                         </if>
                         <if condition="$v['rongliang'] != null">
-                        	<a href="{:U('Rong/rong',array('tname'=>$v['rongliang'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量(容量)管理</a>&nbsp;/&nbsp;
+                            &nbsp;/&nbsp;<a
+                                onmouseover="showAwesomeFontTips('{$v['rongliang_tip']}','#rong_rongliang_{$v['id']}')"
+                                onmouseout="hideAwesomeFontTips()" id="rong_rongliang_{$v['id']}"
+                                href="{:U('Rong/rong',array('tname'=>$v['rongliang'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
                         </if>
-
-                        <if condition="$v['zx'] != null">
-                        	<a href="{:U('Zongxiu/zx',array('tname'=>$v['zx'],'cabinid'=>$v['id'],'cabinname'=>$v['cabinname'],'shipid'=>$v['shipid']))}">纵修(容量)管理</a>
-                        </if>
-                        <if condition="$v['rongliang_1'] != null">
-                        	&nbsp;|&nbsp;<a href="{:U('Rong/rong',array('tname'=>$v['rongliang_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量(底量)管理</a>&nbsp;/&nbsp;
-                        </if>
-                        <if condition="$v['zx_1'] != null">
-                        	<a href="{:U('Zongxiu/zx',array('tname'=>$v['zx_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">纵修(底量)管理</a>
+                        <if condition="$v['tankcapacityshipid'] != null">
+                            <a onmouseover="showAwesomeFontTips('{$v['tankcapacityshipid_tip']}','#rong_tankcapacityshipid_{$v['id']}')"
+                               onmouseout="hideAwesomeFontTips()" id="rong_tankcapacityshipid_{$v['id']}"
+                               href="{:U('Tripbystern/zong',array('tname'=>$v['tankcapacityshipid'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
                         </if>
                     </td>
-				</tr>
-			</volist>
-			<tr>
-				<td colspan=7 class="pages">{$page}</td>
-			</tr>
-		</table>
-	</div>
+                    <td>
+                        <if condition="$v['zx_1'] != null">
+                            <a onmouseover="showAwesomeFontTips('{$v['zx_1_tip']}','#di_zx_{$v['id']}')"
+                               onmouseout="hideAwesomeFontTips()" id="di_zx_{$v['id']}"
+                               href="{:U('Zongxiu/zx',array('tname'=>$v['zx_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">纵修表</a>
+                        </if>
+                        <if condition="$v['rongliang_1'] != null">
+                            &nbsp;/&nbsp;<a
+                                onmouseover="showAwesomeFontTips('{$v['rongliang_1_tip']}','#di_rongliang_{$v['id']}')"
+                                onmouseout="hideAwesomeFontTips()" id="di_rongliang_{$v['id']}"
+                                href="{:U('Rong/rong',array('tname'=>$v['rongliang_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+            <tr>
+                <td colspan=10 class="pages">{$page}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var tipIndex; //存储tip对象Index
+
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+
+        //弹出提示，用于鼠标悬浮
+        function showAwesomeFontTips(tipString, follow) {
+            tipIndex = layer.tips(tipString, follow, {
+                tips: [1, '#696969'] //设置tip朝上，灰色
+                , tipsMore: false //设置不允许其他tip出现
+                , time: 500000
+                , maxWidth: 500
+            });
+        }
+
+        //关闭提示
+        function hideAwesomeFontTips() {
+            layer.close(tipIndex);
+        }
+    </script>
 </block>

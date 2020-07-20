@@ -52,7 +52,7 @@ class CabinController extends IndexBaseController
             ->select();
         $assign = array(
             'data' => $data,
-            'page' => $page->show(),
+//            'page' => $page->show(),
             'shiplist' => $shiplist
         );
         $this->assign($assign);
@@ -161,7 +161,57 @@ html;
         }
 
 
-        echo ajaxReturn(array("state" => 1, 'message' => "成功", 'content' => $string));
+        echo ajaxReturn(array("code" => 1, 'message' => "成功", 'content' => $string));
+
+    }
+
+
+    /**
+     * 获取舱的原始数据
+     */
+    public function cabinmsgs()
+    {
+        // 船舱数据信息
+        $cabinmsg = $this->db->where(array('id' => $_POST['id']))->find();
+
+        $firm = new \Common\Model\FirmModel();
+        $user = new \Common\Model\UserModel();
+        $uid = $_SESSION['user_info']['id'];
+        $usermsg = $user
+            ->where(array('id' => $uid))
+            ->find();
+        $firmmsg = $firm
+            ->where(array('id' => $usermsg['firmid']))
+            ->find();
+        $operation_jur = explode(',', $firmmsg['operation_jur']);
+        $ship = new \Common\Model\ShipFormModel();
+        $where = array(
+            'id' => array('in', $operation_jur)
+        );
+        $shiplist = $ship
+            ->where($where)
+            ->order('id desc')
+            ->select();
+        $is_diliang = $ship->getFieldById($cabinmsg ['shipid'], 'is_diliang');
+
+
+        $shipname = "";
+        foreach ($shiplist as $k => $v) {
+            if ($cabinmsg['shipid'] == $v['id']) {
+                $shipname = $v['shipname'];
+            }
+        }
+
+
+        $cabin_msg = array(
+            'shipname'=>$shipname,
+            'is_diliang'=>$is_diliang,
+            'is_lock'=>$ship->is_lock($cabinmsg['shipid']),
+            'cabin_list'=>$cabinmsg
+        );
+
+
+        echo ajaxReturn(array("code" => 1, 'message' => "成功",'cabin_msg'=>$cabin_msg));
 
     }
 
@@ -170,13 +220,13 @@ html;
      */
     public function edit()
     {
-        if (I('post.shipid') and I('post.id') and I('post.cabinname') and I('post.pipe_line') and I('post.altitudeheight') and I('post.bottom_volume')) {
+        if (I('post.shipid') and I('post.id') and I('post.cabinname') and I('post.pipe_line')!==null and I('post.altitudeheight') and I('post.bottom_volume')!==null) {
             // 判断是否超过船舶限制舱总数
 //			$ship = new \Common\Model\ShipModel();
 //			$cabinnum = $ship->getFieldById(I('post.shipid'),'cabinnum');
 //			$count = $this->db->where(array('shipid'=>I('post.shipid')))->count();
 //			if ($count+1 > $cabinnum  ) {
-//				echo ajaxReturn(array("state" => 2, 'message' => '超过该船限制总舱数'));
+//				echo ajaxReturn(array("code" => 2, "error" => '超过该船限制总舱数'));
 //			} else {
             //判断同一条船不能有重复的舱名
 
@@ -199,13 +249,14 @@ html;
             );
             $count = $this->db->where($where)->count();
             if ($count > 0) {
-                echo ajaxReturn(array("state" => 2, 'message' => '该船已存在该舱名'));
+                echo ajaxReturn(array("code" => 2, "error" => '该船已存在该舱名'));
             } else {
                 $data = I('post.');
+                unset($data['shipid']);
                 // 对数据进行验证
                 if (!$this->db->create($data)) {
                     // 如果创建失败 表示验证没有通过 输出错误提示信息
-                    echo ajaxReturn(array("state" => 2, 'message' => $this->db->getError()));
+                    echo ajaxReturn(array("code" => 2, "error" => $this->db->getError()));
                 } else {
                     $ship = new \Common\Model\ShipFormModel();
 //                    $ship_id = $this->db->getFieldById('');
@@ -214,7 +265,7 @@ html;
                     );
                     //获得算法
                     $shipmsg = $ship
-                        ->field('suanfa,review')
+                        ->field('is_lock,suanfa,review')
                         ->where($where1)
                         ->find();
                     if ($ship->is_lock(I('post.shipid'))) {
@@ -332,7 +383,7 @@ html;
                                     if ($name_count > 0 or $review_name_count > 0) {
                                         M()->rollback();
                                         //船舱已存在   2020
-                                        exit(ajaxReturn(array("state" => 2020, 'message' => "船舱已存在")));
+                                        exit(ajaxReturn(array("code" => 2020, "error" => "船舱已存在")));
 
                                     }
                                 }
@@ -363,25 +414,25 @@ html;
                                     //回滚
                                     M()->rollback();
                                     //修改失败,错误11
-                                    exit(ajaxReturn(array("state" => 11, 'message' => "修改失败")));
+                                    exit(ajaxReturn(array("code" => 11, "error" => "修改失败")));
 
                                 }
                             } else {
                                 //回滚
                                 M()->rollback();
                                 //未找到舱,错误2027
-                                exit(ajaxReturn(array("state" => 2027, 'message' => "未找到舱")));
+                                exit(ajaxReturn(array("code" => 2027, "error" => "未找到舱")));
 
                             }
 
                             //提交并等待审核
                             M()->commit();
-                            exit(ajaxReturn(array("state" => 200, 'review_id' => $result, 'message' => "提交成功，请等待复核")));
+                            exit(ajaxReturn(array("code" => 2023, 'review_id' => $result, 'message' => "提交成功，请等待复核")));
 
                         } else {
                             M()->rollback();
                             //修改失败,错误11
-                            exit(ajaxReturn(array("state" => 11, 'message' => "修改失败")));
+                            exit(ajaxReturn(array("code" => 11, "error" => "修改失败")));
                         }
                     } else {
                         // 验证通过 可以进行其他数据操作
@@ -391,16 +442,16 @@ html;
                         unset($data['id']);
                         $res = $this->db->editData($map, $data);
                         if ($res !== false) {
-                            echo ajaxReturn(array("state" => 1, 'message' => "修改成功"));
+                            echo ajaxReturn(array("code" => 1, 'message' => "修改成功"));
                         } else {
-                            echo ajaxReturn(array("state" => 2, 'message' => "修改失败"));
+                            echo ajaxReturn(array("code" => 2, "error" => "修改失败"));
                         }
                     }
                 }
             }
 //			}
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "表单不能存在空值"));
+            echo ajaxReturn(array("code" => 2, "error" => "表单不能存在空值"));
         }
     }
 
@@ -414,7 +465,7 @@ html;
             $cabinnum = $ship->getFieldById(I('post.shipid'), 'cabinnum');
             $count1 = $this->db->where(array('shipid' => I('post.shipid')))->count();
             if ($count1 + 1 > $cabinnum) {
-                echo ajaxReturn(array("state" => 2, 'message' => '超过该船限制总舱数'));
+                echo ajaxReturn(array("code" => 2, "error" => '超过该船限制总舱数'));
             } else {
                 $ship_id = trimall(I('post.shipid'));
                 //判断同一条船不能有重复的舱名
@@ -426,7 +477,7 @@ html;
                 $cabin = new \Common\Model\CabinModel();
                 $count = $cabin->where($where)->count();
                 if ($count > 0) {
-                    echo ajaxReturn(array("state" => 2, 'message' => "该船已存在该舱名"));
+                    echo ajaxReturn(array("code" => 2, "error" => "该船已存在该舱名"));
                 } else {
                     // 去除键值首位空格
                     $data = I('post.');
@@ -434,7 +485,7 @@ html;
                     if (!$this->db->create($data)) {
                         // 如果创建失败 表示验证没有通过 输出错误提示信息
                         // $this->error($cabin->getError());
-                        echo ajaxReturn(array("state" => 2, 'message' => $this->db->getError()));
+                        echo ajaxReturn(array("code" => 2, "error" => $this->db->getError()));
                     } else {
                         // 验证通过 可以进行其他数据操作
                         $res = $cabin->addData($data);
@@ -452,21 +503,21 @@ html;
 
                                 $res = $ship->editData($ship_where, $ship_data);
                                 if ($res !== false) {
-                                    echo ajaxReturn(array("state" => 1, 'message' => "新增成功"));
+                                    echo ajaxReturn(array("code" => 1, 'message' => "新增成功"));
                                 } else {
-                                    echo ajaxReturn(array("state" => 1, 'message' => "新增成功，但复核状态异常"));
+                                    echo ajaxReturn(array("code" => 1, 'message' => "新增成功，但复核状态异常"));
                                 }
                             } else {
-                                echo ajaxReturn(array("state" => 1, 'message' => "新增成功"));
+                                echo ajaxReturn(array("code" => 1, 'message' => "新增成功"));
                             }
                         } else {
-                            echo ajaxReturn(array("state" => 2, 'message' => "新增失败"));
+                            echo ajaxReturn(array("code" => 2, "error" => "新增失败"));
                         }
                     }
                 }
             }
         } else {
-            echo ajaxReturn(array("state" => 2, 'message' => "表单不能存在空值"));
+            echo ajaxReturn(array("code" => 2, "error" => "表单不能存在空值"));
         }
     }
 

@@ -190,9 +190,7 @@ class ShipController extends AppBaseController
                             'ship_id' => $res_s['content']['shipid']
                         );
                     } else {
-                        $res = array(
-                            'code' => $res_s['code'],
-                        );
+                        $res = $res_s;
                     }
                 }
             } else {
@@ -254,10 +252,10 @@ class ShipController extends AppBaseController
                             /**
                              * 查找船的作业次数
                              */
-                            $work = new \Common\Model\WorkModel();
-                            $res_count = $work->where(array('shipid' => $data['id']))->count();
+//                            $work = new \Common\Model\WorkModel();
+//                            $res_count = $work->where(array('shipid' => $data['id']))->count();
 
-                            $old_info = $this->db->field('shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
+                            $old_info = $this->db->field('is_lock,shipname,cabinnum,coefficient,is_guanxian,is_diliang,suanfa,expire_time,review')->where($map)->find();
 
                             //验证船名是否和已有的船名重复
                             $name_count = $this->db->where(array('shipname' => $data['shipname'], 'id' => array('neq', $data['id'])))->count();
@@ -279,7 +277,7 @@ class ShipController extends AppBaseController
                                 );
 
                             } else {
-                                if ($res_count > 1 or $old_info['review'] == 3) {
+                                if ($old_info['is_lock'] == 1) {
 
                                     /**
                                      * 开始对比数据差异，获取更改的数据
@@ -417,5 +415,123 @@ class ShipController extends AppBaseController
             }
         }
         echo jsonreturn($res);
+    }
+
+    /**
+     * 上传舱容表
+     */
+    public function table_review(){
+        if (I('post.uid') and I('post.imei') and I('post.shipname') and I('post.type')) {
+            $uid = intval(trimall(I('post.uid')));
+            $imei = trimall(I('post.imei'));
+            $shipname = trimall(I('post.shipname'));
+            $type = intval(trimall(I('post.type')));
+            $user = new \Common\Model\UserModel();
+            $msg =$user->is_judges($uid,$imei);
+            if($msg['code'] == 1){
+                $res = $this->db->up_table($uid,$type,$shipname);
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //参数不正确，参数缺失	4
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        echo jsonreturn($res);
+    }
+//
+//    public function
+//
+//    public function allship(){
+//        echo jsonreturn($this->db->getShipList(21,1));
+//    }
+
+    /**
+     * 追加审核船舶复核信息
+     */
+    public function add_edit_review_notice(){
+        if (I('post.uid') and I('post.imei') and I('post.review_id')){
+            $uid = intval(trimall(I('uid')));
+            $imei = trimall(I('imei'));
+            $review_id = intval(trimall(I('post.review_id')));
+
+            $user = new \Common\Model\UserModel();
+            $msg =$user->is_judges($uid,$imei);
+            if($msg['code'] == 1){
+                $user_info =$user->getUserOpenId($uid);
+                $where = array(
+                    'id'=>$review_id
+                );
+                $data = array(
+                    'open_id'=>$user_info['open_id']
+                );
+                $ship_review = M("ship_review");
+                $result = $ship_review->where($where)->save($data);
+                if($result !== false){
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['SUCCESS']
+                    );
+                }else{
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['DB_ERROR'],
+                        'error'=>$ship_review->getDbError(),
+                    );
+                }
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //缺少参数
+            $res = array(
+                'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+
+    /**
+     * 追加审核舱容表信息通知
+     */
+    public function add_table_review_notice(){
+        if (I('post.uid') and I('post.imei') and I('post.review_id')){
+            $uid = intval(trimall(I('uid')));
+            $imei = trimall(I('imei'));
+            $review_id = intval(trimall(I('post.review_id')));
+
+            $user = new \Common\Model\UserModel();
+            $msg =$user->is_judges($uid,$imei);
+            if($msg['code'] == 1){
+                $user_info =$user->getUserOpenId($uid);
+                $where = array(
+                    'id'=>$review_id
+                );
+                $data = array(
+                    'open_id'=>$user_info['open_id']
+                );
+                $table_review = M("table_review");
+                $result = $table_review->where($where)->save($data);
+                if($result !== false){
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['SUCCESS']
+                    );
+                }else{
+                    $res = array(
+                        'code'=>$this->ERROR_CODE_COMMON['DB_ERROR'],
+                        'error'=>$table_review->getDbError(),
+                    );
+                }
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //缺少参数
+            $res = array(
+                'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+            );
+        }
+        exit(jsonreturn($res));
     }
 }

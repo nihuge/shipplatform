@@ -78,14 +78,12 @@
                     <!-- <input type="text" class="wid" required  name="suanfa" maxlength="15" value="{$shipmsg['suanfa']}"/> -->
 
                     <select class="wid" name="suanfa" required>
-                        <option value="a" {$shipmsg[
-                        'suanfa'] == "a" ? 'selected' : ''}>a</option>
-                        <option value="b" {$shipmsg[
-                        'suanfa'] == 'b' ? 'selected' : ''}>b</option>
-                        <option value="c" {$shipmsg[
-                        'suanfa'] == 'c' ? 'selected' : ''}>c</option>
+                        <option value="a" {$shipmsg['suanfa'] == "a" ? 'selected' : ''}>a</option>
+                        <option value="b" {$shipmsg['suanfa'] == 'b' ? 'selected' : ''}>b</option>
+                        <option value="c" {$shipmsg['suanfa'] == 'c' ? 'selected' : ''}>c</option>
+                        <option value="d" {$shipmsg['suanfa'] == 'd' ? 'selected' : ''}>d</option>
                     </select>
-                    <span style="color:red"><br>a:一本书(容量表)；b:一本书(容量表与纵倾修正表)；c:两本书(容量书与底量书)</span>
+                    <span style="color:red"><br>a:一本书(容量表)；b:一本书(容量表与纵倾修正表)；c:两本书两个表(容量书与底量书,纵倾修正表和容量表)；d：两本书一个表(容量表)</span>
                 </td>
             </tr>
             <tr>

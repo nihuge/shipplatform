@@ -120,6 +120,9 @@ class SearchController extends AdminBaseController
             ->join('left join user u on r.uid = u.id')
             ->where($where)
             ->find();
+        $list['add_weight'] = sprintf("%1\$.3f", $list['add_weight']);
+        $list['weight'] = sprintf("%1\$.3f", abs($list['weight']));
+        $list['final_weight'] = sprintf("%1\$.3f", abs($list['weight']+$list['add_weight']));
         if ($list !== false) {
             $where1 = array('re.resultid' => $list['id']);
             $resultlist = new \Common\Model\ResultlistModel();
@@ -183,6 +186,9 @@ class SearchController extends AdminBaseController
                         $gxinfo['houxgx'] += $xgx;
                     }
                 }
+                $v['volume'] = sprintf("%1\$.6f", $v['volume']);
+                $v['expand'] = sprintf("%1\$.6f", $v['expand']);
+                $v['standardcapacity'] =sprintf("%1\$.3f", $v['standardcapacity']);
 
 
                 /**

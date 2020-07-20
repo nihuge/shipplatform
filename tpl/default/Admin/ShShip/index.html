@@ -46,6 +46,7 @@
                 <th>船名</th>
                 <th>所属公司</th>
                 <th>编号</th>
+                <th>数据状态</th>
                 <th>舱总数</th>
                 <th>操作</th>
             </tr>
@@ -56,6 +57,7 @@
                     <td>{$v['shipname']}</td>
                     <td>{$v['firmname']}</td>
                     <td>{$v['number']}</td>
+                    <td>{$v['data_ship']=='y'?'有表船':'无表船'}</td>
                     <td>{$v['cabinnum']}</td>
                     <td>
                         <a href="{:U('ShShip/edit',array('id'=>$v['id']))}">修改</a>

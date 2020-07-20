@@ -2,9 +2,6 @@
 
 namespace Common\Model;
 
-use Common\Model\BaseModel;
-use Think\Think;
-
 /**
  * 作业Model
  *
@@ -63,13 +60,17 @@ class WorkModel extends BaseModel
     public function addResult($data, $uid)
     {
         $datas = $data;
+		unset($datas['imei']);
+        foreach ($datas as $data_key=>$data_value){
+            if(!filterString($data_value)) return array('code'=>$this->ERROR_CODE_COMMON['ERROR_DATA'],'msg'=>"请不要提交异常字符信息".$data_key.":".$data_value);
+        }
         //判断船驳舱容表时间是否到期
-        $ship = new \Common\Model\ShipModel();
+        $ship = new \Common\Model\ShipFormModel();
 //        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
 //        if ($expire_time > time()) {
         //判断相同船是否有相同的航次
         $result = new \Common\Model\ResultModel();
-        $v = trimall(I('post.voyage'));
+        $v = trimall($datas['voyage']);
         $voyage = '"voyage":"' . $v . '"';
         $where = array(
             'shipid' => intval(I('post.shipid')),
@@ -122,12 +123,12 @@ class WorkModel extends BaseModel
                     if ($arr['code'] == '1') {
                         // 扣费成功
                         // 根据船ID获取是否底量字段
-                        $ship = new \Common\Model\ShipModel();
                         $shipmsg = $ship
                             ->field('is_diliang,suanfa')
                             ->where(array('id' => $data['shipid']))
                             ->find();
                         $is_have_data = $ship->is_have_data($data['shipid']);
+
                         if (isset($datas['start']) || isset($datas['objective'])) {
                             // 获取船舶原始起始点、终点港原来的统计停泊港
                             $moorings = M('ship_historical_sum')->getFieldByshipid($data['shipid'], 'mooring');
@@ -152,6 +153,8 @@ class WorkModel extends BaseModel
                         M('user_historical_sum')->where(array('userid' => $uid))->setInc('num');
                         M('ship_historical_sum')->where(array('shipid' => $data['shipid']))->setInc('num');
 
+                        //更新船舶的锁定状态
+                        $ship->updata_lock_ship($data['shipid']);
 
                         M()->commit();
                         //成功 1
@@ -191,6 +194,7 @@ class WorkModel extends BaseModel
 //                'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXPIRETIME_TIME_RONG']]
 //            );
 //        }
+		
         return $res;
     }
 
@@ -281,7 +285,6 @@ class WorkModel extends BaseModel
                 'msg' => $this->getError()
             );
         } else {
-
             $resultid = intval($data['resultid']);
             $shipid = intval($data['shipid']);
             $uid = intval($data['uid']);
@@ -420,6 +423,11 @@ class WorkModel extends BaseModel
                 ->join('left join electronic_visa e on e.resultid = r.id')
                 ->where($where)
                 ->find();
+            $list['add_weight'] = sprintf("%1\$.3f", $list['add_weight']);
+            $list['weight'] = sprintf("%1\$.3f", abs($list['weight']));
+            $list['final_weight'] = sprintf("%1\$.3f", abs($list['weight'] + $list['add_weight']));
+            $list['qiantotal'] = sprintf("%1\$.3f", abs($list['qiantotal']));
+            $list['houtotal'] = sprintf("%1\$.3f", abs($list['houtotal']));
             // 获取水尺照片
             $forntimg = M('fornt_img')
                 ->field('img,types,solt')
@@ -478,7 +486,7 @@ class WorkModel extends BaseModel
                 $resultrecord = M('resultrecord');
                 $resultmsg = $resultlist
                     ->alias('re')
-                    ->field('re.*,c.cabinname,c.pipe_line')
+                    ->field('re.*,c.cabinname,c.pipe_line,c.base_volume as base_sum,c.base_count')
                     ->join('left join cabin c on c.id = re.cabinid')
                     ->where($where1)
                     ->order('re.solt asc,re.cabinid asc')
@@ -498,7 +506,10 @@ class WorkModel extends BaseModel
                     $v['ullageimg'] = array();
                     $v['soundingimg'] = array();
                     $v['temperatureimg'] = array();
-                    $v['expand'] = round($v['expand'], 5);
+                    $v['base_volume'] = $v['base_sum'] / ($v['base_count'] > 0 ? $v['base_count'] : 1);//计算平均经验底量
+                    $v['base_title'] = $v['base_count'] > 0 ? "作业" . $v['base_count'] . "次，经验底量" . $v['base_volume'] . "m³" : "暂无统计";
+
+
                     unset($v['process']);
                     // 获取作业照片
                     $listimg = M('resultlist_img')
@@ -520,12 +531,15 @@ class WorkModel extends BaseModel
                      */
                     //初始化修正后管线容量
                     $xgx = 0;
+                    //保留原始的作业
+                    $v['new_standardcapacity'] = $v['standardcapacity'];
                     //如果需要单列管线的同时，舱容表不包含管线且当前检验管线内有货。报告时货物容量减去管线容量
                     if ($gxtype == "y" and $list['is_guanxian'] == 2 and $recordmsg['is_pipeline'] == 1) {
                         // 计算修正后管道容量   管道容量*体积*膨胀
                         $xgx = round($v['pipe_line'] * $v['volume'] * $v['expand'], 3);
                         //作业舱容量减去管线容量
                         $v['cabinweight'] -= $v['pipe_line'];
+
                         //作业前舱容量减去修正后管线容量
                         $v['standardcapacity'] -= $xgx;
 
@@ -542,6 +556,12 @@ class WorkModel extends BaseModel
                             $gxinfo['houxgx'] += $xgx;
                         }
                     }
+                    $v['standardcapacity'] = sprintf("%1\$.3f", $v['standardcapacity']);
+                    $v['volume'] = sprintf("%1\$.4f", $v['volume']);
+                    $v['expand'] = sprintf("%1\$.6f", $v['expand']);
+                    $v['listcorrection'] = sprintf("%1\$.3f", $v['listcorrection']);
+                    $v['cabinweight'] = sprintf("%1\$.3f", $v['cabinweight']);
+                    $v['ullage'] = sprintf("%1\$.3f", $v['ullage']);
 
 
                     $v['qufen'] = $recordmsg['qufen'];
@@ -576,6 +596,12 @@ class WorkModel extends BaseModel
                 foreach ($result as $key => $value) {
                     $a[] = $value;
                 }
+
+                $gxinfo['qiangx'] = sprintf("%1\$.3f", $gxinfo['qiangx']);
+                $gxinfo['qianxgx'] = sprintf("%1\$.3f", $gxinfo['qianxgx']);
+                $gxinfo['hougx'] = sprintf("%1\$.3f", $gxinfo['hougx']);
+                $gxinfo['houxgx'] = sprintf("%1\$.3f", $gxinfo['houxgx']);
+
                 //成功	1
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
@@ -792,10 +818,10 @@ class WorkModel extends BaseModel
         if ($msg1['code'] == '1') {
             $ship = new \Common\Model\ShipFormModel();
             if ($datas['solt'] == '1') {
-                $result_msg = $this->field('qianprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $result_msg = $this->field('qianprocess,shipid,oil_type')->where(array("id" => $datas['resultid']))->find();
                 $this->process = json_decode($result_msg['qianprocess'], true);
             } elseif ($datas['solt'] == '2') {
-                $result_msg = $this->field('houprocess,shipid')->where(array("id" => $datas['resultid']))->find();
+                $result_msg = $this->field('houprocess,shipid,oil_type')->where(array("id" => $datas['resultid']))->find();
                 $this->process = json_decode($result_msg['houprocess'], true);
             }
 
@@ -932,6 +958,9 @@ class WorkModel extends BaseModel
                 $data1['houprocess'] = json_encode($this->process);
             }
 
+
+
+
             // 判断水尺数据是否存在 添加/修改数据
             $map = array(
                 'solt' => $datas['solt'],
@@ -939,13 +968,22 @@ class WorkModel extends BaseModel
             );
             $num = M('forntrecord')->where($map)->count();
             M()->startTrans();  // 开启事物
-            if ($num > 0) {
-                //数据存在--修改
-                $r = M('forntrecord')->where($map)->save($data);
-            } else {
-                //数据不存在--新增
-                $r = M('forntrecord')->add($data);
+            try{
+                if ($num > 0) {
+                    //数据存在--修改
+                    $r = M('forntrecord')->where($map)->save($data);
+                } else {
+                    //数据不存在--新增
+                    $r = M('forntrecord')->add($data);
+                }
+            }catch (\Exception $exception){
+                M()->rollback();
+                $res = array(
+                    'code'=>$this->ERROR_CODE_COMMON['DB_ERROR']
+                );
+                exit(jsonreturn($res));
             }
+
 
             $datafile = array();
             // 判断是否存在首吃水 尾吃水
@@ -1019,7 +1057,7 @@ class WorkModel extends BaseModel
                             $this->process = array();
                             $value['uid'] = $datas['uid'];
                             $value['imei'] = $datas['imei'];
-                            $this->reckon($value);
+                            $this->reckon($value,'l',true);
                         }
                     }
                 }
@@ -1040,6 +1078,95 @@ class WorkModel extends BaseModel
             $res = $msg1;
         }
         return $res;
+    }
+
+    /**
+     * 获取20℃下的体积修正系数
+     * @param float $P15 15℃的标准温度
+     * @param float $oilTemperature 油温，测量空高时，油体的温度
+     * @param float $Alpha 油品Alpha
+     * @param float $P20 20℃的标准温度
+     * @return float|int
+     */
+    function getVcf20($P15,$oilTemperature,$oilType,$P20){
+        $deltaT = $oilTemperature-15;
+        $Alpha = $this->getAlpha($oilType,$P15);
+        return $P15*exp(-1*$Alpha*$deltaT*(1+0.8*$Alpha*$deltaT))/$P20;
+    }
+
+    /**
+     * 获取20℃下的标准密度
+     * @param float $P15 15℃的标准温度
+     * @param float $Alpha 油品Alpha
+     * @return float|int
+     */
+    function getP20($P15,$oilType){
+        return $P15*exp(-1*($this->getAlpha($oilType,$P15))*5*(1+0.8*($this->getAlpha($oilType,$P15))*5));
+    }
+
+    /**
+     * 迭代算法获取15℃下的标准密度
+     * @param float $density 实际密度
+     * @param float $Alpha 油的Alpha
+     * @param float $obTemperature 测量密度时的视温度
+     */
+    function iterativeCalculation($density,$obTemperature,$oilType,$cp15){
+        $deltaT = $obTemperature-15;
+        $P = $density;
+        for($i=0;$i<=999;$i++){
+            $Alpha = $this->getAlpha($oilType,$P);
+            //exp函数为自然对数  exp(2)=e的二次方
+            $P15=$density/exp((-1*$Alpha*$deltaT)*(1+0.8*$Alpha*$deltaT));
+            //如果差值小于阈值，退出循环
+            if(abs($P-$P15)<0.000001) break;
+            //否则将结果代入density继续参与计算
+            $P=$P15;
+        }
+//        echo "迭代算法循环了：".($i+1)."次，P15为".$P15."<br/>";
+        return $P15;
+    }
+
+
+    /**
+     * 获取视密度修正系数
+     * @param float $obTemperature 视温度
+     * @param float $t 希望修正到的标准温度
+     * @return float|int
+     */
+    function getApparentDensityCorrectionFactor($obTemperature,$t){
+        return 1-2.3*0.00001*($obTemperature-$t)-2*0.00000001*pow(($obTemperature-$t),2);
+    }
+
+    /**
+     * 根据密度获取不同油品的Alpha
+     * @param int $oilType 油类型，2：原油，3：石油产品，4：润滑油
+     * @param float $density 油品密度 t/m³
+     */
+    function getAlpha($oilType,$density){
+        //初始化,默认为0
+        $k0 = 0;
+        $k1 = 0;
+        $A = 0;
+        if($oilType == 2){
+            $k0 = 613.9723;
+        }elseif ($oilType == 3){
+            if($density<=770.3){
+                $k0 = 346.4228;
+                $k1 = 0.4388;
+            }elseif ($density>770.3 && $density<=787.5){
+                $k0 = 2680.3206;
+                $A = -0.00336312;
+            }elseif ($density>787.5 && $density<=838.3){
+                $k0 = 594.5418;
+            }elseif ($density>838.3 && $density<=1163.5){
+                $k0 = 186.9696;
+                $k1 = 0.4862;
+            }
+        }elseif ($oilType == 4){
+            $k1 = 0.6278;
+        }
+        //返回算法
+        return $k0/($density*$density) + $k1/$density + $A;
     }
 
     /**
@@ -1213,8 +1340,17 @@ class WorkModel extends BaseModel
      * @param string $type 默认l，代表没有发生错误时由此方法提交事务，传入其他值则外部提交事务
      * @return array
      */
-    public function reckon($data, $type = 'l')
+    public function reckon($data, $type = 'l',$is_repeat=false)
     {
+		if(!$is_repeat){
+			$validata_result = validata_range($data);
+			if($validata_result['error']){
+				//提交的值超出约定范围，报错2044
+				M()->rollback();
+				return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+			}	
+		}
+        
         $this->process = array();
         // 根据船ID获取纵倾值
         $ship = new \Common\Model\ShipModel();
@@ -2429,7 +2565,6 @@ class WorkModel extends BaseModel
                     'resultlist_id' => $listid
                 );
             }
-
         }
         return $datafile;
     }
@@ -2439,11 +2574,21 @@ class WorkModel extends BaseModel
      * */
     public function reckon1($data, $type = 'l')
     {
+
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
+
+
         $this->process = array();
         self::$function_process = array();
 
         // 将录入数据更新到表中
         $resultrecord = M('resultrecord');
+
         $where = array(
             'resultid' => $data['resultid'],
             'cabinid' => $data['cabinid'],
@@ -2496,6 +2641,7 @@ class WorkModel extends BaseModel
                     's.id' => $data['shipid'],
                     'r.id' => $data['resultid']
                 );
+
                 //获取旧过程，没有就初始化新过程
                 $this->process = json_decode($r['process'], true);
                 if ($this->process == null) {
@@ -2764,6 +2910,20 @@ class WorkModel extends BaseModel
                 $msg = round($this->suanfa($qiu, $ulist, $keys, $r['ullage'], $chishui), 3);
                 $this->process['trim_table']['process'] = self::$function_process;
 
+                /*
+                 * 记录累积值
+                 */
+                $cumluative_trim_data = array(
+                    'ullage1' => $data['ullage1'],
+                    'ullage2' => $data['ullage2'],
+                    'draft1' => $data['draft1'],
+                    'draft2' => $data['draft2'],
+                    'value1' => $data['value1'],
+                    'value2' => $data['value2'],
+                    'value3' => $data['value3'],
+                    'value4' => $data['value4'],
+                );
+                $this->adjust_cumulative_trim_data($data['resultid'], $data['solt'], $data['cabinid'], $r['qufen'], $cumluative_trim_data);
 
                 // writeLog($msg);
                 switch ($shipmsg['suanfa']) {
@@ -3040,6 +3200,17 @@ class WorkModel extends BaseModel
                             'listcorrection' => $zongxiu,
                             'process' => json_encode($this->process)
                         );
+
+                        /*
+                         * 查询累积数据
+                         */
+                        $capacity_data = $this->get_cumulative_capacity_data($data['cabinid'], floatval($xiukong), $r['qufen']);
+
+                        //如果查询到数据，合并需要存入的累积数据，等待下一次查询
+                        if (false !== $capacity_data) {
+                            $d = array_merge($capacity_data, $d);
+                        }
+
                         $a = $resultrecord
                             ->where(array('id' => $r['id']))
                             ->save($d);
@@ -3068,7 +3239,6 @@ class WorkModel extends BaseModel
                         );
                         break;
                 }
-
             } else {
                 M()->rollback();
                 //其它错误 2
@@ -3094,6 +3264,12 @@ class WorkModel extends BaseModel
      * */
     public function capacityreckon($data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $this->process = array();
         self::$function_process = array();
         $user = new \Common\Model\UserModel();
@@ -3364,6 +3540,18 @@ class WorkModel extends BaseModel
                     $this->process['sum(now_cabin_volume)'] = $allweight[0]['sums'];
                     $this->process['AB'] = 0.0011;
 
+                    /*
+                     * 记录累积值
+                     */
+                    $cumluative_capacity_data = array(
+                        'xiuullage1' => $dt2['ullage'],
+                        'xiuullage2' => $dt1['ullage'],
+                        'capacity1' => $dt2['capacity'],
+                        'capacity2' => $dt1['capacity'],
+                    );
+                    $this->adjust_cumulative_capacity_data($data['resultid'], $data['solt'], $data['cabinid'], $cumluative_capacity_data, $r['qufen']);
+
+
                     //作业前作业后区分是否计算总货重
                     switch ($data['solt']) {
                         case '1':
@@ -3540,6 +3728,7 @@ class WorkModel extends BaseModel
                 unset($data[$value]);
             }
         }
+
         // 航次
         // if (isset($data['voyage'])) {
         //     $personality['voyage'] = $data['voyage'];
@@ -3627,13 +3816,14 @@ class WorkModel extends BaseModel
         // 根据公司类型区分修改内容
         if ($data['firmtype'] == '1') {
             // 修改作业评价
+
             $da = array(
                 'grade1' => $data['grade'],
-                'evaluate1' => $data['content'],
+                'evaluate1' => $data['content']=='undefined'?"":$data['content'],
                 'operater1' => $data['operater'],
                 'measure_standard1' => $data['measure'],
                 'security1' => $data['security'],
-                'time1'=>time(),
+                'time1' => time(),
             );
             $re = $evaluate->where($map)->save($da);
             if ($re !== false) {
@@ -3704,7 +3894,7 @@ class WorkModel extends BaseModel
                 'operater2' => $data['operater'],
                 'measure_standard2' => $data['measure'],
                 'security2' => $data['security'],
-                'time2'=>time(),
+                'time2' => time(),
             );
             $re = $evaluate->where($map)->save($da);
             if ($re !== false) {
@@ -3776,84 +3966,108 @@ class WorkModel extends BaseModel
 
 
     /**
-     * 自动评价机制，调用该程序自动检测和评价所有未被评价的作业
+     * 调用时自动评价所有
      */
     public function automatic_evaluation()
     {
-        #todo 加入评价系统
-        // 获取所有创建时间超过10天并且检验员或者船方未评价的作业
-        $expire_time = strtotime('-10 day', time());//获取十天前的时间戳
+        // 获取所有10天前未评价的作业
         $evaluate = M('evaluation');
-        $where_1['r.grade1'] = 0;
-        $where_2['r.grade2'] = 0;
+        $ship = new \Common\Model\ShipFormModel();
+
+        $where_1 = array(
+            'e.grade1' => 0,
+            'e.grade2' => 0,
+            '_logic' => 'or'
+        );
+        $where_2 = array(
+            'r.time' => array('LT', strtotime('-10 day', time()))
+        );
         $where_main['_complex'] = array(
             $where_1,
             $where_2,
-            '_logic' => 'or'
         );
         $rlist = $evaluate
-            ->field('r.id,r.time,r.grade1,r.grade2,r.uid,r.shipid')
+            ->field('r.id,r.shipid')
             ->alias('e')
             ->where($where_main)
-            ->join('right join result r on r.id = e.resultid')
+            ->join('right join result r on r.id = e.result_id')
             ->select();
-        $result = new \Common\Model\ResultModel();
         $res = array('code' => 1);
         foreach ($rlist as $key => $value) {
-            // 获取当前作业新建时间的后10天
-            $time = strtotime('+10 day', $value['time']);
-            $nowtime = time();
-            if ($time < $nowtime) {
+
+            // 检验
+            $data1 = array(
+                'uid' => $value['uid'],
+                'id' => $value['id'],
+                'shipid' => $value['shipid'],
+                'grade' => 5,
+                'firmtype' => 1,
+                'content' => '默认好评',
+                'operater' => $value['uid'],
+                'measure' => 3,
+                'security' => 3,
+            );
+//            $data1 = array(
+//                'uid' => $value['uid'],
+//                'id' => $value['id'],
+//                'shipid' => $value['shipid'],
+//                'grade' => 5,
+//                'firmtype' => 1,
+//                'content' => '默认好评',
+//                'operater' => $value['uid']
+//            );
+
+            $ship_user_info = $ship->get_ship_auto_account($value['shipid']);
+            // 船舶
+            $data2 = array(
+                'uid' => $value['uid'],
+                'id' => $value['id'],
+                'shipid' => $value['shipid'],
+                'grade' => 5,
+                'firmtype' => 2,
+                'content' => '默认好评',
+                'operater' => $ship_user_info['id'],
+                'measure' => 3,
+                'security' => 3,
+            );
+
+            // 船舶
+//            $data2 = array(
+//                'uid' => $value['uid'],
+//                'id' => $value['id'],
+//                'shipid' => $value['shipid'],
+//                'grade' => 5,
+//                'firmtype' => 2,
+//                'content' => '默认好评',
+//                'operater' => -1
+//            );
+
+            // 当前时间大于作业后0天，启动自动评价
+            if ($value['grade1'] == '0' && $value['grade2'] == '0') {
+                // 两边 都没有评价
                 // 检验
-                $data1 = array(
-                    'uid' => $value['uid'],
-                    'id' => $value['id'],
-                    'shipid' => $value['shipid'],
-                    'grade' => 5,
-                    'firmtype' => 1,
-                    'content' => '默认好评',
-                    'operater' => $value['uid']
-                );
-                // 船舶
-                $data2 = array(
-                    'uid' => $value['uid'],
-                    'id' => $value['id'],
-                    'shipid' => $value['shipid'],
-                    'grade' => 5,
-                    'firmtype' => 2,
-                    'content' => '默认好评',
-                    'operater' => -1
-                );
-
-                // 当前时间大于作业后0天，启动自动评价
-                if ($value['grade1'] == '0' && $value['grade2'] == '0') {
-                    // 两边 都没有评价
-                    // 检验
-                    $res1 = $result->evaluate($data1);
-                    if ($res1['code'] != '1') {
-                        break;//终止循环
-                    }
-
-                    // 船舶
-                    $res2 = $result->evaluate($data2);
-                    if ($res2['code'] != '1') {
-                        break;//终止循环
-                    }
-                } else if ($value['grade1'] != '0' && $value['grade2'] == '0') {
-                    // 船驳公司评价
-                    $res = $result->evaluate($data2);
-                    if ($res['code'] != '1') {
-                        break;//终止循环
-                    }
-                } else if ($value['grade1'] == '0' && $value['grade2'] != '0') {
-                    // 检验公司评价
-                    $data = $data1;
-                    $res = $result->evaluate($data1);
-                    if ($res['code'] != '1') {
-                        break;//终止循环
-                    }
+                $res1 = $this->evaluate($data1);
+                if ($res1['code'] != '1') {
+                    break;//终止循环
                 }
-
+                // 船舶
+                $res2 = $this->evaluate($data2);
+                if ($res2['code'] != '1') {
+                    break;//终止循环
+                }
+            } else if ($value['grade1'] != '0' && $value['grade2'] == '0') {
+                // 船驳公司评价
+                $res = $this->evaluate($data2);
+                if ($res['code'] != '1') {
+                    break;//终止循环
+                }
+            } else if ($value['grade1'] == '0' && $value['grade2'] != '0') {
+                // 检验公司评价
+                $data = $data1;
+                $res = $this->evaluate($data1);
+                if ($res['code'] != '1') {
+                    break;//终止循环
+                }
             }
         }
 
@@ -3999,9 +4213,13 @@ class WorkModel extends BaseModel
         $resultlist = new \Common\Model\ResultlistModel();
         // 根据计量ID获取密度，
         $msg = $this
-            ->field('houdensity,qiandensity,houtotal,qiantotal,weight,shipid')
+            ->field('houdensity,qiandensity,houtotal,qiantotal,weight,shipid,add_weight')
             ->where(array('id' => $resultid))
             ->find();
+
+        $msg['add_weight'] = sprintf("%1\$.3f", $msg['add_weight']);
+        $msg['weight'] = sprintf("%1\$.3f", abs($msg['weight']));
+        $msg['final_weight'] = abs($msg['weight'] + $msg['add_weight']);
 
         //不作业的舱纳入统计
         $list_qian_where = array(
@@ -4048,10 +4266,11 @@ class WorkModel extends BaseModel
             'qiantotal' => $msg['qiantotal'],
             'shipid' => $msg['shipid'],
             'houtotal' => $msg['houtotal'],
+            'add_weight' => $msg['add_weight'],
             'total' => $msg['weight'],
+            'final_weight' => $msg['final_weight'],
             'is_have_data' => $is_have_data
         );
-
         return $res;
     }
 
@@ -4061,6 +4280,12 @@ class WorkModel extends BaseModel
      */
     public function adjust_cabin(array $data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $result_record = M("resultrecord");
         $record_where = array(
             "solt" => $data['solt'],
@@ -4084,7 +4309,7 @@ class WorkModel extends BaseModel
         } catch (\Exception $e) {
             //数据格式有错 7
             M()->rollback();
-            return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA']);
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR']);
         }
 
         //如果保存失败
@@ -4125,7 +4350,12 @@ class WorkModel extends BaseModel
      */
     public function adjust_nodata_cabin(array $data)
     {
-
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $result_record = M("resultrecord");
         $record_where = array(
             "solt" => $data['solt'],
@@ -4214,6 +4444,8 @@ class WorkModel extends BaseModel
             'r.solt' => $solt,
             'r.is_work' => 1,
         );
+        $ship = new \Common\Model\ShipFormModel();
+        $suanfa = $ship->getFieldById($shipid, 'suanfa');
 
         $res = $result_record
             ->alias('r')
@@ -4229,6 +4461,7 @@ class WorkModel extends BaseModel
                 }
             }
         }
+        $res['suanfa'] = $suanfa;
         return $res;
     }
 
@@ -4242,10 +4475,12 @@ class WorkModel extends BaseModel
     {
         $result_record = M('resultrecord');
         if ($solt == 1) {
-            $record_arr = $this->field('qianchi as chishui')->where(array('id' => $resultid))->find();
+            $record_arr = $this->field('qianchi as chishui,shipid')->where(array('id' => $resultid))->find();
         } else {
-            $record_arr = $this->field('houchi as chishui')->where(array('id' => $resultid))->find();
+            $record_arr = $this->field('houchi as chishui,shipid')->where(array('id' => $resultid))->find();
         }
+        $ship = new \Common\Model\ShipFormModel();
+        $suanfa = $ship->getFieldById($record_arr['shipid'], 'suanfa');
 
         $where = array(
             'r.resultid' => $resultid,
@@ -4268,6 +4503,7 @@ class WorkModel extends BaseModel
             }
         }
         $res['chishui'] = $record_arr['chishui'];
+        $res['suanfa'] = $suanfa;
         return $res;
     }
 
@@ -4336,5 +4572,256 @@ class WorkModel extends BaseModel
         }
         return $res;
     }
+
+    /**
+     * 累积纵倾修正表数据
+     *
+     */
+    public function cumulative_trim_data($trim_data)
+    {
+        $res = 0;
+        if (!judgeTwoString($trim_data)) {
+            //如果含有特殊字符，返回0
+            $res = 0;
+        } else {
+            $cumulative_trim_data = M('cumulative_trim_data');
+            //先判断此累积数据是否存在公司的数据内
+            $trim_where = array('cabinid' => $trim_data['cabinid']);
+
+            if ($trim_data['ullage1'] == $trim_data['ullage2']) {
+                //如果空高正好落在空高刻度上，只需要查询是否空高1或者空高2等于该刻度值，其中一项有且刻度对上则算作数据已经有了
+                $trim_where['ullage1|ullage2'] = floatval($trim_data['ullage1']);
+            } else {
+                $trim_where['ullage1&ullage2'] = array(floatval($trim_data['ullage1']), floatval($trim_data['ullage2']), '_multi' => true);
+            }
+
+            if ($trim_data['draft1'] == $trim_data['draft2']) {
+                //同理吃水差如果正好落在刻度上，同上
+                $trim_where['draft1|draft2'] = floatval($trim_data['draft1']);
+            } else {
+                $trim_where['draft1&draft2'] = array(floatval($trim_data['draft1']), floatval($trim_data['draft2']), '_multi' => true);
+            }
+            $trim_where['value1'] = floatval($trim_data['value1']);
+            $trim_where['value2'] = floatval($trim_data['value2']);
+            $trim_where['value3'] = floatval($trim_data['value3']);
+            $trim_where['value4'] = floatval($trim_data['value4']);
+
+
+            $data_count = $cumulative_trim_data->where($trim_where)->count();
+
+            if ($data_count == 0) {
+                $trim_data['ins_time'] = time();
+                //如果没有则插入累积值
+                $result = $cumulative_trim_data->add($trim_data);
+                #todo 插入成功以后删除可能重复的数据
+                if ($result !== false) {
+                    //存入成功，返回1
+                    $res = 1;
+                } else {
+                    //存入失败，返回3
+                    $res = 3;
+                }
+            } else {
+                //如果数据已存在，返回2
+                $res = 2;
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * 累积容量表数据
+     */
+    public function cumulative_capacity_data($capacity_data)
+    {
+        $res = 0;
+        if (!judgeTwoString($capacity_data)) {
+            //如果含有特殊字符，返回0
+            $res = 0;
+        } else {
+            $cumulative_capacity_data = M('cumulative_capacity_data');
+            //先判断此累积数据是否存在公司的数据内
+            $capacity_where = array('cabinid' => $capacity_data['cabinid']);
+
+            if ($capacity_data['xiuullage1'] == $capacity_data['xiuullage2']) {
+                //如果空高正好落在空高刻度上，只需要查询是否空高1或者空高2等于该刻度值，其中一项有且刻度对上则算作数据已经有了
+                $capacity_where['xiuullage1|xiuullage2'] = floatval($capacity_data['xiuullage1']);
+            } else {
+                $capacity_where['xiuullage1&xiuullage2'] = array(floatval($capacity_data['xiuullage1']), floatval($capacity_data['xiuullage2']), '_multi' => true);
+            }
+            $capacity_where['capacity1'] = floatval($capacity_data['capacity1']);
+            $capacity_where['capacity2'] = floatval($capacity_data['capacity2']);
+
+            $data_count = $cumulative_capacity_data->where($capacity_where)->count();
+
+            if ($data_count == 0) {
+                $capacity_data['ins_time'] = time();
+                //如果没有则插入累积值
+                $result = $cumulative_capacity_data->add($capacity_data);
+                #todo 插入成功以后删除可能重复的数据
+                if ($result !== false) {
+                    //存入成功，返回1
+                    $res = 1;
+                } else {
+                    //存入失败，返回3
+                    $res = 3;
+                }
+            } else {
+                //如果数据已存在，返回2
+                $res = 2;
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * 调整累积舱容表数据
+     * @param $result_id 作业ID
+     * @param $solt 作业前后
+     * @param $cabinid 舱ID
+     * @param array $trim_data 纵倾修正值数据
+     * @return int $res 返回值：0错误，有特殊字符、1成功、2新值检测到重复，不录入、3失败
+     */
+    public function adjust_cumulative_trim_data($result_id, $solt, $cabinid, $book, $trim_data)
+    {
+        $cumulative_trim_data = M('cumulative_trim_data');
+        $result_mark = strval($result_id) . ($solt == 1 ? "Q" : "H");
+        $repeat_where = array(
+            'result_mark' => $result_mark,
+            'cabinid' => $cabinid,
+        );
+        $cumulative_trim_data->where($repeat_where)->delete();
+        $ins_data = $trim_data;
+        $ins_data['cabinid'] = $cabinid;
+        $ins_data['data_sources'] = 1;
+        $ins_data['result_mark'] = $result_mark;
+
+        if ($book == 'diliang') {
+            $ins_data['book'] = 2;
+        } else {
+            $ins_data['book'] = 1;
+        }
+
+        return $this->cumulative_trim_data($ins_data);
+    }
+
+    /**
+     * 调整累积舱容表数据
+     * @param $result_id 作业ID
+     * @param $solt 作业前后
+     * @param $cabinid 舱ID
+     * @param array $trim_data 纵倾修正值数据
+     * @param int $data_sources 数据来源，1自动累积，2手动累积
+     * @return int $res 返回值：0错误，有特殊字符、1成功、2新值检测到重复，不录入、3失败
+     */
+    public function adjust_cumulative_capacity_data($result_id, $solt, $cabinid, $capacity_data, $book, $data_sources = 1)
+    {
+        $cumulative_capacity_data = M('cumulative_capacity_data');
+        $result_mark = strval($result_id) . ($solt == 1 ? "Q" : "H");
+        $repeat_where = array(
+            'result_mark' => $result_mark,
+            'cabinid' => $cabinid,
+        );
+        //如果来源于同一个地方，先删除原来的记录再放入新的记录
+        $cumulative_capacity_data->where($repeat_where)->delete();
+        $ins_data = $capacity_data;
+        $ins_data['cabinid'] = $cabinid;
+        $ins_data['data_sources'] = $data_sources;
+        $ins_data['result_mark'] = $result_mark;
+
+        //区分底量还是容量书
+        if ($book == 'diliang') {
+            $ins_data['book'] = 2;
+        } else {
+            $ins_data['book'] = 1;
+        }
+
+        return $this->cumulative_capacity_data($ins_data);
+    }
+
+    /**
+     * 获取对应的纵倾修正表字段
+     * @param $cabinid 舱ID
+     * @param $ullage 空高
+     * @param $draft 吃水差
+     * @param bool $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
+     * @return array|bool
+     */
+    public function get_cumulative_trim_data($cabinid, $ullage, $draft, $book, $fullsearch = false)
+    {
+        $cumulative_trim_data = M('cumulative_trim_data');
+        $trim_where = array(
+            'cabinid' => intval($cabinid),
+            'ullage1' => array('ELT', floatval($ullage)),
+            'ullage2' => array('EGT', floatval($ullage)),
+            'draft1' => array('ELT', floatval($draft)),
+            'draft2' => array('EGT', floatval($draft)),
+        );
+
+        //区分是容量表还是底量表
+        if ($book == 'diliang') {
+            $trim_where['book'] = 2;
+        } else {
+            $trim_where['book'] = 1;
+        }
+
+        //查找
+        if (false == $fullsearch) {
+            $data = $cumulative_trim_data->field('ullage1,ullage2,draft1,draft2,value1,value2,value3,value4')->where($trim_where)->order('data_sources desc,ins_time desc')->find();
+        } else {
+            $data = $cumulative_trim_data->where($trim_where)->order('data_sources desc,ins_time desc')->find();
+        }
+        if (!empty($data)) {
+            //调用次数+1
+            $cumulative_trim_data->where($trim_where)->setInc('use_count');
+            return $data;
+        } else {
+            //无数据返回false
+            return false;
+        }
+    }
+
+
+    /**
+     * 获取对应的容量表字段
+     * @param $cabinid 舱ID
+     * @param $ullage 空高
+     * @param bool $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
+     * @return array|bool
+     */
+    public function get_cumulative_capacity_data($cabinid, $ullage, $book, $fullsearch = false)
+    {
+        $cumulative_capacity_data = M('cumulative_capacity_data');
+        $capacity_where = array(
+            'cabinid' => intval($cabinid),
+            'xiuullage1' => array('ELT', floatval($ullage)),
+            'xiuullage2' => array('EGT', floatval($ullage)),
+        );
+
+        //区分是容量表还是底量表
+        if ($book == 'diliang') {
+            $capacity_where['book'] = 2;
+        } else {
+            $capacity_where['book'] = 1;
+        }
+
+        //查找
+        if (false == $fullsearch) {
+            $data = $cumulative_capacity_data->field('xiuullage1,xiuullage2,capacity1,capacity2')->where($capacity_where)->order('data_sources desc,ins_time desc')->find();
+        } else {
+            $data = $cumulative_capacity_data->where($capacity_where)->order('data_sources desc,ins_time desc')->find();
+        }
+
+        if (!empty($data)) {
+            //调用次数+1
+            $cumulative_capacity_data->where($capacity_where)->setInc('use_count');
+            return $data;
+        } else {
+            //无数据返回false
+            return false;
+        }
+    }
+
+
 }
 

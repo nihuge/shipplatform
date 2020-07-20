@@ -17,14 +17,13 @@ class WxController extends AppBaseController
 
 
     /**
-     * 获取session_key 接口
+     * 获取openid接口
      * @param string code 用户登录的JS_code
      */
     public function getSession()
     {
-
-        $appid = "wx15510d554f66581e";
-        $appsecret = "64758c2cfdac8831bb616d4ef41b5973";
+        $appid = "wxa81a46b43e2ea143";
+        $appsecret = "262422fd46c412128ad5d665993c7203";
 
         if (I('post.code')) {
             $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $appid . "&secret=" . $appsecret . "&js_code=" . I('post.code') . "&grant_type=authorization_code";
@@ -32,7 +31,7 @@ class WxController extends AppBaseController
             if ($result['code'] == 1) {
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                    'content' => $result['content'],
+                    'content' => json_decode($result['content'],true),
                 );
 //                echo $result['content'];
             } else {
@@ -77,7 +76,9 @@ class WxController extends AppBaseController
                     $unionid = $decryptedData['unionid'];
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                        'decryptedData' => $decryptedData
+                        'decryptedData' => $decryptedData,
+                        'unionid' => $unionid,
+                        'openid' => $openid,
                     );
                 } else {
                     $res = array(
@@ -100,7 +101,4 @@ class WxController extends AppBaseController
         echo jsonreturn($res);
     }
 
-    function test(){
-
-    }
 }

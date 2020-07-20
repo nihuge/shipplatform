@@ -1,0 +1,58 @@
+<extend name="Public:base"/>
+<block name="title">数据导入</block>
+<block name="navtitle">
+    <li class="active">
+        数据导入
+    </li>
+    <li class="active">
+        无表散货船数据导入
+    </li>
+</block>
+<block name="activeopen41">class="active open"</block>
+<block name="active_watchless_upload">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <form action="__ACTION__" method="post" enctype="multipart/form-data">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover"
+                   style='width:500px;margin:auto auto;text-align: center;'>
+
+                <tr>
+                    <td style="width:80px;">船&nbsp;&nbsp;&nbsp;&nbsp;舶</td>
+                    <td>
+                        <select name="shipid" id="shipid" required class="col-xs-10 col-sm-5">
+                            <option value="">--选择船--</option>
+                            <volist name="shiplist" id="v">
+                                <option id="shipid_{$v['id']}" value="{$v['id']}">{$v['shipname']}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+
+        <br>
+        <div style="width: 80px;height: 60px;margin: 0 auto"><input type="submit" value="上传" class="btn btn-primary"></div>
+        <br>
+        <br>
+        <table id='presence' class="table table-striped table-bordered table-hover"
+               style='table-layout:fixed;margin:0 auto;text-align: center;'>
+            <thead>
+            <th>平均吃水(d_m)</th>
+            <th>排水量变化(tpc)</th>
+            <th>排水量(ds)</th>
+            <th>漂心距舯线距离(xf)</th>
+            </thead>
+            <tbody>
+            <for start="0" end="50">
+                <tr>
+                    <td><input style='border:0;background-color:transparent;' name='data[{$i}][d_m]'></td>
+                    <td><input style='border:0;background-color:transparent;' name='data[{$i}][tpc]'></td>
+                    <td><input style='border:0;background-color:transparent;' name='data[{$i}][ds]'></td>
+                    <td><input style='border:0;background-color:transparent;' name='data[{$i}][xf]'></td>
+                </tr>
+            </for>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</block>

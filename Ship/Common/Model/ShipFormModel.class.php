@@ -38,11 +38,12 @@ class ShipFormModel extends BaseModel
      * 获取用户可以操作的船列表
      * @param string imei 标识
      * @param int uid 用户ID
+     * @param int has_data 是否只获取有表船
      * @return array
      * @return @param code 返回码
      * @return @param content 说明、内容
      */
-    public function shiplist($uid, $imei)
+    public function shiplist($uid, $imei, $has_data = 0)
     {
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -51,15 +52,28 @@ class ShipFormModel extends BaseModel
             $where = array(
                 'id' => $uid
             );
+
             //获取用户的船舶列表id
             $usermsg = $user
                 ->field('operation_jur')
                 ->where($where)
                 ->find();
             if ($usermsg !== false and !empty($usermsg['operation_jur'])) {
+                $where_ship = array(
+                    's.id' => array('IN', $usermsg['operation_jur']),
+                    "s.del_sign" => 1
+                );
+                //是否只获取有表船，0，都获取，1，只获取有表船，2，只获取无表船
+                if ($has_data == 1) {
+                    $where_ship['s.data_ship'] = 'y';
+                } elseif ($has_data == 2) {
+                    $where_ship['s.data_ship'] = 'n';
+                }
                 $list = $this
-                    ->field('id,shipname,goodsname,expire_time')
-                    ->where(array('id' => array('IN', $usermsg['operation_jur']), "del_sign" => 1))
+                    ->alias('s')
+                    ->field('s.id,s.data_ship,s.shipname,s.goodsname,s.expire_time,sl.table_accuracy as accuracy_sum,sl.accuracy_num')
+                    ->join('left join ship_historical_sum as sl on sl.shipid=s.id')
+                    ->where($where_ship)
                     ->select();
                 if ($list !== false) {
                     //返回数组，用于排序
@@ -72,7 +86,19 @@ class ShipFormModel extends BaseModel
                         } else {
                             $list[$key]['expired'] = true;
                         }
-                        $list[$key]['pinyin'] = strtoupper(pinyin($value['shipname'], "one"));
+                        $accuracy_per = $value['accuracy_sum'] / ($value['accuracy_num'] > 0 ? $value['accuracy_num'] : 1) / 3 * 100;
+                        $list[$key]['table_accuracy'] = $value['accuracy_sum'] / ($value['accuracy_num'] > 0 ? $value['accuracy_num'] : 1);
+                        if ($value['accuracy_num'] == 0) {
+                            $list[$key]['accuracy_title'] = "暂无评价";
+                        } elseif ($accuracy_per < 50) {
+                            $list[$key]['accuracy_title'] = "平均偏小";
+                        } elseif ($accuracy_per == 50) {
+                            $list[$key]['accuracy_title'] = "平均正常";
+                        } elseif ($accuracy_per > 50) {
+                            $list[$key]['accuracy_title'] = "平均偏大";
+                        }
+
+                        $list[$key]['pinyin'] = strtoupper(pinyin($value['shipname'], "one",'#','/[a-zA-Z]/'));
                         //赋值拼音全拼当做键给返回数组
                         $retrun_list[pinyin($value['shipname'])] = $list[$key];
                     }
@@ -106,11 +132,12 @@ class ShipFormModel extends BaseModel
      * 获取用户可以查询的船列表
      * @param string imei 标识
      * @param int uid 用户ID
+     * @param int has_data 是否只获取有表船
      * @return array
      * @return @param code 返回码
      * @return @param content 说明、内容
      */
-    public function shipSearchList($uid, $imei)
+    public function shipSearchList($uid, $imei,$has_data=0)
     {
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
@@ -125,9 +152,21 @@ class ShipFormModel extends BaseModel
                 ->where($where)
                 ->find();
             if ($usermsg !== false and !empty($usermsg['search_jur'])) {
+
+                $where_ship = array(
+                    'id' => array('IN', $usermsg['search_jur']),
+                    "del_sign" => 1
+                );
+
+                if($has_data == 1){
+                    $where_ship['data_ship'] = 'y';
+                }elseif ($has_data == 2){
+                    $where_ship['data_ship'] = 'n';
+                }
+
                 $list = $this
                     ->field('id,shipname,goodsname,expire_time')
-                    ->where(array('id' => array('IN', $usermsg['search_jur']), "del_sign" => 1))
+                    ->where($where_ship)
                     ->select();
                 if ($list !== false) {
                     foreach ($list as $key => $value) {
@@ -199,6 +238,13 @@ class ShipFormModel extends BaseModel
                     ->field('id,shipname')
                     ->where(array('firmid' => $value['id'], "del_sign" => 1))
                     ->select();
+                /*                foreach ($res[$key]['shiplist'] as $k=>$v){
+                                    if($this->is_have_data($v['id'])=='y'){
+                                        $res['dataship'][] = $v['shipname'];
+                                    }else{
+                                        $res['nodataship'][] = $v['shipname'];
+                                    }
+                                }*/
             }
         } else {
             $res = array();
@@ -206,12 +252,27 @@ class ShipFormModel extends BaseModel
         return $res;
     }
 
+
     /**
      * 判断船是否有舱容数据
      * @param int $shipid 船id
      * @return array
      */
     public function is_have_data($shipid)
+    {
+        $msg = $this
+            ->field('data_ship')
+            ->where(array('id' => $shipid))
+            ->find();
+        return $msg['data_ship'];
+    }
+
+    /**
+     * 判断船是否有舱容数据
+     * @param int $shipid 船id
+     * @return array
+     */
+    public function is_have_datas($shipid)
     {
         $msg = $this
             ->field('tankcapacityshipid,zx,rongliang,zx_1,rongliang_1,suanfa')
@@ -273,10 +334,25 @@ class ShipFormModel extends BaseModel
         return $res;
     }
 
+
     /**
-     * 判断船是否被锁定
+     * 新版本判断船是否被锁定
      */
     public function is_lock($shipid)
+    {
+        $info = $this->field('is_lock')->where(array('id' => intval($shipid)))->find();
+        if ($info['is_lock'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * 旧版本判断船是否被锁定
+     */
+    public function is_locks($shipid)
     {
         $work = new \Common\Model\WorkModel();
         $res_count = $work->where(array('shipid' => $shipid))->count();
@@ -343,20 +419,44 @@ class ShipFormModel extends BaseModel
                         }
 
                         $s = $this->addData($data);
-                        if ($s) {
+                        if ($s !== false) {
                             // 新增船舶创建表、添加船舶历史数据汇总初步
                             $this->createtable($data['suanfa'], $data['shipname'], $s);
+
+
+                            /*
+                             * 新建船舶时自动添加一个对应的船舶账户
+                             */
+                            //判断公司有无管理员账户，如果没有管理员账户，则不创建
+                            $user = new \Common\Model\UserModel();
+                            $firm_admin = $user->field('id')->where(array('firmid' => $data['firmid'], 'pid' => 0))->find();
+                            //管理员数等于1,开始创建账号,账号名为船名各字的首字母+船的全拼，如果超出字符限制，则裁剪至字符
+                            if ($firm_admin['id'] > 0) {
+                                $user_data = array(
+                                    'title' => substr(pinyin($data['shipname'], 'first') . pinyin($data['shipname']), 0, $user->getUserMaxLength()),
+                                    'username' => $data['shipname'],
+                                    'pwd' => time(),//第一次的密码随机，如果用户需要登陆就去重置
+                                    'firmid' => $data['firmid'],
+                                    'pid' => $firm_admin['id'],
+                                    'operation_jur' => array($s),//将这个船的权限加入到自己的账号中
+                                    'look_other' => 2,//可以看所有公司的作业记录
+                                );
+                                //创建用户,不考虑是否创建成功，创建失败也不回档。如果创建失败自动评价时使用-1
+                                $user->adddatas($user_data);
+                            }
+
 
                             // 获取公司限制的个数
                             $limit = $firm->getFieldById($fid, 'limit');
                             // 判断公司的船个数是否超限制
                             $count = $count + 1;
+
                             if ($count > $limit) {
                                 // 超过限额 新增船，不加权限
                                 M()->commit();
                                 $res = array(
                                     'code' => $this->ERROR_CODE_RESULT['EXCEED_NUM'],
-                                    'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXCEED_NUM']]
+                                    'error' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXCEED_NUM']]
                                 );
                             } else {
                                 // 修改公司的操作/查询权限 
@@ -426,7 +526,7 @@ class ShipFormModel extends BaseModel
                                     //数据库连接错误   3
                                     $res = array(
                                         'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                                        'msg' => $this->ERROR_CODE_COMMON[$this->ERROR_CODE_COMMON['DB_ERROR']]
+                                        'error' => $this->ERROR_CODE_COMMON[$this->ERROR_CODE_COMMON['DB_ERROR']]
                                     );
                                 }
                             }
@@ -435,28 +535,28 @@ class ShipFormModel extends BaseModel
                             //数据库连接错误   3
                             $res = array(
                                 'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
-                                'msg' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]
+                                'error' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]
                             );
                         }
                     } else {
                         //船舶已存在   2014
                         $res = array(
                             'code' => $this->ERROR_CODE_RESULT['HAVE_SHIP'],
-                            'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
+                            'error' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['HAVE_SHIP']]
                         );
                     }
                 } else {
                     //用户对该公司没有操作权限   1014
                     $res = array(
                         'code' => $this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM'],
-                        'msg' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM']]
+                        'error' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_OPERATION_FIRM']]
                     );
                 }
             } else {
                 //用户不是管理员   1015
                 $res = array(
                     'code' => $this->ERROR_CODE_USER['USER_NOT_ADMIN'],
-                    'msg' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_ADMIN']]
+                    'error' => $this->ERROR_CODE_USER_ZH[$this->ERROR_CODE_USER['USER_NOT_ADMIN']]
                 );
             }
         }
@@ -504,6 +604,7 @@ sql;
         } else if ($suanfa == 'b') {
             $rongname = 'tankcapacityzi' . time() . chr(rand(97, 122));
             $zxname = 'trimcorrectionzi' . time() . chr(rand(97, 122));
+            $hxname = 'tablelistcorrectionzi' . time() . chr(rand(97, 122));
             // 创建一个容量表一个纵倾表
             $sql1 = <<<sql
 CREATE TABLE `${rongname}` (
@@ -576,6 +677,7 @@ sql;
             $time = time() . chr(rand(97, 122));
             $rongname = 'tankcapacityzi' . $time . '_1';
             $zxname = 'trimcorrectionzi' . $time . '_1';
+            $hxname = 'tablelistcorrectionzi' . $time . '_1';
             // 创建一个容量表一个纵倾表
             $sql1 = <<<sql
 CREATE TABLE `${rongname}` (
@@ -602,6 +704,8 @@ sql;
             M()->execute($sql2);
             $rongname1 = 'tankcapacityzi' . $time . '_2';
             $zxname1 = 'trimcorrectionzi' . $time . '_2';
+            $hxname = 'tablelistcorrectionzi' . $time . '_2';
+
             // 创建一个容量表一个纵倾表
             $sql3 = <<<sql
 CREATE TABLE `${rongname1}` (
@@ -755,4 +859,139 @@ sql;
         return $histtory_res;
     }
 
+    /**
+     * 获取船舶的自动创建的账户，如果没有则返回-1
+     */
+    public function get_ship_auto_account($ship_id)
+    {
+        $user = new UserModel();
+        $ship_info = $this->field('firmid,shipname')->where(array('id' => intval($ship_id)))->find();
+        $where = array(
+            'title' => substr(pinyin($ship_info['shipname'], 'first') . pinyin($ship_info['shipname']), 0, $user->getUserMaxLength()),
+            'name' => $ship_info['shipname'],
+            'firmid' => $ship_info['firmid'],
+        );
+        $user_info = $user->field('id,username')->where($where)->find();
+        //如果找不到就返回-1
+        if ($user_info['id'] == 0 or $user_info['id'] == null) {
+            $user_info = array(
+                'id' => -1,
+                'username' => -1,
+            );
+        }
+        return $user_info;
+    }
+
+    /**
+     * 上传舱容表
+     */
+    public function up_table($uid, $type, $shipname)
+    {
+        M()->startTrans();
+        $ship_review = M('table_review');
+        $data = array(
+            'uid' => $uid,
+            'type' => $type,
+            'shipname' => $shipname,
+            'time' => time(),
+        );
+        $id = $ship_review->add($data);
+        if ($id === false) {
+            M()->rollback();
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+            );
+        } else {
+            M()->commit();
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'review_id' => $id,
+            );
+        }
+        return $res;
+    }
+
+    /**
+     * 更新所有船舶的有表无表状态
+     */
+    public function updata_data_ship()
+    {
+        /**
+         * 获取公司下的所有船列表
+         * */
+        M()->startTrans();
+        $res = $this
+            ->field('id')
+            ->select();
+        foreach ($res as $k => $v) {
+            $data_ship = $this->is_have_datas($v['id']);
+            $data_ship = $data_ship == "" ? "n" : $data_ship;
+            $data = array(
+                'data_ship' => $data_ship
+            );
+            $map = array(
+                'id' => $v['id']
+            );
+            $res[$v['id']] = $data;
+            $result = $this->editData($map, $data);
+            if ($result === false) {
+                M()->rollback();
+                //数据库错误
+                return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'], 'error' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]);
+            }
+        }
+        M()->commit();
+        $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+        return $res;
+    }
+
+    //更新某条船的有表无表状态
+    public function updata_one_ship($shipid)
+    {
+        $data_ship = $this->is_have_datas($shipid);
+        $data_ship = $data_ship == "" ? "n" : $data_ship;
+        $data = array(
+            'data_ship' => $data_ship
+        );
+        $map = array(
+            'id' => $shipid
+        );
+        $res[$shipid] = $data;
+        $result = $this->editData($map, $data);
+        if ($result === false) {
+            M()->rollback();
+            //数据库错误
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'], 'error' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]);
+        } else {
+            M()->commit();
+            $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+            return $res;
+        }
+    }
+
+    public function updata_lock_ships()
+    {
+        $shipid_arr = $this->getField('id', true);
+        //更新所有船的锁定状态
+        foreach ($shipid_arr as $value) {
+            $this->updata_lock_ship($value);
+        }
+    }
+
+    public function updata_lock_ship($shipid)
+    {
+        //根据作业量来更新一下船的锁状态
+        /**
+         * 查找船的作业次数
+         */
+        $work = new \Common\Model\WorkModel();
+        $result_count = $work->where(array('shipid' => intval($shipid)))->count();
+//        $result_count = M('ship_historical_sum')->field('num')->where(array('shipid' => intval($shipid)))->find();
+        if ($result_count['num'] >= 2) {
+            $ship_data = array(
+                'is_lock' => 1
+            );
+            $this->editData(array('id' => intval($shipid)), $ship_data);
+        }
+    }
 }

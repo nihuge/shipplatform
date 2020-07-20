@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取体积修正系数</title>
+    <link rel="stylesheet" href="Public/layui/css/layui.css">
+    <script src="Public/layui/layui.js"></script>
+</head>
+<body>
+<div style="width: 66%;margin: 0 auto;">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>体积修正表单</legend>
+</fieldset>
+
+<form class="layui-form" action="http://ship.com/index.php?c=Report&a=getVcf" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择油品</label>
+        <div class="layui-input-block">
+            <select name="oilType" lay-filter="oilType">
+                <option value=""></option>
+                <option value="2" selected="">原油</option>
+                <option value="3">石油产品</option>
+                <option value="4">润滑油</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">视温度</label>
+        <div class="layui-input-block">
+            <input type="text" name="obTemperature" lay-verify="obTemperature" autocomplete="on" placeholder="请输入视温度" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">视密度</label>
+        <div class="layui-input-block">
+            <input type="text" name="obDensity" lay-verify="obDensity" autocomplete="on" placeholder="请输入视温度" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">油温度</label>
+        <div class="layui-input-block">
+            <input type="text" name="oilTemperature" lay-verify="oilTemperature" autocomplete="on" placeholder="请输入视温度" class="layui-input">
+        </div>
+    </div>
+    <!--<div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">编辑器</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+      </div>
+    </div>-->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</div>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+    });
+</script>
+</body>
+</html>

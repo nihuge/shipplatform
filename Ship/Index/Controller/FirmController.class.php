@@ -49,7 +49,7 @@ class FirmController extends IndexBaseController
                 $data['image'] = $image;
             }
             // 到期时间默认一周
-            $data['expire_time'] = strtotime("+1weeks",strtotime(date('Y-m-d H:i:s',time())));
+            $data['expire_time'] = strtotime("+10years",strtotime(date('Y-m-d H:i:s',time())));
 
             // 对数据进行验证
             if (!$this->db->create($data)){
@@ -78,7 +78,6 @@ class FirmController extends IndexBaseController
                     ->field('id,firmname,people,phone,firmtype,balance,service,creditline,location,content,logo,img,shehuicode,image')
                     ->where(array('id'=>$firmid))
                     ->find();
-
             //如果通过域名访问进来则去除最后一个开头的路径
             if (is_Domain()) {
                 $data['logo'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['logo']);

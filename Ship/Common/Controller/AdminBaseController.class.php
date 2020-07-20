@@ -89,7 +89,7 @@ class AdminBaseController extends BaseController
          * 获取符合条件的油船新建审核数量
          */
         $ship_where = array(
-            's.review' => 2
+            's.is_lock' => 2
         );
 
         /**
@@ -97,65 +97,101 @@ class AdminBaseController extends BaseController
          *
          * 生成sql：(select id from ship where review = 1)
          **/
-        $sub_sql = $ship
+//        $sub_sql = $ship
+//            ->alias("s")
+//            ->field('s.id')
+//            ->join('left join cabin as c on c.shipid=s.id')
+//            ->where($ship_where)
+//            ->group('s.id')
+//            ->having('count(c.id)>0')
+//            ->buildSql();
+//        /*
+//         * 结合子查询查询作业次数小于2的待审核船
+//         *
+//         * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
+//         */
+//        try {
+//            $ship_count = $ship->alias('s')
+//                ->field('s.id')
+//                ->join('left join result as r on s.id=r.shipid')
+//                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
+//                ->group('s.id')
+//                ->having('count(r.shipid)<2')
+//                ->select();
+//        } catch (\Exception $e) {
+//            $ship_count = array();
+//        }
+//        //我count我自己
+//        $ship_count = count($ship_count);
+
+        $ship_count = $ship
             ->alias("s")
             ->field('s.id')
             ->join('left join cabin as c on c.shipid=s.id')
             ->where($ship_where)
             ->group('s.id')
             ->having('count(c.id)>0')
-            ->buildSql();
-        /*
-         * 结合子查询查询作业次数小于2的待审核船
-         *
-         * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
-         */
-        try {
-            $ship_count = $ship->alias('s')
-                ->field('s.id')
-                ->join('left join result as r on s.id=r.shipid')
-                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
-                ->group('s.id')
-                ->having('count(r.shipid)<2')
-                ->select();
-        } catch (\Exception $e) {
-            $ship_count = array();
-        }
+            ->select();
         //我count我自己
         $ship_count = count($ship_count);
 
-
         $ship_where = array(
-            'review' => 1
+            'is_lock' => 2
         );
 
 
-        /*
-         * 构建子查询sql,查询哪些船处于待审核状态
-         *
-         * 生成sql：(select id from ship where review = 1)
-         */
-        $sub_sql = $sh_ship->field('id')->where($ship_where)->buildSql();
-
-        /*
-         * 结合子查询查询作业次数小于2的待审核船
-         *
-         * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
-         */
-        try {
-            $sh_ship_count = $sh_ship
-                ->alias('s')
-                ->field('s.id')
-                ->join('left join sh_result as r on s.id=r.shipid')
-                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
-                ->group('s.id')
-                ->having('count(r.shipid)<2')
-                ->select();
-        } catch (\Exception $e) {
-            $sh_ship_count = array();
-        }
+//        /*
+//         * 构建子查询sql,查询哪些船处于待审核状态
+//         *
+//         * 生成sql：(select id from ship where review = 1)
+//         */
+//        $sub_sql = $sh_ship->field('id')->where($ship_where)->buildSql();
+//
+//        /*
+//         * 结合子查询查询作业次数小于2的待审核船
+//         *
+//         * 生成sql:select count(1) as a,shipid FROM result WHERE shipid in((select id from ship where review = 1)) GROUP BY shipid HAVING count(1)<2
+//         */
+//        try {
+//            $sh_ship_count = $sh_ship
+//                ->alias('s')
+//                ->field('s.id')
+//                ->join('left join sh_result as r on s.id=r.shipid')
+//                ->where(array('s.id' => array('exp', 'in (' . $sub_sql . ')')))
+//                ->group('s.id')
+//                ->having('count(r.shipid)<2')
+//                ->select();
+//        } catch (\Exception $e) {
+//            $sh_ship_count = array();
+//        }
+//        //我count我自己
+//        $sh_ship_count = count($sh_ship_count);
+        $sh_ship_count = $sh_ship->field('id')->where($ship_where)->select();
         //我count我自己
         $sh_ship_count = count($sh_ship_count);
+        /*
+         * 公司认领审核部分
+         */
+        $firm_review_count_where = array(
+            'result' => 1,//统计待审核记录
+            'file_count' => array('gt', 0),//统计有文件的记录
+        );
+        $firm_review = M('firm_review');
+        $firm_review_count = $firm_review->where($firm_review_count_where)->count();
+
+        /*
+         * 舱容表审核部分
+         */
+        $table_review_count_where = array(
+            'result' => 1,//统计待审核记录
+            'file_count' => array('gt', 0),//统计有文件的记录
+        );
+        $table_review = M('table_review');
+        $table_review_count = $table_review->where($table_review_count_where)->count();
+
+
+        $firm = new \Common\Model\FirmModel();
+        $legalize_firm_count = $firm->where(array("legalize_img" => array('neq', ""), "legalize_code" => array('neq', ""), "claimed" => 1))->count();
 
         //初始化审核计数渲染数组
         $review_count_arr = array();
@@ -164,13 +200,16 @@ class AdminBaseController extends BaseController
         $review_count_arr['ship_review_count'] = $ship_review_count;
         $review_count_arr['sh_ship_count'] = $sh_ship_count;
         $review_count_arr['ship_count'] = $ship_count;
+        $review_count_arr['firm_review_count'] = $firm_review_count;
+        $review_count_arr['table_review_count'] = $table_review_count;
+        $review_count_arr['legalize_firm_count'] = $legalize_firm_count;
 
 
         //修改审核总数
-        $review_count_arr['review_count'] = $sh_ship_review_count + $ship_review_count;
+        $review_count_arr['review_count'] = $sh_ship_review_count + $ship_review_count + $firm_review_count + $legalize_firm_count;
 
         //新建审核总数
-        $review_count_arr['create_count'] = $sh_ship_count + $ship_count;
+        $review_count_arr['create_count'] = $sh_ship_count + $ship_count + $table_review_count;
 
 
         //总审核总数

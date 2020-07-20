@@ -39,6 +39,8 @@
                 <th>用户名</th>
                 <th>联系电话</th>
                 <th>所属公司</th>
+                <th>最后登录日期</th>
+                <!--                <th>最后登录IP</th>-->
                 <th>用户操作</th>
                 <th>权限操作</th>
             </tr>
@@ -49,6 +51,10 @@
                     <td>{$v['username']}</td>
                     <td>{$v['phone']}</td>
                     <td>{$v['firmname']}</td>
+                    <td><span onmouseover="showAwesomeFontTips('{$v[\'login_time\']}','#login_time_{$v['id']}')"
+                              onmouseout="hideAwesomeFontTips()" id="login_time_{$v['id']}" title="登录日期">{$v['login_date']}</span>
+                    </td>
+                    <!--                    <td>{$v['login_ip']}</td>-->
 
                     <td><a href="{:U('User/edit',array('firmid'=>$v['firmid'],'id'=>$v['id']))}" style="color:#6FB3E0;"
                            onmouseover="showAwesomeFontTips('修改用户的基本信息','#user_edit_{$v['id']}')"
@@ -69,11 +75,24 @@
                                onmouseout="hideAwesomeFontTips()" id="lock_{$v['id']}" title="点此按钮冻结用户，无法操作系统"><i
                                     class="fa fa-lock fa-lg" aria-hidden="true"></i></a>
                         </if>
-                        &nbsp;|&nbsp;<a href="{:U('User/add',array('firmid'=>$v['firmid'],'id'=>$v['id']))}"
-                                        style="color: #87B87F"
-                                        onmouseover="showAwesomeFontTips('新增操作员','#add_user_{$v['id']}')"
-                                        onmouseout="hideAwesomeFontTips()" id="add_user_{$v['id']}" title="新增操作员"><i
+                        <if condition="$v['pid'] != 0">
+                            |&nbsp;<a href="javascript:;" onclick="del_user('{$v['id']}')"
+                                      style="color: #8A3104"
+                                      onmouseover="showAwesomeFontTips('删除当前用户','#del_user_{$v['id']}')"
+                                      onmouseout="hideAwesomeFontTips()" id="del_user_{$v['id']}" title="删除操作员"><i
+                                class="fa fa-trash fa-lg"></i></a>
+                            <else/>
+                            &nbsp;|&nbsp;<a href="{:U('User/add',array('firmid'=>$v['firmid'],'id'=>$v['id']))}"
+                                            style="color: #87B87F"
+                                            onmouseover="showAwesomeFontTips('新增操作员','#add_user_{$v['id']}')"
+                                            onmouseout="hideAwesomeFontTips()" id="add_user_{$v['id']}" title="新增操作员"><i
                                 class="fa fa-plus-square fa-lg"></i></a>
+                            |&nbsp;<a href="javascript:;" onclick="change_admin('{$v['id']}')"
+                                      style="color: #8A3104"
+                                      onmouseover="showAwesomeFontTips('更换管理员','#change_admin_{$v['id']}')"
+                                      onmouseout="hideAwesomeFontTips()" id="change_admin_{$v['id']}" title="更换管理员"><i
+                                class="fa fa-exchange fa-lg"></i></a>
+                        </if>
                     </td>
                     <td>
                         <a href="javascript:void(0);" onclick="editOperationJur({$v['id']})" style="color:#6FB3E0;"
@@ -228,10 +247,51 @@
             })
         }
 
+        //删除用户
+        function del_user(id) {
+            var content = '<div style="margin: 20px 20%;"><input type="text" id="phone" style="width: 100%" placeholder="请输入该用户的手机号确认"></div>';
+            layer.open({
+                id: 1,
+                type: 1,
+                title: '删除用户',
+                skin: 'layui-layer-rim',
+                area: ['450px', 'auto'],
+
+                content: content,
+                btn: ['确定', '取消'],
+                btn1: function (index, layero) {
+                    var phone = $('#phone').val();
+                    $.ajax({
+                        url: "{:U('User/del')}",
+                        type: "GET",
+                        data: {
+                            "id": id,
+                            "phone": phone,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state == 1) {
+                                layer.alert('删除成功', {icon: 6}, function () {
+                                    //刷新
+                                    location.reload();
+                                });
+                            } else {
+                                console.log(data);
+                                layer.alert(data.msg, {
+                                    icon: 5
+                                });
+                            }
+                        }
+                    });
+                },
+                btn2: function (index, layero) {
+                    layer.close(index);
+                }
+            });
+        }
+
         //复制权限
         function copyJur(id) {
-
-
             $.ajax({
                 url: "{:U('User/copyJur')}/id/" + id,
                 type: "GET",
@@ -261,6 +321,84 @@
 
                         content: content,
                         btn: ['保存', '取消'],
+                        btn1: function (index, layero) {
+                            var id_array = [];
+                            $('input[name="id"]:checked').each(function () {
+                                id_array.push($(this).val());//向数组中添加元素
+                            });
+
+                            if (id_array.length == 0) {
+                                //提示层
+                                layer.alert("请选择用户", {
+                                    icon: 5
+                                });
+                            } else {
+                                $.ajax({
+                                    url: "{:U('User/copyJur')}/id/" + id,
+                                    type: "POST",
+                                    data: {
+                                        "operator": id_array,
+                                    },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.state == 1) {
+                                            layer.alert('修改成功', {icon: 6}, function () {
+                                                //刷新
+                                                location.reload();
+                                            });
+                                        } else {
+                                            console.log(data);
+                                            layer.alert(data.msg, {
+                                                icon: 5
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        btn2: function (index, layero) {
+                            layer.close(index);
+                        }
+
+                    });
+                }
+            });
+
+
+            /**/
+        }
+
+        //更改公司管理员
+        function change_admin(id) {
+            $.ajax({
+                url: "{:U('User/copyJur')}/id/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var operator = data;
+                    if (operator.length == 0) {
+                        layer.msg("该管理员下并无操作员");
+                        return false;
+                    }
+                    var content = ' <div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">';
+                    for (var k in operator) {
+                        content += '<div class="checkbox checkbox-primary" style="margin-left: 60px">'
+                            + '<input id="id_' + operator[k]["id"] + '" type="checkbox" name="id" value="' + operator[k]["id"] + '" class="styled">'
+                            + '<label for="id_' + operator[k]["id"] + '">' + operator[k]["username"] + '</label>'
+                            + '</div>';
+                    }
+
+                    content += '</div>';
+
+                    layer.open({
+                        id: 1,
+                        type: 1,
+                        title: '更换管理员',
+                        skin: 'layui-layer-rim',
+                        area: ['450px', 'auto'],
+
+                        content: content,
+                        btn: ['确定', '取消'],
                         btn1: function (index, layero) {
                             var id_array = [];
                             $('input[name="id"]:checked').each(function () {

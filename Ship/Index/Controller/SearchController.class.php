@@ -66,7 +66,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('f.firmtype' => '1', 'del_sign' => 1);
         if (I('get.firmname')) {
-            $where['f.firmname'] = I('get.firmname');
+            $where['f.firmname'] = array('like', "%" . trimall(I('get.firmname')) . "%");
         }
         $count = $this->db
             ->alias('f')
@@ -102,7 +102,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('f.firmtype' => '2', 'del_sign' => 1);
         if (I('get.firmname')) {
-            $where['f.firmname'] = I('get.firmname');
+            $where['f.firmname'] = array('like', "%" . trimall(I('get.firmname')) . "%");
         }
         $count = $this->db
             ->alias('f')
@@ -110,14 +110,14 @@ class SearchController extends IndexBaseController
             ->where($where)
             ->count();
         // 分页
-        $page = new \Org\Nx\Page($count, 20);
+//        $page = new \Org\Nx\Page($count, 20);
 
         $jian = $this->db
             ->field('f.id,f.firmname,s.grade,s.grade_num,s.weight,s.num')
             ->alias('f')
             ->join('left join firm_historical_sum s on s.firmid = f.id')
             ->where($where)
-            ->limit($page->firstRow, $page->listRows)
+//            ->limit($page->firstRow, $page->listRows)
             ->select();
         foreach ($jian as $key => $value) {
             // 求评分平均分
@@ -125,7 +125,7 @@ class SearchController extends IndexBaseController
         }
         $assign = array(
             'data' => $jian,
-            'page' => $page->show()
+//            'page' => $page->show()
         );
         $this->assign($assign);
         $this->display();
@@ -138,7 +138,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('1', 'del_sign' => 1);
         if (I('get.shipname')) {
-            $where['s.shipname'] = I('get.shipname');
+            $where['s.shipname'] = array('like', "%" . trimall(I('get.shipname')) . "%");
         }
         $count = $this->shipdb
             ->alias('s')
@@ -174,7 +174,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('1', 'del_sign' => 1);
         if (I('get.shipname')) {
-            $where['shipname'] = I('get.shipname');
+            $where['shipname'] = array('like', "%" . trimall(I('get.shipname')) . "%");
         }
 
         $count = $this->sh_shipdb
@@ -203,55 +203,55 @@ class SearchController extends IndexBaseController
      */
     public function getShip()
     {
-        if (IS_AJAX) {
-            $page = I('post.pageNum');//当前页
-            $where = '1 and del_sign=1';
-            if ($_POST['strin'] != '') {
-                $string = substr($_POST['strin'], 0, -1);    //字符串截取
-                // $arr = explode(',', $string);
-                $data = array();
-                // foreach ($arr as $key => $value) {
-                $v = explode(':', $string);
-                $data[$v[0]] = $v[1];
-                // }
-                if (isset($data['shipname'])) {
-                    $shipname = $data['shipname'];
-                    $where .= " and s.shipname='$shipname'";
-                }
+//        if (IS_AJAX) {
+        $page = I('post.pageNum');//当前页
+        $where = '1 and del_sign=1';
+        if ($_POST['strin'] != '') {
+            $string = substr($_POST['strin'], 0, -1);    //字符串截取
+            // $arr = explode(',', $string);
+            $data = array();
+            // foreach ($arr as $key => $value) {
+            $v = explode(':', $string);
+            $data[$v[0]] = $v[1];
+            // }
+            if (isset($data['shipname'])) {
+                $shipname = $data['shipname'];
+                $where .= " and s.shipname='$shipname'";
             }
-            $total = $this->shipdb
-                ->alias('s')
-                ->join('left join ship_historical_sum h on h.shipid = s.id')
-                ->where($where)
-                ->count();
-
-            $pageSize = 10; //每页显示数
-            $totalPage = ceil($total / $pageSize); //总页数
-            $startPage = $page * $pageSize; //开始记录
-
-            $list = $this->shipdb
-                ->field('s.id,s.shipname,s.type,s.weight as sweight,h.grade,h.grade_num,h.weight,h.num')
-                ->alias('s')
-                ->join('left join ship_historical_sum h on h.shipid = s.id')
-                ->where($where)
-                ->limit($startPage, $pageSize)
-                ->select();
-            $num = 1;
-            foreach ($list as $key => $value) {
-                $pin = round($value['grade'] / $value['grade_num'], 1);
-                // 求评分平均分
-                $list[$key]['pin'] = $pin;
-                $list[$key]['nn'] = $num;
-                $num++;
-            }
-            //构造数组
-            $arr['total'] = $total;
-            $arr['pageSize'] = $pageSize;
-            $arr['totalPage'] = $totalPage;
-
-            $arr['list'] = $list;
-            $this->ajaxReturn($arr);
         }
+        $total = $this->shipdb
+            ->alias('s')
+            ->join('left join ship_historical_sum h on h.shipid = s.id')
+            ->where($where)
+            ->count();
+
+        $pageSize = 10; //每页显示数
+        $totalPage = ceil($total / $pageSize); //总页数
+        $startPage = $page * $pageSize; //开始记录
+
+        $list = $this->shipdb
+            ->field('s.id,s.shipname,s.type,s.weight as sweight,h.grade,h.grade_num,h.weight,h.num')
+            ->alias('s')
+            ->join('left join ship_historical_sum h on h.shipid = s.id')
+            ->where($where)
+            ->limit($startPage, $pageSize)
+            ->select();
+        $num = 1;
+        foreach ($list as $key => $value) {
+            $pin = round($value['grade'] / $value['grade_num'], 1);
+            // 求评分平均分
+            $list[$key]['pin'] = $pin;
+            $list[$key]['nn'] = $num;
+            $num++;
+        }
+        //构造数组
+        $arr['total'] = $total;
+        $arr['pageSize'] = $pageSize;
+        $arr['totalPage'] = $totalPage;
+
+        $arr['list'] = $list;
+        $this->ajaxReturn($arr);
+//        }
     }
 
 
@@ -260,42 +260,42 @@ class SearchController extends IndexBaseController
      */
     public function getShShip()
     {
-        if (IS_AJAX) {
-            $page = I('post.pageNum');//当前页
-            $where = '1 and del_sign=1';
-            if ($_POST['strin'] != '') {
-                $string = substr($_POST['strin'], 0, -1);    //字符串截取
-                $data = array();
-                $v = explode(':', $string);
-                $data[$v[0]] = $v[1];
-                // }
-                if (isset($data['shipname'])) {
-                    $shipname = $data['shipname'];
-                    $where .= " and shipname='$shipname'";
-                }
+//        if (IS_AJAX) {
+        $page = I('post.pageNum');//当前页
+        $where = '1 and del_sign=1';
+        if ($_POST['strin'] != '') {
+            $string = substr($_POST['strin'], 0, -1);    //字符串截取
+            $data = array();
+            $v = explode(':', $string);
+            $data[$v[0]] = $v[1];
+            // }
+            if (isset($data['shipname'])) {
+                $shipname = $data['shipname'];
+                $where .= " and shipname='$shipname'";
             }
-            $total = $this->sh_shipdb
-                ->where($where)
-                ->count();
-
-            $pageSize = 10; //每页显示数
-            $totalPage = ceil($total / $pageSize); //总页数
-            $startPage = $page * $pageSize; //开始记录
-
-            $list = $this->sh_shipdb
-                ->field('id,shipname,goodsname,weight,lbp,make')
-                ->where($where)
-                ->limit($startPage, $pageSize)
-                ->select();
-
-            //构造数组
-            $arr['total'] = $total;
-            $arr['pageSize'] = $pageSize;
-            $arr['totalPage'] = $totalPage;
-
-            $arr['list'] = $list;
-            $this->ajaxReturn($arr);
         }
+        $total = $this->sh_shipdb
+            ->where($where)
+            ->count();
+
+        $pageSize = 10; //每页显示数
+        $totalPage = ceil($total / $pageSize); //总页数
+        $startPage = $page * $pageSize; //开始记录
+
+        $list = $this->sh_shipdb
+            ->field('id,shipname,goodsname,weight,lbp,make')
+            ->where($where)
+            ->limit($startPage, $pageSize)
+            ->select();
+
+        //构造数组
+        $arr['total'] = $total;
+        $arr['pageSize'] = $pageSize;
+        $arr['totalPage'] = $totalPage;
+
+        $arr['list'] = $list;
+        $this->ajaxReturn($arr);
+//        }
     }
 
     /**
@@ -359,6 +359,31 @@ class SearchController extends IndexBaseController
             $content['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $content['img']);
             $content['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['image']);
         }
+
+        foreach ($list as $key => $value) {
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
+            }
+            if (!file_exists($list[$key]['img'])) {
+                $list[$key]['img'] = "/Public/Admin/noimg.png";
+            }
+        }
+
+        if (substr($content['img'], 0, 1) == '/') {
+            $content['img'] = '.' . $content['img'];
+        }
+        if (substr($content['image'], 0, 1) == '/') {
+            $content['image'] = '.' . $content['image'];
+        }
+        if (!file_exists($content['img'])) {
+            $content['img'] = "/Public/Admin/noimg.png";
+        }
+
+        if (!file_exists($content['image'])) {
+            $content['image'] = "/Public/Admin/noimg.png";
+        }
+
+
         // 求评分平均分
         $content['pin'] = round($content['grade'] / $content['grade_num'], 1);
         // p($content);die;
@@ -377,6 +402,82 @@ class SearchController extends IndexBaseController
     public function chuanmsg()
     {
         $firmid = I('get.firmid');
+
+        $user = new \Common\Model\UserModel();
+
+        if (I('post.days')) {
+            $days = intval(I('post.days'));
+            $time = strtotime("-" . $days . " day");
+//                    echo $time;
+//                    $user = new \Common\Model\UserModel();
+            $users = $user->field('id')->where(array('firmid' => $firmid))->select();
+            $user_ids = array();
+            foreach ($users as $key => $value) {
+                $user_ids[] = $value["id"];
+            }
+
+            $evaluation = M("evaluation");
+            //获取船舶公司的相关评价
+            $where = array(
+                'time2' => array("gt", $time),
+                'uid' => array('in', implode(",", $user_ids))
+            );
+
+//                    $datas = $evaluation->where($where)->fetchSql(true)->select();
+            $datas = $evaluation->where($where)->select();
+            //缺省作业统计查询条件
+            $result_where = array(
+                'time' => array("gt", $time),
+            );
+
+            $count_data = array(
+                'num' => 0,                   //总作业数量
+                'weight' => 0,                //总作业吨数
+                'grade' => 0,                 //评价等级总和
+                'grade_num' => 0,             //评价次数
+                'measure_standard' => 0,      //计量规范总分
+                'measure_num' => 0,           //计量规范次数
+                'security' => 0,              //安全规范总分
+                'security_num' => 0,          //安全规范评价次数
+            );
+
+            foreach ($datas as $key1 => $value1) {
+                //统计评价等级
+                if ($value1['grade2'] > 0) {
+                    $count_data['grade'] += $value1['grade2'];
+                    $count_data['grade_num'] += 1;
+                }
+
+                //统计计量规范分
+                if ($value1['measure_standard2'] > 0) {
+                    $count_data['measure_standard'] += $value1['measure_standard2'];
+                    $count_data['measure_num'] += 1;
+                }
+
+                //统计安全规范分
+                if ($value1['security2'] > 0) {
+                    $count_data['security'] += $value1['security2'];
+                    $count_data['security_num'] += 1;
+                }
+
+            }
+            //统计总作业次数
+            $result_where['uid'] = array('in', $user_ids);
+
+            $result = new \Common\Model\ResultModel();
+            $count_data['num'] = $result->where($result_where)->count();
+//                    $result_weight = $result->field('sum(weight) as s_weight')->fetchSql(true)->where($result_where)->find();
+            $result_weight = $result->field('sum(weight) as s_weight')->where($result_where)->find();
+//                    exit($result_weight);
+            $count_data['weight'] = $result_weight['s_weight'];
+            $count_data['firmid'] = $firmid;
+
+        } else {
+            $firm_count = M('firm_historical_sum');
+            $count_data = $firm_count->where(array('firmid' => $firmid))->find();
+        }
+
+
         // 获取公司下所有的船
         $shiplist = $this->shipdb
             ->field('s.shipname,s.type,h.grade,h.grade_num,s.id,s.weight,s.img')
@@ -417,6 +518,28 @@ class SearchController extends IndexBaseController
             $content['image'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $content['image']);
         }
 
+        foreach ($shiplist as $key => $value) {
+            if (substr($shiplist[$key]['img'], 0, 1) == '/') {
+                $shiplist[$key]['img'] = '.' . $shiplist[$key]['img'];
+            }
+            if (!file_exists($shiplist[$key]['img'])) {
+                $shiplist[$key]['img'] = "/Public/Admin/noimg.png";
+            }
+        }
+        if (substr($content['img'], 0, 1) == '/') {
+            $content['img'] = '.' . $content['img'];
+        }
+        if (substr($content['image'], 0, 1) == '/') {
+            $content['image'] = '.' . $content['image'];
+        }
+        if (!file_exists($content['img'])) {
+            $content['img'] = "/Public/Admin/noimg.png";
+        }
+
+        if (!file_exists($content['image'])) {
+            $content['image'] = "/Public/Admin/noimg.png";
+        }
+
         // 求评分平均分
         $content['pin'] = round($content['grade'] / $content['grade_num'], 1);
         // p($content);die;
@@ -424,6 +547,7 @@ class SearchController extends IndexBaseController
             'list' => $shiplist,
             'sh_list' => $sh_shiplist,
             'content' => $content,
+            'count_data' => $count_data,
         );
         $this->assign($assign);
         $this->display();
@@ -465,6 +589,15 @@ class SearchController extends IndexBaseController
                 $list[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
             }
         }
+        foreach ($list as $key => $value) {
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
+            }
+            if (!file_exists($list[$key]['img'])) {
+                $list[$key]['img'] = "/Public/Admin/noimg.png";
+            }
+        }
+
 
         $assign = array(
             'list' => $list,
@@ -514,6 +647,15 @@ class SearchController extends IndexBaseController
         if (is_Domain()) {
             foreach ($list as $key => $value) {
                 $list[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+            }
+        }
+
+        foreach ($list as $key => $value) {
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
+            }
+            if (!file_exists($list[$key]['img'])) {
+                $list[$key]['img'] = "/Public/Admin/noimg.png";
             }
         }
 
@@ -631,6 +773,7 @@ class SearchController extends IndexBaseController
             $data['grade_title'] = "很好";
         }
 
+
         //计量规范评分
         $measure_per = $data['measure_standard'] / ($data['measure_num'] < 1 ? 1 : $data['measure_num']) / 3 * 100;
         $data['measure_title'] = $measure_per . "%";
@@ -644,6 +787,7 @@ class SearchController extends IndexBaseController
             $data['measure_title'] = "好";
         }
 
+
         //安全评分
         $security_per = $data['security'] / ($data['security_num'] < 1 ? 1 : $data['security_num']) / 3 * 100;
         $data['security_title'] = $security_per . "%";
@@ -656,12 +800,25 @@ class SearchController extends IndexBaseController
         } elseif ($security_per <= 100) {
             $data['security_title'] = "好";
         }
+
+        $data['security_pin'] = ($data['security'] / ($data['security_num'] < 1 ? 1 : $data['security_num']) / 3) * 5;
+        $data['grade_pin'] = $data['grade'] / ($data['grade_num'] < 1 ? 1 : $data['grade_num']);
+        $data['measure_pin'] = ($data['measure_standard'] / ($data['measure_num'] < 1 ? 1 : $data['measure_num']) / 3) * 5;
+
         /**
          * 处理域名访问无法获取用户上传图片的问题
          */
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
+
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
+        }
+        if (!file_exists($data['img'])) {
+            $data['img'] = "/Public/Admin/noimg.png";
+        }
+
         $data['id'] = $id;
 
         $assign = array(
@@ -694,6 +851,12 @@ class SearchController extends IndexBaseController
          */
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
+        }
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
+        }
+        if (!file_exists($data['img'])) {
+            $data['img'] = "/Public/Admin/noimg.png";
         }
 
         $assign = array(
@@ -752,7 +915,7 @@ class SearchController extends IndexBaseController
             $data['security_title'] = "好";
         }
 
-        $accuracy_per = $data['table_accuracy'] = $data['accuracy_sum'] / ($data['accuracy_num'] > 0 ? $data['accuracy_num'] : 1)/3*100;
+        $accuracy_per = $data['accuracy_sum'] / ($data['accuracy_num'] > 0 ? $data['accuracy_num'] : 1) / 3 * 100;
         if ($data['accuracy_num'] == 0) {
             $data['accuracy_title'] = "暂无评价";
         } elseif ($accuracy_per < 50) {
@@ -763,11 +926,22 @@ class SearchController extends IndexBaseController
             $data['accuracy_title'] = "平均偏大";
         }
 
+        $data['security_pin'] = ($data['security'] / ($data['security_num'] < 1 ? 1 : $data['security_num']) / 3) * 5;
+        $data['grade_pin'] = $data['grade'] / ($data['grade_num'] < 1 ? 1 : $data['grade_num']);
+        $data['measure_pin'] = ($data['measure_standard'] / ($data['measure_num'] < 1 ? 1 : $data['measure_num']) / 3) * 5;
+
+
         /**
          * 处理域名访问无法获取用户上传图片的问题
          */
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[\d]?[^\/]*(\S+)/", "$1", $data['img']);
+        }
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
+        }
+        if (!file_exists($data['img'])) {
+            $data['img'] = "/Public/Admin/noimg.png";
         }
 
         // 获取最近作业的20条数据
@@ -818,6 +992,13 @@ class SearchController extends IndexBaseController
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
+        }
+        if (!file_exists($data['img'])) {
+            $data['img'] = "./Public/Admin/noimg.png";
+        }
+
 
         // 获取最近作业的20条数据
         $rlist = $this->shrdb
@@ -858,7 +1039,7 @@ class SearchController extends IndexBaseController
      */
     public function result()
     {
-        $shipid = I('get.shipid');
+        $shipid = intval(I('get.shipid'));
 
         $user = new \Common\Model\UserModel();
         //获取水尺数据
@@ -894,6 +1075,7 @@ class SearchController extends IndexBaseController
         foreach ($list as $k1 => $v1) {
             // 个性化信息
             $personality = json_decode($v1['personality'], true);
+//            $list[$k1]['personality'] = $personality;
             $personality_array = array();
             // 检索个性化名称
             foreach ($personality as $key => $value) {
@@ -1171,6 +1353,330 @@ class SearchController extends IndexBaseController
 
 
     /**
+     * 船舶作业列表
+     */
+    public function results()
+    {
+        $shipid = intval(I('get.shipid'));
+
+        $user = new \Common\Model\UserModel();
+        //获取水尺数据
+        $where = array(
+            'r.shipid' => $shipid,
+            'r.del_sign' => 1
+        );
+
+        $count = $this->rdb
+            ->alias('r')
+            ->join('left join ship s on r.shipid=s.id')
+            ->join('left join user u on r.uid = u.id')
+            ->join('left join firm f on u.firmid = f.id')
+            ->where($where)
+            ->count();
+        // 分页
+        $page = new \Org\Nx\Page($count, 15);
+
+        //查询作业数据
+        $list = $this->rdb
+            ->alias('r')
+            ->field('r.*,s.shipname,u.username,s.goodsname goodname,f.firmtype as ffirmtype')
+            ->join('left join ship s on r.shipid=s.id')
+            ->join('left join user u on r.uid = u.id')
+            ->join('left join firm f on u.firmid = f.id')
+            ->where($where)
+            ->limit($page->firstRow, $page->listRows)
+            ->order('id desc')
+            ->select();
+        $cabin = new \Common\Model\CabinModel();
+        $persona = new \Common\Model\PersonalityModel();
+        $resultlist = new \Common\Model\ResultlistModel();
+        foreach ($list as $k1 => $v1) {
+            // 个性化信息
+            $personality = json_decode($v1['personality'], true);
+            $list[$k1]['personality'] = $personality;
+            $personality_array = array();
+
+            // 检索个性化名称
+            foreach ($personality as $key => $value) {
+                $title = $persona->get_title_name($key);
+                $personality_array[] = array(
+                    'name' => $key,
+                    'title' => $title,
+                    'value' => $value
+                );
+                if ($key == 'voyage') {
+                    $list[$k1]['voyage'] = $value;
+                }
+            }
+
+            // 获取船驳所有舱列表
+            $list[$k1]['personality_array'] = $personality_array;
+            $list[$k1]['personality'] = $personality_array;
+
+            $cabinlist = $cabin
+                ->field('id,cabinname')
+                ->where(array('shipid' => $v1['shipid']))
+                ->order('cabinname asc')
+                ->select();
+            $qian = array();
+            $hou = array();
+            foreach ($cabinlist as $key => $value) {
+                $data = $resultlist
+                    ->where(array('resultid' => $v1['id'], 'cabinid' => $value['id']))
+                    ->select();
+                if (empty($data)) {
+                    $qian[] = array(
+                        'cabinname' => $value['cabinname'],
+                        'sounding' => '',
+                        'ullage' => '',
+                        'listcorrection' => '',
+                        'temperature' => '',
+                        'standardcapacity' => '',
+                        'volume' => '',
+                        'expand' => '',
+                        'correntkong' => '',
+                        'cabinweight' => '',
+                        'ullageimg' => array(),
+                        'soundingimg' => array(),
+                        'temperatureimg' => array()
+                    );
+                    $hou[] = array(
+                        'cabinname' => $value['cabinname'],
+                        'sounding' => '',
+                        'ullage' => '',
+                        'listcorrection' => '',
+                        'temperature' => '',
+                        'standardcapacity' => '',
+                        'volume' => '',
+                        'expand' => '',
+                        'correntkong' => '',
+                        'cabinweight' => '',
+                        'ullageimg' => array(),
+                        'soundingimg' => array(),
+                        'temperatureimg' => array()
+                    );
+                } else if (count($data) == '1') {
+                    // 一条作业数据只会是作业前数据
+                    // 循环获取舱列表数据
+                    foreach ($data as $k => $v) {
+                        // 获取作业照片
+                        $listimg = M('resultlist_img')
+                            ->where(array('resultlist_id' => $v['id']))
+                            ->select();
+
+                        /**
+                         * 处理域名访问无法获取用户上传图片的问题
+                         */
+                        if (is_Domain()) {
+                            foreach ($listimg as $key => $value) {
+                                $listimg[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                            }
+                        }
+
+                        $ullageimg = array();
+                        $soundingimg = array();
+                        $temperatureimg = array();
+                        if (!empty($listimg)) {
+                            foreach ($listimg as $ke => $valu) {
+                                if ($valu['types'] == '1') {
+                                    $ullageimg[] = $valu['img'];
+                                } else if ($valu['types'] == '2') {
+                                    $soundingimg[] = $valu['img'];
+                                } else if ($valu['types'] == '3') {
+                                    $temperatureimg[] = $valu['img'];
+                                }
+                            }
+                        }
+                        $qian[] = array(
+                            'cabinname' => $value['cabinname'],
+                            'sounding' => $v['sounding'],
+                            'ullage' => $v['ullage'],
+                            'listcorrection' => $v['listcorrection'],
+                            'temperature' => $v['temperature'],
+                            'standardcapacity' => $v['standardcapacity'],
+                            'volume' => $v['volume'],
+                            'expand' => $v['expand'],
+                            'correntkong' => $v['correntkong'],
+                            'cabinweight' => $v['cabinweight'],
+                            'ullageimg' => $ullageimg,
+                            'soundingimg' => $soundingimg,
+                            'temperatureimg' => $temperatureimg
+                        );
+                    }
+
+                    $hou[] = array(
+                        'cabinname' => $value['cabinname'],
+                        'sounding' => '',
+                        'ullage' => '',
+                        'listcorrection' => '',
+                        'temperature' => '',
+                        'standardcapacity' => '',
+                        'volume' => '',
+                        'expand' => '',
+                        'correntkong' => '',
+                        'cabinweight' => '',
+                        'ullageimg' => array(),
+                        'soundingimg' => array(),
+                        'temperatureimg' => array()
+                    );
+                } else if (count($data) == '2') {
+                    // 循环获取舱列表数据
+                    foreach ($data as $k => $v) {
+                        // 获取作业照片
+                        $listimg = M('resultlist_img')
+                            ->where(array('resultlist_id' => $v['id']))
+                            ->select();
+
+                        /**
+                         * 处理域名访问无法获取用户上传图片的问题
+                         */
+                        if (is_Domain()) {
+                            foreach ($listimg as $key => $value) {
+                                $listimg[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                            }
+                        }
+
+                        $ullageimg = array();
+                        $soundingimg = array();
+                        $temperatureimg = array();
+                        if (empty($listimg)) {
+                            foreach ($listimg as $ke => $valu) {
+                                if ($valu['types'] == '1') {
+                                    $ullageimg[] = $valu['img'];
+                                } else if ($valu['types'] == '2') {
+                                    $soundingimg[] = $valu['img'];
+                                } else if ($valu['types'] == '3') {
+                                    $temperatureimg[] = $valu['img'];
+                                }
+                            }
+                        }
+                        if ($v['solt'] == '1') {
+                            $qian[] = array(
+                                'cabinname' => $value['cabinname'],
+                                'sounding' => $v['sounding'],
+                                'ullage' => $v['ullage'],
+                                'listcorrection' => $v['listcorrection'],
+                                'temperature' => $v['temperature'],
+                                'standardcapacity' => $v['standardcapacity'],
+                                'volume' => $v['volume'],
+                                'expand' => $v['expand'],
+                                'correntkong' => $v['correntkong'],
+                                'cabinweight' => $v['cabinweight'],
+                                'ullageimg' => $ullageimg,
+                                'soundingimg' => $soundingimg,
+                                'temperatureimg' => $temperatureimg
+                            );
+                        } else {
+
+                            $hou[] = array(
+                                'cabinname' => $value['cabinname'],
+                                'sounding' => $v['sounding'],
+                                'ullage' => $v['ullage'],
+                                'listcorrection' => $v['listcorrection'],
+                                'temperature' => $v['temperature'],
+                                'standardcapacity' => $v['standardcapacity'],
+                                'volume' => $v['volume'],
+                                'expand' => $v['expand'],
+                                'correntkong' => $v['correntkong'],
+                                'cabinweight' => $v['cabinweight'],
+                                'ullageimg' => $ullageimg,
+                                'soundingimg' => $soundingimg,
+                                'temperatureimg' => $temperatureimg
+                            );
+                        }
+                    }
+                }
+            }
+            $uid = $_SESSION['user_info']['id'];
+            $where1 = array('re.resultid' => $v1['id']);
+
+            $resultmsg = $resultlist
+                ->alias('re')
+                ->field('re.*,c.cabinname')
+                ->join('left join cabin c on c.id = re.cabinid')
+                ->where($where1)
+                ->order('re.solt asc,re.cabinid asc')
+                ->select();
+            //以舱区分数据（）
+            foreach ($resultmsg as $k => $v) {
+                $result[$v['cabinid']][] = $v;
+            }
+            // 获取水尺数据
+            $shuichi = M('forntrecord')->where(array('resultid' => $v1['id']))->select();
+            foreach ($shuichi as $key => $value) {
+                $aa = array('forntleft' => $value['forntleft'], 'afterleft' => $value['afterleft']);
+                if ($value['solt'] == '1') {
+                    $list[$k1]['qianchi'] = $aa;
+                } else {
+                    $list[$k1]['houchi'] = $aa;
+                }
+            }
+            if (empty($list[$k1]['qianchi'])) $list[$k1]['qianchi'] = array('forntleft' => "", 'afterleft' => "");
+            if (empty($list[$k1]['houchi'])) $list[$k1]['houchi'] = array('forntleft' => "", 'afterleft' => "");
+            $list[$k1]['qian'] = $qian;
+            $list[$k1]['hou'] = $hou;
+            // 获取水尺照片
+            $datata = M('fornt_img')
+                ->where(array('result_id' => $v1['id']))
+                ->select();
+
+            /**
+             * 处理域名访问无法获取用户上传图片的问题
+             */
+            if (is_Domain()) {
+                foreach ($datata as $key => $value) {
+                    $datata[$key]['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $value['img']);
+                }
+            }
+
+            if (empty($datata)) {
+                $list[$k1]['firstfiles1'] = array();
+                $list[$k1]['tailfiles1'] = array();
+                $list[$k1]['firstfiles2'] = array();
+                $list[$k1]['tailfiles2'] = array();
+            } else {
+                foreach ($datata as $key => $value) {
+                    if ($value['solt'] == '1') {
+                        if ($value['types'] == '1') {
+                            $list[$k1]['firstfiles1'][] = $value['img'];
+                        } else {
+                            $list[$k1]['tailfiles1'][] = $value['img'];
+                        }
+                    } else {
+                        if ($value['types'] == '1') {
+                            $list[$k1]['firstfiles2'][] = $value['img'];
+                        } else {
+                            $list[$k1]['tailfiles2'][] = $value['img'];
+                        }
+                    }
+
+
+                }
+                if (empty($list[$k1]['firstfiles1'])) {
+                    $list[$k1]['firstfiles1'] = array();
+                }
+                if (empty($list[$k1]['tailfiles1'])) {
+                    $list[$k1]['tailfiles1'] = array();
+                }
+                if (empty($list[$k1]['firstfiles2'])) {
+                    $list[$k1]['firstfiles2'] = array();
+                }
+                if (empty($list[$k1]['tailfiles2'])) {
+                    $list[$k1]['tailfiles2'] = array();
+                }
+            }
+
+        }
+        $assign = array(
+            'list' => $list,
+            'page' => $page->show(),
+        );
+        $this->assign($assign);
+        $this->display();
+    }
+
+
+    /**
      * 散货船舶作业列表
      */
     public function sh_result()
@@ -1359,11 +1865,11 @@ class SearchController extends IndexBaseController
             if ($result_evaluation_info[$key]['measure_standard1'] == 0) {
                 $result_evaluation_info[$key]['measure_standard1_str'] = "暂未评分";
             } else {
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     if ($i < $result_evaluation_info[$key]['measure_standard1']) {
-                        $result_evaluation_info[$key]['measure_standard1_str'] .= "★";
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "♦ ";
                     } else {
-                        $result_evaluation_info[$key]['measure_standard1_str'] .= "☆";
+                        $result_evaluation_info[$key]['measure_standard1_str'] .= "♢";
                     }
                 }
             }
@@ -1384,11 +1890,11 @@ class SearchController extends IndexBaseController
             if ($result_evaluation_info[$key]['security1'] == 0) {
                 $result_evaluation_info[$key]['security1_str'] = "暂未评分";
             } else {
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 3; $i++) {
                     if ($i < $result_evaluation_info[$key]['security1']) {
-                        $result_evaluation_info[$key]['security1_str'] .= "★";
+                        $result_evaluation_info[$key]['security1_str'] .= "♦ ";
                     } else {
-                        $result_evaluation_info[$key]['security1_str'] .= "☆";
+                        $result_evaluation_info[$key]['security1_str'] .= "♢";
                     }
                 }
             }

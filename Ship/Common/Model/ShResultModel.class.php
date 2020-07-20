@@ -78,10 +78,10 @@ class ShResultModel extends BaseModel
                 $id = $this->addData($data);
                 if ($id) {
                     // 作业扣费
-                    $consump = new \Common\Model\ShConsumptionModel();
+                    $consump = new \Common\Model\ConsumptionModel();
 
                     //这里加上扣费区分，散货船扣费时，标注是散货
-                    $arr = $consump->buckleMoney($uid, $firmid, $id);
+                    $arr = $consump->buckleMoney($uid, $firmid, $id, 2);
                     if ($arr['code'] == '1') {
                         #todo 添加船舶统计停泊港功能，自动添加公司，用户，船的历史作业次数。
                         // 扣费成功
@@ -178,12 +178,12 @@ class ShResultModel extends BaseModel
 
 
         $edit_result = $this->where($result_where)->bind($result_bind)->save($edit_data);
-        if($edit_result === false){
+        if ($edit_result === false) {
             //失败返回修改失败 11
-            return array('code'=>$this->ERROR_CODE_COMMON['EDIT_FALL']);
-        }else{
+            return array('code' => $this->ERROR_CODE_COMMON['EDIT_FALL']);
+        } else {
             //成功
-            return array('code'=>$this->ERROR_CODE_COMMON['SUCCESS']);
+            return array('code' => $this->ERROR_CODE_COMMON['SUCCESS']);
         }
     }
 
@@ -192,12 +192,13 @@ class ShResultModel extends BaseModel
      * @param $resultid
      * @return bool
      */
-    public function checkFinish($resultid){
+    public function checkFinish($resultid)
+    {
         //获取作业状态
-        $finish_state = $this->getFieldById(intval($resultid),"finish");
-        if($finish_state == 1){
+        $finish_state = $this->getFieldById(intval($resultid), "finish");
+        if ($finish_state == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -358,21 +359,6 @@ class ShResultModel extends BaseModel
             }
 
 
-            #todo 详情得到水尺照片
-            /*// 获取水尺照片
-            $forntimg = M('fornt_img')
-                ->field('img,types,solt')
-                ->where(array('result_id' => $resultid))
-                ->select();
-            $list['qianchiimg'] = array();
-            $list['houchiimg'] = array();
-            foreach ($forntimg as $key => $value) {
-                if ($value['solt'] == '1') {
-                    array_push($list['qianchiimg'], $value['img']);
-                } else {
-                    array_push($list['houchiimg'], $value['img']);
-                }
-            }*/
 
             // 个性化组装
             $personality = json_decode($list['personality'], true);
@@ -504,6 +490,7 @@ class ShResultModel extends BaseModel
 
 //        $result = new \Common\Model\ShResultModel();
 
+//        $LBP = (float)$ship_msg['lbp'];
         if ($msg !== false) {
             $data = array();
             $result_msg = $this->field('hou_fwater_weight,hou_sewage_weight,hou_fuel_weight,hou_other_weight,qian_fwater_weight,qian_sewage_weight,qian_fuel_weight,qian_other_weight,qian_pwd,hou_pwd')
@@ -527,11 +514,19 @@ class ShResultModel extends BaseModel
                         $data['h'] = $msg[$key];
                     }
                 }
+                //获取船数据
+                $ship = new \Common\Model\ShShipModel();
+                $result_ship_id = $this->field('shipid')->where(array('id' => $resultid))->find();
+                $wheres = array(
+                    'id' => $result_ship_id['shipid'],
+                );
+                $ship_msg = $ship->field('data_ship')->where($wheres)->find();
 
                 //成功 1
                 $res = array(
                     'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                    'content' => $data
+                    'content' => $data,
+                    'data_ship' => $ship_msg['data_ship']
                 );
             } else {
                 //数据库连接错误	3
@@ -1078,20 +1073,32 @@ class ShResultModel extends BaseModel
                     $data1['qian_tc'] = $TC;
                     $data1['qian_d_m'] = $D_M;
                     $data1['qian_pwd'] = (float)$datas['pwd'];//存储密度
-                    $data1['qian_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
-                    $data1['qian_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
-                    $data1['qian_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
-                    $data1['qian_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                    if (isset($datas['fwater_weight'])) {
+                        $data1['qian_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+                        $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+
+                    }
+                    if (isset($datas['sewage_weight'])) {
+                        $data1['qian_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+                        $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+
+                    }
+                    if (isset($datas['fuel_weight'])) {
+                        $data1['qian_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+                        $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+
+                    }
+                    if (isset($datas['other_weight'])) {
+                        $data1['qian_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                        $this->process['other_weight'] = $data1['qian_other_weight'];
+                    }
+
                     $result_field = "qian_dspc as dspc,qian_constant as constant";
 
                     /*$this->process .= "\t TC=" . $data1['qian_tc'] . ",D_M=" . $data1['qian_d_m'] . "\r\n fwater_weight=" . $data1['qian_fwater_weight']
                         . ",sewage_weight=" . $data1['qian_sewage_weight'] . ",fuel_weight=" . $data1['qian_fuel_weight'] . ",other_weight=" . $data1['qian_other_weight'] . "\r\n";*/
 
                     //存储计算过程变量
-                    $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
-                    $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
-                    $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
-                    $this->process['other_weight'] = $data1['qian_other_weight'];
                     $data1['qianprocess'] = json_encode($this->process);
 
                 } elseif ($datas['solt'] == '2') {
@@ -1102,18 +1109,33 @@ class ShResultModel extends BaseModel
                     $data1['hou_tc'] = $TC;
                     $data1['hou_d_m'] = $D_M;
                     $data1['hou_pwd'] = $datas['pwd'];//存储密度
-                    $data1['hou_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
-                    $data1['hou_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
-                    $data1['hou_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
-                    $data1['hou_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                    if (isset($datas['fwater_weight'])) {
+                        $data1['hou_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+                        $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+
+                    }
+
+                    if (isset($datas['sewage_weight'])) {
+                        $data1['hou_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+                        $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+
+                    }
+
+                    if (isset($datas['fuel_weight'])) {
+                        $data1['hou_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+                        $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+
+                    }
+
+                    if (isset($datas['other_weight'])) {
+                        $data1['hou_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                        $this->process['other_weight'] = $data1['qian_other_weight'];
+                    }
+
                     $result_field = "hou_dspc as dspc,hou_constant as constant";
 //                    $this->process .= "\t TC=" . $data1['hou_tc'] . ",D_M=" . $data1['hou_d_m'] . "\r\n";
 
                     //存储计算过程变量
-                    $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
-                    $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
-                    $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
-                    $this->process['other_weight'] = $data1['qian_other_weight'];
                     //将过程存入数据库
                     $data1['houprocess'] = json_encode($this->process);
                 } else {
@@ -1139,56 +1161,29 @@ class ShResultModel extends BaseModel
                 }
 
 
-                #todo 支持添加水尺计量图片
-                /*$datafile = array();
-                // 判断是否存在首吃水 尾吃水
-                if (!empty($datas['firstfiles']) && $datas['firstfiles'] != '[]') {
-                    $firstfiles = substr($datas['firstfiles'], 1);
-                    $firstfiles = substr($firstfiles, 0, -1);
-                    $firstfiles = explode(',', $firstfiles);
-                    foreach ($firstfiles as $key => $value) {
-                        $datafile[] = array(
-                            'img' => trim($value),
-                            'result_id' => $datas['resultid'],
-                            'types' => 1,
-                            'solt' => $datas['solt']
-                        );
+                //自动填充下一界面的累积数据,不需要报错
+                $hydrostatic_data = $this->get_cumulative_hydrostatic_data($result_ship_id['shipid'], $D_M);
+
+                if($hydrostatic_data !== false){
+                    $resultrecord = M('sh_resultrecord');
+                    //检索条件构成
+                    $where_r = array(
+                        'resultid' => $data['resultid'],
+                        'solt' => $data['solt'],
+                    );
+                    $record_data = array_merge($hydrostatic_data, $where_r);
+                    $record_data['shipid'] = $result_ship_id['shipid'];
+                    $recodenums = $resultrecord->where($where_r)->count();
+                    //添加数据到数据库排水量表数据表,如果存在则修改
+                    if ($recodenums > 0) {
+                        $re = $resultrecord->where($where_r)->save($record_data);
+                    } else {
+                        $re = $resultrecord->add($record_data);
                     }
+                }else{
+                    $re = true;
                 }
 
-                // 判断是否存在尾吃水
-                if (!empty($datas['tailfiles']) && $datas['tailfiles'] != '[]') {
-
-                    $tailfiles = substr($datas['tailfiles'], 1);
-                    $tailfiles = substr($tailfiles, 0, -1);
-                    $tailfiles = explode(',', $tailfiles);
-                    foreach ($tailfiles as $key => $value) {
-                        $datafile[] = array(
-                            'img' => trim($value),
-                            'result_id' => $datas['resultid'],
-                            'types' => 2,
-                            'solt' => $datas['solt']
-                        );
-                    }
-                }
-
-                // 删除原有的首吃水 尾吃水
-                $fornt_img = M('fornt_img')->where(array('result_id' => $datas['resultid'], 'solt' => $datas['solt']))->select();
-
-                if (!empty($datafile)) {
-                    M('fornt_img')->where(array('result_id' => $datas['resultid'], 'solt' => $datas['solt']))->delete();
-                    // 新增图片
-                    $aa = M('fornt_img')->addAll($datafile);
-                    if ($aa == false) {
-                        M()->rollback();
-                        // 数据库错误	3
-                        $res = array(
-                            'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
-                        );
-                        echo jsonreturn($res);
-                        die;
-                    }
-                }*/
 
                 // 添加/修改数据
                 $m = array(
@@ -1196,11 +1191,12 @@ class ShResultModel extends BaseModel
                 );
                 $res = $this->editData($m, $data1);
                 // 修改数据成功
-                if ($res['code'] !== false and $r !== false) {
-                    #todo 如果存在已有的作业数据，则重新计算已录入的数据
+                if ($res !== false and $r !== false and $re !== false) {
+
                     M()->commit();
                     $r_data = $this->field($result_field)->where($m)->find();
 
+                    // 如果存在已有的作业数据，则重新计算已录入的数据
                     if ($r_data['dspc'] > 0) {
                         $dspc_res = $this->suanDspc1($datas['resultid'], $datas['solt']);
                     } else {
@@ -1212,6 +1208,7 @@ class ShResultModel extends BaseModel
                     } else {
                         $weight_res['code'] = 1;
                     }
+
 
                     if ($dspc_res['code'] == 1 and $weight_res['code'] == 1) {
                         //成功 1
@@ -1246,447 +1243,789 @@ class ShResultModel extends BaseModel
         return $res;
     }
 
-    /**
-     * 计算容量
-     * */
-//    public function suanfa($qiu, $ulist, $keys = '', $ullage = '', $chishui = '')
-//    {
-//        self::$function_process = array(
-//            'interpolation_calculation' => array()
-//        );
-//        //四种情况计算容量
-//        if (count($qiu) == '1' and count($ulist) == '1') {
-//            //【1】纵倾（吃水差）查出一条，空高查出1条
-//            self::$function_process['count(ulist)'] = "1";
-//            self::$function_process['count(Draught)'] = "1";
-//            $res = $ulist[0][$keys[0]];
-//            self::$function_process['final_result'] = $res;
-//
-//        } elseif (count($qiu) == '2' and count($ulist) == '2') {
-//            self::$function_process['count(ulist)'] = "2";
-//            self::$function_process['count(Draught)'] = "2";
-//            //【2】纵倾（吃水差）查出2条，空高查出2条
-//            $hou = suanfa5002((float)$ulist[1][$keys[1]], (float)$ulist[0][$keys[1]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-//            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $hou);
-//
-//            $qian = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-//            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $qian);
-//
-//            $res = suanfa5002($hou, $qian, $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
-//            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
-//            self::$function_process['final_result'] = $res;
-//
-//        } elseif (count($qiu) == '1' and count($ulist) == '2') {
-//            self::$function_process['count(ulist)'] = "2";
-//            self::$function_process['count(Draught)'] = "1";
-//
-//            //【3】纵倾（吃水差）查出1条，空高查出2条
-//            $res = suanfa5002((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['ullage'], (float)$ulist[0]['ullage'], $ullage);
-//            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
-//            self::$function_process['final_result'] = $res;
-//
-//        } elseif (count($qiu) == '2' and count($ulist) == '1') {
-//            self::$function_process['count(ulist)'] = "1";
-//            self::$function_process['count(Draught)'] = "2";
-//
-//            //【4】纵倾（吃水差）查出2条，空高查出1条
-//            $res = suanfa5002($ulist[0][$keys[1]], $ulist[0][$keys[0]], $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
-//            self::$function_process['interpolation_calculation'][] = array('interpolation_calculation_result' => $res);
-//            self::$function_process['final_result'] = $res;
-//        } else {
-//            //其他错误	2
-//            $res = array(
-//                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
-//            );
-//        }
-//        return $res;
-//    }
-
-//    /**
-//     * 计算上一条与下一条数据
-//     */
-//    public function downup($ullage, $tablename, $field, $cabinid)
-//    {
-//        $tname = M($tablename);
-//        $u = $tname
-//            ->field($field)
-//            ->where(array('ullage' => $ullage, 'cabinid' => $cabinid))
-//            ->find();
-//        if (!empty($u)) {
-//            $res[] = $u;
-//        } else {
-//            //查不到数据，搜索它的上一条或者下一条数据
-//            //上一条数据
-//            $wherelt = array(
-//                'cabinid' => $cabinid,
-//                'ullage' => array('LT', $ullage)
-//            );
-//            $e = $tname
-//                ->field($field)
-//                ->where($wherelt)
-//                ->order('ullage desc')
-//                ->find();
-//            if (!empty($e)) {
-//                $res[] = $e;
-//            }
-//            //下一条数据
-//            $wheregt = array(
-//                'cabinid' => $cabinid,
-//                'ullage' => array('GT', $ullage)
-//            );
-//            $f = $tname
-//                ->field($field)
-//                ->where($wheregt)
-//                ->order('ullage asc')
-//                ->find();
-//            if (!empty($f)) {
-//                $res[] = $f;
-//            }
-//        }
-//        return $res;
-//    }
-//
-//
-//    /**
-//     * 计算纵倾修正 json转化数组
-//     */
-//    public function getjsonarray($data, $chishui)
-//    {
-//        // 计算纵倾修正
-//        // json转化数组
-//        $arrtb = json_decode($data, true);
-//        $array = array();
-//        $arrayxiao = array();
-//        $arrayda = array();
-//        // 判断数据是否在纵倾修正值数组内
-//        foreach ($arrtb as $key => $value) {
-//            if ($chishui == $value) {
-//                $array[] = array(
-//                    $key => $value
-//                );
-//            } elseif ($chishui > $value) {
-//                //获取所有比纵倾值小
-//                $arrayxiao[$key] = $value;
-//            } elseif ($chishui < $value) {
-//                //获取所有比纵倾值大
-//                $arrayda[$key] = $value;
-//            }
-//        }
-//        //判断是否有对应的纵倾修正值
-//        if (count($array) == '1') {
-//            //①正巧取到纵倾修正值
-//            //舱容表对应的key与value
-//            $qiu = $array[0];
-//        } elseif (count($array) == '0' and count($arrayxiao) >= '1' and count($arrayda) >= '1') {
-//            // ②取到两条数据，最小的最大数据、最大的最小数据
-//            // 获取最小列表的最大值(比吃水值小)
-//            $k = array_search(max($arrayxiao), $arrayxiao);
-//            $qiu[$k] = $arrayxiao[$k];
-//            //获取最大列表的最小值(比吃水值大)
-//            $x = array_search(min($arrayda), $arrayda);
-//            $qiu[$x] = $arrayda[$x];
-//        } elseif (count($array) == '0' and count($arrayxiao) == '0' and count($arrayda) >= '1') {
-//            //③只取到一条最大的最小数据
-//            //获取最大列表的最小值(比吃水值大)
-//            $x = array_search(min($arrayda), $arrayda);
-//            $qiu[$x] = $arrayda[$x];
-//        } elseif (count($array) == '0' and count($arrayxiao) >= '1' and count($arrayda) == '0') {
-//            //④只取到一条最小的最大数据
-//            //获取最小列表的最大值(比吃水值小)
-//            $k = array_search(max($arrayxiao), $arrayxiao);
-//            $qiu[$k] = $arrayxiao[$k];
-//        }
-//        return $qiu;
-//    }
-
 
     /**
-     * 实高图片、空高图片、温度图片路径整理
+     * 水尺操作(水尺信息记录、修改作业水尺差数据)
      */
-    /*public function imgfile($data, $listid)
+    public function forntOperation2($datas)
     {
-        $resultlist_img = M('resultlist_img');
-        $datafile = array();
+        $user = new \Common\Model\UserModel();
+        //判断用户状态、是否到期、标识比对
+        $msg1 = $user->is_judges($datas['uid'], $datas['imei']);
 
-        // 判断是否存在实高图片
-        if (!empty($data['soundingfile']) && $datas['soundingfile'] != '[]') {
-            $soundingfile = substr($data['soundingfile'], 1);
-            $soundingfile = substr($soundingfile, 0, -1);
-            $soundingfile = explode(',', $soundingfile);
-            foreach ($soundingfile as $key => $value) {
-                $datafile[] = array(
-                    'img' => $value,
-                    'types' => 2,
-                    'resultlist_id' => $listid
-                );
-            }
+        if ($datas['solt'] == '1') {
+            $this->process = json_decode($this->getFieldById($datas['resultid'], "qianprocess"), true);
+        } elseif ($datas['solt'] == '2') {
+            $this->process = json_decode($this->getFieldById($datas['resultid'], "houprocess"), true);
+        } else {
+
+            //其他错误 4
+            return array(
+                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+            );
         }
 
-        // 判断是否存在空高图片
-        if (!empty($data['ullagefile']) && $datas['ullagefile'] != '[]') {
-            $ullagefile = substr($data['ullagefile'], 1);
-            $ullagefile = substr($ullagefile, 0, -1);
-            $ullagefile = explode(',', $ullagefile);
-            foreach ($ullagefile as $key => $value) {
-                $datafile[] = array(
-                    'img' => $value,
-                    'types' => 1,
-                    'resultlist_id' => $listid
-                );
-            }
+        if ($this->process == null) {
+            $this->process = array();
+        }
 
-        }
-        // 判断是否存在温度图片
-        if (!empty($data['temperaturefile']) && $datas['temperaturefile'] != '[]') {
-            $temperaturefile = substr($data['temperaturefile'], 1);
-            $temperaturefile = substr($temperaturefile, 0, -1);
-            $temperaturefile = explode(',', $temperaturefile);
-            foreach ($temperaturefile as $key => $value) {
-                $datafile[] = array(
-                    'img' => $value,
-                    'types' => 3,
-                    'resultlist_id' => $listid
+        if ($msg1['code'] == '1') {
+            $res_num = $this->where(array('id' => $datas['resultid']))->count();
+            if ($res_num > 0) {
+                //开始接受值到变量，类型转换，防止用户乱填
+                // 艏左，艏右
+                $forntleft = (float)$datas['forntleft'];
+                $forntright = (float)$datas['forntright'];
+                // 艉左，艉右
+                $afterleft = (float)$datas['afterleft'];
+                $afterright = (float)$datas['afterright'];
+                //舯左，舯右
+                $centerleft = (float)$datas['centerleft'];
+                $centerright = (float)$datas['centerright'];
+                //获取港水密度
+                $PWD = (float)$datas['pwd'];
+
+
+                //获取船数据
+                $ship = new \Common\Model\ShShipModel();
+                $result_ship_id = $this->field('shipid')->where(array('id' => $datas['resultid']))->find();
+                $wheres = array(
+                    'id' => $result_ship_id['shipid'],
+                );
+                $ship_msg = $ship->field('shipname,lbp,df,da,dm,ptwd,ds_table')->where($wheres)->find();
+                $LBP = (float)$ship_msg['lbp'];
+
+                //获取水尺距垂线距离
+                $Df = (float)$ship_msg['df'];
+                $Da = (float)$ship_msg['da'];
+                $Dm = (float)$ship_msg['dm'];
+
+                //初始化水尺相对垂线位置
+                $Pf = 0;
+                $Pa = 0;
+                $Pm = 0;
+
+                //判断flag变量
+                if ($Df <= 0) {
+                    $Pf = 1;
+                    $Df = abs($Df);
+                }
+
+                if ($Da <= 0) {
+                    $Pa = 1;
+                    $Da = abs($Da);
+                }
+
+                if ($Dm <= 0) {
+                    $Pm = 1;
+                    $Dm = abs($Dm);
+                }
+
+                //计算平均吃水差
+                $Fps = round(($forntleft + $forntright) / 2, 5);
+                $Aps = round(($afterleft + $afterright) / 2, 5);
+                $Mps = round(($centerleft + $centerright) / 2, 5);
+
+                //拿到吃水差
+                $T = $Aps - $Fps;
+
+                //吃水差正负状态
+                if ($T > 0) {
+                    $Tf = 0;
+                } else {
+                    $Tf = 1;
+                }
+
+                $Fflag = $Tf ^ $Pf; //矫正吃水flag
+                $Aflag = $Tf ^ $Pa; //矫正吃水flag
+                $Mflag = $Tf ^ $Pm; //矫正吃水flag
+
+                $LBM = round($LBP + pow(-1, $Pf) * $Df - pow(-1, $Pa) * $Da, 5);//计算艏艉水尺间长
+
+                $Fc = round(abs($Df * $T / $LBM), 5);//计算艏吃水矫正值
+                $Ac = round(abs($Da * $T / $LBM), 5);//计算艉吃水校正值
+                $Mc = round(abs($Dm * $T / $LBM), 5);//舯吃水校正值
+
+                $Fm = round($Fps + pow(-1, $Fflag) * $Fc, 5);//计算校正后艏吃水
+                $Am = round($Aps + pow(-1, $Aflag) * $Ac, 5);//计算校正后艉吃水
+                $Mm = round($Mps + pow(-1, $Mflag) * $Mc, 5);//计算校正后舯吃水
+
+                $TC = round($Am - $Fm, 5);//计算矫正后吃水差
+
+                $D_M = round(($Fm + $Am + (6 * $Mm)) / 8, 5);//计算拱陷矫正后总平均吃水
+
+
+                /**
+                 * 记录计算过程重要变量
+                 */
+                $this->process['nowtime'] = date('Y-m-d H:i:s', time());
+                $this->process['forntleft'] = $forntleft;
+                $this->process['forntright'] = $forntright;
+                $this->process['afterleft'] = $afterleft;
+                $this->process['afterright'] = $afterright;
+                $this->process['centerleft'] = $centerleft;
+                $this->process['centerright'] = $centerright;
+
+                $this->process['p'] = $PWD;
+                $this->process['LBP'] = $LBP;
+                $this->process['Df'] = $Df;
+                $this->process['Da'] = $Da;
+                $this->process['Dm'] = $Dm;
+                $this->process['Pf'] = $Pf;
+                $this->process['Pa'] = $Pa;
+                $this->process['Pm'] = $Pm;
+
+                $this->process['Fps'] = $Fps;
+                $this->process['Aps'] = $Aps;
+                $this->process['Mps'] = $Mps;
+                $this->process['T'] = $T;
+                $this->process['Tf'] = $Tf;
+                $this->process['Fflag'] = $Fflag;
+                $this->process['Aflag'] = $Aflag;
+                $this->process['Mflag'] = $Mflag;
+                $this->process['LBM'] = $LBM;
+
+                $this->process['Fc'] = $Fc;
+                $this->process['Ac'] = $Ac;
+                $this->process['Mc'] = $Mc;
+
+                $this->process['Fm'] = $Fm;
+                $this->process['Am'] = $Am;
+                $this->process['Mm'] = $Mm;
+
+                $this->process['TC'] = $TC;
+                $this->process['D_M'] = $D_M;
+
+                $this->process['ship_name'] = $ship_msg['shipname'];
+
+
+                //水尺数据
+                $data = array(
+                    'forntleft' => $forntleft,
+                    'forntright' => $forntright,
+                    'centerleft' => $centerleft,
+                    'centerright' => $centerright,
+                    'afterleft' => $afterleft,
+                    'afterright' => $afterright,
+                    'fornt' => $Fps,
+                    'center' => $Mps,
+                    'after' => $Aps,
+                    'fc' => $Fc,
+                    'ac' => $Ac,
+                    'mc' => $Mc,
+                    'fm' => $Fm,
+                    'am' => $Am,
+                    'mm' => $Mm,
+                    'solt' => $datas['solt'],
+                    'resultid' => $datas['resultid']
+                );
+
+                //作业表的数据
+                $data1 = array(
+                    'solt' => $datas['solt'],
+                );
+
+                if ($datas['solt'] == '1') {
+//                    $this->process .= "soltType=作业前 then:\r\n";
+                    $this->process['soltType'] = "作业前";
+
+                    //存储吃水差和拱陷修正后总平均吃水
+                    $data1['qian_tc'] = $TC;
+                    $data1['qian_d_m'] = $D_M;
+                    $data1['qian_pwd'] = (float)$datas['pwd'];//存储密度
+                    if (isset($datas['fwater_weight'])) {
+                        $data1['qian_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+                        $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+
+                    }
+                    if (isset($datas['sewage_weight'])) {
+                        $data1['qian_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+                        $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+
+                    }
+                    if (isset($datas['fuel_weight'])) {
+                        $data1['qian_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+                        $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+
+                    }
+                    if (isset($datas['other_weight'])) {
+                        $data1['qian_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                        $this->process['other_weight'] = $data1['qian_other_weight'];
+                    }
+
+                    $result_field = "qian_dspc as dspc,qian_constant as constant";
+
+                    /*$this->process .= "\t TC=" . $data1['qian_tc'] . ",D_M=" . $data1['qian_d_m'] . "\r\n fwater_weight=" . $data1['qian_fwater_weight']
+                        . ",sewage_weight=" . $data1['qian_sewage_weight'] . ",fuel_weight=" . $data1['qian_fuel_weight'] . ",other_weight=" . $data1['qian_other_weight'] . "\r\n";*/
+
+                    //存储计算过程变量
+                    $data1['qianprocess'] = json_encode($this->process);
+
+                } elseif ($datas['solt'] == '2') {
+//                    $this->process .= "soltType: 作业后 then:\r\n";
+                    $this->process['soltType'] = "作业后";
+
+                    //存储吃水差和拱陷修正后总平均吃水
+                    $data1['hou_tc'] = $TC;
+                    $data1['hou_d_m'] = $D_M;
+                    $data1['hou_pwd'] = $datas['pwd'];//存储密度
+                    if (isset($datas['fwater_weight'])) {
+                        $data1['hou_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+                        $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+
+                    }
+
+                    if (isset($datas['sewage_weight'])) {
+                        $data1['hou_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+                        $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+
+                    }
+
+                    if (isset($datas['fuel_weight'])) {
+                        $data1['hou_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+                        $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+
+                    }
+
+                    if (isset($datas['other_weight'])) {
+                        $data1['hou_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+                        $this->process['other_weight'] = $data1['qian_other_weight'];
+                    }
+
+                    $result_field = "hou_dspc as dspc,hou_constant as constant";
+//                    $this->process .= "\t TC=" . $data1['hou_tc'] . ",D_M=" . $data1['hou_d_m'] . "\r\n";
+
+                    //存储计算过程变量
+                    //将过程存入数据库
+                    $data1['houprocess'] = json_encode($this->process);
+                } else {
+                    //其他错误 4
+                    return array(
+                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+                    );
+                }
+
+                // 判断水尺数据是否存在 添加/修改数据
+                $map = array(
+                    'solt' => $datas['solt'],
+                    'resultid' => $datas['resultid']
+                );
+                $num = M('sh_forntrecord')->where($map)->count();
+                M()->startTrans();  // 开启事物
+                if ($num > 0) {
+                    //数据存在--修改
+                    $r = M('sh_forntrecord')->where($map)->save($data);
+                } else {
+                    //数据不存在--新增
+                    $r = M('sh_forntrecord')->add($data);
+                }
+
+
+
+
+                // 添加/修改数据
+                $m = array(
+                    'id' => $datas['resultid']
+                );
+                $res = $this->editData($m, $data1);
+                // 修改数据成功
+                if ($res !== false and $r !== false) {
+
+                    M()->commit();
+                    $r_data = $this->field($result_field)->where($m)->find();
+
+                    // 如果存在已有的作业数据，则重新计算已录入的数据
+                    if ($r_data['dspc'] > 0) {
+                        $dspc_res = $this->suanDspc1($datas['resultid'], $datas['solt']);
+                    } else {
+                        $dspc_res['code'] = 1;
+                    }
+
+                    if ($r_data['constant'] > 0) {
+                        $weight_res = $this->suanWeight($datas['resultid'], $result_ship_id);
+                    } else {
+                        $weight_res['code'] = 1;
+                    }
+
+
+                    if ($dspc_res['code'] == 1 and $weight_res['code'] == 1) {
+                        $this->process = array();
+                        //检索条件构成
+                        $where_r = array(
+                            'resultid' => $datas['resultid'],
+                            'solt' => $datas['solt'],
+                        );
+                        $resultrecord = M('sh_resultrecord');
+                        //获取舱计算过程
+                        $process = $resultrecord->field("process")->where($where_r)->find();
+
+                        //过程转换数组
+                        if ($process !== false) {
+                            $this->process = json_decode($process['process'], true);
+                            if ($this->process === null) {
+                                $this->process = array(
+                                    'table' => array()
+                                );
+                            }
+                        } else {
+                            $this->process = array(
+                                'table' => array()
+                            );
+                        }
+                        //开始自动计算压载水
+                        //取船舶信息
+                        /**
+                         * 开始计算排水量
+                         */
+
+                        $p = $PWD;
+                        $LBP = $ship_msg['lbp'];
+                        $pt = $ship_msg['ptwd'];
+
+                        /**
+                         * 整理数据
+                         *
+                         * */
+                        //开始寻找有表船的静水力表数据
+                        $table_data = $this->downup($D_M,$ship_msg['ds_table'],true);
+//                echo $D_M;
+//                exit(jsonreturn($table_data));
+
+                        if(count($table_data) == 1){
+                            $Dup = $table_data[0]['d_e_m'];
+                            $Ddown = $table_data[0]['d_e_m'];
+                            $TPCup = $table_data[0]['tpc'];
+                            $TPCdown = $table_data[0]['tpc'];
+                            $DSup = $table_data[0]['ds'];
+                            $DSdown = $table_data[0]['ds'];
+                            $Xfdown = $table_data[0]['lcf'];
+                            $Xfup = $table_data[0]['lcf'];
+
+                        }else if(count($table_data) == 2){
+                            $Dup = $table_data[0]['d_e_m'];
+                            $Ddown = $table_data[1]['d_e_m'];
+                            $TPCup = $table_data[0]['tpc'];
+                            $TPCdown = $table_data[1]['tpc'];
+                            $DSup = $table_data[0]['ds'];
+                            $DSdown = $table_data[1]['ds'];
+                            $Xfdown = $table_data[0]['lcf'];
+                            $Xfup = $table_data[1]['lcf'];
+                        }
+
+                        $mtc_up_data = $this->downup(round($D_M-0.5,3),$ship_msg['ds_table'],false);
+                        if(count($mtc_up_data) == 1){
+                            $MTCup = $mtc_up_data[0]['mct'];
+                        }else if(count($mtc_up_data) == 2){
+                            $up = $mtc_up_data[0]['mct'];
+                            $down = $mtc_up_data[1]['mct'];
+                            $MTCup = $this->getMiddleValue($up, $down, $mtc_up_data[0]['d_e_m'], $mtc_up_data[1]['d_e_m'], $D_M-0.5);
+                        }
+
+                        $mtc_down_data = $this->downup(round($D_M+0.5,3),$ship_msg['ds_table'],false);
+                        if(count($mtc_down_data) == 1){
+                            $MTCdown = $mtc_down_data[0]['mct'];
+                        }else if(count($mtc_down_data) == 2){
+                            $up = $mtc_down_data[0]['mct'];
+                            $down = $mtc_down_data[1]['mct'];
+                            $MTCdown = $this->getMiddleValue($up, $down, $mtc_down_data[0]['d_e_m'], $mtc_down_data[1]['d_e_m'], $D_M+0.5);
+                        }
+
+                        $data_r = array();
+                        $data_r['d_up'] = $Dup;
+                        $data_r['d_down'] = $Ddown;
+                        $data_r['tpc_up'] = $TPCup;
+                        $data_r['tpc_down'] = $TPCdown;
+                        $data_r['ds_up'] = $DSup;
+                        $data_r['ds_down'] = $DSdown;
+                        $data_r['d_up'] = $Dup;
+                        $data_r['d_up'] = $Dup;
+                        $data_r['xf_up'] = $Xfup;
+                        $data_r['xf_down'] = $Xfdown;
+                        $data_r['mtc_up'] = $MTCup;
+                        $data_r['mtc_down'] = $MTCdown;
+                        $data_r['solt'] = $datas['solt'];
+                        $data_r['resultid'] = $datas['resultid'];
+                        $data_r['shipid'] = $result_ship_id['shipid'];
+
+
+
+                        $this->process['table']['time'] = date('Y-m-d H:i:s', time());
+                        $this->process['table']['Dup'] = $Dup;
+                        $this->process['table']['Ddown'] = $Ddown;
+
+                        $this->process['table']['TPCup'] = $TPCup;
+                        $this->process['table']['TPCdown'] = $TPCdown;
+
+                        $this->process['table']['DSdown'] = $DSdown;
+                        $this->process['table']['DSup'] = $DSup;
+
+                        $this->process['table']['Xfdown'] = $Xfdown;
+                        $this->process['table']['Xfup'] = $Xfup;
+
+                        $this->process['table']['MTCup'] = $MTCup;
+
+                        $this->process['table']['MTCdown'] = $MTCdown;
+
+                        $this->process['LBP'] = $LBP;
+                        $this->process['table']['pt'] = $pt;
+
+
+                        //开始计算
+                        //开始插值计算
+                        $getDS_arr = $this->getDS((float)$D_M, (float)$Dup, (float)$Ddown, (float)$TPCup, (float)$TPCdown, (float)$DSup, (float)$DSdown, (float)$Xfup, (float)$Xfdown);//计算排水量插值
+
+                        $TPC = round($getDS_arr['TPC'], 5);
+                        $DS = round($getDS_arr['DS'], 5);
+                        $Xf = round($getDS_arr['Xf'], 5);
+                        $this->process['table']['TPC'] = $TPC;
+                        $this->process['table']['DS'] = $DS;
+                        $this->process['table']['Xf'] = $Xf;
+
+
+
+
+                        $dmdz = round($MTCup - $MTCdown, 5);
+                        $this->process['dmdz'] = $dmdz;
+
+                        $Dc1 = round(100 * $TC * $Xf * $TPC / $LBP, 5);
+                        $this->process['Dc1'] = $Dc1;
+
+                        $Dc2 = round(50 * $dmdz * pow($TC, 2) / $LBP, 5);
+                        $this->process['Dc2'] = $Dc2;
+
+                        $Dc = round($Dc1 + $Dc2, 5);
+                        $this->process['Dc'] = $Dc;
+
+                        $Dsc = round($DS + $Dc, 5);
+                        $this->process['Dsc'] = $Dsc;
+
+                        $Dpc = round($Dsc * ($p - $pt) / $pt, 5);
+                        $this->process['Dpc'] = $Dpc;
+
+                        $Dspc = round($Dsc + $Dpc, 5);
+                        $this->process['Dspc'] = $Dspc;
+
+                        $data_r['tpc'] = $TPC;
+                        $data_r['ds'] = $DS;
+                        $data_r['xf'] = $Xf;
+                        $data_r['dmdz'] = $dmdz;
+                        $data_r['dc1'] = $Dc1;
+                        $data_r['dc2'] = $Dc2;
+                        $data_r['dc'] = $Dc;
+                        $data_r['dsc'] = $Dsc;
+                        $data_r['dpc'] = $Dpc;
+                        $data_r['xf_up'] = $Xfup;
+                        $data_r['xf_down'] = $Xfdown;
+                        $data_r['process'] = json_encode($this->process);
+
+                        $recodenums = $resultrecord->where($where_r)->count();
+
+                        M()->startTrans();    //开启事物
+                        //添加数据到数据库排水量表数据表,如果存在则修改
+                        if ($recodenums > 0) {
+                            $re = $resultrecord->where($where_r)->save($data_r);
+                        } else {
+//                            exit(jsonreturn($data_r));
+                            $re = $resultrecord->add($data_r);
+                        }
+                        if ($re !== false) {
+                            //计算总货重并修改
+                            //作业前作业后区分是否计算总货重
+                            switch ($datas['solt']) {
+                                case '1':
+                                    //作业前
+                                    //修改作业前总货重、总容量
+                                    $g = array(
+                                        'qian_dspc' => $Dspc,
+                                    );
+                                    $res_r = $this
+                                        ->where(array('id' => $datas['resultid']))
+                                        ->save($g);
+                                    if ($res_r !== false) {
+                                        M()->commit();
+                                        if ($r['constant'] > 0) {
+                                            $weight_res = $this->suanWeight($datas['resultid'], $result_ship_id['shipid']);
+                                        } else {
+                                            $weight_res['code'] = 1;
+                                        }
+
+                                        if ($weight_res['code'] == 1) {
+                                            $res = array(
+                                                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                                'Dspc' => $Dspc,
+                                            );
+                                        } else {
+                                            $res = array(
+                                                'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                                                'weight' => $weight_res['code'],
+                                            );
+                                        }
+                                    } else {
+                                        M()->rollback();
+                                        // $trans->rollback();
+                                        //其它错误  2
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                        );
+                                    }
+                                    break;
+                                case '2':
+                                    //作业前
+                                    //修改作业前总货重、总容量
+                                    $g = array(
+                                        'hou_dspc' => $Dspc,
+                                    );
+                                    $r = $this
+                                        ->where(array('id' => $datas['resultid']))
+                                        ->save($g);
+                                    if ($r !== false) {
+                                        M()->commit();
+
+                                        if ($r['constant'] > 0) {
+                                            $weight_res = $this->suanWeight($datas['resultid'], $result_ship_id['shipid']);
+                                        } else {
+                                            $weight_res['code'] = 1;
+                                        }
+
+                                        if ($weight_res['code'] == 1) {
+                                            $res = array(
+                                                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                                'Dspc' => $Dspc,
+                                            );
+                                        } else {
+                                            $res = array(
+                                                'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                                                'weight' => $weight_res['code'],
+                                            );
+                                        }
+                                    } else {
+                                        M()->rollback();
+                                        // $trans->rollback();
+                                        //其它错误  2
+                                        $res = array(
+                                            'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                        );
+                                    }
+                                    break;
+                                default:
+                                    M()->rollback();
+                                    //其它错误  2
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                    );
+                                    # 不是作业前后，跳出
+                                    break;
+                            }
+
+                        } else {
+                            M()->rollback();
+                            //其它错误 2
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+                            );
+                        }
+                    } else {
+                        $res = array(
+                            'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                            'dspc' => $dspc_res['code'],
+                            'weight' => $weight_res['code'],
+                        );
+                    }
+                } else {
+                    //数据库连接错误	3
+                    M()->rollback();
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                    );
+                }
+            } else {
+                //其他错误 4
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
                 );
             }
+        } else {
+            // 错误信息
+            $res = $msg1;
         }
-        return $datafile;
-    }*/
+        return $res;
+    }
+
 
     /**
-     * 计算器计算容量
-     *
-     * 已废弃！请使用 reckon2 接口
-     *
-     * */
+     * 获取
+     */
+    public function downup($d_m, $tablename,$need_tpc = true)
+    {
+        $tname = M($tablename);
+        $u = $tname
+            ->field('d_e_m,ds,lcf')
+            ->where(array('d_e_m' => $d_m))
+            ->find();
+        if (!empty($u)) {
+            if($need_tpc){
+                $lt_tpc = $tname
+                    ->field('d_e_m,ds')
+                    ->where(array('d_e_m'=>array('LT', floatval($d_m))))
+                    ->order('d_e_m desc')
+                    ->find();
+//            print_r($lt_tpc);
+                $u['tpc'] = ($u['ds'] - $lt_tpc['ds'])/(($u['d_e_m']-$lt_tpc['d_e_m'])*100);
 
-//    public function reckon1($data)
-//    {
-//        $user = new \Common\Model\UserModel();
-//        //判断用户状态、是否到期、标识比对
-//        $msg1 = $user->is_judges($data['uid'], $data['imei']);
-//        if ($msg1['code'] == '1') {
-//
-//            $where_r = array(
-//                'resultid' => $data['resultid'],
-//                'solt' => $data['solt'],
-//            );
-//
-//            // 将录入数据更新到表中
-//            $field_str = "";
-//            if ($data['solt'] == '1') {
-//                $field_str = "r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp";
-//
-//            } elseif ($data['solt'] == '2') {
-//                $field_str = "r.hou_tc as tc,r.hou_d_m as d_m,r.hou_pwd as pwd,r.hou_constant as constant,s.lbp";
-//
-//            }
-//
-//            $where = array(
-//                'r.id' => $data['resultid'],
-//            );
-//
-//            $r = $this
-//                ->alias('r')
-//                ->field($field_str)
-//                ->join('left join sh_ship s on s.id=r.shipid')
-//                ->where($where)
-//                ->find();
-//
-//            if ($r['tc'] != null and $r['d_m'] != null and $r['pwd'] != null and $r['lbp'] != null) {
-//                // if ($r['ullage']>$data['ullage2'] or $r['ullage']<$data['ullage1']) {
-//                // 	// 空高有误 2009
-//                //     $res = array(
-//                //         'code'  =>  $this->ERROR_CODE_RESULT['ULLAGE_ISNOT']
-//                //     );
-//                // } else {
-//
-//                /**
-//                 * 开始计算排水量
-//                 */
-//
-//                $TC = $r['tc'];
-//                $D_M = $r['d_m'];
-//                $p = $r['pwd'];
-//                $LBP = $r['lbp'];
-//
-//                /**
-//                 * 整理数据
-//                 *
-//                 * */
-//                $this->process .= "Received table:\r\n\t"
-//                    . "Dup=" . $data['d_up'] . ", TPCup=" . $data['tpc_up'] . ",DSup=" . $data['ds_up'] . ",Xfup=" . $data['xf_up'] . "\r\n\t"
-//                    . "Ddown=" . $data['d_down'] . ", TPCdown=" . $data['tpc_down'] . ",DSdown=" . $data['ds_down'] . ",Xfdown=" . $data['xf_down']
-//                    . "\r\n\tMTCup=" . $data['mtc_up'] . ",MTCdown=" . $data['mtc_down'] . "\r\n---------------------------------------\r\n pt="
-//                    . $data['ptwd'] . "\r\n";
-//                $Dup = (float)$data['d_up'];
-//                $Ddown = (float)$data['d_down'];
-//                $TPCup = (float)$data['tpc_up'];
-//                $TPCdown = (float)$data['tpc_down'];
-//                $DSup = (float)$data['ds_up'];
-//                $DSdown = (float)$data['ds_down'];
-//                $Xfup = (float)$data['xf_up'];
-//                $Xfdown = (float)$data['xf_down'];
-//                $MTCup = (float)$data['mtc_up'];
-//                $MTCdown = (float)$data['mtc_down'];
-//                $pt = (float)$data['ptwd'];
-//
-//                //开始计算
-//                //开始插值计算
-//                $getDS_arr = $this->getDS((float)$D_M, (float)$Dup, (float)$Ddown, (float)$TPCup, (float)$TPCdown, (float)$DSup, (float)$DSdown, (float)$Xfup, (float)$Xfdown);//计算排水量插值
-//                $TPC = round($getDS_arr['TPC'], 5);
-//                $DS = round($getDS_arr['DS'], 5);
-//                $Xf = round($getDS_arr['Xf'], 5);
-//
-//                /*                $TPC = 59.5;
-//                                $DS = 55118.7;
-//                                $Xf = 2.85;*/
-//
-//                $dmdz = round($MTCup - $MTCdown, 5);
-//                $this->process .= "dmdz = $MTCup - $MTCdown = " . $dmdz;
-//                $Dc1 = round(100 * $TC * $Xf * $TPC / $LBP, 5);
-//                $this->process .= "Dc1 = 100 * TC * Xf * TPC / LBP = 100 * $TC * $Xf * $TPC / $LBP = " . $Dc1;
-//
-//                $Dc2 = round(50 * $dmdz * pow($TC, 2) / $LBP, 5);
-//                $this->process .= "Dc2 = 50 * dmdz * pow(TC, 2) / LBP = 50 * $dmdz * pow($TC, 2) / $LBP = " . $Dc2;
-//
-//                $Dc = round($Dc1 + $Dc2, 5);
-//                $this->process .= "Dc = $Dc1 + $Dc2 = " . $Dc;
-//
-//                $Dsc = round($DS + $Dc, 5);
-//                $this->process .= "Dsc = $DS + $Dc = " . $Dsc;
-//
-//                $Dpc = round($Dsc * ($p - $pt) / $pt, 5);
-//                $this->process .= "Dpc =  Dsc * (p - pt) / pt = $Dsc * ($p - $pt) / $pt = " . $Dpc;
-//
-//                $Dspc = round($Dsc + $Dpc, 5);
-//                $this->process .= "Dspc = $Dsc + $Dpc = " . $Dspc;
-//
-//                $resultrecord = M('sh_resultrecord');
-//
-//                $data['tpc'] = $TPC;
-//                $data['ds'] = $DS;
-//                $data['xf'] = $Xf;
-//                $data['dmdz'] = $dmdz;
-//                $data['dc1'] = $Dc1;
-//                $data['dc2'] = $Dc2;
-//                $data['dc'] = $Dc;
-//                $data['dsc'] = $Dsc;
-//                $data['dpc'] = $Dpc;
-//                $data['process'] = urlencode($this->process);
-//
-//                $recodenums = $resultrecord->where($where_r)->count();
-//
-//                M()->startTrans();    //开启事物
-//                //添加数据到数据库排水量表数据表,如果存在则修改
-//                if ($recodenums > 0) {
-//                    $re = $resultrecord->where($where_r)->save($data);
-//                } else {
-//                    $re = $resultrecord->add($data);
-//                }
-//                if ($re !== false) {
-//                    //计算总货重并修改
-//                    //作业前作业后区分是否计算总货重
-//                    switch ($data['solt']) {
-//                        case '1':
-//                            //作业前
-//                            //修改作业前总货重、总容量
-//                            $g = array(
-//                                'qian_dspc' => $Dspc,
-//                            );
-//                            $res_r = $this
-//                                ->where(array('id' => $data['resultid']))
-//                                ->save($g);
-//                            if ($res_r !== false) {
-//                                M()->commit();
-//
-//                                if ($r['constant'] > 0) {
-//                                    $weight_res = $this->suanWeight($data['resultid']);
-//                                } else {
-//                                    $weight_res['code'] = 1;
-//                                }
-//
-//                                if ($weight_res['code'] == 1) {
-//                                    $res = array(
-//                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-//                                        'Dspc' => $Dspc,
-//                                    );
-//                                } else {
-//                                    $res = array(
-//                                        'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
-//                                        'weight' => $weight_res['code'],
-//                                    );
-//                                }
-//                            } else {
-//                                M()->rollback();
-//                                // $trans->rollback();
-//                                //其它错误  2
-//                                $res = array(
-//                                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-//                                );
-//                            }
-//                            break;
-//                        case '2':
-//                            //作业前
-//                            //修改作业前总货重、总容量
-//                            $g = array(
-//                                'hou_dspc' => $Dspc,
-//                            );
-//                            $r = $this
-//                                ->where(array('id' => $data['resultid']))
-//                                ->save($g);
-//                            if ($r !== false) {
-//                                M()->commit();
-//
-//                                if ($r['constant'] > 0) {
-//                                    $weight_res = $this->suanWeight($data['resultid']);
-//                                } else {
-//                                    $weight_res['code'] = 1;
-//                                }
-//
-//                                if ($weight_res['code'] == 1) {
-//                                    $res = array(
-//                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-//                                        'Dspc' => $Dspc,
-//                                    );
-//                                } else {
-//                                    $res = array(
-//                                        'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
-//                                        'weight' => $weight_res['code'],
-//                                    );
-//                                }
-//                            } else {
-//                                M()->rollback();
-//                                // $trans->rollback();
-//                                //其它错误  2
-//                                $res = array(
-//                                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
-//                                );
-//                            }
-//                            break;
-//                        default:
-//                            # 不是作业前后，跳出
-//                            break;
-//                    }
-//
-//                } else {
-//                    //其它错误 2
-//                    $res = array(
-//                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
-//                    );
-//                }
-//                // }
-//            } else {
-//                //其它错误 2
-//                $res = array(
-//                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
-//                );
-//            }
-//        } else {
-//            //未到期/状态禁止/标识错误
-//            $res = $msg1;
-//        }
-//        return $res;
-//    }
+            }
+            $res[] = $u;
+        } else {
+            //查不到数据，搜索它的上一条或者下一条数据
+            //上一条数据
+            $wherelt = array(
+                'd_e_m' => array('LT', $d_m)
+            );
+            $e = $tname
+                ->where($wherelt)
+                ->order('d_e_m desc')
+                ->find();
+            if (!empty($e)) {
+                if($need_tpc) {
+                    $lt_tpc = $tname
+                        ->field('d_e_m,ds')
+                        ->where(array('d_e_m' => array('LT', floatval($e['d_e_m']))))
+                        ->order('d_e_m desc')
+                        ->find();
+//                print_r($lt_tpc);
+                    $e['tpc'] = ($e['ds'] - $lt_tpc['ds']) / (($e['d_e_m'] - $lt_tpc['d_e_m']) * 100);
+                }
+                $res[] = $e;
+            }
+            //下一条数据
+            $wheregt = array(
+                'd_e_m' => array('GT', $d_m)
+            );
+            $f = $tname
+                ->where($wheregt)
+                ->order('d_e_m asc')
+                ->find();
+            if (!empty($f)) {
+                if($need_tpc) {
+                    $lt_tpc = $tname
+                        ->field('d_e_m,ds')
+                        ->where(array('d_e_m' => array('LT', floatval($f['d_e_m']))))
+                        ->order('d_e_m desc')
+                        ->find();
+//                print_r($lt_tpc);
+                    $f['tpc'] = ($f['ds'] - $lt_tpc['ds']) / (($f['d_e_m'] - $lt_tpc['d_e_m']) * 100);
+                }
+                $res[] = $f;
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * 添加补充船舶重量常数
+     * @param $datas
+     * @return array
+     */
+    public function add_constant($datas)
+    {
+
+        if ($datas['solt'] == '1') {
+            $this->process = json_decode($this->getFieldById($datas['resultid'], "qianprocess"), true);
+        } elseif ($datas['solt'] == '2') {
+            $this->process = json_decode($this->getFieldById($datas['resultid'], "houprocess"), true);
+        } else {
+
+            //其他错误 4
+            return array(
+                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+            );
+        }
+
+        if ($this->process == null) {
+            $this->process = array();
+        }
+
+        if ($datas['solt'] == '1') {
+            //存储常量
+            $data1['qian_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+            $data1['qian_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+            $data1['qian_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+            $data1['qian_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+            $result_field = "qian_dspc as dspc,qian_constant as constant,shipid";
+
+            //存储计算过程变量
+            $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+            $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+            $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+            $this->process['other_weight'] = $data1['qian_other_weight'];
+            $data1['qianprocess'] = json_encode($this->process);
+
+        } elseif ($datas['solt'] == '2') {
+
+            //存储常量
+            $data1['hou_fwater_weight'] = round((float)$datas['fwater_weight'], 5);//存储淡水量
+            $data1['hou_sewage_weight'] = round((float)$datas['sewage_weight'], 5);//存储污水量
+            $data1['hou_fuel_weight'] = round((float)$datas['fuel_weight'], 5);//存储燃油量
+            $data1['hou_other_weight'] = round((float)$datas['other_weight'], 5);//存储其他货物重量
+            $result_field = "hou_dspc as dspc,hou_constant as constant,shipid";
+
+            //存储计算过程变量
+            $this->process['fwater_weight'] = $data1['qian_fwater_weight'];
+            $this->process['sewage_weight'] = $data1['qian_sewage_weight'];
+            $this->process['fuel_weight'] = $data1['qian_fuel_weight'];
+            $this->process['other_weight'] = $data1['qian_other_weight'];
+            //将过程存入数据库
+            $data1['houprocess'] = json_encode($this->process);
+        } else {
+            //其他错误 4
+            return array(
+                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+            );
+        }
+        M()->startTrans();
+        // 添加/修改数据
+        $m = array(
+            'id' => $datas['resultid']
+        );
+        $res = $this->editData($m, $data1);
+        // 修改数据成功
+        if ($res['code'] !== false) {
+            #todo 如果存在已有的作业数据，则重新计算已录入的数据
+            M()->commit();
+            $r_data = $this->field($result_field)->where($m)->find();
+
+            if ($r_data['dspc'] > 0) {
+                $dspc_res = $this->suanDspc1($datas['resultid'], $datas['solt']);
+            } else {
+                $dspc_res['code'] = 1;
+            }
+
+            if ($r_data['constant'] > 0) {
+                $weight_res = $this->suanWeight($datas['resultid'], $r_data['shipid']);
+            } else {
+                $weight_res['code'] = 1;
+            }
+
+            if ($dspc_res['code'] == 1 and $weight_res['code'] == 1) {
+                //成功 1
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                );
+            } else {
+                $res = array(
+                    'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                    'dspc' => $dspc_res['code'],
+                    'weight' => $weight_res['code'],
+                );
+            }
+        } else {
+            //数据库连接错误	3
+            M()->rollback();
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+            );
+        }
+        return $res;
+    }
 
 
     /**
@@ -1695,7 +2034,6 @@ class ShResultModel extends BaseModel
      * */
     public function reckon2($data)
     {
-
         $user = new \Common\Model\UserModel();
         //判断用户状态、是否到期、标识比对
         $msg1 = $user->is_judges($data['uid'], $data['imei']);
@@ -1765,12 +2103,35 @@ class ShResultModel extends BaseModel
                 $TPCdown = (float)$data['tpc_down'];
                 $DSup = (float)$data['ds_up'];
                 $DSdown = (float)$data['ds_down'];
-                $Xfup = ($LBP / 2) - (float)$data['lca_up'];
-                $Xfdown = ($LBP / 2) - (float)$data['lca_down'];
+
+                if (isset($data['lca_up'])) {
+                    $Xfup = ($LBP / 2) - (float)$data['lca_up'];
+                    $Xfdown = ($LBP / 2) - (float)$data['lca_down'];
+                } elseif (isset($data['xf_up'])) {
+                    $Xfup = (float)$data['xf_up'];
+                    $Xfdown = (float)$data['xf_down'];
+                } elseif (isset($data['lcb_up'])) {
+                    $Xfup = (float)$data['lcb_up'] - ($LBP / 2);
+                    $Xfdown = (float)$data['lcb_down'] - ($LBP / 2);
+                } else {
+                    $Xfup = (float)$data['xf_up'];
+                    $Xfdown = (float)$data['xf_down'];
+                }
+
                 $MTCup = (float)$data['mtc_up'];
                 $MTCdown = (float)$data['mtc_down'];
 
 
+                $cumulative_data = array(
+                    'd_up' => $data['d_up'],
+                    'd_down' => $data['d_down'],
+                    'tpc_up' => $data['tpc_up'],
+                    'tpc_down' => $data['tpc_down'],
+                    'ds_down' => $data['ds_down'],
+                    'ds_up' => $data['ds_up'],
+                    'xf_down' => $Xfdown,
+                    'xf_up' => $Xfup,
+                );
                 $this->process['table']['time'] = date('Y-m-d H:i:s', time());
                 $this->process['table']['Dup'] = $data['d_up'];
                 $this->process['table']['Ddown'] = $data['d_down'];
@@ -1876,7 +2237,7 @@ class ShResultModel extends BaseModel
                                 ->save($g);
                             if ($res_r !== false) {
                                 M()->commit();
-
+                                $this->adjust_cumulative_hydrostatic_data(intval($data['resultid']), intval($data['solt']), intval($data['shipid']), $cumulative_data);
                                 if ($r['constant'] > 0) {
                                     $weight_res = $this->suanWeight($data['resultid'], $data['shipid']);
                                 } else {
@@ -1920,8 +2281,10 @@ class ShResultModel extends BaseModel
                                 } else {
                                     $weight_res['code'] = 1;
                                 }
+                                $this->adjust_cumulative_hydrostatic_data(intval($data['resultid']), intval($data['solt']), intval($data['shipid']), $cumulative_data);
 
                                 if ($weight_res['code'] == 1) {
+
                                     $res = array(
                                         'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
                                         'Dspc' => $Dspc,
@@ -1947,6 +2310,318 @@ class ShResultModel extends BaseModel
                     }
 
                 } else {
+                    //其它错误 2
+                    $res = array(
+                        'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+                    );
+                }
+                // }
+            } else {
+                //其它错误 2
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+                );
+            }
+        } else {
+            //未到期/状态禁止/标识错误
+            $res = $msg1;
+        }
+        return $res;
+    }
+
+
+
+
+
+    /**
+     * 计算器计算容量(新版，视图省略tpc的值)
+     * 表载水密度使用船舶信息内的
+     * */
+    public function reckon3($data)
+    {
+        $user = new \Common\Model\UserModel();
+        //判断用户状态、是否到期、标识比对
+        $msg1 = $user->is_judges($data['uid'], $data['imei']);
+        if ($msg1['code'] == '1') {
+            $resultrecord = M('sh_resultrecord');
+            //检索条件构成
+            $where_r = array(
+                'resultid' => $data['resultid'],
+                'solt' => $data['solt'],
+            );
+
+            //获取舱计算过程
+            $process = $resultrecord->field("process")->where($where_r)->find();
+
+            //过程转换数组
+            if ($process !== false) {
+                $this->process = json_decode($process['process'], true);
+                if ($this->process === null) {
+                    $this->process = array(
+                        'table' => array()
+                    );
+                }
+            } else {
+                $this->process = array(
+                    'table' => array()
+                );
+            }
+
+            // 将录入数据更新到表中
+            $field_str = "";
+            if ($data['solt'] == '1') {
+                $field_str = "r.qian_tc as tc,r.qian_d_m as d_m,r.qian_pwd as pwd,r.qian_constant as constant,s.lbp,s.ptwd";
+            } elseif ($data['solt'] == '2') {
+                $field_str = "r.hou_tc as tc,r.hou_d_m as d_m,r.hou_pwd as pwd,r.hou_constant as constant,s.lbp,s.ptwd";
+            }
+
+            $where = array(
+                'r.id' => $data['resultid'],
+            );
+
+            $r = $this
+                ->alias('r')
+                ->field($field_str)
+                ->join('left join sh_ship s on s.id=r.shipid')
+                ->where($where)
+                ->find();
+
+            if ($r['tc'] != null and $r['d_m'] != null and $r['pwd'] != null and $r['lbp'] != null) {
+
+                /**
+                 * 开始计算排水量
+                 */
+
+                $TC = $r['tc'];
+                $D_M = $r['d_m'];
+                $p = $r['pwd'];
+                $LBP = $r['lbp'];
+                $pt = $r['ptwd'];
+
+                /**
+                 * 整理数据
+                 *
+                 * */
+                $Dup = (float)$data['d_up'];
+                $Ddown = (float)$data['d_down'];
+//                $TPCup = (float)$data['tpc_up'];
+//                $TPCdown = (float)$data['tpc_down'];
+                $DSup = (float)$data['ds_up'];
+                $DSdown = (float)$data['ds_down'];
+
+                if (isset($data['lca_up'])) {
+                    $Xfup = ($LBP / 2) - (float)$data['lca_up'];
+                    $Xfdown = ($LBP / 2) - (float)$data['lca_down'];
+                } elseif (isset($data['xf_up'])) {
+                    $Xfup = (float)$data['xf_up'];
+                    $Xfdown = (float)$data['xf_down'];
+                } elseif (isset($data['lcb_up'])) {
+                    $Xfup = (float)$data['lcb_up'] - ($LBP / 2);
+                    $Xfdown = (float)$data['lcb_down'] - ($LBP / 2);
+                } else {
+                    $Xfup = (float)$data['xf_up'];
+                    $Xfdown = (float)$data['xf_down'];
+                }
+
+                $MTCup = (float)$data['mtc_up'];
+                $MTCdown = (float)$data['mtc_down'];
+
+
+                $cumulative_data = array(
+                    'd_up' => $data['d_up'],
+                    'd_down' => $data['d_down'],
+                    'tpc_up' => 0,
+                    'tpc_down' => 0,
+                    'ds_down' => $data['ds_down'],
+                    'ds_up' => $data['ds_up'],
+                    'xf_down' => $Xfdown,
+                    'xf_up' => $Xfup,
+                );
+                $this->process['table']['time'] = date('Y-m-d H:i:s', time());
+                $this->process['table']['Dup'] = $data['d_up'];
+                $this->process['table']['Ddown'] = $data['d_down'];
+
+//                $this->process['table']['TPCup'] = $data['tpc_up'];
+//                $this->process['table']['TPCdown'] = $data['tpc_down'];
+
+                $this->process['table']['DSdown'] = $data['ds_down'];
+                $this->process['table']['DSup'] = $data['ds_up'];
+
+                $this->process['table']['LCAdown'] = $data['lca_down'];
+                $this->process['table']['LCAup'] = $data['lca_up'];
+
+                $this->process['table']['Xfdown'] = $Xfdown;
+                $this->process['table']['Xfup'] = $Xfup;
+
+                $this->process['table']['MTCup'] = $data['mtc_up'];
+                $this->process['table']['MTCdown'] = $data['mtc_down'];
+
+                $this->process['LBP'] = $LBP;
+                $this->process['table']['pt'] = $pt;
+
+//                $pt = (float)$data['ptwd'];
+
+                //开始计算
+                //开始插值计算
+                $getDS_arr = $this->getDS((float)$D_M, (float)$Dup, (float)$Ddown, 0, 0, (float)$DSup, (float)$DSdown, (float)$Xfup, (float)$Xfdown);//计算排水量插值
+
+                $TPC = round($getDS_arr['TPC'], 5);
+                $DS = round($getDS_arr['DS'], 5);
+                $Xf = round($getDS_arr['Xf'], 5);
+                $this->process['table']['TPC'] = $TPC;
+                $this->process['table']['DS'] = $DS;
+                $this->process['table']['Xf'] = $Xf;
+
+
+                /*                $TPC = 59.5;
+                                $DS = 55118.7;
+                                $Xf = 2.85;*/
+
+                $dmdz = round($MTCup - $MTCdown, 5);
+//                $this->process .= "dmdz = $MTCup - $MTCdown = " . $dmdz;
+                $this->process['dmdz'] = $dmdz;
+
+                $Dc1 = round(100 * $TC * $Xf * $TPC / $LBP, 5);
+//                $this->process .= "Dc1 = 100 * TC * Xf * TPC / LBP = 100 * $TC * $Xf * $TPC / $LBP = " . $Dc1;
+                $this->process['Dc1'] = $Dc1;
+
+                $Dc2 = round(50 * $dmdz * pow($TC, 2) / $LBP, 5);
+//                $this->process .= "Dc2 = 50 * dmdz * pow(TC, 2) / LBP = 50 * $dmdz * pow($TC, 2) / $LBP = " . $Dc2;
+                $this->process['Dc2'] = $Dc2;
+
+                $Dc = round($Dc1 + $Dc2, 5);
+//                $this->process .= "Dc = $Dc1 + $Dc2 = " . $Dc;
+                $this->process['Dc'] = $Dc;
+
+                $Dsc = round($DS + $Dc, 5);
+//                $this->process .= "Dsc = $DS + $Dc = " . $Dsc;
+                $this->process['Dsc'] = $Dsc;
+
+                $Dpc = round($Dsc * ($p - $pt) / $pt, 5);
+//                $this->process .= "Dpc =  Dsc * (p - pt) / pt = $Dsc * ($p - $pt) / $pt = " . $Dpc;
+                $this->process['Dpc'] = $Dpc;
+
+                $Dspc = round($Dsc + $Dpc, 5);
+//                $this->process .= "Dspc = $Dsc + $Dpc = " . $Dspc;
+                $this->process['Dspc'] = $Dspc;
+
+                $data['tpc'] = $TPC;
+                $data['ds'] = $DS;
+                $data['xf'] = $Xf;
+                $data['dmdz'] = $dmdz;
+                $data['dc1'] = $Dc1;
+                $data['dc2'] = $Dc2;
+                $data['dc'] = $Dc;
+                $data['dsc'] = $Dsc;
+                $data['dpc'] = $Dpc;
+                $data['xf_up'] = $Xfup;
+                $data['xf_down'] = $Xfdown;
+                $data['process'] = json_encode($this->process);
+
+
+                $recodenums = $resultrecord->where($where_r)->count();
+
+                M()->startTrans();    //开启事物
+                //添加数据到数据库排水量表数据表,如果存在则修改
+                if ($recodenums > 0) {
+                    $re = $resultrecord->where($where_r)->save($data);
+                } else {
+                    $re = $resultrecord->add($data);
+                }
+                if ($re !== false) {
+                    //计算总货重并修改
+                    //作业前作业后区分是否计算总货重
+                    switch ($data['solt']) {
+                        case '1':
+                            //作业前
+                            //修改作业前总货重、总容量
+                            $g = array(
+                                'qian_dspc' => $Dspc,
+                            );
+                            $res_r = $this
+                                ->where(array('id' => $data['resultid']))
+                                ->save($g);
+                            if ($res_r !== false) {
+                                M()->commit();
+                                $this->adjust_cumulative_hydrostatic_data(intval($data['resultid']), intval($data['solt']), intval($data['shipid']), $cumulative_data);
+                                if ($r['constant'] > 0) {
+                                    $weight_res = $this->suanWeight($data['resultid'], $data['shipid']);
+                                } else {
+                                    $weight_res['code'] = 1;
+                                }
+
+                                if ($weight_res['code'] == 1) {
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                        'Dspc' => $Dspc,
+                                    );
+                                } else {
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                                        'weight' => $weight_res['code'],
+                                    );
+                                }
+                            } else {
+                                M()->rollback();
+                                // $trans->rollback();
+                                //其它错误  2
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                );
+                            }
+                            break;
+                        case '2':
+                            //作业前
+                            //修改作业前总货重、总容量
+                            $g = array(
+                                'hou_dspc' => $Dspc,
+                            );
+                            $r = $this
+                                ->where(array('id' => $data['resultid']))
+                                ->save($g);
+                            if ($r !== false) {
+                                M()->commit();
+
+                                if ($r['constant'] > 0) {
+                                    $weight_res = $this->suanWeight($data['resultid'], $data['shipid']);
+                                } else {
+                                    $weight_res['code'] = 1;
+                                }
+                                $this->adjust_cumulative_hydrostatic_data(intval($data['resultid']), intval($data['solt']), intval($data['shipid']), $cumulative_data);
+
+                                if ($weight_res['code'] == 1) {
+
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                                        'Dspc' => $Dspc,
+                                    );
+                                } else {
+                                    $res = array(
+                                        'code' => $this->ERROR_CODE_RESULT['RE_RECKON_FALL'],
+                                        'weight' => $weight_res['code'],
+                                    );
+                                }
+                            } else {
+                                M()->rollback();
+                                // $trans->rollback();
+                                //其它错误  2
+                                $res = array(
+                                    'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                                );
+                            }
+                            break;
+                        default:
+                            M()->rollback();
+                            //其它错误  2
+                            $res = array(
+                                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER'],
+                            );
+                            # 不是作业前后，跳出
+                            break;
+                    }
+
+                } else {
+                    M()->rollback();
                     //其它错误 2
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
@@ -3244,7 +3919,7 @@ class ShResultModel extends BaseModel
 //            $this->process = "t_weight=" . (float)$total_weight['t_weight'] . " \r\n hou_constant=dspc - t_weight - fwater_weight- sewage_weight - fuel_weight - other_weight=" . $data_r['hou_constant'];
             $this->process['t_weight'] = (float)$total_weight['t_weight'];
             $this->process['ship_weight'] = $ship_weight;
-            $this->process['constant'] = (float)$data_r['qian_constant'];
+            $this->process['constant'] = (float)$data_r['hou_constant'];
 
             if ($result_msg['qian_constant'] >= $result_msg['hou_constant']) {
                 $data_r['weight'] = round((float)$result_msg['qian_constant'] - (float)$result_msg['hou_constant'], 5);
@@ -3277,8 +3952,6 @@ class ShResultModel extends BaseModel
 
             return $res;
         }
-
-
     }
 
     /**
@@ -3315,7 +3988,6 @@ class ShResultModel extends BaseModel
 
         if ($D_M >= $maxD_M) {
             if ($Dup >= $Ddown) {
-
                 $this->process['table']['TPC'] = $TPCup;
                 $this->process['table']['DS'] = $DSup;
                 $this->process['table']['Xf'] = $Xfup;
@@ -3389,7 +4061,6 @@ class ShResultModel extends BaseModel
                 'DS' => $DS,
                 'Xf' => $Xf,
             );
-
         }
     }
 
@@ -4489,7 +5160,7 @@ class ShResultModel extends BaseModel
 		</tr>
 		<tr style="height: 40px;">
 			<td></td>
-			<td colspan="3" style="border-bottom: 1px solid;height: 40px;"></td>
+			<td colspan="3" style="border-bottom: 1px solid;height: 40px;">{{content.username}}</td>
 			<td colspan="2"></td>
 			<td colspan="2" style="border-bottom: 1px solid;height: 40px;"></td>
 			<td></td>
@@ -4570,7 +5241,8 @@ html_tpl;
             "{{hou-qian_dspc}}",
             "{{hou-qian_total}}",
             "{{content.weight}}",
-            "{{content.remark}}"
+            "{{content.remark}}",
+            "{{content.username}}"
         );
 
         $qian_total = $arr['content']['ship_weight'] + $arr['content']['qian_fuel_weight'] + $arr['content']['qian_fwater_weight'] + $arr['content']['qian_bw'];
@@ -4658,11 +5330,121 @@ html_tpl;
             $arr['content']['hou_dspc'] - $arr['content']['qian_dspc'],
             $hou_total - $qian_total,
             $arr['content']['weight'],
-            $arr['content']['remark']
+            $arr['content']['remark'],
+            $arr['content']['username']
         );
 
         $html = str_replace($tpl_var, $tpl_value, $html_tpl);
 
         return $html;
     }
+
+    /**
+     * 积累静水压力排水量表数据
+     */
+    public function cumulative_hydrostatic_data($data)
+    {
+        if (!judgeTwoString($data)) {
+            //如果含有特殊字符，返回0
+            $res = 0;
+        } else {
+            $cumulative_hydrostatic_data = M('cumulative_hydrostatic_data');
+            //先判断此累积数据是否存在公司的数据内
+            $trim_where = array('ship_id' => $data['shipid']);
+
+            if ($data['d_up'] == $data['d_down']) {
+                //如果空高正好落在空高刻度上，只需要查询是否空高1或者空高2等于该刻度值，其中一项有且刻度对上则算作数据已经有了
+                $trim_where['d_up|d_down'] = floatval($data['d_up']);
+            } else {
+                $trim_where['d_up&d_down'] = array(floatval($data['d_up']), floatval($data['d_down']), '_multi' => true);
+            }
+
+            $hydrostatic_where['tpc_up'] = floatval($data['tpc_up']);
+            $hydrostatic_where['tpc_down'] = floatval($data['tpc_down']);
+            $hydrostatic_where['ds_up'] = floatval($data['ds_up']);
+            $hydrostatic_where['ds_down'] = floatval($data['ds_down']);
+            $hydrostatic_where['xf_up'] = floatval($data['xf_up']);
+            $hydrostatic_where['xf_down'] = floatval($data['xf_down']);
+
+
+            $data_count = $cumulative_hydrostatic_data->where($hydrostatic_where)->count();
+
+            if ($data_count == 0) {
+                $data['ins_time'] = time();
+                //如果没有则插入累积值
+                $result = $cumulative_hydrostatic_data->add($data);
+                if ($result !== false) {
+                    //存入成功，返回1
+                    $res = 1;
+                } else {
+                    //存入失败，返回3
+                    $res = 3;
+                }
+            } else {
+                //如果数据已存在，返回2
+                $res = 2;
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * 调整累积静力水表数据
+     * @param       $result_id 作业ID
+     * @param       $solt 作业前后
+     * @param       $shipid 船ID
+     * @param array $data 静力水表数据
+     * @return int $res 返回值：0错误，有特殊字符、1成功、2新值检测到重复，不录入、3失败
+     */
+    public function adjust_cumulative_hydrostatic_data($result_id, $solt, $shipid, $data)
+    {
+        $cumulative_hydrostatic_data = M('cumulative_hydrostatic_data');
+        $result_mark = strval($result_id) . ($solt == 1 ? "Q" : "H");
+        $repeat_where = array(
+            'result_mark' => $result_mark,
+            'ship_id' => $shipid,
+        );
+        $cumulative_hydrostatic_data->where($repeat_where)->delete();
+        $ins_data = $data;
+        $ins_data['ship_id'] = $shipid;
+        $ins_data['data_sources'] = 1;
+        $ins_data['result_mark'] = $result_mark;
+
+        return $this->cumulative_hydrostatic_data($ins_data);
+    }
+
+    /**
+     * 获取对应的纵倾修正表字段
+     * @param int       $shipid 船ID
+     * @param float|int $d_m 平均吃水
+     * @param bool      $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
+     * @return array|bool
+     */
+    public function get_cumulative_hydrostatic_data($shipid, $d_m, $fullsearch = false)
+    {
+        $cumulative_hydrostatic_data = M('cumulative_hydrostatic_data');
+        $trim_where = array(
+            'ship_id' => intval($shipid),
+            'd_up' => array('ELT', floatval($d_m)),
+            'd_down' => array('EGT', floatval($d_m)),
+        );
+
+        //查找
+        if (false == $fullsearch) {
+            $data = $cumulative_hydrostatic_data->field('d_up,d_down,tpc_up,tpc_down,ds_up,ds_down,xf_up,xf_down')->where($trim_where)->order('data_sources desc,ins_time desc')->find();
+        } else {
+            $data = $cumulative_hydrostatic_data->where($trim_where)->order('data_sources desc,ins_time desc')->find();
+        }
+
+        if (!empty($data)) {
+            //调用次数+1
+            $cumulative_hydrostatic_data->where($trim_where)->setInc('use_count');
+            return $data;
+        } else {
+            //无数据返回false
+            return false;
+        }
+    }
+
+
 }

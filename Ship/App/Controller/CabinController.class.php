@@ -301,7 +301,7 @@ class CabinController extends AppBaseController
                     );
                     //获得算法
                     $shipmsg = $ship
-                        ->field('suanfa,review')
+                        ->field('is_lock,suanfa,review')
                         ->where($where1)
                         ->find();
 
@@ -346,9 +346,9 @@ class CabinController extends AppBaseController
                     /**
                      * 查找船的作业次数
                      */
-                    $work = new \Common\Model\WorkModel();
-                    $res_count = $work->where(array('shipid' => $shipid))->count();
-                    if ($res_count > 1 or $shipmsg['review'] == 3) {
+//                    $work = new \Common\Model\WorkModel();
+//                    $res_count = $work->where(array('shipid' => $shipid))->count();
+                    if ($shipmsg['is_lock'] == 1) {
                         M()->startTrans();
                         /**
                          * 由于舱审核信息挂载载船的审核信息上，所以要考虑几种情况

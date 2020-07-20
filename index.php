@@ -17,6 +17,26 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG',true);
 
+
+// 允许APP端AJAX跨域请求
+$origin = isset($_SERVER['HTTP_ORIGIN'])? $_SERVER['HTTP_ORIGIN'] : '';
+
+$allowOrigin = array(
+    'https://www.ciplat.com',
+    'https://api.ciplat.com',
+    'https://www.newcip.com',
+    'https://wxship.xzitc.com',
+    'https://wxshiptest.xzitc.com',
+    'http://10.0.2.33:8080',
+);
+
+if (in_array($origin, $allowOrigin)) {
+    header("Access-Control-Allow-Origin:".$origin);
+}
+
+header("Access-Control-Allow-credentials: true");
+header("Access-Control-Allow-Headers: content-type,x-requested-with,Authorization, x-ui-request,lang,Access-Control-Allow-Origin,Access-Control-Allow-credentials");
+
 // 定义应用目录
 define('APP_PATH','./Ship/');
 
