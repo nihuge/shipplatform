@@ -500,6 +500,15 @@ class WorkController extends AppBaseController
                 if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.density')) {
                     $result = new \Common\Model\WorkModel();
                     $data = I('post.');
+                    unset($data['temperature']);
+                    $validata_result = validata_range($data);
+                    if($validata_result['error']){
+                        //提交的值超出约定范围，报错2044
+                        M()->rollback();
+                        exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key'])));
+                    }
+
+                    $data['temperature'] = I('post.temperature');
                     /*
                      *   限制空高和温度的精度，要求符合2012-12-12发布的国家出入境检验检
                      * 疫行业标准，若标准更新，请以新标准为准
@@ -754,10 +763,12 @@ class WorkController extends AppBaseController
                         'id' => array('in', json_decode($firmmsg['personality'], true))
                     );
                     $person_arr = $person->field('name')->where($where)->select();
+
                     foreach ($person_arr as $key => $value) {
                         //判断是否存在,如果其中有空值报错个性化字段残缺，2030
                         if (empty($arr['personality'][$value['name']]) or $arr['personality'][$value['name']] == "") exit(jsonreturn(array('code' => $this->ERROR_CODE_RESULT['PERSON_INCOMPLETE'])));
                     }
+
                     //引入了https，做https协议的适配
                     $is_https = I('post.minipost');
                     if ($is_https) {
@@ -1503,6 +1514,13 @@ class WorkController extends AppBaseController
                     ->where(array('id' => I('post.shipid')))
                     ->find();
                 $data = I('post.');
+
+                $validata_result = validata_range($data);
+                if($validata_result['error']){
+                    //提交的值超出约定范围，报错2044
+                    M()->rollback();
+                    exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key'])));
+                }
 
                 $cabin = new \Common\Model\CabinModel();
                 // 安卓端基准高度在计算底量书底量计算时提交错误
@@ -2865,6 +2883,7 @@ class WorkController extends AppBaseController
                         'firmtype' => $firmtype,
                         'measure' => $measure,
                         'security' => $security,
+                        'time1' => time(),
                     );
 
                     $res = $result->evaluate($data);

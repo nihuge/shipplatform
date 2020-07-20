@@ -52,6 +52,7 @@ class LoginController extends Controller
                 ->find();
 
             if ($arr['id'] != '') {
+                //如果账号密码正确，则记录成一次登录
                 $ip = get_client_ip();
                 $login_data = array(
                     'login_time'=>time(),

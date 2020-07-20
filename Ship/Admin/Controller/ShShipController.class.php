@@ -52,7 +52,7 @@ class ShShipController extends AdminBaseController
 
         $data = $ship
             ->alias('s')
-            ->field('s.id,s.shipname,s.number,s.cabinnum,f.firmname,s.del_sign')
+            ->field('s.id,s.shipname,s.number,s.data_ship,s.cabinnum,f.firmname,s.del_sign')
             ->where($where)
             ->join('left join firm f on f.id=s.firmid')
             ->order('s.id desc,f.firmname desc')

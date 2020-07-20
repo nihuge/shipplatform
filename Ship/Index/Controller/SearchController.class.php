@@ -66,7 +66,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('f.firmtype' => '1', 'del_sign' => 1);
         if (I('get.firmname')) {
-            $where['f.firmname'] = array('like',"%".trimall(I('get.firmname'))."%");
+            $where['f.firmname'] = array('like', "%" . trimall(I('get.firmname')) . "%");
         }
         $count = $this->db
             ->alias('f')
@@ -102,7 +102,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('f.firmtype' => '2', 'del_sign' => 1);
         if (I('get.firmname')) {
-            $where['f.firmname'] = array('like',"%".trimall(I('get.firmname'))."%");
+            $where['f.firmname'] = array('like', "%" . trimall(I('get.firmname')) . "%");
         }
         $count = $this->db
             ->alias('f')
@@ -110,14 +110,14 @@ class SearchController extends IndexBaseController
             ->where($where)
             ->count();
         // 分页
-        $page = new \Org\Nx\Page($count, 20);
+//        $page = new \Org\Nx\Page($count, 20);
 
         $jian = $this->db
             ->field('f.id,f.firmname,s.grade,s.grade_num,s.weight,s.num')
             ->alias('f')
             ->join('left join firm_historical_sum s on s.firmid = f.id')
             ->where($where)
-            ->limit($page->firstRow, $page->listRows)
+//            ->limit($page->firstRow, $page->listRows)
             ->select();
         foreach ($jian as $key => $value) {
             // 求评分平均分
@@ -125,7 +125,7 @@ class SearchController extends IndexBaseController
         }
         $assign = array(
             'data' => $jian,
-            'page' => $page->show()
+//            'page' => $page->show()
         );
         $this->assign($assign);
         $this->display();
@@ -138,7 +138,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('1', 'del_sign' => 1);
         if (I('get.shipname')) {
-            $where['s.shipname'] = array('like',"%".trimall(I('get.shipname'))."%");
+            $where['s.shipname'] = array('like', "%" . trimall(I('get.shipname')) . "%");
         }
         $count = $this->shipdb
             ->alias('s')
@@ -174,7 +174,7 @@ class SearchController extends IndexBaseController
     {
         $where = array('1', 'del_sign' => 1);
         if (I('get.shipname')) {
-            $where['shipname'] = array('like',"%".trimall(I('get.shipname'))."%");
+            $where['shipname'] = array('like', "%" . trimall(I('get.shipname')) . "%");
         }
 
         $count = $this->sh_shipdb
@@ -361,25 +361,25 @@ class SearchController extends IndexBaseController
         }
 
         foreach ($list as $key => $value) {
-            if(substr( $list[$key]['img'], 0, 1 ) == '/'){
-                $list[$key]['img'] = '.'.$list[$key]['img'];
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
             }
-            if(!file_exists($list[$key]['img'])){
+            if (!file_exists($list[$key]['img'])) {
                 $list[$key]['img'] = "/Public/Admin/noimg.png";
             }
         }
 
-        if(substr($content['img'], 0, 1 ) == '/'){
-            $content['img'] = '.'.$content['img'];
+        if (substr($content['img'], 0, 1) == '/') {
+            $content['img'] = '.' . $content['img'];
         }
-        if(substr( $content['image'], 0, 1 ) == '/'){
-            $content['image'] = '.'.$content['image'];
+        if (substr($content['image'], 0, 1) == '/') {
+            $content['image'] = '.' . $content['image'];
         }
-        if(!file_exists($content['img'])){
+        if (!file_exists($content['img'])) {
             $content['img'] = "/Public/Admin/noimg.png";
         }
 
-        if(!file_exists($content['image'])){
+        if (!file_exists($content['image'])) {
             $content['image'] = "/Public/Admin/noimg.png";
         }
 
@@ -402,6 +402,82 @@ class SearchController extends IndexBaseController
     public function chuanmsg()
     {
         $firmid = I('get.firmid');
+
+        $user = new \Common\Model\UserModel();
+
+        if (I('post.days')) {
+            $days = intval(I('post.days'));
+            $time = strtotime("-" . $days . " day");
+//                    echo $time;
+//                    $user = new \Common\Model\UserModel();
+            $users = $user->field('id')->where(array('firmid' => $firmid))->select();
+            $user_ids = array();
+            foreach ($users as $key => $value) {
+                $user_ids[] = $value["id"];
+            }
+
+            $evaluation = M("evaluation");
+            //获取船舶公司的相关评价
+            $where = array(
+                'time2' => array("gt", $time),
+                'uid' => array('in', implode(",", $user_ids))
+            );
+
+//                    $datas = $evaluation->where($where)->fetchSql(true)->select();
+            $datas = $evaluation->where($where)->select();
+            //缺省作业统计查询条件
+            $result_where = array(
+                'time' => array("gt", $time),
+            );
+
+            $count_data = array(
+                'num' => 0,                   //总作业数量
+                'weight' => 0,                //总作业吨数
+                'grade' => 0,                 //评价等级总和
+                'grade_num' => 0,             //评价次数
+                'measure_standard' => 0,      //计量规范总分
+                'measure_num' => 0,           //计量规范次数
+                'security' => 0,              //安全规范总分
+                'security_num' => 0,          //安全规范评价次数
+            );
+
+            foreach ($datas as $key1 => $value1) {
+                //统计评价等级
+                if ($value1['grade2'] > 0) {
+                    $count_data['grade'] += $value1['grade2'];
+                    $count_data['grade_num'] += 1;
+                }
+
+                //统计计量规范分
+                if ($value1['measure_standard2'] > 0) {
+                    $count_data['measure_standard'] += $value1['measure_standard2'];
+                    $count_data['measure_num'] += 1;
+                }
+
+                //统计安全规范分
+                if ($value1['security2'] > 0) {
+                    $count_data['security'] += $value1['security2'];
+                    $count_data['security_num'] += 1;
+                }
+
+            }
+            //统计总作业次数
+            $result_where['uid'] = array('in', $user_ids);
+
+            $result = new \Common\Model\ResultModel();
+            $count_data['num'] = $result->where($result_where)->count();
+//                    $result_weight = $result->field('sum(weight) as s_weight')->fetchSql(true)->where($result_where)->find();
+            $result_weight = $result->field('sum(weight) as s_weight')->where($result_where)->find();
+//                    exit($result_weight);
+            $count_data['weight'] = $result_weight['s_weight'];
+            $count_data['firmid'] = $firmid;
+
+        } else {
+            $firm_count = M('firm_historical_sum');
+            $count_data = $firm_count->where(array('firmid' => $firmid))->find();
+        }
+
+
         // 获取公司下所有的船
         $shiplist = $this->shipdb
             ->field('s.shipname,s.type,h.grade,h.grade_num,s.id,s.weight,s.img')
@@ -443,24 +519,24 @@ class SearchController extends IndexBaseController
         }
 
         foreach ($shiplist as $key => $value) {
-            if(substr($shiplist[$key]['img'], 0, 1 ) == '/'){
-                $shiplist[$key]['img'] = '.'.$shiplist[$key]['img'];
+            if (substr($shiplist[$key]['img'], 0, 1) == '/') {
+                $shiplist[$key]['img'] = '.' . $shiplist[$key]['img'];
             }
-            if(!file_exists($shiplist[$key]['img'])){
+            if (!file_exists($shiplist[$key]['img'])) {
                 $shiplist[$key]['img'] = "/Public/Admin/noimg.png";
             }
         }
-        if(substr($content['img'], 0, 1 ) == '/'){
-            $content['img'] = '.'.$content['img'];
+        if (substr($content['img'], 0, 1) == '/') {
+            $content['img'] = '.' . $content['img'];
         }
-        if(substr($content['image'], 0, 1 ) == '/'){
-            $content['image'] = '.'.$content['image'];
+        if (substr($content['image'], 0, 1) == '/') {
+            $content['image'] = '.' . $content['image'];
         }
-        if(!file_exists($content['img'])){
+        if (!file_exists($content['img'])) {
             $content['img'] = "/Public/Admin/noimg.png";
         }
 
-        if(!file_exists($content['image'])){
+        if (!file_exists($content['image'])) {
             $content['image'] = "/Public/Admin/noimg.png";
         }
 
@@ -471,6 +547,7 @@ class SearchController extends IndexBaseController
             'list' => $shiplist,
             'sh_list' => $sh_shiplist,
             'content' => $content,
+            'count_data' => $count_data,
         );
         $this->assign($assign);
         $this->display();
@@ -513,10 +590,10 @@ class SearchController extends IndexBaseController
             }
         }
         foreach ($list as $key => $value) {
-            if(substr($list[$key]['img'], 0, 1 ) == '/'){
-                $list[$key]['img'] = '.'.$list[$key]['img'];
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
             }
-            if(!file_exists($list[$key]['img'])){
+            if (!file_exists($list[$key]['img'])) {
                 $list[$key]['img'] = "/Public/Admin/noimg.png";
             }
         }
@@ -574,10 +651,10 @@ class SearchController extends IndexBaseController
         }
 
         foreach ($list as $key => $value) {
-            if(substr($list[$key]['img'], 0, 1 ) == '/'){
-                $list[$key]['img'] = '.'.$list[$key]['img'];
+            if (substr($list[$key]['img'], 0, 1) == '/') {
+                $list[$key]['img'] = '.' . $list[$key]['img'];
             }
-            if(!file_exists($list[$key]['img'])){
+            if (!file_exists($list[$key]['img'])) {
                 $list[$key]['img'] = "/Public/Admin/noimg.png";
             }
         }
@@ -735,10 +812,10 @@ class SearchController extends IndexBaseController
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
 
-        if(substr( $data['img'], 0, 1 ) == '/'){
-            $data['img'] = '.'.$data['img'];
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
         }
-        if(!file_exists($data['img'])){
+        if (!file_exists($data['img'])) {
             $data['img'] = "/Public/Admin/noimg.png";
         }
 
@@ -775,10 +852,10 @@ class SearchController extends IndexBaseController
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
-        if(substr($data['img'], 0, 1 ) == '/'){
-            $data['img'] = '.'.$data['img'];
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
         }
-        if(!file_exists($data['img'])){
+        if (!file_exists($data['img'])) {
             $data['img'] = "/Public/Admin/noimg.png";
         }
 
@@ -860,10 +937,10 @@ class SearchController extends IndexBaseController
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[\d]?[^\/]*(\S+)/", "$1", $data['img']);
         }
-        if(substr($data['img'], 0, 1 ) == '/'){
-            $data['img'] = '.'.$data['img'];
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
         }
-        if(!file_exists($data['img'])){
+        if (!file_exists($data['img'])) {
             $data['img'] = "/Public/Admin/noimg.png";
         }
 
@@ -915,11 +992,11 @@ class SearchController extends IndexBaseController
         if (is_Domain()) {
             $data['img'] = preg_replace("/^\/shipPlatform[^\/]*(\S+)/", "$1", $data['img']);
         }
-        if(substr($data['img'], 0, 1 ) == '/'){
-            $data['img'] = '.'.$data['img'];
+        if (substr($data['img'], 0, 1) == '/') {
+            $data['img'] = '.' . $data['img'];
         }
-        if(!file_exists($data['img'])){
-            $data['img'] = "/Public/Admin/noimg.png";
+        if (!file_exists($data['img'])) {
+            $data['img'] = "./Public/Admin/noimg.png";
         }
 
 
@@ -1534,8 +1611,8 @@ class SearchController extends IndexBaseController
                     $list[$k1]['houchi'] = $aa;
                 }
             }
-            if(empty($list[$k1]['qianchi'])) $list[$k1]['qianchi']=array('forntleft'=>"",'afterleft'=>"");
-            if(empty($list[$k1]['houchi'])) $list[$k1]['houchi']=array('forntleft'=>"",'afterleft'=>"");
+            if (empty($list[$k1]['qianchi'])) $list[$k1]['qianchi'] = array('forntleft' => "", 'afterleft' => "");
+            if (empty($list[$k1]['houchi'])) $list[$k1]['houchi'] = array('forntleft' => "", 'afterleft' => "");
             $list[$k1]['qian'] = $qian;
             $list[$k1]['hou'] = $hou;
             // 获取水尺照片

@@ -83,8 +83,8 @@ class ShipModel extends BaseModel
     }
 
     /**
-     * 获取公司下的所有船列表
-     * @param int $firmid 公司id
+     * 获取公司下的所有船列表(区分检验公司和船公司)
+     * @param int    $firmid 公司id
      * @param string $firmtype 公司类型检验、船舶
      * */
     public function getShipList($firmid, $firmtype)
@@ -125,6 +125,8 @@ class ShipModel extends BaseModel
         }
         return $res;
     }
+
+
 
     /**
      * 判断船是否有舱容数据
@@ -195,7 +197,7 @@ class ShipModel extends BaseModel
 
     /**
      * 新增船
-     * @param $data
+     * @param        $data
      * @param string $type
      * @return array
      */

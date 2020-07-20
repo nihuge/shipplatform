@@ -2,3 +2,5 @@
 /databak/
 *.log
 /Ship/Common/Conf/config.php
+/.metadata/
+/.idea/

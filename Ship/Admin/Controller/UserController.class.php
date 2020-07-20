@@ -22,7 +22,7 @@ class UserController extends AdminBaseController
         $count = $user
             ->where($where)
             ->count();
-        $per = 30;
+        $per = $count;
 
         if ($_GET['p']) {
             $p = $_GET['p'];
@@ -115,12 +115,12 @@ class UserController extends AdminBaseController
             } else {
                 $this->error('新增失败');
             }
-
         } else {
             // 根据firmid获取公司操作权限
             $firm = new \Common\Model\FirmModel();
+//            $user = new \Common\Model\UserModel();
             $firmmsg = $firm->getFirmOperationSearch(I('get.firmid'));
-
+//            $pid =
             // 获取公司下操作的船信息
             $ship = new \Common\Model\ShipModel();
             $where = array(
@@ -384,7 +384,7 @@ endhtml;
                 // 修改用户查询条件
                 $resu = $user->editData($map, $data);
                 if ($resu !== false) {
-                    $this->success('修改用户查询条件成功!', U('index'));
+                    $this->success('修改用户查询条件成功!', U('index',array('firmid'=>$user->getUserFirm(I('post.id')))));
                 } else {
                     $this->error("修改用户查询条件失败！");
                 }

@@ -16,17 +16,27 @@
         </div>
         <h4></h4>
         <div>
-            <form action="__ACTION__" method="get">
+            <form action="__ACTION__" method="get" style="margin-top: 10px;" class="layui-form">
                 <input type="hidden" name="tname" value="{$tname}">
                 <input type="hidden" name="c" value="Cabin">
                 <input type="hidden" name="a" value="index">
-                船名：<select name="shipid">
-                <option value="">--全部--</option>
-                <volist name="shiplist" id="v">
-                    <option value="{$v['id']}">{$v['shipname']}</option>
-                </volist>
-            </select>
-                <input type="submit" value="筛选" style="height:28px;width:80px">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">船名：</label>
+
+                        <div class="layui-inline">
+                            <select name="shipid" lay-search="" lay-verify="">
+                                <option value="">--全部--</option>
+                                <volist name="shiplist" id="v">
+                                    <option value="{$v['id']}">{$v['shipname']}</option>
+                                </volist>
+                            </select>
+                        </div>
+                        <div class="layui-inline" style="margin-top: 0px;">
+                            <input type="submit" class="layui-btn" value="筛选">
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <h4></h4>
@@ -60,25 +70,32 @@
                     <td>
                         <if condition="$v['zx'] != null">
                             <a onmouseover="showAwesomeFontTips('{$v['zx_tip']}','#rong_zx_{$v['id']}')"
-                               onmouseout="hideAwesomeFontTips()" id="rong_zx_{$v['id']}" href="{:U('Zongxiu/zx',array('tname'=>$v['zx'],'cabinid'=>$v['id'],'cabinname'=>$v['cabinname'],'shipid'=>$v['shipid']))}">纵修表</a>
+                               onmouseout="hideAwesomeFontTips()" id="rong_zx_{$v['id']}"
+                               href="{:U('Zongxiu/zx',array('tname'=>$v['zx'],'cabinid'=>$v['id'],'cabinname'=>$v['cabinname'],'shipid'=>$v['shipid']))}">纵修表</a>
                         </if>
                         <if condition="$v['rongliang'] != null">
-                            &nbsp;/&nbsp;<a onmouseover="showAwesomeFontTips('{$v['rongliang_tip']}','#rong_rongliang_{$v['id']}')"
-                                            onmouseout="hideAwesomeFontTips()" id="rong_rongliang_{$v['id']}" href="{:U('Rong/rong',array('tname'=>$v['rongliang'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
+                            &nbsp;/&nbsp;<a
+                                onmouseover="showAwesomeFontTips('{$v['rongliang_tip']}','#rong_rongliang_{$v['id']}')"
+                                onmouseout="hideAwesomeFontTips()" id="rong_rongliang_{$v['id']}"
+                                href="{:U('Rong/rong',array('tname'=>$v['rongliang'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
                         </if>
                         <if condition="$v['tankcapacityshipid'] != null">
                             <a onmouseover="showAwesomeFontTips('{$v['tankcapacityshipid_tip']}','#rong_tankcapacityshipid_{$v['id']}')"
-                               onmouseout="hideAwesomeFontTips()" id="rong_tankcapacityshipid_{$v['id']}"  href="{:U('Tripbystern/zong',array('tname'=>$v['tankcapacityshipid'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
+                               onmouseout="hideAwesomeFontTips()" id="rong_tankcapacityshipid_{$v['id']}"
+                               href="{:U('Tripbystern/zong',array('tname'=>$v['tankcapacityshipid'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
                         </if>
                     </td>
                     <td>
                         <if condition="$v['zx_1'] != null">
                             <a onmouseover="showAwesomeFontTips('{$v['zx_1_tip']}','#di_zx_{$v['id']}')"
-                               onmouseout="hideAwesomeFontTips()" id="di_zx_{$v['id']}"  href="{:U('Zongxiu/zx',array('tname'=>$v['zx_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">纵修表</a>
+                               onmouseout="hideAwesomeFontTips()" id="di_zx_{$v['id']}"
+                               href="{:U('Zongxiu/zx',array('tname'=>$v['zx_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">纵修表</a>
                         </if>
                         <if condition="$v['rongliang_1'] != null">
-                            &nbsp;/&nbsp;<a onmouseover="showAwesomeFontTips('{$v['rongliang_1_tip']}','#di_rongliang_{$v['id']}')"
-                                            onmouseout="hideAwesomeFontTips()" id="di_rongliang_{$v['id']}"  href="{:U('Rong/rong',array('tname'=>$v['rongliang_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
+                            &nbsp;/&nbsp;<a
+                                onmouseover="showAwesomeFontTips('{$v['rongliang_1_tip']}','#di_rongliang_{$v['id']}')"
+                                onmouseout="hideAwesomeFontTips()" id="di_rongliang_{$v['id']}"
+                                href="{:U('Rong/rong',array('tname'=>$v['rongliang_1'],'cabinid'=>$v['id'],'shipid'=>$v['shipid']))}">容量表</a>
                         </if>
                     </td>
                 </tr>
@@ -90,6 +107,10 @@
     </div>
     <script>
         var tipIndex; //存储tip对象Index
+
+        layui.use('form', function () {
+            var form = layui.form;
+        });
 
         //弹出提示，用于鼠标悬浮
         function showAwesomeFontTips(tipString, follow) {

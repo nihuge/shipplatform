@@ -234,6 +234,133 @@ class ShipController extends AdminBaseController
         exit(jsonreturn($res));
     }
 
+
+    /**
+     * 正则匹配word版本的船信息
+     */
+    public function match_word_ship_info()
+    {
+//            $orgin_txt_rong = I('post.rong_txt');
+//            $orgin_txt_di = I('post.di_txt');
+        $is_diliang = I('post.is_diliang');//是否有底量书
+        $diliang_number = I('post.diliang_number');//底量书编号
+
+        $firm = new \Common\Model\FirmModel();
+//        if ($_FILES['zs']['tmp_name'] and $_FILES['sysm']['tmp_name'] and $is_diliang) {
+        if ($_FILES['zs']['tmp_name'] and $_FILES['sysm']['tmp_name'] and $_FILES['crb']['tmp_name']) {
+
+            /*
+             * 第一部分，匹配获取船名，证书编号，有效期，舱数
+             */
+            $zs_orgin_txt = file_get_contents($_FILES['zs']['tmp_name']);
+//            exit($zs_orgin_txt);
+            $sysm_orgin_txt = file_get_contents($_FILES['sysm']['tmp_name']);
+//            exit($sysm_orgin_txt);
+            $crb_orgin_txt = file_get_contents($_FILES['crb']['tmp_name']);
+            $zs_re = '/证\s*?书\s*?编\s*?号[：\:]+\s*?Certificate\s*?No\.\s*?([A-Za-z0-9]+)\s*?船名[\(（]+出厂编号[\)）]+\s*?Name\s*?of\s*?Ship\s*?[\(（]+Serial\s*?No\.[\)）]+\s*?([\S]+)\s*?计量器具名称\s*?Name\s*?of\s*?Instrument\s*?[\S]+\s*?[A-Za-z ]+[\s\S]*?舱\s*?数\s*?Number\s*?of\s*?Tank\s*?(\d+)[\s\S]*?有\s*?效\s*?期\s*?自\s*?Period\s*?of\s*?Validity\s*?from\s*?[\S\s]*?至[\s\S]*?To\s*?([\d]{4}\s*?年\s*?Year\s*?[\d]{2}\s*?月\s*?Month\s*?[\d]{2}\s*?日\s*?Day)/m';
+            preg_match($zs_re, $zs_orgin_txt, $matche);
+//                echo jsonreturn($matche);
+//                exit($orgin_txt);
+
+
+            //船名
+            $shipname = $matche[2];
+            //证书编号
+            $number = $matche[1];
+            //舱总数
+            $cabinnum = $matche[3];
+            //有效期
+            $expire_time = date_parse_from_format('Y年m月d日', $this->replace_date_str($matche[4]));
+            $expire_time = $expire_time["year"] . '-' . $expire_time["month"] . '-' . $expire_time["day"];
+
+
+            /*
+             * 匹配舱材料膨胀倍数
+             */
+            $re2 = "/Vt=V20×\[1\+(\d+)3\(t-20\)\]/m";
+            preg_match($re2, $sysm_orgin_txt, $matche2);
+
+            $coefficient = $matche2[1];
+
+            /*
+             * 匹配舱材料的线膨胀系数
+             */
+            $re3 = "/=\s*?([\.\d]+)\/℃。/m";
+            preg_match($re3, $sysm_orgin_txt, $matche3);
+
+            $a = $matche3[1];
+
+            /*
+             * 验证判断，判断是否存在此字样，如果存在则管线不包含，否则包含管线
+             */
+            $re4 = "/舱容表所示容量不包括所属该舱输油管系内的液体/";
+            if (preg_match($re4, $sysm_orgin_txt)) {
+                $is_guanxian = '2';
+            } else {
+                $is_guanxian = '1';
+            }
+
+
+            if ($is_diliang == '1') {
+                $suanfa = 'd';
+                $number .= "-" . $diliang_number;
+            } else {
+                $suanfa = 'a';
+            }
+
+
+            $re6 = '/SOUNDING\s*?ULLAGE\s*?([ \t\-\.\d]+)\s*?/';
+            preg_match($re6, $crb_orgin_txt, $matches4);
+//            echo jsonreturn($matches4);
+            //开始分开吃水刻度
+            $kedu_str = $this->removeExtraSpace($matches4[1]);
+//            exit($kedu_str);
+            $kedu_arr = explode(' ', $kedu_str);
+            foreach ($kedu_arr as $key=>$value){
+                $kedu_arr[$key] = floatval($value);
+            }
+//            echo jsonreturn($kedu_arr);
+            $space = 15 - count($kedu_arr);
+            //用于占位
+            for ($i = 0; $i < $space; $i++) {
+                $kedu_arr[] = "";
+            }
+
+            $ship_info = array(
+                'shipname' => $shipname,
+                'number' => $number,
+                'expire_time' => $expire_time,
+                'cabinnum' => $cabinnum,
+                'coefficient' => $coefficient,
+                'is_guanxian' => $is_guanxian,
+                'suanfa' => $suanfa,
+                'a' => $a,
+                'weight' => "无",
+                'goodsname' => "无",
+                'kedu' => $kedu_arr,
+                'kedu1' => $kedu_arr,
+            );
+
+            $res = array(
+                'state' => $firm->ERROR_CODE_COMMON['SUCCESS'],
+                'ship_info' => $ship_info
+            );
+
+        } else {
+            $res = array(
+                'state' => $firm->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+                'error' => "参数缺少",
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+    function replace_date_str($date_str)
+    {
+        $arr = array("year", "day", "month", "Year", "Day", "Month", "\r", "\n");
+        return str_replace($arr, "", $date_str);
+    }
+
     /**
      * 新增船
      * */
@@ -587,10 +714,10 @@ class ShipController extends AdminBaseController
 
         $cabin_list = $cabin->where(array('shipid' => intval($shipid)))->select();
 
-        $list_data = array('suanfa' => $msg['suanfa'], 'shipname' => $msg['shipname'],'cabin_tree'=>$cabin_list);
+        $list_data = array('suanfa' => $msg['suanfa'], 'shipname' => $msg['shipname'], 'cabin_tree' => $cabin_list);
 
         if ($msg['suanfa'] == "a") {
-            $list_data['rongliang'] = array('rongliang'=>array(),'kedu'=>json_decode($msg['tripbystern'],true));
+            $list_data['rongliang'] = array('rongliang' => array(), 'kedu' => json_decode($msg['tripbystern'], true));
             foreach ($cabin_list as $key => $value) {
                 $m = M($msg['tankcapacityshipid']);
                 $msg1 = $m->where(array('cabinid' => $value['id']))->select();
@@ -599,10 +726,10 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg1,
                 );
-                array_push($list_data['rongliang']['rongliang'],$data);
+                array_push($list_data['rongliang']['rongliang'], $data);
             }
-        }elseif ($msg['suanfa'] == "b"){
-            $list_data['rongliang'] = array('rongliang'=>array(),'zx'=>array(),'kedu'=>json_decode($msg['trimcorrection'],true));
+        } elseif ($msg['suanfa'] == "b") {
+            $list_data['rongliang'] = array('rongliang' => array(), 'zx' => array(), 'kedu' => json_decode($msg['trimcorrection'], true));
             foreach ($cabin_list as $key => $value) {
                 $m1 = M($msg['rongliang']);
                 $msg1 = $m1->where(array('cabinid' => $value['id']))->select();
@@ -611,7 +738,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg1,
                 );
-                array_push($list_data['rongliang']['rongliang'],$data);
+                array_push($list_data['rongliang']['rongliang'], $data);
 
                 $m2 = M($msg['zx']);
                 $msg2 = $m2->where(array('cabinid' => $value['id']))->select();
@@ -620,11 +747,11 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg2,
                 );
-                array_push($list_data['rongliang']['zx'],$data1);
+                array_push($list_data['rongliang']['zx'], $data1);
             }
-        }elseif ($msg['suanfa'] == "c"){
-            $list_data['rongliang'] = array('rongliang'=>array(),'zx'=>array(),'kedu'=>json_decode($msg['trimcorrection'],true));
-            $list_data['diliang'] = array('rongliang'=>array(),'zx'=>array(),'kedu1'=>json_decode($msg['trimcorrection1'],true));
+        } elseif ($msg['suanfa'] == "c") {
+            $list_data['rongliang'] = array('rongliang' => array(), 'zx' => array(), 'kedu' => json_decode($msg['trimcorrection'], true));
+            $list_data['diliang'] = array('rongliang' => array(), 'zx' => array(), 'kedu1' => json_decode($msg['trimcorrection1'], true));
             foreach ($cabin_list as $key => $value) {
                 $m1 = M($msg['rongliang']);
                 $msg1 = $m1->where(array('cabinid' => $value['id']))->select();
@@ -633,7 +760,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg1,
                 );
-                array_push($list_data['rongliang']['rongliang'],$data);
+                array_push($list_data['rongliang']['rongliang'], $data);
 
                 $m2 = M($msg['zx']);
                 $msg2 = $m2->where(array('cabinid' => $value['id']))->select();
@@ -642,7 +769,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg2,
                 );
-                array_push($list_data['rongliang']['zx'],$data1);
+                array_push($list_data['rongliang']['zx'], $data1);
 
                 $m3 = M($msg['rongliang_1']);
                 $msg3 = $m3->where(array('cabinid' => $value['id']))->select();
@@ -651,7 +778,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg3,
                 );
-                array_push($list_data['diliang']['rongliang'],$data3);
+                array_push($list_data['diliang']['rongliang'], $data3);
 
                 $m4 = M($msg['zx_1']);
                 $msg4 = $m4->where(array('cabinid' => $value['id']))->select();
@@ -660,11 +787,11 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg4,
                 );
-                array_push($list_data['diliang']['zx'],$data4);
+                array_push($list_data['diliang']['zx'], $data4);
             }
-        }elseif ($msg['suanfa'] == "d"){
-            $list_data['rongliang'] = array('zx'=>array(),'kedu'=>json_decode($msg['trimcorrection'],true));
-            $list_data['diliang'] = array('zx'=>array(),'kedu1'=>json_decode($msg['trimcorrection1'],true));
+        } elseif ($msg['suanfa'] == "d") {
+            $list_data['rongliang'] = array('zx' => array(), 'kedu' => json_decode($msg['trimcorrection'], true));
+            $list_data['diliang'] = array('zx' => array(), 'kedu1' => json_decode($msg['trimcorrection1'], true));
             foreach ($cabin_list as $key => $value) {
                 $m2 = M($msg['zx']);
                 $msg2 = $m2->where(array('cabinid' => $value['id']))->select();
@@ -673,7 +800,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg2,
                 );
-                array_push($list_data['rongliang']['zx'],$data1);
+                array_push($list_data['rongliang']['zx'], $data1);
 
                 $m4 = M($msg['zx_1']);
                 $msg4 = $m4->where(array('cabinid' => $value['id']))->select();
@@ -682,7 +809,7 @@ class ShipController extends AdminBaseController
                     'cabinid' => $value['id'],
                     'list' => $msg4,
                 );
-                array_push($list_data['diliang']['zx'],$data4);
+                array_push($list_data['diliang']['zx'], $data4);
             }
         }
 
@@ -837,30 +964,44 @@ class ShipController extends AdminBaseController
 
 
     //反转锁的状态，原来是有锁的变成无锁，原来是无锁的，变成有锁
-    public function reverse_lock(){
-        $where = array('id'=>intval(I('post.shipid')));
+    public function reverse_lock()
+    {
+        $where = array('id' => intval(I('post.shipid')));
         $ship = new \Common\Model\ShipFormModel();
         $old_lock = $ship->field('is_lock')->where($where)->find();
-        if($old_lock['is_lock'] == 1){
+        if ($old_lock['is_lock'] == 1) {
             $data = array(
-                'is_lock'=>2
+                'is_lock' => 2
             );
-        }else{
+        } else {
             $data = array(
-                'is_lock'=>1
+                'is_lock' => 1
             );
         }
-        $result = $ship->editData($where,$data);
-        if($result !== false){
+        $result = $ship->editData($where, $data);
+        if ($result !== false) {
             $res = array(
-                'code'=>$ship->ERROR_CODE_COMMON['SUCCESS'],
+                'code' => $ship->ERROR_CODE_COMMON['SUCCESS'],
             );
-        }else{
+        } else {
             $res = array(
-                'code'=>$ship->ERROR_CODE_COMMON['DB_ERROR'],
-                'error'=>$ship->getDbError()
+                'code' => $ship->ERROR_CODE_COMMON['DB_ERROR'],
+                'error' => $ship->getDbError()
             );
         }
         $this->ajaxReturn($res);
+    }
+
+    /**
+     * 去除文本内多余空格，并且去除头部和结尾的空格
+     * @param $txt
+     * @return string
+     */
+    function removeExtraSpace($txt)
+    {
+        $txt1 = preg_replace("/^ {2,}/m", "", $txt);
+        $txt2 = preg_replace("/(\d) {2,}/m", "$1 ", $txt1);
+        $txt3 = preg_replace("/ {2,}$/m", "", $txt2);
+        return $txt3;
     }
 }

@@ -68,7 +68,7 @@ class ShShipModel extends BaseModel
 
     /**
      * 获取公司下的所有船列表
-     * @param int $firmid 公司id
+     * @param int    $firmid 公司id
      * @param string $firmtype 公司类型检验、船舶
      * */
     public function getShipList($firmid, $firmtype)
@@ -177,8 +177,117 @@ class ShShipModel extends BaseModel
     }
 
     /**
+     * 判断船是否有舱容数据
+     * @param int $shipid 船id
+     * @return string
+     */
+    public function is_have_datas($shipid)
+    {
+        $msg = $this
+            ->field('ds_table')
+            ->where(array('id' => $shipid))
+            ->find();
+
+        if (!empty($msg['ds_table'])) {
+            $tname = $msg['ds_table'];
+            // 查看表是否有数据
+            $rong = M("$tname");
+            $count = $rong->count();
+            if ($count > 0) {
+                $res = 'y';
+            } else {
+                $res = 'n';
+            }
+        } else {
+            $res = 'n';
+        }
+
+        return $res;
+    }
+
+
+    /**
+     * 创建船舶静力水表
+     * @param $shipid
+     * @return array|bool|mixed|string|null
+     */
+    public function create_ds_table($shipid)
+    {
+        $ship_info = $this->field('shipname,ds_table,data_ship')->where(array('id' => $shipid))->find();
+
+        if ($ship_info['ds_table'] == "") {
+            $dsname = 'tableds' . time() . chr(rand(97, 122));
+            // 创建一个静力水表
+            $sql1 = <<<sql
+CREATE TABLE `${dsname}` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_e_m` float(7,3) DEFAULT NULL COMMENT 'DRAUGHT EXTREME/m',
+  `d_r_m` float(7,3) DEFAULT NULL COMMENT 'DRAUGHT RFP/m',
+  `ds` float(9,3) DEFAULT NULL COMMENT 'DISPL TOTAL SW/t',
+  `df` float(9,3) DEFAULT NULL COMMENT 'DISPL TOTAL FW/t',
+  `dm` float(9,3) DEFAULT NULL COMMENT 'DISPL MLD/m^3',
+  `lcf` float(9,3) DEFAULT NULL COMMENT 'LCF FWD RFP/m',
+  `tcf` float(9,3) DEFAULT NULL COMMENT 'TCF STB OF RFP/m',
+  `lcb` float(9,3) DEFAULT NULL COMMENT 'LCB FWD OF RFP/m',
+  `tcb` float(9,3) DEFAULT NULL COMMENT 'TCB STB OF RFP/m',
+  `vcb` float(9,3) DEFAULT NULL COMMENT 'VCB ABOVE RFP/m',
+  `kmt` float(9,3) DEFAULT NULL COMMENT 'KMT/m',
+  `kml` float(9,3) DEFAULT NULL COMMENT 'KML/m',
+  `it` float(9,3) DEFAULT NULL COMMENT 'IT/m^4',
+  `it1000` float(9,3) DEFAULT NULL COMMENT '  IL/1000  /m^4',
+  `mct` float(9,3) DEFAULT NULL COMMENT 'MCT SW  /  t*m/cm',
+  `tpm` float(9,3) DEFAULT NULL COMMENT 'TPM SW  /  t/cm',
+  `wpa` float(9,3) DEFAULT NULL COMMENT 'WPA  /  m^2',
+  `wetsurf` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cb` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cp` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cm` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cw` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cwf` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  `cbf` float(9,3) DEFAULT NULL COMMENT 'WETSURF  /  m^2',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='${ship_info['shipname']}容量表';
+sql;
+
+//            exit($sql1);
+            M()->execute($sql1);
+            $data = array(
+                'ds_table'=>$dsname
+            );
+            $this->editData(array('id' => $shipid),$data);
+            $ship_info = $this->field('ds_table,data_ship')->where(array('id' => $shipid))->find();
+        }
+        return $ship_info;
+    }
+
+
+    //更新某条船的有表无表状态
+    public function updata_one_ship($shipid)
+    {
+        $data_ship = $this->is_have_datas($shipid);
+        $data_ship = $data_ship == "" ? "n" : $data_ship;
+        $data = array(
+            'data_ship' => $data_ship
+        );
+        $map = array(
+            'id' => $shipid
+        );
+        $res[$shipid] = $data;
+        $result = $this->editData($map, $data);
+        if ($result === false) {
+            M()->rollback();
+            //数据库错误
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR'], 'error' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]);
+        } else {
+            M()->commit();
+            $res['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+            return $res;
+        }
+    }
+
+    /**
      * 新增船
-     * @param $data
+     * @param        $data
      * @param string $type
      * @return array
      */
@@ -354,183 +463,6 @@ class ShShipModel extends BaseModel
             }
         }
         return $res;
-    }
-
-    /**
-     * 新增船舶创建表
-     * 添加船舶历史数据汇总初步
-     */
-    public function createtable($suanfa, $shipname, $shipid, $kedu = array())
-    {
-        // 根据算法自动创建需要的表
-        if ($suanfa == 'a') {
-            $tablename = 'tankcapacityzi' . time() . chr(rand(97, 122));
-            $cou = 1;
-            $str = '';
-            $tripbystern = array();
-            foreach ($kedu as $key => $value) {
-                $str .= "`tripbystern" . $cou . "` float(6,3) DEFAULT NULL COMMENT '纵倾值" . $value . "/m',";
-                $tripbystern['tripbystern' . $cou] = $value;
-                $cou++;
-            }
-            // 创建一个容量表
-            $sql = <<<sql
-CREATE TABLE `${tablename}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(6,3) DEFAULT NULL COMMENT '实高',
-  `ullage` float(6,3) DEFAULT NULL COMMENT '空高',
-    ${str}
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
-sql;
-            M()->execute($sql);
-            if (!empty($tripbystern)) {
-                $tripbystern = json_encode($tripbystern, JSON_UNESCAPED_UNICODE);
-            } else {
-                $tripbystern = '';
-            }
-            $datas = array(
-                'tankcapacityshipid' => $tablename,
-                'tripbystern' => $tripbystern
-            );
-        } else if ($suanfa == 'b') {
-            $rongname = 'tankcapacityzi' . time() . chr(rand(97, 122));
-            $zxname = 'trimcorrectionzi' . time() . chr(rand(97, 122));
-            // 创建一个容量表一个纵倾表
-            $sql1 = <<<sql
-CREATE TABLE `${rongname}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(7,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(7,3) DEFAULT NULL COMMENT '空高/m',
-  `capacity` float(7,3) DEFAULT NULL COMMENT '容量',
-  `diff` float(7,3) DEFAULT NULL COMMENT '厘米容量',
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='${shipname}容量表';
-sql;
-            M()->execute($sql1);
-            // 确定刻度
-            $cou = 1;
-            $str = '';
-            $trimcorrection = array();
-            foreach ($kedu as $key => $value) {
-                $str .= "`trimvalue" . $cou . "` int(11) DEFAULT NULL COMMENT '纵倾值" . $value . "/m',";
-                $trimcorrection['trimvalue' . $cou] = $value;
-                $cou++;
-            }
-            $sql2 = <<<sql
-CREATE TABLE `${zxname}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
-  ${str}
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
-sql;
-            M()->execute($sql2);
-            if (!empty($trimcorrection)) {
-                $trimcorrection = json_encode($trimcorrection, JSON_UNESCAPED_UNICODE);
-            } else {
-                $trimcorrection = '';
-            }
-
-            $datas = array(
-                'rongliang' => $rongname,
-                'zx' => $zxname,
-                'trimcorrection' => $trimcorrection
-            );
-        } else if ($suanfa == 'c') {
-            // 确定刻度
-            $cou = 1;
-            $str = '';
-            $trimcorrection = array();
-            foreach ($kedu as $key => $value) {
-                $str .= "`trimvalue" . $cou . "` int(11) DEFAULT NULL COMMENT '纵倾值" . $value . "/m',";
-                $trimcorrection['trimvalue' . $cou] = $value;
-                $cou++;
-            }
-            $time = time() . chr(rand(97, 122));
-            $rongname = 'tankcapacityzi' . $time . '_1';
-            $zxname = 'trimcorrectionzi' . $time . '_1';
-            // 创建一个容量表一个纵倾表
-            $sql1 = <<<sql
-CREATE TABLE `${rongname}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(7,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(7,3) DEFAULT NULL COMMENT '空高/m',
-  `capacity` float(7,3) DEFAULT NULL COMMENT '容量',
-  `diff` float(7,3) DEFAULT NULL COMMENT '厘米容量',
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='${shipname}容量表';
-sql;
-            M()->execute($sql1);
-            $sql2 = <<<sql
-CREATE TABLE `${zxname}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
-  ${str}
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
-sql;
-            M()->execute($sql2);
-            $rongname1 = 'tankcapacityzi' . $time . '_2';
-            $zxname1 = 'trimcorrectionzi' . $time . '_2';
-            // 创建一个容量表一个纵倾表
-            $sql3 = <<<sql
-CREATE TABLE `${rongname1}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(7,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(7,3) DEFAULT NULL COMMENT '空高/m',
-  `capacity` float(7,3) DEFAULT NULL COMMENT '容量',
-  `diff` float(7,3) DEFAULT NULL COMMENT '厘米容量',
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='${shipname}容量表';
-sql;
-            M()->execute($sql3);
-            $sql4 = <<<sql
-CREATE TABLE `${zxname1}` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sounding` float(5,3) DEFAULT NULL COMMENT '测深/m',
-  `ullage` float(5,3) DEFAULT NULL COMMENT '空高/m',
-  ${str}
-  `cabinid` int(11) DEFAULT NULL COMMENT '舱ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${shipname}纵倾表';
-sql;
-            M()->execute($sql4);
-            if (!empty($trimcorrection)) {
-                $trimcorrection = json_encode($trimcorrection, JSON_UNESCAPED_UNICODE);
-            } else {
-                $trimcorrection = '';
-            }
-            $datas = array(
-                'rongliang' => $rongname,
-                'rongliang_1' => $rongname1,
-                'zx' => $zxname,
-                'zx_1' => $zxname1,
-                'trimcorrection' => $trimcorrection
-            );
-        }
-        $map = array(
-            'id' => $shipid
-        );
-        $this->editData($map, $datas);
-
-
-        // 添加船舶历史数据汇总初步
-        $arr = array('shipid' => $shipid);
-        // 判断船历史统计数据是否存在
-        $cc = M('ship_historical_sum')->where($arr)->count();
-        if ($cc == 0) {
-            M('ship_historical_sum')->add($arr);
-        }
-        return 1;
     }
 
     public function is_lock($shipid)

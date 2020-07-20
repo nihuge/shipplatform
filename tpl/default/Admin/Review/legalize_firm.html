@@ -5,11 +5,11 @@
         审核管理
     </li>
     <li class="active">
-        新建散货船审核
+        公司认证审核
     </li>
 </block>
 <block name="activeopen11">class="active open"</block>
-<block name="active35">class="active"</block>
+<block name="active37">class="active"</block>
 <block name="content">
     <style>
         .wid {
@@ -30,7 +30,7 @@
             <tr>
                 <td style="width:150px;height: 40px">公司名</td>
                 <td>
-                    <strong>{$firm_msg['firmname']}</strong>
+                    <strong>{$review_msg['firmname']}</strong>
                 </td>
             </tr>
             <tr>
@@ -49,15 +49,15 @@
             <tr>
                 <td style="width:150px;">社会信用代码</td>
                 <td>
-                    <strong>{$firm_msg['claimed_code']}</strong>
+                    <strong>{$review_msg['legalize_code']}</strong>
                 </td>
             </tr>
             <tr>
                 <td style="width:150px;">营业执照图片</td>
                 <td id="code_img">
                     <img class="normalFace"
-                         layer-src="{:($firm_msg['claimed_img']) ? $firm_msg['claimed_img']:'__PUBLIC__/Admin/noimg.png'}"
-                         src="{:($firm_msg['claimed_img']) ? $firm_msg['claimed_img']:'__PUBLIC__/Admin/noimg.png'}"
+                         layer-src="{:($review_msg['legalize_img']) ? $review_msg['legalize_img']:'__PUBLIC__/Admin/noimg.png'}"
+                         src="{:($review_msg['legalize_img']) ? $review_msg['legalize_img']:'__PUBLIC__/Admin/noimg.png'}"
                          onclick="zoom();" alt="test" style='width: 150px;height: 110px;'>
                 </td>
             </tr>
@@ -81,7 +81,7 @@
             <!--</tr>-->
         </table>
 
-        <div style="width:900px;margin:15px auto;text-align: center;color: gray"><strong>用户上传文件列表</strong></div>
+        <!--<div style="width:900px;margin:15px auto;text-align: center;color: gray"><strong>用户上传文件列表</strong></div>
         <div class="layui-upload-list">
             <table class="layui-table" style="width:900px;margin:auto auto;">
                 <thead>
@@ -99,14 +99,14 @@
                 </volist>
                 </tbody>
             </table>
-        </div>
+        </div>-->
+<!--        <div style="text-align: center;margin: 10px 0px;">-->
+<!--            <a href="{:U('Review/down_claimed_zip',array('claimed_id'=>$review_msg['id']))}"><button type="button" class="layui-btn" id="testListAction">下载文件，开始审核</button></a>-->
+<!--        </div>-->
         <div style="text-align: center;margin: 10px 0px;">
-            <a href="{:U('Review/down_claimed_zip',array('claimed_id'=>$review_msg['id']))}"><button type="button" class="layui-btn" id="testListAction">下载文件，开始审核</button></a>
-        </div>
-        <div style="text-align: center;margin: 10px 0px;">
-            <input type="button" name="sub" value="通过" onclick="result({$review_msg['id']},4)"
+            <input type="button" name="sub" value="通过" onclick="result({$review_msg['id']},0)"
                    class="btn btn-success btn-lg">
-            <input type="button" name="sub" value="拒绝" onclick="result({$review_msg['id']},3)"
+            <input type="button" name="sub" value="拒绝" onclick="result({$review_msg['id']},2)"
                    class="btn btn-danger btn-lg">
         </div>
     </div>
@@ -119,24 +119,6 @@
             , theme: 'grid' //主题
             , format: 'yyyy-MM-dd' //自定义格式
             , min: 0
-        });
-        //下拉获取cang,单选获取表
-        $("select[name=suanfa]").change(function () {
-            if ($(this).children().is(':selected')) {
-                var id = $(this).val();
-                // var tname = $("#tname");
-                var tname1 = $("#tname1");
-                if (id == 'c') {
-
-                    string = '<td style="width:120px;">底量表纵倾刻度值</td><td><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" required/><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /><input type="text" class="kedu" name="kedu1[]" maxlength="5" /></td>';
-                    tname1.html(string);
-                    $("#tname1").show()
-                } else {
-                    $("#tname1").css('display', 'none');
-                }
-            } else {
-                tname.css('display', 'none');
-            }
         });
 
         function checkImg(img_id) {
@@ -156,7 +138,6 @@
         }
 
         function zoom() {
-
             console.log(1);
 
             //调用示例
@@ -168,13 +149,13 @@
         function result(id, resultid) {
             var content_html = "";
             var area = ['200px', 'auto'];
-            if (resultid === 4) {
+            if (resultid === 0) {
                 //通过审核
                 content_html = "<input type='hidden' name='remark' id='remark' value='success'><div style='text-align: center'>是否通过该审核？</div>";
-            } else if (resultid === 3) {
+            } else if (resultid === 2) {
                 //拒绝审核，拒绝需要提供理由
                 area = ['450px', 'auto'];
-                content_html = "<div class=\"row\" style=\"width: 420px;  margin-left:7px; margin-top:10px; text-align: center\"><label>拒绝理由：<input type='text' name='remark' id='remark'><div style='text-align: center'>请输入拒绝理由，该理由将展示给客户</div></label></div>";
+                content_html = "<input type='hidden' name='remark' id='remark' value='fail'><div style='text-align: center'>是否拒绝该审核？</div>";
             }
 
 
@@ -198,7 +179,7 @@
                     }
                     // return;
                     $.ajax({
-                        url: "{:U('Review/claimed_firm_result',array('claimed_id'=>$review_msg['id']))}",
+                        url: "{:U('Review/legalize_firm_result',array('firm_id'=>$review_msg['id']))}",
                         type: "POST",
                         data: {
                             'result': resultid,
@@ -209,7 +190,7 @@
                             if (data.code == 1) {
                                 layer.alert('审核成功', {icon: 6}, function () {
                                     //刷新
-                                    window.location.href = "{:U('Review/review_ship_index')}";
+                                    window.location.href = "{:U('Review/legalize_firm_index')}";
                                 });
                             } else {
                                 layer.alert(data.msg, {

@@ -66,8 +66,18 @@
                     <td>{$v['firmname']}</td>
                     <td>{$v['number']}</td>
                     <td>{$v['data_ship']=="y"?"有表船":"无表船"} | <span  onclick="reverse_lock({$v['id']})" style="cursor: pointer;color: {$v['is_lock']==1?'blue':'red'}">{$v['is_lock']==1?"被锁定":"未锁定"}</span></td>
-                    <td><a href="{:U('Cabin/index',array('shipid'=>$v['id']))}">{$v['cabinnum']} <span
-                            class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a></td>
+
+                    <td>
+                        <if condition="$v['cabinnum'] lt 10">
+                            <a href="{:U('Cabin/index',array('shipid'=>$v['id']))}">&nbsp;&nbsp;{$v['cabinnum']}<span class="fa fa-eye"></span></a>
+                        <else/>
+                            <a href="{:U('Cabin/index',array('shipid'=>$v['id']))}">{$v['cabinnum']}<span class="fa fa-eye"></span></a>
+                        </if>
+                        &nbsp;|&nbsp;
+                        <a href="{:U('Cabin/batch_edit',array('shipid'=>$v['id']))}">批量修改<span
+                            class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
+                    </td>
+
                     <td>
                         <a href="{:U('Ship/edit',array('id'=>$v['id']))}">修改</a>
                         &nbsp;/&nbsp;

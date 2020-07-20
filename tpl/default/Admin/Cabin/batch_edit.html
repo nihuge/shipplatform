@@ -5,43 +5,36 @@
         船舱管理
     </li>
     <li class="active">
-        船舱修改
+        船舱批量修改
     </li>
 </block>
 <block name="active7">class="active"</block>
 <block name="content">
     <div class="page-container">
         <form action="__ACTION__" method="post">
-            <div style='width:800px;margin:auto auto;'>
-                所属船：
-                <select style="width: 200px;" name="shipid" required id='shipid'>
-                    <option value="">----&nbsp;选&nbsp;择&nbsp;船&nbsp;舶&nbsp;----</option>
-                    <volist name="shiplist" id="v">
-                        <option value="{$v['id']}" NUMBER="{$v['cabinnum']}" SUANFA="{$v['suanfa']}">{$v['shipname']}
-                        </option>
-                    </volist>
-                </select>
-                <span style="margin-left: 40px;color: red;">基准高度支持输入4位整数或小数，并且会检查数据</span>
-            </div>
-            <br>
+                        <br>
             <div>
                 <div style="text-align: left;float: left">
                     <div id="errorMsg" style="color: red"></div>
                 </div>
                 <div style="text-align: right;float: right">
 
-                    <input style="left: 10px;width: 18px;height: 18px;" type="checkbox" id="no_check" name="jizhu"
-                           title="勾选时不提示数据" lay-skin="primary"><label for="no_check"
-                                                                      style="font-size: 17px;margin-right: 10px;color: #a03e00">勾选时不提示数据</label>
-                    <span
-                            class="layui-btn layui-btn-normal" id="txt_cabin" style="margin-right: 150px;"
-                            onclick="match_cabin()">自动识别数据</span>
-                    <span
-                            class="layui-btn layui-btn-normal layui-hide" id="word_cabin" style="margin-right: 150px;"
+                    <input style="left: 10px;width: 18px;height: 18px;" type="checkbox" id="no_check" name="jizhu" title="勾选时不提示数据" lay-skin="primary"><label for="no_check" style="font-size: 17px;margin-right: 10px;color: #a03e00">勾选时不提示数据</label>
+                    <if condition="$ship_info['suanfa'] eq 'a'">
+                        <span class="layui-btn layui-btn-normal" style="margin-right: 20px;" onclick="match_cabin()">自动识别数据</span>
+
+                        <span
+                            class="layui-btn layui-btn-normal" id="word_cabin" style="margin-right: 115px;"
                             onclick="match_word_cabin()">识别word数据</span>
-                    <!--                <input type="checkbox" id="no_check" style="border-radius: 50%;width: 16px;height: 16px;"/>-->
+
+                        <else/>
+
+                        <span class="layui-btn layui-btn-normal" style="margin-right: 115px;" onclick="match_cabin()">自动识别数据</span>
+                    </if>
+    <!--                <input type="checkbox" id="no_check" style="border-radius: 50%;width: 16px;height: 16px;"/>-->
                 </div>
             </div>
+            <input type="hidden" name="shipid" value="{$shipid}">
             <table id="sample-table-1" class="table table-striped table-bordered table-hover"
                    style='width:800px;margin:auto auto;text-align: center;'>
                 <tr>
@@ -55,6 +48,30 @@
                     <td>底量表</td>
                     <td>容量表</td>
                     <td>底量表</td>
+                </tr>
+                <foreach name="list" item="v" key="k" >
+                    <input type="hidden" name="data[{$k}][id]" value="{$v['id']}">
+                    <in name="ship_info.suanfa" value="c,d">
+                        <tr>
+                            <td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required value="{$v['cabinname']}" name="data[{$k}][cabinname]" maxlength="5" tabindex="{:$ship_info['cabinnum']*0+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['altitudeheight']}" name="data[{$k}][altitudeheight]" maxlength="5" tabindex="{:$ship_info['cabinnum']*1+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="{$v['dialtitudeheight']}" name="data[{$k}][dialtitudeheight]" maxlength="5" tabindex="{:$ship_info['cabinnum']*2+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['bottom_volume']}" name="data[{$k}][bottom_volume]" maxlength="5" tabindex="{:$ship_info['cabinnum']*3+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="{$v['bottom_volume_di']}" name="data[{$k}][bottom_volume_di]" maxlength="5" tabindex="{:$ship_info['cabinnum']*4+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['pipe_line']}" name="data[{$k}][pipe_line]" maxlength="5" tabindex="{:$ship_info['cabinnum']*5+$k+1}"/></td>
+                        </tr>
+                        <else/>
+                        <tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required value="{$v['cabinname']}" name="data[{$k}][cabinname]" maxlength="5" tabindex="{:$ship_info['cabinnum']*0+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['altitudeheight']}" name="data[{$k}][altitudeheight]" maxlength="5" tabindex="{:$ship_info['cabinnum']*1+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="{$v['dialtitudeheight']}" name="data[{$k}][dialtitudeheight]" maxlength="5" tabindex="{:$ship_info['cabinnum']*2+$k+1}" disabled="disabled"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['bottom_volume']}" name="data[{$k}][bottom_volume]" maxlength="5" tabindex="{:$ship_info['cabinnum']*3+$k+1}"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="{$v['bottom_volume_di']}" name="data[{$k}][bottom_volume_di]" maxlength="5" tabindex="{:$ship_info['cabinnum']*4+$k+1}" disabled="disabled"/></td>
+                            <td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="{$v['pipe_line']}" name="data[{$k}][pipe_line]" maxlength="5" tabindex="{:$ship_info['cabinnum']*5+$k+1}"/></td>
+                        </tr>
+                    </in>
+                </foreach>
+                <tr>
+                    <td colspan=6 style="text-align: center;"><input type="submit" name="sub" value="提交" class="btn btn-primary" ></td>
                 </tr>
             </table>
         </form>
@@ -84,18 +101,6 @@
                             string += '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][cabinname]" maxlength="5" tabindex="' + (num * 0 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][altitudeheight]" maxlength="5" tabindex="' + (num * 1 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="" name="data[' + i + '][dialtitudeheight]" maxlength="5" tabindex="' + (num * 2 + i) + '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][bottom_volume]" maxlength="5" tabindex="' + (num * 3 + i) + '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" value="" name="data[' + i + '][bottom_volume_di]" maxlength="5" tabindex="' + (num * 4 + i) + '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required value="" name="data[' + i + '][pipe_line]" maxlength="5" tabindex="' + (num * 5 + i) + '"/></td></tr>';
                         }
                     }
-
-                    // if(suanfa == 'a' || suanfa == 'd'){
-                    if (suanfa == 'a') {
-                        $("#word_cabin").removeClass("layui-hide")
-                        // $("#txt_cabin").removeClass("margin-right")
-                        $("#txt_cabin").css({marginRight: "20px"})
-                    } else {
-                        $("#word_cabin").addClass("layui-hide")
-                        // $("#txt_cabin").removeClass("margin-right")
-                        $("#txt_cabin").css({marginRight: "150px"})
-                    }
-
                     string += '<tr><td colspan=6 style="text-align: center;"><input type="submit" name="sub" value="提交" class="btn btn-primary" ></td></tr>';
                 }
                 edc.html(string);
@@ -121,7 +126,7 @@
                                 layer.tips('此数值有些问题，请检查', $(this), {
                                     tips: [2, '#3595CC'],
                                     time: 4000,
-                                    tipsMore: true
+                                    tipsMore:true
                                 });
                             }
                         }
@@ -147,14 +152,14 @@
             let shipid = $("select[name=shipid]").val();
             let cabinnum = $('#shipid option:selected').attr('NUMBER');
 
-            if (shipid !== "") {
+            if( shipid!=="" ){
                 let suanfa = $('#shipid option:selected').attr('SUANFA');
                 let errorMsg = $('#errorMsg');
 
                 let content = '';
-                content += '<form class="layui-form" method="post"><input type="hidden" name="shipid" value="' + shipid + '">';
+                content += '<form class="layui-form" method="post"><input type="hidden" name="shipid" value="'+shipid+'">';
 
-                content += '<div class="layui-form-item">\n' +
+                content +='<div class="layui-form-item">\n' +
                     '    <label class="layui-form-label">是否有底量栏</label>\n' +
                     '    <div class="layui-input-block">\n' +
                     '      <input type="radio" name="has_diliang" value="1" title="有" checked="">\n' +
@@ -167,14 +172,13 @@
                     '      <textarea placeholder="请输入内容" class="layui-textarea" name="rong_txt"></textarea>\n' +
                     '    </div>\n' +
                     '  </div>';
-
                 if (suanfa == 'c' || suanfa == 'd') {
-                    content += '  <div class="layui-form-item layui-form-text">\n' +
-                        '    <label class="layui-form-label">底量书</label>\n' +
-                        '    <div class="layui-input-block">\n' +
-                        '      <textarea placeholder="请输入内容" class="layui-textarea" name="di_txt"></textarea>\n' +
-                        '    </div>\n' +
-                        '  </div>';
+                    content +='  <div class="layui-form-item layui-form-text">\n' +
+                    '    <label class="layui-form-label">底量书</label>\n' +
+                    '    <div class="layui-input-block">\n' +
+                    '      <textarea placeholder="请输入内容" class="layui-textarea" name="di_txt"></textarea>\n' +
+                    '    </div>\n' +
+                    '  </div>';
                 }
 
                 content += '<div class="layui-form-item">\n' +
@@ -186,15 +190,15 @@
 
                 let index = layer.open({
                     type: 1,
-                    title: "识别书内舱信息",
+                    title:"识别书内舱信息",
                     skin: 'layui-layer-rim', //加上边框
                     area: ['650px', '450px'], //宽高
                     content: content
                 });
-                layui.use('form', function () {
+                layui.use('form', function(){
                     var form = layui.form;
                     form.render();
-                    form.on('submit(demo1)', function (data) {
+                    form.on('submit(demo1)', function(data){
                         $.ajax({
                             url: "{:U('Cabin/match_cabin')}",
                             type: "POST",
@@ -204,8 +208,8 @@
                                 if (data.state == 1) {
                                     let edc = $("#sample-table-1");
                                     edc.html(data.content);
-                                    console.log(data.cabinnum, cabinnum);
-                                    if (data.cabinnum != cabinnum) {
+                                    console.log(data.cabinnum,cabinnum);
+                                    if(data.cabinnum != cabinnum){
                                         layer.alert("船舶资料的舱数与书内的舱数不符合，请检查", {
                                             icon: 5
                                         });
@@ -221,9 +225,10 @@
                         return false;
                     })
                 });
-            } else {
+            }else {
                 layer.alert('请选择船');
             }
+
 
         }
 
@@ -452,9 +457,12 @@
                             icon: 5
                         });
                     }
+
+
                     return false;
                 })
             });
         }
+
     </script>
 </block>

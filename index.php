@@ -23,10 +23,11 @@ $origin = isset($_SERVER['HTTP_ORIGIN'])? $_SERVER['HTTP_ORIGIN'] : '';
 
 $allowOrigin = array(
     'https://www.ciplat.com',
+    'https://api.ciplat.com',
     'https://www.newcip.com',
     'https://wxship.xzitc.com',
     'https://wxshiptest.xzitc.com',
-    'http://10.0.0.103:8080',
+    'http://10.0.2.33:8080',
 );
 
 if (in_array($origin, $allowOrigin)) {

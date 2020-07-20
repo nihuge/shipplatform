@@ -3,12 +3,35 @@
 namespace Index\Controller;
 
 use Think\Controller;
+use Common\Controller\AppBaseController;
 
 /**
  * 验证
  * */
 class ReportController extends Controller
 {
+    public $ERROR_CODE_COMMON = array();         // 公共返回码
+    public $ERROR_CODE_COMMON_ZH = array();      // 公共返回码中文描述
+    public $ERROR_CODE_USER = array();           // 用户相关返回码
+    public $ERROR_CODE_USER_ZH = array();        // 用户相关返回码中文描述
+    public $ERROR_CODE_RESULT = array();         // 作业相关返回码
+    public $ERROR_CODE_RESULT_ZH = array();      // 作业相关返回码中文描述
+
+    /**
+     * 初始化方法
+     */
+    public function _initialize()
+    {
+        // 返回码配置
+        $this->ERROR_CODE_COMMON = json_decode(error_code_common, true);
+        $this->ERROR_CODE_COMMON_ZH = json_decode(error_code_common_zh, true);
+        $this->ERROR_CODE_USER = json_decode(error_code_user, true);
+        $this->ERROR_CODE_USER_ZH = json_decode(error_code_user_zh, true);
+        $this->ERROR_CODE_RESULT = json_decode(error_code_result, true);
+        $this->ERROR_CODE_RESULT_ZH = json_decode(error_code_result_zh, true);
+
+    }
+
     /**
      * 液货船作业验证
      */
@@ -627,7 +650,7 @@ test_json;
                 //如果不存在行数组，自动创建
                 if (!isset($table_datas[$row])) $table_datas[$row] = array();
                 $v['word'] = preg_replace('/\*/', '', $v['word']);
-                if (!strpos($v['word'], '.') and $v['word']!="" and $row>3) $v['word'] = intval($v['word']) / 1000;
+                if (!strpos($v['word'], '.') and $v['word'] != "" and $row > 3) $v['word'] = intval($v['word']) / 1000;
                 $table_datas[$row][$column] = $v['word'];
                 //获取空高列表
                 if (($column == 2 or $column == 6) and $row > 3 and $v['word'] != "") {
@@ -649,14 +672,14 @@ test_json;
             $column = $ullage_arr[$i]['column'];
             $now_ullage = $ullage_arr[$i]['val'];
             if ($ullage_up == 0) {
-                if($i > 0){
+                if ($i > 0) {
                     if ($ullage == $now_ullage) {
                         $ullage_up = $row;
                         $ullage_down = $row;
                         $draft_up = $column;
                         $draft_down = $column;
                     } else {
-                        $pre_arr = $ullage_arr[$i-1];
+                        $pre_arr = $ullage_arr[$i - 1];
                         if ($pre_arr['val'] < $ullage and $now_ullage > $ullage) {
                             $ullage_up = $pre_arr['row'];
                             $ullage_down = $row;
@@ -664,7 +687,7 @@ test_json;
                             $draft_down = $column;
                         }
                     }
-                }else{
+                } else {
                     if ($ullage == $now_ullage) {
                         $ullage_up = $row;
                         $ullage_down = $row;
@@ -1239,13 +1262,14 @@ test_json;
 
     function middle($a, $b, $c, $d, $e)
     {
-        $suanfa = ($a - $b) / ($c - $d) * ($e - $d) + $b;
+        $suanfa = round(($a - $b) / ($c - $d) * ($e - $d) + $b, 3);
         return $suanfa;
     }
 
 
-    public function get_middle($c_big,$c_small,$x_big,$x_small,$x){
-        echo $this->middle($c_big,$c_small,$x_big,$x_small,$x);
+    public function get_middle($c_big, $c_small, $x_big, $x_small, $x)
+    {
+        echo $this->middle($c_big, $c_small, $x_big, $x_small, $x);
     }
 
     /**
@@ -1318,7 +1342,7 @@ test_json;
                     //如果不存在行数组，自动创建
                     if (!isset($table_datas[$row])) $table_datas[$row] = array();
                     $table_datas[$row][$column] = $v['word'];
-                    
+
                     //获取吃水差列表
                     if ($row == 2 and $column > 1 and $v['word'] != "") {
                         //处理一下数字
@@ -1482,7 +1506,6 @@ test_json;
     {
 
 
-
         //设置好的空高
         $ullage = 5.442;
 
@@ -1537,7 +1560,7 @@ test_json;
                     //如果不存在行数组，自动创建
                     if (!isset($table_datas[$row])) $table_datas[$row] = array();
                     $v['word'] = preg_replace('/\*|米/', '', $v['word']);
-                    if (!strpos($v['word'], '.') and $v['word']!="" and $row>3) $v['word'] = intval($v['word']) / 1000;
+                    if (!strpos($v['word'], '.') and $v['word'] != "" and $row > 3) $v['word'] = intval($v['word']) / 1000;
                     $table_datas[$row][$column] = $v['word'];
                     //获取空高列表
                     if (($column == 2 or $column == 6) and $row > 3 and $v['word'] != "") {
@@ -1559,14 +1582,14 @@ test_json;
                 $column = $ullage_arr[$i]['column'];
                 $now_ullage = $ullage_arr[$i]['val'];
                 if ($ullage_up == 0) {
-                    if($i > 0){
+                    if ($i > 0) {
                         if ($ullage == $now_ullage) {
                             $ullage_up = $row;
                             $ullage_down = $row;
                             $draft_up = $column;
                             $draft_down = $column;
                         } else {
-                            $pre_arr = $ullage_arr[$i-1];
+                            $pre_arr = $ullage_arr[$i - 1];
                             if ($pre_arr['val'] < $ullage and $now_ullage > $ullage) {
                                 $ullage_up = $pre_arr['row'];
                                 $ullage_down = $row;
@@ -1574,7 +1597,7 @@ test_json;
                                 $draft_down = $column;
                             }
                         }
-                    }else{
+                    } else {
                         if ($ullage == $now_ullage) {
                             $ullage_up = $row;
                             $ullage_down = $row;
@@ -1615,7 +1638,7 @@ test_json;
 //        exit(json_encode($assign));
             $this->assign($assign);
             $this->display();
-        }else{
+        } else {
             exit(json_encode($result));
         }
     }
@@ -1641,7 +1664,7 @@ test_json;
     {
 //        $shipid,$qufen,$trim_kedu
 
-        $file_path = "./Upload/txt/dayang28_rong.txt";
+        $file_path = "./Upload/txt/baoying003.txt";
         $cabin = new \Common\Model\CabinModel();
         $ship = new \Common\Model\ShipFormModel();
         $cabins_info = $cabin->field('id,cabinname')->where(array('shipid' => $shipid))->select();
@@ -1692,37 +1715,37 @@ test_json;
 //        echo "kedu:".$trim_kedu . "   table1：" .$table1. " table2：".$table2." <br/>";
         //        array_merge_recursive($a, $b);
         M()->startTrans();
-//        if ($table_name_1 != "") {
-//            $table1 = M($table_name_1);
-//            $trim = $this->read_trim_data($trim_kedu, $file_path, $cabins_info);
-////            exit(json_encode($trim));
+        if ($table_name_1 != "") {
+            $table1 = M($table_name_1);
+            $trim = $this->read_trim_data($trim_kedu, $file_path, $cabins_info);
+//            exit(json_encode($trim));
 //            foreach ($trim as $value) {
 //                if ($table1->addAll($value['tirm_data']) === false) {
 //                    M()->rollback();
 //                    exit(jsonreturn(array('code' => 3, 'error' => $table1->getDbError())));
 //                };
 //            }
-//        }
-//        if ($table_name_2 != "") {
-//            $table2 = M($table_name_2);
-//            $ca = $this->read_ca_data($file_path, $cabins_info);
-////            exit(json_encode($ca));
-//            foreach ($ca as $value1) {
-//                if ($table2->addAll($value1['ca_data']) === false) {
-//                    M()->rollback();
-//                    exit(jsonreturn(array('code' => 4, 'error' => $table2->getDbError())));
-//                };
-//            }
-//        }
-
-        if ($table_name_3 != "") {
-            $table3 = M($table_name_3);
-//            exit(json_encode($ca));
-            foreach ($list_data['data'] as $value1) {
-                //横倾修正表，录入时不报错,防止影响正常的纵倾修正表录入业务
-                @$table3->addAll($value1['list_data']);
+        }
+        if ($table_name_2 != "") {
+            $table2 = M($table_name_2);
+            $ca = $this->read_ca_data($file_path, $cabins_info);
+            exit(json_encode($ca));
+            foreach ($ca as $value1) {
+                if ($table2->addAll($value1['ca_data']) === false) {
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => 4, 'error' => $table2->getDbError())));
+                };
             }
         }
+
+//        if ($table_name_3 != "") {
+//            $table3 = M($table_name_3);
+////            exit(json_encode($ca));
+//            foreach ($list_data['data'] as $value1) {
+//                //横倾修正表，录入时不报错,防止影响正常的纵倾修正表录入业务
+//                @$table3->addAll($value1['list_data']);
+//            }
+//        }
 
 
         M()->commit();
@@ -1802,7 +1825,7 @@ test_json;
 //            $ullage =
 //            echo "<br/>";
         }
-        return $res;
+//        return $res;
 //        exit(json_encode($res));
     }
 
@@ -2355,12 +2378,13 @@ sql;
             "P15" => $P15,
             "cp15" => $cp15,
             "P20" => $CrP20,
+            "RP20" => $P20,
             "cp20" => $cp20,
             "Vcf20" => $Vcf20,
         );
-        \Think\Log::record("\r\n \r\n [ trans!!! ] 1.".$oilType."，2.".$obTemperature."，3.".$obDensity."，4.".$oilTemperature." \r\n \r\n ", "DEBUG", true);
+        \Think\Log::record("\r\n \r\n [ trans!!! ] 1." . $oilType . "，2." . $obTemperature . "，3." . $obDensity . "，4." . $oilTemperature . " \r\n \r\n ", "DEBUG", true);
 
-        \Think\Log::record("\r\n \r\n [ trans!!! ] ".json_encode($data)." \r\n \r\n ", "DEBUG", true);
+        \Think\Log::record("\r\n \r\n [ trans!!! ] " . json_encode($data) . " \r\n \r\n ", "DEBUG", true);
 
         exit(jsonreturn($data));
 
@@ -2370,10 +2394,64 @@ sql;
 
 
     /**
+     * 开放接口，密度转换
+     */
+    public function getTransform()
+    {
+        $type = I('post.type');
+        $density = I('post.density');
+        $oilType = I('post.oilType');
+
+        $res = array(
+            'density' => $this->transform($type, $density, $oilType),
+        );
+
+        exit(jsonreturn($res));
+    }
+
+    function transform($type, $density, $oilType)
+    {
+        //type=1,表示15℃转20℃
+        if ($type == 1) {
+            //获取该油在20℃下的实际密度
+            return $this->getP20($density, $oilType);
+        } else {
+            //获取该油在15℃下的实际密度
+            return $this->getP15($density, $oilType);
+        }
+    }
+
+    /**
+     * 开放接口，计算体积修正系数
+     */
+    public function getOilVCF()
+    {
+        //油类型
+        $oilType = I('post.oilType/d');
+        //标准密度
+        $density = I('post.density/f');
+        //油温
+        $OilTemperature = I('post.OilTemperature/f');
+        //获取视密度修正系数
+        $cp20 = $this->getApparentDensityCorrectionFactor(15, 20);
+        //获取该油在20℃下的实际密度
+        $P20 = $density / $cp20;
+        //根据p20换算p15
+        $P15 = $this->transform(2, $density, $oilType);
+
+        //获取该油在15℃下的实际密度
+        $res = array(
+            'VCF' => $this->getVcf20($P15, $OilTemperature, $oilType, $P20),
+        );
+        exit(jsonreturn($res));
+    }
+
+
+    /**
      * 获取20℃下的体积修正系数
      * @param float $P15 15℃的标准温度
      * @param float $oilTemperature 油温，测量空高时，油体的温度
-     * @param float $Alpha 油品Alpha
+     * @param int   $oilType 油品类型
      * @param float $P20 20℃的标准温度
      * @return float|int
      */
@@ -2384,15 +2462,27 @@ sql;
         return $P15 * exp(-1 * $Alpha * $deltaT * (1 + 0.8 * $Alpha * $deltaT)) / $P20;
     }
 
+
     /**
      * 获取20℃下的标准密度
      * @param float $P15 15℃的标准温度
-     * @param float $Alpha 油品Alpha
+     * @param int   $oilType 油品类型
      * @return float|int
      */
     function getP20($P15, $oilType)
     {
         return $P15 * exp(-1 * ($this->getAlpha($oilType, $P15)) * 5 * (1 + 0.8 * ($this->getAlpha($oilType, $P15)) * 5));
+    }
+
+    /**
+     * 获取15℃下的标准密度
+     * @param float $P20 20℃的标准温度
+     * @param int   $oilType 油品类型
+     * @return float|int
+     */
+    function getP15($P20, $oilType)
+    {
+        return $P20 * exp(-1 * ($this->getAlpha($oilType, $P20)) * -5 * (1 + 0.8 * ($this->getAlpha($oilType, $P20)) * -5));
     }
 
     /**
@@ -2472,5 +2562,483 @@ sql;
         return $k0 / ($density * $density) + $k1 / $density + $A;
     }
 
+    public function getlcf()
+    {
 
+        if (I('post.lbp', null) === null) {
+            //缺少参数 4
+            exit(jsonreturn(array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            )));
+        }
+        $lbp = I('post.lbp');
+        if (I('post.lca', null) !== null) {
+            $lca = I('post.lca');
+            //计算lcf
+            $lcf = $lbp / 2 - $lca;
+            exit(jsonreturn(array(
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'lcf' => $lcf
+            )));
+        } elseif (I('post.lcb', null) !== null) {
+            $lcb = I('post.lcb');
+            //计算lcf
+            $lcf = $lcb - ($lbp / 2);
+            exit(jsonreturn(array(
+                'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+                'lcf' => $lcf
+            )));
+        } else {
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+
+    /**
+     *  压载水计算器
+     * @param array $data
+     */
+    public function reckon_sw($data)
+    {
+
+
+        //补充下一行
+        if ($data['sounding_down'] == "") {
+            //如果水深未落在水深刻度或者不等于0，则代表参数不正确，参数缺失，报错4
+            if ($data['sounding'] != $data['sounding_up']) return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "sounding_down");
+            $data['sounding_down'] = $data['sounding_up'];
+            $data['value3'] = $data['value1'];
+            $data['value4'] = $data['value2'];
+        } else {
+            if ($data['value3'] == "") return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "value3");
+            if ($data['value4'] == "" and $data['draft2'] != "") return array("code" => $this->ERROR_CODE_COMMON['PARAMETER_ERROR'], "type" => "value4");
+        }
+
+        //补充右列
+        if ($data['draft2'] == "") {
+            $data['draft2'] = $data['draft1'];
+            $data['value2'] = $data['value1'];
+            $data['value4'] = $data['value3'];
+        }
+
+
+        $sounding = floatval($data['sounding']);
+        $draft = floatval($data['draft']);
+        $density = floatval($data['density']);
+//
+//        $sounding1 = floatval($data['sounding1']);
+//        $sounding2 = floatval($data['sounding2']);
+//
+//        $draft1 = floatval($data['draft1']);
+//        $draft2 = floatval($data['draft2']);
+//        $value1 = floatval($data['value1']);
+//        $value2 = floatval($data['value2']);
+//        $value3 = floatval($data['value3']);
+//        $value4 = floatval($data['value4']);
+
+        /*
+         * 表数据排序，小值在ullage1,draft1，大值在ullage2,draft2
+         */
+        if ($data['sounding1'] > $data['sounding2']) {
+
+            $sounding1 = floatval($data['sounding1']);
+            $sounding2 = floatval($data['sounding2']);
+
+            $value1 = floatval($data['value1']);
+            $value2 = floatval($data['value2']);
+            $value3 = floatval($data['value3']);
+            $value4 = floatval($data['value4']);
+
+            $data['sounding1'] = $sounding2;
+            $data['sounding2'] = $sounding1;
+
+            $data['value1'] = $value3;
+            $data['value2'] = $value4;
+            $data['value3'] = $value1;
+            $data['value4'] = $value2;
+
+        }
+
+
+        /*
+         * 依旧排序，排序吃水顺序，排序后顺带将对应值排序
+         */
+        if ($data['draft1'] > $data['draft2']) {
+            $draft1 = floatval($data['draft1']);
+            $draft2 = floatval($data['draft2']);
+
+            $value1 = floatval($data['value1']);
+            $value2 = floatval($data['value2']);
+            $value3 = floatval($data['value3']);
+            $value4 = floatval($data['value4']);
+
+            $data['draft1'] = $draft2;
+            $data['draft2'] = $draft1;
+
+            $data['value1'] = $value2;
+            $data['value3'] = $value4;
+            $data['value2'] = $value1;
+            $data['value4'] = $value3;
+        }
+
+        /*
+         * 开始构建插值计算的计算数组，历史遗留原因，数组不太好解释结构，详情计算请看控制器中的
+         * suanfa函数
+         *
+         * 这一段的代码意思：先判断纵倾是否是极值或者落在刻度的情况下，如果是这种情况只需要放入最
+         * 接近的纵倾刻度值和对应容量值即可，不是这种情况则都放入，水深也是如此。
+         */
+        if ($draft <= $data['draft1']) {
+            $qiu[] = $draft;
+            $keys = array(
+                0 => 'draft1'
+            );
+            // 判断水深是否在两个数之间
+            if ($sounding <= $data['sounding1']) {
+                //如果水深比最小值还小，取极值
+                $ulist[] = array(
+                    'sounding' => $data['sounding1'],   //输入的水深
+                    'draft1' => $data['value1']
+                );
+            } elseif ($sounding >= $data['sounding2']) {
+                //如果水深比最大值还大，取极值
+                $ulist[] = array(
+                    'sounding' => $data['sounding2'],   //输入的水深
+                    'draft1' => $data['value3']
+                );
+            } else {
+                //否则开始插值计算，现在开始处理
+                $ulist = array(
+                    0 => array(
+                        'sounding' => $data['sounding1'],   //输入的水深
+                        'draft1' => $data['value1']
+                    ),
+                    1 => array(
+                        'sounding' => $data['sounding2'],   //输入的水深
+                        'draft1' => $data['value3']
+                    )
+                );
+            }
+        } elseif ($draft >= $data['draft2']) {
+            $qiu[] = $draft;
+            // 下标
+            $keys = array(
+                0 => 'draft2'
+            );
+            // 判断水深是否在两个数中间
+            if ($sounding <= $data['sounding1']) {
+                $ulist[] = array(
+                    'sounding' => $data['sounding1'],   //输入的水深
+                    'draft2' => $data['value2']
+                );
+            } elseif ($sounding >= $data['sounding2']) {
+                $ulist[] = array(
+                    'sounding' => $data['sounding2'],   //输入的水深
+                    'draft2' => $data['value4']
+                );
+            } else {
+                $ulist = array(
+                    0 => array(
+                        'sounding' => $data['sounding1'],   //输入的水深
+                        'draft2' => $data['value2']
+                    ),
+                    1 => array(
+                        'sounding' => $data['sounding2'],   //输入的水深
+                        'draft2' => $data['value4']
+                    )
+                );
+            }
+        } else {
+            $qiu = array(
+                'draft1' => $data['draft1'],
+                'draft2' => $data['draft2']
+            );
+            // 下标
+            $keys = array(
+                0 => 'draft1',
+                1 => 'draft2'
+            );
+            $ulist = array(
+                0 => array(
+                    'sounding' => $data['sounding1'],   //输入的水深
+                    'draft1' => $data['value1'],
+                    'draft2' => $data['value2']
+                ),
+                1 => array(
+                    'sounding' => $data['sounding2'],   //输入的水深
+                    'draft1' => $data['value3'],
+                    'draft2' => $data['value4']
+                )
+            );
+        }
+
+        //开始根据填好的结构开始插值计算
+        $msg = $this->suanfa($qiu, $ulist, $keys, $sounding, $draft);
+
+        //如果返回的是数组，代表返回错误了，返回错误代码
+        if (is_array($msg)) {
+            exit(json_encode($msg));
+        }
+
+        $msg = round((float)$msg, 3);
+
+        $res = array(
+            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+            'volume' => $msg,
+            'density' => $density,//密度
+            'air_buoyancy' => 0.0011,//空气浮力
+            'weight' => round((float)($msg * ($density - 0.0011)), 3),//重量
+            'suanfa' => "volume*(density-air_buoyancy)",//算法字符串
+        );
+
+        exit(json_encode($res));
+    }
+
+
+    /**
+     * 根据算法，插值计算各数据，返回数据
+     * @param array  $qiu 结构：
+     * @param array  $ulist
+     * @param string $keys
+     * @param string $sounding
+     * @param string $chishui
+     * @return array|float
+     */
+    function suanfa($qiu, $ulist, $keys = '', $sounding = '', $chishui = '')
+    {
+        //四种情况计算容量
+        if (count($qiu) == '1' and count($ulist) == '1') {
+            //【1】纵倾（吃水差）查出一条，空高查出1条
+            $res = $ulist[0][$keys[0]];
+        } elseif (count($qiu) == '2' and count($ulist) == '2') {
+            //【2】纵倾（吃水差）查出2条，空高查出2条
+            $hou = $this->get_middle((float)$ulist[1][$keys[1]], (float)$ulist[0][$keys[1]], (float)$ulist[1]['sounding'], (float)$ulist[0]['sounding'], $sounding);
+            $qian = $this->get_middle((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['sounding'], (float)$ulist[0]['sounding'], $sounding);
+            $res = $this->get_middle($hou, $qian, $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
+        } elseif (count($qiu) == '1' and count($ulist) == '2') {
+            //【3】纵倾（吃水差）查出1条，空高查出2条
+            $res = $this->get_middle((float)$ulist[1][$keys[0]], (float)$ulist[0][$keys[0]], (float)$ulist[1]['sounding'], (float)$ulist[0]['sounding'], $sounding);
+        } elseif (count($qiu) == '2' and count($ulist) == '1') {
+            //【4】纵倾（吃水差）查出2条，空高查出1条
+            $res = $this->get_middle($ulist[0][$keys[1]], $ulist[0][$keys[0]], $qiu[$keys[1]], $qiu[$keys[0]], $chishui);
+        } else {
+            //其他错误	2
+            $res = array(
+                'code' => $this->ERROR_CODE_COMMON['ERROR_OTHER']
+            );
+        }
+        return $res;
+    }
+
+
+    public function up_word($shipid,$qufen)
+    {
+
+        $file_path = "./Upload/txt/5003.txt";
+        $cabin = new \Common\Model\CabinModel();
+        $ship = new \Common\Model\ShipFormModel();
+        $cabins_info = $cabin->field('id,cabinname')->where(array('shipid' => $shipid))->select();
+        $ship_info = $ship->field('suanfa,is_diliang,tripbystern,trimcorrection,trimcorrection1,heelingcorrection,heelingcorrection1,tankcapacityshipid,rongliang,zx,hx,rongliang_1,zx_1,hx_1')->where(array('id' => $shipid))->find();
+//        $list_data = $this->read_list_data($file_path, $cabins_info);
+//        $ship_info = $ship_info = $ship->field('shipname,suanfa')->where(array('id' => $shipid))->find();
+//        exit(json_encode($list_data,JSON_UNESCAPED_UNICODE));
+        switch ($ship_info['suanfa']) {
+            case 'a':
+                $trim_kedu = $ship_info['tripbystern'];
+                $table_name_1 = $ship_info['tankcapacityshipid'];
+//                $table_name_2 = "";
+//                $table_name_3 = "";
+                break;
+//            case 'b':
+//                $trim_kedu = $ship_info['trimcorrection'];
+//                $table_name_1 = $ship_info['zx'];
+//                $table_name_2 = $ship_info['rongliang'];
+//                $table_name_3 = $ship_info['hx'];
+//                break;
+//            case 'c':
+//                if ($qufen == 'diliang') {
+//                    $trim_kedu = $ship_info['trimcorrection1'];
+//                    $table_name_1 = $ship_info['zx_1'];
+//                    $table_name_2 = $ship_info['rongliang_1'];
+//                    $table_name_3 = $ship_info['hx_1'];
+//                } else {
+//                    $trim_kedu = $ship_info['trimcorrection'];
+//                    $table_name_1 = $ship_info['zx'];
+//                    $table_name_2 = $ship_info['rongliang'];
+//                    $table_name_3 = $ship_info['hx'];
+//                }
+//                break;
+            case 'd':
+                if ($qufen == 'diliang') {
+                    $trim_kedu = $ship_info['trimcorrection1'];
+                    $table_name_1 = $ship_info['zx_1'];
+                    $table_name_2 = "";
+                    $table_name_3 = "";
+                } else {
+                    $trim_kedu = $ship_info['trimcorrection'];
+                    $table_name_1 = $ship_info['zx'];
+                    $table_name_2 = "";
+                    $table_name_3 = "";
+                }
+                break;
+        }
+//        echo "kedu:".$trim_kedu . "   table1：" .$table1. " table2：".$table2." <br/>";
+        //        array_merge_recursive($a, $b);
+        M()->startTrans();
+        if ($table_name_1 != "") {
+            $table1 = M($table_name_1);
+            $trim = $this->read_word_trim_data($trim_kedu, $file_path, $cabins_info);
+//            exit(json_encode($trim));
+            foreach ($trim as $value) {
+                if ($table1->addAll($value['tirm_data']) === false) {
+                    M()->rollback();
+                    exit(jsonreturn(array('code' => 3, 'error' => $table1->getDbError())));
+                };
+            }
+        }
+//        if ($table_name_2 != "") {
+//            $table2 = M($table_name_2);
+//            $ca = $this->read_ca_data($file_path, $cabins_info);
+//            exit(json_encode($ca));
+//            foreach ($ca as $value1) {
+//                if ($table2->addAll($value1['ca_data']) === false) {
+//                    M()->rollback();
+//                    exit(jsonreturn(array('code' => 4, 'error' => $table2->getDbError())));
+//                };
+//            }
+//        }
+
+//        if ($table_name_3 != "") {
+//            $table3 = M($table_name_3);
+////            exit(json_encode($ca));
+//            foreach ($list_data['data'] as $value1) {
+//                //横倾修正表，录入时不报错,防止影响正常的纵倾修正表录入业务
+//                @$table3->addAll($value1['list_data']);
+//            }
+//        }
+
+        M()->commit();
+        exit(jsonreturn(array('code' => 1, 'msg' => "导入成功")));
+    }
+
+    /**
+     * 正则匹配文本内的纵倾修正表数据并返回
+     * @param $trim_kedu
+     * @param $file_path
+     * @return array
+     */
+    function read_word_trim_data($trim_kedu, $file_path, $cabins_info)
+    {
+        //        https://regex101.com/r/ozVP4k/2 纵倾修正表正则视图
+
+        $orgin_txt = file_get_contents($file_path);
+//        dump($orgin_txt);
+        $re = '/\s*?证书编号\s*?(?:\:|：)\s*?([a-zA-Z0-9]+)\s*?船名\s*?(?:\:|：)\s*?(\S+)\s*?第\s*?(\d+)\s*?页\s*?舱名(?:\:|：)\s*?(\S+)\s*?\S*?\s*?基准高度\/REFERENCE\s*?HEIGHT\:\s*?([\d]{1,2}\.[\d]{0,3})\(m\)\s*?\*+\s*?纵\s*?倾\s*?值\/TRIM\s*?BY\s*?STERN\s*?测\s*?深\s*?空\s*?高\s*?\*+\s*?SOUNDING\s*?ULLAGE\s*?([ \t\-\.\d]+)\s*?(?:\(m\)\s+)+\*+\s+([0-9\.\- \r\n]+)/m';
+        preg_match_all($re, $orgin_txt, $matches, PREG_SET_ORDER, 0);
+        $res = array();
+        $trim_kedu = json_decode($trim_kedu, true);
+
+//        exit(jsonreturn($matches));
+
+        foreach ($matches as $key => $value) {
+            $data = array();
+            //处理页数编号等信息
+//            echo "第".$value[1]."页 ， 有效期：".$value[2]."， 舱号：".$value[3].", 船名：".$value[4]."，书编号：".$value[5]."<br/>";
+            $data['page'] = $value[3];
+            $data['cabin_name'] = preg_replace("/[左右]+污油舱 /", "", $value[4]);
+            $data['ship_name'] = $value[2];
+            $data['book_number'] = $value[1];
+            $cabin_id = 0;
+            $cabin_name = trimall($data['cabin_name']);
+            $digital_cabin_name = $this->chineseToDigital($cabin_name);
+            foreach ($cabins_info as $v11) {
+                if ($cabin_name == $v11['cabinname'] or $digital_cabin_name == $v11['cabinname']) {
+                    $cabin_id = $v11['id'];
+                }
+            }
+            if ($cabin_id == 0) continue;
+            //开始分开吃水刻度
+            $kedu_str = $this->removeExtraSpace($value[6]);
+//            exit($kedu_str);
+
+            $kedu = explode(' ', $kedu_str);
+//            $kedu[count($kedu) - 1] = str_replace("m", "", $kedu[count($kedu) - 1]);
+//            exit(jsonreturn($kedu));
+//            exit;
+            $data['kedu'] = $kedu;
+//            echo "<table style='text-align: center' border='1px solid'>";
+//            echo "<thead><th>实高</th><th>空高</th>";
+//            foreach ($kedu as $k=>$v){
+//                echo "<th>".$v."</th>";
+//            }
+//            echo "</thead>";
+//            echo "<tbody>";
+            $data_row = explode("\r\n", $this->removeExtraSpace($value[7]));
+//            array_pop($data_row);
+//            exit(jsonreturn($data_row));
+
+            $data['tirm_data'] = array();
+            foreach ($data_row as $k1 => $v1) {
+                $qian = array(" ", "　", "   ", "    ", '-', '0', '.');
+                $hou = array("", "", "", "", "", "", "");
+                if (str_replace($qian, $hou, $v1) == "") continue;
+                $data_cloumn = explode(" ", $v1);
+                $data_cloumn[count($data_cloumn) - 1] = str_replace("\r", "", $data_cloumn[count($data_cloumn) - 1]);
+
+                $td = array('sounding' => $data_cloumn[0], 'ullage' => $data_cloumn[1], 'cabinid' => $cabin_id);
+                $i = 0;
+//                print_r($trim_kedu);
+                foreach ($trim_kedu as $k2 => $v2) {
+                    $td["$k2"] = $data_cloumn[$i + 2];
+                    $i++;
+                }
+//                exit(jsonreturn($td));
+
+                array_push($data['tirm_data'], $td);
+//                foreach ($data_cloumn as $k2=>$v2){
+//                    echo "<td>".$v2."</td>";
+//                }
+//                echo "</tr>";
+            }
+
+            if (count($data['tirm_data']) >= 1) {
+                array_push($res, $data);
+            }
+//            echo "</tbody>";
+//            echo "</table>";
+//            $ullage =
+//            echo "<br/>";
+        }
+        return $res;
+//        exit(json_encode($res));
+    }
+
+    /**
+     * 去除文本内多余空格，并且去除头部和结尾的空格
+     * @param $txt
+     * @return string
+     */
+    public function removeExtraSpace($txt)
+    {
+        $txt1 = preg_replace("/^ {2,}/m", "", $txt);
+        $txt2 = preg_replace("/(\d) {2,}/m", "$1 ", $txt1);
+        $txt3 = preg_replace("/ {2,}$/m", "", $txt2);
+        return $txt3;
+    }
+
+    /**
+     * 去除中文汉字转数字
+     * @param $txt
+     * @return string
+     */
+    public function chineseToDigital($txt)
+    {
+        $arr1 = array('一', '二', '三', '四', '五', '六', '七', '八', '九');
+        $arr2 = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
+        $txt1 = str_replace($arr1, $arr2, $txt);
+        return $txt1;
+    }
 }

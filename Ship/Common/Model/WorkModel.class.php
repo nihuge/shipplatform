@@ -60,6 +60,10 @@ class WorkModel extends BaseModel
     public function addResult($data, $uid)
     {
         $datas = $data;
+		unset($datas['imei']);
+        foreach ($datas as $data_key=>$data_value){
+            if(!filterString($data_value)) return array('code'=>$this->ERROR_CODE_COMMON['ERROR_DATA'],'msg'=>"请不要提交异常字符信息".$data_key.":".$data_value);
+        }
         //判断船驳舱容表时间是否到期
         $ship = new \Common\Model\ShipFormModel();
 //        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
@@ -190,6 +194,7 @@ class WorkModel extends BaseModel
 //                'msg' => $this->ERROR_CODE_RESULT_ZH[$this->ERROR_CODE_RESULT['EXPIRETIME_TIME_RONG']]
 //            );
 //        }
+		
         return $res;
     }
 
@@ -963,13 +968,22 @@ class WorkModel extends BaseModel
             );
             $num = M('forntrecord')->where($map)->count();
             M()->startTrans();  // 开启事物
-            if ($num > 0) {
-                //数据存在--修改
-                $r = M('forntrecord')->where($map)->save($data);
-            } else {
-                //数据不存在--新增
-                $r = M('forntrecord')->add($data);
+            try{
+                if ($num > 0) {
+                    //数据存在--修改
+                    $r = M('forntrecord')->where($map)->save($data);
+                } else {
+                    //数据不存在--新增
+                    $r = M('forntrecord')->add($data);
+                }
+            }catch (\Exception $exception){
+                M()->rollback();
+                $res = array(
+                    'code'=>$this->ERROR_CODE_COMMON['DB_ERROR']
+                );
+                exit(jsonreturn($res));
             }
+
 
             $datafile = array();
             // 判断是否存在首吃水 尾吃水
@@ -1043,7 +1057,7 @@ class WorkModel extends BaseModel
                             $this->process = array();
                             $value['uid'] = $datas['uid'];
                             $value['imei'] = $datas['imei'];
-                            $this->reckon($value);
+                            $this->reckon($value,'l',true);
                         }
                     }
                 }
@@ -1326,8 +1340,17 @@ class WorkModel extends BaseModel
      * @param string $type 默认l，代表没有发生错误时由此方法提交事务，传入其他值则外部提交事务
      * @return array
      */
-    public function reckon($data, $type = 'l')
+    public function reckon($data, $type = 'l',$is_repeat=false)
     {
+		if(!$is_repeat){
+			$validata_result = validata_range($data);
+			if($validata_result['error']){
+				//提交的值超出约定范围，报错2044
+				M()->rollback();
+				return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+			}	
+		}
+        
         $this->process = array();
         // 根据船ID获取纵倾值
         $ship = new \Common\Model\ShipModel();
@@ -2551,6 +2574,15 @@ class WorkModel extends BaseModel
      * */
     public function reckon1($data, $type = 'l')
     {
+
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
+
+
         $this->process = array();
         self::$function_process = array();
 
@@ -3232,6 +3264,12 @@ class WorkModel extends BaseModel
      * */
     public function capacityreckon($data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $this->process = array();
         self::$function_process = array();
         $user = new \Common\Model\UserModel();
@@ -3781,7 +3819,7 @@ class WorkModel extends BaseModel
 
             $da = array(
                 'grade1' => $data['grade'],
-                'evaluate1' => $data['content'],
+                'evaluate1' => $data['content']=='undefined'?"":$data['content'],
                 'operater1' => $data['operater'],
                 'measure_standard1' => $data['measure'],
                 'security1' => $data['security'],
@@ -4242,6 +4280,12 @@ class WorkModel extends BaseModel
      */
     public function adjust_cabin(array $data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $result_record = M("resultrecord");
         $record_where = array(
             "solt" => $data['solt'],
@@ -4265,7 +4309,7 @@ class WorkModel extends BaseModel
         } catch (\Exception $e) {
             //数据格式有错 7
             M()->rollback();
-            return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA']);
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR']);
         }
 
         //如果保存失败
@@ -4306,7 +4350,12 @@ class WorkModel extends BaseModel
      */
     public function adjust_nodata_cabin(array $data)
     {
-
+        $validata_result = validata_range($data);
+        if($validata_result['error']){
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key']);
+        }
         $result_record = M("resultrecord");
         $record_where = array(
             "solt" => $data['solt'],
@@ -4718,7 +4767,7 @@ class WorkModel extends BaseModel
 
         //查找
         if (false == $fullsearch) {
-            $data = $cumulative_trim_data->field('ullage1,ullage2,draft1,draft2,value1,value2,value3,value4')->where($trim_where)->order('ins_time desc')->find();
+            $data = $cumulative_trim_data->field('ullage1,ullage2,draft1,draft2,value1,value2,value3,value4')->where($trim_where)->order('data_sources desc,ins_time desc')->find();
         } else {
             $data = $cumulative_trim_data->where($trim_where)->order('data_sources desc,ins_time desc')->find();
         }
@@ -4758,7 +4807,7 @@ class WorkModel extends BaseModel
 
         //查找
         if (false == $fullsearch) {
-            $data = $cumulative_capacity_data->field('xiuullage1,xiuullage2,capacity1,capacity2')->where($capacity_where)->order('ins_time desc')->find();
+            $data = $cumulative_capacity_data->field('xiuullage1,xiuullage2,capacity1,capacity2')->where($capacity_where)->order('data_sources desc,ins_time desc')->find();
         } else {
             $data = $cumulative_capacity_data->where($capacity_where)->order('data_sources desc,ins_time desc')->find();
         }

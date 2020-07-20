@@ -144,7 +144,7 @@ function encrypt($pwd)
 /**
  * Ajax方式返回数据
  * @access protected
- * @param mixed $data 要返回的数据
+ * @param mixed  $data 要返回的数据
  * @param String $type AJAX返回数据格式
  * @return void
  */
@@ -276,6 +276,107 @@ function trimall($str)
 }
 
 /**
+ * 过滤特殊字符
+ * @param string $string :字符串
+ * @return boolan
+ */
+function filterString($string)
+{
+    if (preg_match("/\;|\'|\\|\"|\(|\)|\,|\s|\#|\/|\[|\]|\&|\`|\*|\=|\!|\%|and|or|union|select|where|limit|group|by|hex|substr/", $string)) {
+        return false;
+    }
+
+    if (preg_match("/((\%3D)|(=))[^\n]*((\%27)|(\’)|(\-\-)|(\%3B)|(:))/i", $string)) {
+        return false;
+    }
+
+    if (preg_match("/\w*((\%27)|(\’))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/ix", $string)) {
+        return false;
+    }
+
+    if (preg_match("/((\%27)|(\’))union/ix", $string)) {
+        return false;
+    }
+
+    if (preg_match("/exec(\s|\+)+(s|x)p\w+/ix", $string)) {
+        return false;
+    }
+
+
+//    if (strpos($string, "'") == false and strpos($string, "'") !== 0 and strpos($string, "/") == false and strpos($string, "/") !== 0) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+    return true;
+}
+
+
+/**
+ * 判断数组内成员是否超出约定范围
+ * @param array $data
+ * @return bool
+ */
+function validata_range($data)
+{
+    /*
+     * 校验值有无超出范围
+     */
+    $validata = array(
+        'ullage1' => 100,
+        'ullage2' => 100,
+        'draft1' => 100,
+        'draft2' => 1000,
+        'value1' => 1000,
+        'value2' => 1000,
+        'value3' => 1000,
+        'value4' => 1000,
+        'xiuullage1' => 100,
+        'xiuullage2' => 100,
+        'capacity1' => 1000,
+        'capacity2' => 1000,
+        'is_work' => 3,
+        'water_sounding' => 1000,
+        'water_ullage' => 1000,
+        'ob_temperature' => 1000,
+        'ob_density' => 10000,
+        'density' => 10000,
+        'ullage' => 100,
+        'sounding' => 100,
+        'solt' => 3,
+        'resultid' => 1000000000,
+        'shipid' => 1000000000,
+        'uid' => 1000000000,
+        'result_id' => 1000000000,
+        'ship_id' => 1000000000,
+        'temperature' => 1000,
+        'forntleft' => 1000,
+        'forntright' => 1000,
+        'centerleft' => 1000,
+        'centerright' => 1000,
+        'afterleft' => 1000,
+        'afterright' => 1000,
+        'sw' => 1,
+    );
+
+    foreach ($data as $key => $data_value) {
+        if (isset($validata[$key])) {
+            if(is_array($data_value)){
+                continue;
+            }
+            if(!is_numeric($data_value)){
+                return array('error' => 1, 'key' => $key);
+            }
+            if (abs($data_value) >= $validata[$key]) {
+                return array('error' => 1, 'key' => $key);
+            }
+        }
+    }
+
+    return array('error' => 0);
+}
+
+/**
  * 循环删除目录和文件
  * @param string $dirName 文件夹目录
  * @return
@@ -378,7 +479,7 @@ function dateRemoveZero($list)
 
 /**
  * 检测文件是否存在，不存在则新建
- * @param $dir
+ * @param     $dir
  * @param int $mode
  * @return bool
  */
@@ -464,7 +565,7 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
 //    $pdf->SetHeaderData('logo.png', 30, 'Helloweba.com', '致力于WEB前端技术在中国的应用',
 //        array(0, 64, 255), array(0, 64, 128));
     // 设置页眉字体
-    $pdf->setHeaderFont(Array('dejavusans', '', '12'));
+    $pdf->setHeaderFont(array('dejavusans', '', '12'));
     // 页眉距离顶部的距离
     $pdf->SetHeaderMargin('1');
     // 是否显示页脚
@@ -472,7 +573,7 @@ function pdf($data = '', $functionname = '', $miniAppPath = "shipPlatform", $PDF
     // 设置页脚显示的内容
     $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
     // 设置页脚的字体
-    $pdf->setFooterFont(Array('dejavusans', '', '10'));
+    $pdf->setFooterFont(array('dejavusans', '', '10'));
     // 设置页脚距离底部的距离
     $pdf->SetFooterMargin('1');
     // 设置默认等宽字体
@@ -556,14 +657,13 @@ function imgToBase64($img_file)
 /**
  * 服务器网络请求方法，如果需要支持https访问请配置apache的根证书
  * @param string $url 网址
- * @param int $type 请求类型，0为get,1为post
+ * @param int    $type 请求类型，0为get,1为post
  * @param string $data 请求参数，非必填，请求类型为post时必填
  */
 function curldo($url, $type = 0, $data = "")
 {
     //数组形式自动构建数据
-    if (is_array($data))
-    {
+    if (is_array($data)) {
         $data = http_build_query($data, null, '&');
     }
 
@@ -846,7 +946,7 @@ function countpdf($list, $sum)
     // 设置页眉显示的内容
     $pdf->SetHeaderData('', 60, '', '', array(0, 64, 255), array(0, 64, 128));
     // 设置页眉字体
-    $pdf->setHeaderFont(Array('dejavusans', '', '12'));
+    $pdf->setHeaderFont(array('dejavusans', '', '12'));
     // 页眉距离顶部的距离
     $pdf->SetHeaderMargin('5');
     // 是否显示页脚
@@ -854,7 +954,7 @@ function countpdf($list, $sum)
     // 设置页脚显示的内容
     $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
     // 设置页脚的字体
-    $pdf->setFooterFont(Array('dejavusans', '', '10'));
+    $pdf->setFooterFont(array('dejavusans', '', '10'));
     // 设置页脚距离底部的距离
     $pdf->SetFooterMargin('10');
     // 设置默认等宽字体
@@ -1178,8 +1278,8 @@ function csicpdf($data = '')
 {
     static $t = '';
     // $count = $data["resultmsg"];
-    $tls = C('TLS',null,'https://');
-    $domain = C('DOMAIN',null,"www.ciplat.com");
+    $tls = C('TLS', null, 'https://');
+    $domain = C('DOMAIN', null, "www.ciplat.com");
     $count = count($data["resultmsg"]);
     $enter1 = "<h4></h4>";
     $enter2 = "<br/>";
@@ -1193,7 +1293,7 @@ function csicpdf($data = '')
                 <td style='width:100px;'>{$data["resultmsg"][$i][0]['cabinname']}</td>
                 <td >{$data["resultmsg"][$i][0]['temperature']}</td>
                 <td >{$data["resultmsg"][$i][0]['ullage']}</td>
-                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>":"")."
+                " . ($data['content']['oil_type'] > 1 ? "<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>" : "") . "
                 <td >{$data["resultmsg"][$i][0]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][0]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][0]['cabinweight']}</td>
@@ -1203,7 +1303,7 @@ function csicpdf($data = '')
                 <td></td>
                 <td>{$data["resultmsg"][$i][1]['temperature']}</td>
                 <td>{$data["resultmsg"][$i][1]['ullage']}</td>
-                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>":"")."
+                " . ($data['content']['oil_type'] > 1 ? "<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>" : "") . "
                 <td>{$data["resultmsg"][$i][1]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][1]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][1]['cabinweight']}</td>
@@ -1221,7 +1321,7 @@ function csicpdf($data = '')
                 <td style='valign:middle;width:100px;'>{$data["resultmsg"][$i][0]['cabinname']}</td>
                 <td >{$data["resultmsg"][$i][0]['temperature']}</td>
                 <td>{$data["resultmsg"][$i][0]['ullage']}</td>
-                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>":"")."
+                " . ($data['content']['oil_type'] > 1 ? "<td >{$data['resultmsg'][$i][0]['water_sounding']}</td>" : "") . "
                 <td>{$data["resultmsg"][$i][0]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][0]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][0]['cabinweight']}</td>
@@ -1231,7 +1331,7 @@ function csicpdf($data = '')
                 <td></td>
                 <td>{$data["resultmsg"][$i][1]['temperature']}</td>
                 <td>{$data["resultmsg"][$i][1]['ullage']}</td>
-                ".($data['content']['oil_type']>1?"<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>":"")."
+                " . ($data['content']['oil_type'] > 1 ? "<td >{$data['resultmsg'][$i][1]['water_sounding']}</td>" : "") . "
                 <td>{$data["resultmsg"][$i][1]['listcorrection']}</td>
                 <td>{$data["resultmsg"][$i][1]['correntkong']}</td>
                 <td>{$data["resultmsg"][$i][1]['cabinweight']}</td>
@@ -1282,7 +1382,7 @@ function csicpdf($data = '')
     <td style="width:300px;">
     <br/>
     <br/>
-    <img width="240px" height="50px" src="'.$tls.$domain.'/Upload/logo/csic_logo.png" style="display:inline-block;">
+    <img width="240px" height="50px" src="' . $tls . $domain . '/Upload/logo/csic_logo.png" style="display:inline-block;">
     </td>
     <td align="center" valign="bottom" style="width:450px;"><br/><br/><br/><h2 align="center">计重记录单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
     <td align="center" style="width:200px;">
@@ -1307,7 +1407,7 @@ function csicpdf($data = '')
             <th  width="45px">编号：</th>
             <th style="border-bottom:solid 1px black" align="center">' . $data['personality']['number'] . '</th>
         </tr>
-        '.$enter2.'
+        ' . $enter2 . '
         <tr>
             <th width="65px">&nbsp;起运港：</th>
             <th style="border-bottom:solid 1px black" width="150px" align="center">' . $data['personality']['start'] . '</th>
@@ -1319,7 +1419,7 @@ function csicpdf($data = '')
             <th style="border-bottom:solid 1px black"  align="center">' . $data['starttime'] . '</th>
         </tr>
     </table>
-    '.$enter1.'
+    ' . $enter1 . '
     <table border="1" cellspacing="0" cellpadding="0" align="center" width="1050px">
         <tr>
             <th colspan="9" width="524px" style="height:17px"> &nbsp; &nbsp; &nbsp; &nbsp;首次检验&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;吃水差：' . $data['content']['qianchi'] . '</th>
@@ -1332,7 +1432,7 @@ function csicpdf($data = '')
             <th style="width:90px;padding:1px;">油舱名称</th>
             <th width="35px">温度</th>
             <th width="57px">空距<br>(米)</th>
-            '.($data['content']['oil_type']>1?"<th width='57px'>水深<br>(米)</th>":"").'
+            ' . ($data['content']['oil_type'] > 1 ? "<th width='57px'>水深<br>(米)</th>" : "") . '
             <th width="57px">纵倾修正值(米)</th>
             <th width="57px">修正后空距(米)</th>
             <th width="57px">容量<br>(米 <sup>3</sup> )</th>
@@ -1342,7 +1442,7 @@ function csicpdf($data = '')
             <th width="2px"></th>
             <th width="35px">温度</th>
             <th width="57px">空距<br>(米)</th>
-            '.($data['content']['oil_type']>1?"<th width='57px'>水深<br>(米)</th>":"").'
+            ' . ($data['content']['oil_type'] > 1 ? "<th width='57px'>水深<br>(米)</th>" : "") . '
             <th width="57px">纵倾修正值(米)</th>
             <th width="57px">修正后空距(米)</th>
             <th width="57px">容量<br>(米 <sup>3</sup> )</th>
@@ -1403,7 +1503,7 @@ function csicpdf($data = '')
             <th  width="125px">&nbsp;&nbsp;量油尺编号：</th>
             <th style="border-bottom:solid 1px black;" width="192px" >' . $data['personality']['dipstick'] . '</th>
         </tr>
-        '.$enter.'
+        ' . $enter . '
         <tr>
             <th width="50px" align="left" class="ju02">备注：</th>
             <th width="900px" colspan=5 style="border-bottom:solid 1px black;">' . $data['content']['remark'] . '</th>
@@ -1482,9 +1582,9 @@ function createQRcode($save_path, $qr_data = 'xiehzong', $qr_level = 'L', $qr_si
 function getReportErCode($result_id, $user_id)
 {
     $sign = reportCodeEncode($result_id, $user_id);
-    $tls = C('TLS',null,'https://');
-    $domain = c('DOMAIN',null,"www.ciplat.com");
-    $url = $tls.$domain."/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $tls = C('TLS', null, 'https://');
+    $domain = c('DOMAIN', null, "www.ciplat.com");
+    $url = $tls . $domain . "/index.php?c=report&a=verification&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 
@@ -1510,9 +1610,9 @@ function reportCodeEncode($result_id, $user_id)
 function shGetReportErCode($result_id, $user_id)
 {
     $sign = shReportCodeEncode($result_id, $user_id);
-    $tls = c('TLS',null,"https://");
-    $domain = c('DOMAIN',null,"www.ciplat.com");
-    $url = $tls.$domain."/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
+    $tls = c('TLS', null, "https://");
+    $domain = c('DOMAIN', null, "www.ciplat.com");
+    $url = $tls . $domain . "/index.php?c=report&a=sh_verify&result_id=" . $result_id . "&uid=" . $user_id . "&sign=" . $sign;
     return "Upload/ercode/" . createQRcode("Upload/ercode/", $url);
 }
 
@@ -1671,7 +1771,7 @@ function upload_ajax($base64_image_content)
  * 上传base64图片
  * @param string $base64 :文件base64编码
  * @param string $path :文件保存路径
- * @param array $exts :允许上传的文件后缀
+ * @param array  $exts :允许上传的文件后缀
  * @param string $method :数据传输方式 POST GET
  * @return string|code
  * @return 成功返回文件完整路径
@@ -1806,17 +1906,16 @@ function getUserIp()
 
 /**
  * 简略正文信息，超出的部分用...代替
- * @param $text
- * @param $length
+ * @param        $text
+ * @param        $length
  * @param string $replace
  * @param string $encoding
  * @return string
  */
-function substr_format($text, $length, $replace='..', $encoding='UTF-8')
+function substr_format($text, $length, $replace = '..', $encoding = 'UTF-8')
 {
-    if ($text && mb_strlen($text, $encoding)>$length)
-    {
-        return mb_substr($text, 0, $length, $encoding).$replace;
+    if ($text && mb_strlen($text, $encoding) > $length) {
+        return mb_substr($text, 0, $length, $encoding) . $replace;
     }
     return $text;
 }
@@ -1837,17 +1936,17 @@ function getCity($ip)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     //参数为0表示不带头文件，为1表示带头文件
-    curl_setopt($ch, CURLOPT_HEADER,0);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
     $output = curl_exec($ch);
 
     curl_close($ch);
 
-    $output = json_decode($output,true);
+    $output = json_decode($output, true);
 
-    return $output['content']['address_detail']['province'].$output['content']['address_detail']['city'];
+    return $output['content']['address_detail']['province'] . $output['content']['address_detail']['city'];
 
 }

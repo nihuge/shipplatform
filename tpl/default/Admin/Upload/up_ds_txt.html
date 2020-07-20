@@ -1,0 +1,129 @@
+<extend name="Public:base"/>
+<block name="title">数据导入</block>
+<block name="navtitle">
+    <li class="active">
+        散货船静力水表txt数据导入
+    </li>
+    <li class="active">
+        导入
+    </li>
+</block>
+<block name="activeopen41">class="active open"</block>
+<block name="active_up_ds_txt">class="active"</block>
+<block name="content">
+    <div class="page-container">
+        <h1 style="text-align: center;margin: 15px auto;">散货船静力水表数据导入</h1>
+        <form action="__ACTION__" method="post" enctype="multipart/form-data">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover"
+                   style='width:500px;margin:auto auto;text-align: center;'>
+
+                <tr>
+                    <td style="width:80px;">船&nbsp;&nbsp;&nbsp;&nbsp;舶</td>
+                    <td>
+                        <select name="shipid" id="shipid" required class="col-xs-10 col-sm-5">
+                            <option value="">--选择船--</option>
+                            <volist name="shiplist" id="v">
+                                <option id="shipid_{$v['id']}" value="{$v['id']}">{$v['shipname']}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+<!--                <tr>
+                    <td>数据类别</td>
+                    <td id="qufen" style="text-align: left">
+                    </td>
+                </tr>-->
+                <tr>
+                    <td>上传文件</td>
+                    <td>
+                        <input type="file" name="file">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="确认上传" class="btn btn-primary" style="margin-top: 5px;">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br>
+        <br>
+        <table id='presence' class="table table-striped table-bordered table-hover"
+               style='width:500px;margin:auto auto;text-align: center;'>
+
+        </table>
+    </div>
+    <script type="text/javascript">
+
+
+        /*
+        封装
+         */
+
+        //设置cookie
+        function setCookie(key, value, t) {
+            var oDate = new Date();
+            oDate.setDate(oDate.getDate() + t);
+            document.cookie = key + "=" + value + "; expires=" + oDate.toDateString();
+        }
+
+        //获取cookie
+        function getCookie(key) {
+            var arr1 = document.cookie.split("; ");//由于cookie是通过一个分号+空格的形式串联起来的，所以这里需要先按分号空格截断,变成[name=Jack,pwd=123456,age=22]数组类型；
+            for (var i = 0; i < arr1.length; i++) {
+                var arr2 = arr1[i].split("=");//通过=截断，把name=Jack截断成[name,Jack]数组；
+                if (arr2[0] == key) {
+                    return decodeURI(arr2[1]);
+                }
+            }
+            return '';
+
+        }
+
+        //封装一个移除cookie的函数
+        function removeCookie(key) {
+            setCookie(key, "", -1);//把cookie设置为过期
+
+        }
+
+
+        $('document').ready(function () {
+            var shipid = getCookie('upload_txt_shipid');
+            var shipinfo ={:json_encode($shiplist)}
+            //下拉获取cang,单选获取表
+            /*$("select[name=shipid]").change(function () {
+                if ($(this).children().is(':selected')) {
+                    var id = $(this).val();
+                    var edc = $("#qufen");
+                    if (id !== '') {
+                        for(let i in shipinfo){
+                            if(shipinfo[i].id == id){
+                                console.log(shipinfo[i]);
+                                if(shipinfo[i].suanfa == "a") {
+                                    edc.html('<input id="qufen1" type="radio" name="qufen" value="rongliang"/><label for="qufen1">容量书</label>');
+                                }else if (shipinfo[i].suanfa == "b"){
+                                    edc.html('<input id="qufen1" type="radio" name="qufen" value="rongliang"/><label for="qufen1">容量书</label>');
+                                }else if (shipinfo[i].suanfa == "c"){
+                                    edc.html('<input id="qufen1" type="radio" name="qufen" value="rongliang"/><label for="qufen1">容量书</label><input id="qufen2" type="radio" name="qufen" value="diliang"/><label for="qufen2">底量书</label>');
+                                }else if (shipinfo[i].suanfa == "d"){
+                                    edc.html('<input id="qufen1" type="radio" name="qufen" value="rongliang"/><label for="qufen1">容量书</label><input id="qufen2" type="radio" name="qufen" value="diliang"/><label for="qufen2">底量书</label>');
+                                }
+                            }
+                        }
+                    } else {
+                        edc.html('');
+                    }
+                } else {
+                    var edc = $("#cabinid");
+                    edc.empty();
+                }
+            });*/
+
+/*            if (shipid !== "") {
+                $('#shipid').val(shipid);
+                $("select[name=shipid]").change();
+            }*/
+
+        });
+    </script>
+</block>

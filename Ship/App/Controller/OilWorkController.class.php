@@ -497,6 +497,15 @@ class OilWorkController extends AppBaseController
                 if (I('post.uid') and I('post.resultid') and I('post.solt') and I('post.imei') and I('post.imei')!==null) {
                     $result = new \Common\Model\OilWorkModel();
                     $data = I('post.');
+                    unset($data['temperature']);
+                    $validata_result = validata_range($data);
+                    if($validata_result['error']){
+                        //提交的值超出约定范围，报错2044
+                        M()->rollback();
+                        exit(jsonreturn(array('code'=>$this->ERROR_CODE_RESULT['OUT_OF_RANGE'],'msg'=>"提交的信息中存在超出范围的值，请检查",'key'=>$validata_result['key'])));
+                    }
+                    $data['temperature'] = I('post.temperature');
+
                     /*
                      *   限制空高和温度的精度，要求符合2012-12-12发布的国家出入境检验检
                      * 疫行业标准，若标准更新，请以新标准为准
@@ -2993,7 +3002,7 @@ class OilWorkController extends AppBaseController
 
                     if ($is_have_data !== 'y') {
                         $res['code'] = $this->ERROR_CODE_RESULT['OIL_TYPE_ERROR'];
-                        $res['error'] = "油船作业暂不支持调整无表船";
+                        $res['msg'] = "油船作业暂不支持调整无表船";
 //
 //                        $need_adjust = array();
 //                        //开启事务

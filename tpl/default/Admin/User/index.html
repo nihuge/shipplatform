@@ -75,11 +75,6 @@
                                onmouseout="hideAwesomeFontTips()" id="lock_{$v['id']}" title="点此按钮冻结用户，无法操作系统"><i
                                     class="fa fa-lock fa-lg" aria-hidden="true"></i></a>
                         </if>
-                        &nbsp;|&nbsp;<a href="{:U('User/add',array('firmid'=>$v['firmid'],'id'=>$v['id']))}"
-                                        style="color: #87B87F"
-                                        onmouseover="showAwesomeFontTips('新增操作员','#add_user_{$v['id']}')"
-                                        onmouseout="hideAwesomeFontTips()" id="add_user_{$v['id']}" title="新增操作员"><i
-                                class="fa fa-plus-square fa-lg"></i></a>
                         <if condition="$v['pid'] != 0">
                             |&nbsp;<a href="javascript:;" onclick="del_user('{$v['id']}')"
                                       style="color: #8A3104"
@@ -87,6 +82,11 @@
                                       onmouseout="hideAwesomeFontTips()" id="del_user_{$v['id']}" title="删除操作员"><i
                                 class="fa fa-trash fa-lg"></i></a>
                             <else/>
+                            &nbsp;|&nbsp;<a href="{:U('User/add',array('firmid'=>$v['firmid'],'id'=>$v['id']))}"
+                                            style="color: #87B87F"
+                                            onmouseover="showAwesomeFontTips('新增操作员','#add_user_{$v['id']}')"
+                                            onmouseout="hideAwesomeFontTips()" id="add_user_{$v['id']}" title="新增操作员"><i
+                                class="fa fa-plus-square fa-lg"></i></a>
                             |&nbsp;<a href="javascript:;" onclick="change_admin('{$v['id']}')"
                                       style="color: #8A3104"
                                       onmouseover="showAwesomeFontTips('更换管理员','#change_admin_{$v['id']}')"

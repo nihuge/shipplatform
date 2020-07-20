@@ -818,7 +818,7 @@ class UploadController extends AppBaseController
                                         M()->commit();
                                         $res = array(
                                             'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                                            'msg' => $res['mes'],
+                                            'msg' => "成功",
                                             'path' => $path
                                         );
                                     } else {

@@ -76,7 +76,9 @@ class WxController extends AppBaseController
                     $unionid = $decryptedData['unionid'];
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
-                        'decryptedData' => $decryptedData
+                        'decryptedData' => $decryptedData,
+                        'unionid' => $unionid,
+                        'openid' => $openid,
                     );
                 } else {
                     $res = array(
@@ -99,7 +101,4 @@ class WxController extends AppBaseController
         echo jsonreturn($res);
     }
 
-    function test(){
-
-    }
 }

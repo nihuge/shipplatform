@@ -173,8 +173,8 @@ class FirmModel extends BaseModel
     }
 
     /**
-     * 获取公司下的所有船列表
-     * @param int $firmid 公司id
+     * 获取公司下的所有船列表(区分检验公司和船公司)
+     * @param int    $firmid 公司id
      * @param string $firmtype 公司类型检验、船舶
      * */
     public function getShipList($firmid, $firmtype)
@@ -231,6 +231,42 @@ class FirmModel extends BaseModel
         }
 
         return $res;
+    }
+
+    /**
+     * 获取所有船列表
+     * @param int    $firmid 公司id
+     * @param string $firmtype 公司类型检验、船舶
+     * */
+    public function getAllShip()
+    {
+        $ship = new \Common\Model\ShipModel();
+        $sh_ship = new \Common\Model\ShShipModel();
+        $res = array();
+        // 获取所有的船舶公司的船
+        $where = array(
+            'firmtype' => '2',
+            "del_sign" => 1,
+        );
+        $res = $this
+            ->field('id,firmname')
+            ->where($where)
+            ->order('id asc')
+            ->select();
+        foreach ($res as $key => $value) {
+            $res[$key]['shiplist'] = $ship
+                ->field('id,shipname,data_ship')
+                ->where(array('firmid' => $value['id'], "del_sign" => 1))
+                ->select();
+
+            $res[$key]['sh_shiplist'] = $sh_ship
+                ->field('id,shipname')
+                ->where(array('firmid' => $value['id'], "del_sign" => 1))
+                ->select();
+        }
+
+        return $res;
+
     }
 
     /**
@@ -409,7 +445,7 @@ class FirmModel extends BaseModel
         //开始事务
         M()->startTrans();
         $user = new \Common\Model\UserModel();
-        $user_msg = $user->field('firmid,pid')->where(array('id'=>$uid))->find();
+        $user_msg = $user->field('firmid,pid')->where(array('id' => $uid))->find();
         $firm_id = $user_msg['firmid'];
 
         #todo 完善代码，社会信用代码和图片不要放在firm表，放在firm_review表，这样的话可以多个用户同时申请一个公司
@@ -418,12 +454,13 @@ class FirmModel extends BaseModel
         );
 
         $firm_claimed_status = $this->field('legalize_img,legalize_code,claimed')->where($map)->find();
-        if ($firm_claimed_status['legalize_img'] == "" and $firm_claimed_status['legalize_code'] == "" and $firm_claimed_status['claimed']==0) {
+        if ($firm_claimed_status['legalize_img'] == "" and $firm_claimed_status['legalize_code'] == "" and $firm_claimed_status['claimed'] == 0) {
             $data = array(
                 'legalize_code' => $shehuicode,
                 'legalize_img' => $img,
                 'claimed' => 1,
                 'legalize_time' => time(),
+                'legalize_uid' => $uid,
             );
 
             //将提交的社会信用代码放入

@@ -132,6 +132,7 @@ $error_code_result = array(
     'STATUS_CANNOT_NORMAL' => 2041,   // 用户状态不能是正常状态
     'CANNOT_CREATE_MULTIPLE_REVIEWS' => 2042,   // 用户不可以创建多个审核
     'OIL_TYPE_ERROR' => 2043,   // 油品种类不适用于当前业务
+    'OUT_OF_RANGE' => 2044,   // 提交的作业值超出约定范围
 );
 define('error_code_result', json_encode($error_code_result));
 
@@ -179,5 +180,6 @@ $error_code_result_zh = array( // /提示信息需要对应修改
     2041 => '用户状态不能是正常状态',
     2042 => '用户不可以创建多个审核',
     2043 => '油品种类不适用于当前业务',
+    2044 => '提交的作业值超出约定范围',
 );
 define('error_code_result_zh', json_encode($error_code_result_zh));

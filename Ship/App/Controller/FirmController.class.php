@@ -479,7 +479,7 @@ class FirmController extends AppBaseController
                 } else {
                     $res = array(
                         'code' => $this->ERROR_CODE_COMMON['ERROR_DATA'],
-                        'error' => $img['msg']
+                        'msg' => $img['msg']
                     );
                 }
             } elseif ($msg['code'] == '1') {
@@ -499,7 +499,7 @@ class FirmController extends AppBaseController
 
 
     /**
-     * 追加复核船信息通知
+     * 追加认领公司信息通知
      */
     public function add_firm_review_notice()
     {
@@ -542,6 +542,108 @@ class FirmController extends AppBaseController
         exit(jsonreturn($res));
     }
 
+
+    /**
+     * 获取用户统计信息
+     */
+    public function get_firm_count()
+    {
+        #todo 支持某段时间的统计，比如最近15天，最近1个月，最近3个月的统计情况,目前只有全部的统计
+        if (I('post.uid') and I('post.imei')) {
+            $uid = intval(I('post.uid'));
+            $imei = I('post.imei');
+            $user = new \Common\Model\UserModel();
+            $msg = $user->is_judges($uid, $imei);
+
+            if ($msg['code'] == 1) {
+                if (I('post.days')) {
+                    $days = intval(I('post.days'));
+                    $time = strtotime("-" . $days . " day");
+//                    echo $time;
+//                    $user = new \Common\Model\UserModel();
+                    $users = $user->field('id')->where(array('firmid' => intval($msg['content'])))->select();
+                    $user_ids = array();
+                    foreach ($users as $key => $value) {
+                        $user_ids[] = $value["id"];
+                    }
+
+                    $evaluation = M("evaluation");
+                    //获取船舶公司的相关评价
+                    $where = array(
+                        'time2' => array("gt", $time),
+                        'uid' => array('in', implode(",", $user_ids))
+                    );
+
+//                    $datas = $evaluation->where($where)->fetchSql(true)->select();
+                    $datas = $evaluation->where($where)->select();
+                    //缺省作业统计查询条件
+                    $result_where = array(
+                        'time'=> array("gt", $time),
+                    );
+
+                    $count_data = array(
+                        'num' => 0,                   //总作业数量
+                        'weight' => 0,                //总作业吨数
+                        'grade' => 0,                 //评价等级总和
+                        'grade_num' => 0,             //评价次数
+                        'measure_standard' => 0,      //计量规范总分
+                        'measure_num' => 0,           //计量规范次数
+                        'security' => 0,              //安全规范总分
+                        'security_num' => 0,          //安全规范评价次数
+                    );
+
+                    foreach ($datas as $key1 => $value1) {
+                        //统计评价等级
+                        if ($value1['grade2'] > 0) {
+                            $count_data['grade'] += $value1['grade2'];
+                            $count_data['grade_num'] += 1;
+                        }
+
+                        //统计计量规范分
+                        if ($value1['measure_standard2'] > 0) {
+                            $count_data['measure_standard'] += $value1['measure_standard2'];
+                            $count_data['measure_num'] += 1;
+                        }
+
+                        //统计安全规范分
+                        if ($value1['security2'] > 0) {
+                            $count_data['security'] += $value1['security2'];
+                            $count_data['security_num'] += 1;
+                        }
+
+                    }
+                    //统计总作业次数
+                    $result_where['uid'] = array('in',$user_ids);
+
+                    $result = new \Common\Model\ResultModel();
+                    $count_data['num'] = $result->where($result_where)->count();
+//                    $result_weight = $result->field('sum(weight) as s_weight')->fetchSql(true)->where($result_where)->find();
+                    $result_weight = $result->field('sum(weight) as s_weight')->where($result_where)->find();
+//                    exit($result_weight);
+                    $count_data['weight'] = $result_weight['s_weight'];
+                    $count_data['firmid'] = intval($msg['content']);
+                    $count_data['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+
+                    exit(jsonreturn($count_data));
+                } else {
+                    $firm_count = M('firm_historical_sum');
+                    $count_data = $firm_count->where(array('firmid' => intval($msg['content'])))->find();
+                    $count_data['code'] = $this->ERROR_CODE_COMMON['SUCCESS'];
+                    exit(json_encode($count_data));
+                }
+            }else{
+                $res = $msg;
+            }
+        }else{
+            //参数缺失 4
+            $res = array(
+                'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR']
+            );
+        }
+        exit(jsonreturn($res));
+    }
+
+
     /**
      * 认证公司，认证后的公司无法被认领
      */
@@ -552,9 +654,9 @@ class FirmController extends AppBaseController
         $code = I('post.code');
 //        $img = I('post.img');
 
-        $user = new \Common\Model\UserModel();
-        $msg = $user->is_judges($uid, $imei);
         if ($uid and $imei and $code) {
+            $user = new \Common\Model\UserModel();
+            $msg = $user->is_judges($uid, $imei);
             if ($msg['code'] == 1) {
                 vendor("Nx.FileUpload");
                 $Upload = new \FileUpload();
@@ -568,7 +670,7 @@ class FirmController extends AppBaseController
                             $img = $res['dest'];
                             $firm = new \Common\Model\FirmModel();
                             $res = $firm->legalize_firm($uid, $code, $img);
-                        }else{
+                        } else {
                             //上传图片失败，返回报错原因 9
                             $res = array(
                                 'code' => $this->ERROR_CODE_COMMON['UPLOAD_IMG_ERROR'],

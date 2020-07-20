@@ -45,7 +45,7 @@ class CabinController extends AdminBaseController
         $begin = ($p - 1) * $per;
 
         $data = $this->db
-            ->field('c.id,c.cabinname,c.altitudeheight,c.dialtitudeheight,c.bottom_volume,c.bottom_volume_di,c.pipe_line,c.shipid,s.shipname,s.tankcapacityshipid,s.rongliang,s.rongliang_1,s.zx,s.zx_1,s.tripbystern,s.trimcorrection,s.trimcorrection1')
+            ->field('c.id,c.cabinname,c.altitudeheight,c.dialtitudeheight,c.bottom_volume,c.bottom_volume_di,c.pipe_line,c.shipid,s.shipname,s.suanfa,s.tankcapacityshipid,s.rongliang,s.rongliang_1,s.zx,s.zx_1,s.tripbystern,s.trimcorrection,s.trimcorrection1')
             ->alias('c')
             ->join('left join ship s on s.id=c.shipid')
             ->where($where)
@@ -54,12 +54,29 @@ class CabinController extends AdminBaseController
             ->select();
 //        order by id DESC
         foreach ($data as $key => $value) {
+            if ($value['suanfa'] == 'a') {
+                $data[$key]['zx'] = "";
+                $data[$key]['zx_1'] = "";
+                $data[$key]['rongliang'] = "";
+                $data[$key]['rongliang_1'] = "";
+            } elseif ($value['suanfa'] == 'b') {
+                $data[$key]['rongliang_1'] = "";
+                $data[$key]['zx_1'] = "";
+                $data[$key]['tankcapacityshipid'] = "";
+            } elseif ($value['suanfa'] == 'c') {
+                $data[$key]['tankcapacityshipid'] = "";
+            } elseif ($value['suanfa'] == 'd') {
+                $data[$key]['rongliang'] = "";
+                $data[$key]['rongliang_1'] = "";
+                $data[$key]['tankcapacityshipid'] = "";
+            }
+
             //带纵倾刻度的容量表的前后数据
             if ($value['tankcapacityshipid'] != "") {
                 try {
                     $table = M($value['tankcapacityshipid']);
                     $title = array('sounding' => "实高", 'ullage' => "空高");
-                    array_merge($title, json_decode($value['tripbystern'], true));
+                    $title = array_merge($title, json_decode($value['tripbystern'], true));
                     $last_array = $table->where(array('cabinid' => $value['id']))->order('id desc')->find();
                     $first_array = $table->where(array('cabinid' => $value['id']))->order('id asc')->find();
                     $tip_txt = "<table style=\'width:400px\'><thead>";
@@ -85,7 +102,7 @@ class CabinController extends AdminBaseController
                     //获取总页数
                     $pages = ceil($rows / 50);
                     $tip_txt .= "<p style=\'text-align: center\'><span>- - - 共：" . $rows . "行," . $pages . "页 - - -</span></p>";
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     $tip_txt = "数据表不存在或发生错误";
                 }
                 $data[$key]['tankcapacityshipid_tip'] = $tip_txt;
@@ -123,7 +140,7 @@ class CabinController extends AdminBaseController
                     //获取总页数
                     $pages = ceil($rows / 50);
                     $tip_txt .= "<p style=\'text-align: center\'><span>- - - 共：" . $rows . "行," . $pages . "页 - - -</span></p>";
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     $tip_txt = "数据表不存在或发生错误";
                 }
 
@@ -160,7 +177,7 @@ class CabinController extends AdminBaseController
                     //获取总页数
                     $pages = ceil($rows / 50);
                     $tip_txt .= "<p style=\'text-align: center\'><span>- - - 共：" . $rows . "行," . $pages . "页 - - -</span></p>";
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     $tip_txt = "数据表不存在或发生错误";
                 }
                 $data[$key]['zx_1_tip'] = $tip_txt;
@@ -195,7 +212,7 @@ class CabinController extends AdminBaseController
                     //获取总页数
                     $pages = ceil($rows / 50);
                     $tip_txt .= "<p style=\'text-align: center\'><span>- - - 共：" . $rows . "行," . $pages . "页 - - -</span></p>";
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     $tip_txt = "数据表不存在或发生错误";
                 }
 
@@ -231,7 +248,7 @@ class CabinController extends AdminBaseController
                     //获取总页数
                     $pages = ceil($rows / 50);
                     $tip_txt .= "<p style=\'text-align: center\'><span>- - - 共：" . $rows . "行," . $pages . "页 - - -</span></p>";
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     $tip_txt = "数据表不存在或发生错误";
                 }
                 $data[$key]['rongliang_1_tip'] = $tip_txt;
@@ -286,7 +303,7 @@ class CabinController extends AdminBaseController
                 unset($data['id']);
                 $res = $this->db->editData($map, $data);
                 if ($res !== false) {
-                    $this->success('修改成功！', U('index'));
+                    $this->success('修改成功！', U('index', array("shipid" => intval(I('post.shipid')))));
                 } else {
                     $this->error('修改失败！');
                 }
@@ -549,20 +566,240 @@ class CabinController extends AdminBaseController
 
             $form_html = "<tr><td rowspan=\"2\">舱名</td><td colspan=\"2\">基准高度(H)</td><td colspan=\"2\">底量(D)</td><td rowspan=\"2\">管线容量</td></tr><tr><td>容量表</td><td>底量表</td><td>容量表</td><td>底量表</td></tr>";
 //            return $res;
+
             foreach ($res as $k4 => $v4) {
                 if ($is_diliang == '1') {
                     // pipe_line
-                    $form_html .= '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][cabinname]"  value="'.$v4['cabinname'].'" tabindex="' . ($shipinfo['cabinnum'] * 0 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][altitudeheight]" value="'.($v4['altitudeheight']/1000).'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 1 + $k4) .'"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][dialtitudeheight]" value="'.($v4['dialtitudeheight']/1000).'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 2 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][bottom_volume]" value="'.$v4['bottom_volume'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 3 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][bottom_volume_di]" value="'.$v4['bottom_volume_di'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 4 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][pipe_line]" value="'.$v4['pipe_line'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 5 + $k4) . '"/></td></tr>';
+                    $form_html .= '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][cabinname]"  value="' . $v4['cabinname'] . '" tabindex="' . ($shipinfo['cabinnum'] * 0 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][altitudeheight]" value="' . ($v4['altitudeheight'] / 1000) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 1 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][dialtitudeheight]" value="' . ($v4['dialtitudeheight'] / 1000) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 2 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][bottom_volume]" value="' . $v4['bottom_volume'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 3 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][bottom_volume_di]" value="' . $v4['bottom_volume_di'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 4 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][pipe_line]" value="' . $v4['pipe_line'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 5 + $k4) . '"/></td></tr>';
                 } else {
                     // pipe_line
-                    $form_html .= '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][cabinname]" value="'.$v4['cabinname'].'" tabindex="' . ($shipinfo['cabinnum'] * 0 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][altitudeheight]" value="'.($v4['altitudeheight']/1000).'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 1 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][dialtitudeheight]" value="'.($v4['dialtitudeheight']/1000).'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 2 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][bottom_volume]" value="'.$v4['bottom_volume'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 3 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][bottom_volume_di]" value="'.$v4['bottom_volume_di'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 4 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][pipe_line]" value="'.$v4['pipe_line'].'" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 5 + $k4) . '"/></td></tr>';
+                    $form_html .= '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][cabinname]" value="' . $v4['cabinname'] . '" tabindex="' . ($shipinfo['cabinnum'] * 0 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][altitudeheight]" value="' . ($v4['altitudeheight'] / 1000) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 1 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][dialtitudeheight]" value="' . ($v4['dialtitudeheight'] / 1000) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 2 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][bottom_volume]" value="' . $v4['bottom_volume'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 3 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][bottom_volume_di]" value="' . $v4['bottom_volume_di'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 4 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][pipe_line]" value="' . $v4['pipe_line'] . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 5 + $k4) . '"/></td></tr>';
                 }
             }
+
             $form_html .= '<tr><td colspan=6 style="text-align: center;"><input type="submit" name="sub" value="提交" class="btn btn-primary" ></td></tr>';
 
-            $this->ajaxReturn(array('state'=>$ship->ERROR_CODE_COMMON['SUCCESS'],'content'=>$form_html,'cabinnum'=>count($res)));
+            $this->ajaxReturn(array('state' => $ship->ERROR_CODE_COMMON['SUCCESS'], 'content' => $form_html, 'cabinnum' => count($res)));
         } else {
             $this->error("请上传容量书信息");
         }
     }
+
+
+    /**
+     * 批量修改舱信息
+     */
+    public function batch_edit()
+    {
+        $cabin = new \Common\Model\CabinModel();
+
+        if (IS_POST) {
+            $shipid = intval(I("post.shipid"));
+            $datas = I('post.data');
+            //事务开启
+            M()->startTrans();
+            //循环获取数据
+            foreach ($datas as $key => $value) {
+                //构建条件
+                $where = array('id' => $value['id']);
+                //构建修改数据
+                $edit_data = array(
+                    'cabinname' => $value['cabinname'],
+                    'altitudeheight' => $value['altitudeheight'],
+                    'dialtitudeheight' => $value['dialtitudeheight'],
+                    'bottom_volume' => $value['bottom_volume'],
+                    'bottom_volume_di' => $value['bottom_volume_di'],
+                    'pipe_line' => $value['pipe_line'],
+                );
+                //更改数据，捕捉异常
+                try {
+                    if (false === $cabin->editData($where, $edit_data)) {
+                        //更改如果没有生效，rollback
+                        M()->rollback();
+                        $this->error($value['cabinname'] . "，修改未生效，修改失败");
+                    }
+                } catch (\Exception $e) {
+                    //更改如果发生异常，rollback
+                    M()->rollback();
+                    $this->error($value['cabinname'] . "，修改时异常，修改失败");
+                }
+            }
+            //事务提交
+            M()->commit();
+            $this->success("修改成功");
+        } else {
+            $shipid = intval(I("get.shipid"));
+            $ship = new \Common\Model\ShipFormModel();
+            $ship_info = $ship->field('cabinnum,suanfa')->where(array('id' => $shipid))->find();
+            $cabin_info = $cabin->where(array('shipid' => $shipid))->select();
+            $assign = array(
+                'list' => $cabin_info,
+                'shipid' => $shipid,
+                'ship_info' => $ship_info,
+            );
+            $this->assign($assign);
+            $this->display();
+        }
+    }
+
+
+    public function match_word_cabin()
+    {
+        $shipid = I('post.shipid');
+        $ship = new \Common\Model\ShipFormModel();
+        $is_diliang = "";
+
+        if ($_FILES['crb']['tmp_name'] and $_FILES['sysm']['tmp_name'] and $shipid) {
+            $shipinfo = $ship->field('is_diliang,cabinnum')->where(array('id' => $shipid))->find();
+            $reg1 = '/舱\s*?内\s*?输\s*?油\s*?管\s*?系\s*?所\s*?含\s*?容\s*?积\s*?列\s*?表\s*?如\s*?下[（\(]+m3[\)）]+[：\:]+\s*?舱\s*?名\s([\S\s]*?)总\s*?计\s*?容\s*?量\s([\d\.\r\n]+)/m';
+            $reg2 = '/\s*?证书编号\s*?(?:\:|：)\s*?([a-zA-Z0-9]+)\s*?船名\s*?(?:\:|：)\s*?(\S+)\s*?第\s*?(\d+)\s*?页\s*?舱名(?:\:|：)\s*?(\S+)\s*?\S*?\s*?基准高度\/REFERENCE\s*?HEIGHT\:\s*?([\d]{1,2}\.[\d]{0,3})\(m\)\s*?\*+\s*?纵\s*?倾\s*?值\/TRIM\s*?BY\s*?STERN\s*?测\s*?深\s*?空\s*?高\s*?\*+\s*?SOUNDING\s*?ULLAGE\s*?([ \t\-\.\d]+)\s*?(?:\(m\)\s+)+\*+\s+([0-9\.\- \r\n]+)/m';
+
+//            if ($shipinfo['is_diliang'] == 1) {
+//                if (!($_FILES['crb_di']['tmp_name'] and $_FILES['sysm_di']['tmp_name'])) $this->error("请上传底量书信息");
+//                $sysm_di_orgin_txt = file_get_contents($_FILES['sysm_di']['tmp_name']);
+//                $crb_di_orgin_txt = file_get_contents($_FILES['crb_di']['tmp_name']);
+//
+//
+//
+//
+//
+//                $is_diliang = '1';
+//            }
+
+            $sysm_orgin_txt = file_get_contents($_FILES['sysm']['tmp_name']);
+//            exit($sysm_orgin_txt);
+            $crb_orgin_txt = file_get_contents($_FILES['crb']['tmp_name']);
+
+            //匹配第一段正则文本
+            preg_match($reg1, $sysm_orgin_txt, $matche);
+
+            $sysm_cabin_txt = $matche[1];
+            $sysm_pipe_txt = $matche[2];
+//            echo jsonreturn($matche);
+            $sysm_cabin_arr = explode("\r", $sysm_cabin_txt);
+            $sysm_pipe_arr = explode("\r", $sysm_pipe_txt);
+            unset($sysm_cabin_arr[count($sysm_cabin_arr) - 1]);
+            unset($sysm_pipe_arr[count($sysm_pipe_arr) - 1]);
+            unset($sysm_pipe_arr[count($sysm_pipe_arr) - 1]);
+
+//            echo json_encode($sysm_cabin_arr);
+
+//            echo json_encode($sysm_pipe_arr);
+
+            $pipe_arr = array();
+            foreach ($sysm_cabin_arr as $key => $value) {
+                $pipe_arr[] = array("cabin_name" => $value, "pipe" => $sysm_pipe_arr[$key]);
+            }
+//            echo json_encode($pipe_arr);
+//            exit();
+
+
+            $diliang = array();
+
+            $last_diliang = array();
+            preg_match_all($reg2, $crb_orgin_txt, $matches, PREG_SET_ORDER, 0);
+//            $trim_kedu = json_decode($trim_kedu, true);
+            foreach ($matches as $key => $value) {
+                $zero_trim = -1;
+                $data['cabin_name'] = preg_replace("/[左右]+污油舱 /", "", $value[4]);
+                $data['altitudeheight'] = floatval($value[5]);
+
+
+                //如果和上一页的舱不相同，则记录到底量列表内
+                if ($last_diliang['cabin_name'] != $data['cabin_name'] && $key > 0) $diliang[] = $last_diliang;
+
+
+                //开始分开吃水刻度
+                $kedu_str = $this->removeExtraSpace($value[6]);
+//            exit($kedu_str);
+                $kedu = explode(' ', $kedu_str);
+//            exit(jsonreturn($kedu));
+//            exit;
+                //获取纵倾为0的刻度
+                foreach ($kedu as $key1 => $value1) {
+                    if (floatval($value1) == 0) {
+                        $zero_trim = $key1;
+//                        echo $zero_trim;
+//                        exit($zero_trim);
+                    }
+                }
+                if ($zero_trim == -1) continue;
+
+                $data['kedu'] = $kedu;
+                //开始处理数据主体
+                $data_row = explode("\r\n", $this->removeExtraSpace($value[7]));
+                //获取每页最后一行的有效数据
+                $last_data = $this->getValidData($data_row);
+//                exit(jsonreturn($last_data));
+                $data_cloumn = explode(" ", $last_data);
+                //获取并且记录纵倾刻度在0位的容量
+                $last_diliang = array("cabin_name" => $data['cabin_name'], "altitudeheight" => $data['altitudeheight'], "bottom_volume" => $data_cloumn[$zero_trim + 2]);
+                if ($key == count($matches) - 1) {
+                    $diliang[] = $last_diliang;
+                }
+            }
+
+
+
+//        echo ajaxReturn($matches_height_data);
+//        dump($matches_pipe_data_di);
+//        exit;
+//            echo jsonreturn($diliang);
+//            echo jsonreturn($pipe_arr);
+//            exit();
+            $res = array();
+            foreach ($diliang as $k2 => $v2) {
+                foreach ($pipe_arr as $k3 => $v3) {
+                    if ($v2['cabin_name'] == $v3['cabin_name']) {
+                        $data = array(
+                            'cabinname' => $v2['cabin_name'],
+                            'altitudeheight' => $v2['altitudeheight'],
+                            'dialtitudeheight' => 0,
+                            'bottom_volume' => $v2['bottom_volume'],
+                            'bottom_volume_di' => 0,
+                            'pipe_line' => $v3['pipe'],
+                        );
+                        array_push($res, $data);
+                    }
+                }
+            }
+
+            $form_html = "<tr><td rowspan=\"2\">舱名</td><td colspan=\"2\">基准高度(H)</td><td colspan=\"2\">底量(D)</td><td rowspan=\"2\">管线容量</td></tr><tr><td>容量表</td><td>底量表</td><td>容量表</td><td>底量表</td></tr>";
+//            return $res;
+
+            foreach ($res as $k4 => $v4) {
+                $form_html .= '<tr><td><input type="text" id="form-field-1" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][cabinname]" value="' . $v4['cabinname'] . '" tabindex="' . ($shipinfo['cabinnum'] * 0 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][altitudeheight]" value="' . floatval($v4['altitudeheight']) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 1 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][dialtitudeheight]" value="' . floatval($v4['dialtitudeheight']) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 2 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][bottom_volume]" value="' . floatval($v4['bottom_volume']) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 3 + $k4) . '"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" name="data[' . $k4 . '][bottom_volume_di]" value="' . floatval($v4['bottom_volume_di']) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 4 + $k4) . '" disabled="disabled"/></td><td><input type="text" id="form-field-2" class="col-xs-15 col-sm-12" required name="data[' . $k4 . '][pipe_line]" value="' . floatval($v4['pipe_line']) . '" maxlength="5" tabindex="' . ($shipinfo['cabinnum'] * 5 + $k4) . '"/></td></tr>';
+            }
+
+            $form_html .= '<tr><td colspan=6 style="text-align: center;"><input type="submit" name="sub" value="提交" class="btn btn-primary" ></td></tr>';
+
+            $this->ajaxReturn(array('state' => $ship->ERROR_CODE_COMMON['SUCCESS'], 'content' => $form_html, 'cabinnum' => count($res)));
+        } else {
+            $this->error("请上传容量书信息");
+        }
+    }
+
+    function getValidData($data_row)
+    {
+        $last_data = $data_row[count($data_row) - 1];
+        unset($data_row[count($data_row) - 1]);
+        $qian = array(" ", "　", "   ", "    ", '-', '0', '.');
+        $hou = array("", "", "", "", "", "", "");
+        if (str_replace($qian, $hou, $last_data) == "") return $this->getValidData($data_row);
+        return $last_data;
+    }
+
+    /**
+     * 去除文本内多余空格，并且去除头部和结尾的空格
+     * @param $txt
+     * @return string
+     */
+    function removeExtraSpace($txt)
+    {
+        $txt1 = preg_replace("/^ {2,}/m", "", $txt);
+        $txt2 = preg_replace("/(\d) {2,}/m", "$1 ", $txt1);
+        $txt3 = preg_replace("/ {2,}$/m", "", $txt2);
+        return $txt3;
+    }
+
 }

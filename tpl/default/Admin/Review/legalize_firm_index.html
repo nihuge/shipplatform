@@ -5,17 +5,17 @@
         审核管理
     </li>
     <li class="active">
-        公司认领审核
+        公司认证审核
     </li>
 </block>
 <block name="activeopen11">class="active open"</block>
-<block name="active35">class="active"</block>
+<block name="active37">class="active"</block>
 <block name="content">
     <div class="page-container">
         <div>
             <form action="__ACTION__" method="get">
                 <input type="hidden" name="c" value="Review">
-                <input type="hidden" name="a" value="claimed_firm_index">
+                <input type="hidden" name="a" value="legalize_firm_index">
                 <!--                <select class=" col-xs-10 col-sm-2" id="form-field-select-1" name="firmid">-->
                 <!--                    <option value="">选择所属公司</option>-->
                 <!--                    <volist name="firmlist" id="v">-->
@@ -28,9 +28,7 @@
                                                                        style='width:130px;text-align: center'>
                 <option value="">--选择审核状态--</option>
                 <option value="1">未审核</option>
-                <option value="2">审核中</option>
-                <option value="3">审核失败</option>
-                <option value="4">审核通过</option>
+                <option value="2">已审核</option>
             </select>
                 <button class="btn btn-sm btn-primary">查询</button>
             </form>
@@ -44,8 +42,6 @@
                 <th>ID</th>
                 <th>公司</th>
                 <th>申请人</th>
-                <th>文件数</th>
-                <th>审核人</th>
                 <th>申请时间</th>
                 <th>操作</th>
             </tr>
@@ -55,11 +51,9 @@
                     <td>{$v['id']}</td>
                     <td>{$v['firmname']}</td>
                     <td>{$v['username']}</td>
-                    <td>{$v['file_count']}</td>
-                    <td>{$v['name']}</td>
                     <td>{$v['time']}</td>
                     <td>
-                        <a href="{:U('Review/claimed_firm',array('claimed_id'=>$v['id']))}">查看</a>
+                        <a href="{:U('Review/legalize_firm',array('firm_id'=>$v['id']))}">查看</a>
                     </td>
                 </tr>
             </volist>
@@ -67,85 +61,5 @@
                 <td colspan=7 class="pages">{$page}</td>
             </tr>
         </table>
-        <script type="text/javascript">
-            function delShip(shipid) {
-                layer.confirm('您确定要删除船舶吗？', {
-                    btn: ['确定', '取消'] //按钮
-                }, function () {
-                    $.ajax({
-                        url: "{:U('Ship/del_ship')}",
-                        type: "POST",
-                        data: {
-                            shipid: shipid
-                        },
-                        success: function (data) {
-                            if (data.code == 1) {
-                                //刷新
-                                location.reload()
-                            } else {
-                                layer.msg(data.msg, {
-                                    icon: 5
-                                });
-                            }
-
-                        }
-
-                    });
-                })
-            }
-
-            function recoverShip(shipid) {
-                layer.confirm('您确定要恢复船舶吗？', {
-                    btn: ['确定', '取消'] //按钮
-                }, function () {
-                    $.ajax({
-                        url: "{:U('Ship/recoverShip')}",
-                        type: "POST",
-                        data: {
-                            shipid: shipid
-                        },
-                        success: function (data) {
-                            if (data.code == 1) {
-                                //刷新
-                                location.reload()
-                            } else {
-                                layer.msg(data.msg, {
-                                    icon: 5
-                                });
-                            }
-
-                        }
-
-                    });
-                })
-            }
-        </script>
-        <if condition="$adminmsg['group_id'] eq 1">
-            <script type="text/javascript">
-                function relDelShip(shipid) {
-                    layer.confirm('危险操作，此操作无法撤回数据。您确定要彻底删除船舶吗？', {
-                        btn: ['确定', '取消'] //按钮
-                    }, function () {
-                        $.ajax({
-                            url: "{:U('Ship/relDelShip')}",
-                            type: "POST",
-                            data: {
-                                shipid: shipid
-                            },
-                            success: function (data) {
-                                if (data.code == 1) {
-                                    //刷新
-                                    location.reload()
-                                } else {
-                                    layer.msg(data.msg, {
-                                        icon: 5
-                                    });
-                                }
-                            }
-                        });
-                    })
-                }
-            </script>
-        </if>
     </div>
 </block>

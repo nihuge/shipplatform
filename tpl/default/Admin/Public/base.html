@@ -329,6 +329,18 @@
                 <b class="arrow"></b>
                 </li>
 
+                <li
+                <block name="active37"></block>
+                >
+                <a href="{:U('Review/legalize_firm_index')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    公司认证审核
+                    <if condition="$review_count_arr['legalize_firm_count'] gt 0">
+                        <span class="layui-badge">{$review_count_arr['legalize_firm_count']}</span>
+                    </if>
+                </a>
+                <b class="arrow"></b>
+                </li>
             </ul>
             </li>
 
@@ -421,11 +433,38 @@
                 </li>
             <b class="arrow"></b>
                 <li
+                <block name="active_formless_sh_upload"></block>
+                >
+                <a href="{:U('Upload/formless_sh_upload')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> 无表散货船数据导入 </span>
+                </a>
+                </li>
+            <b class="arrow"></b>
+                <li
                 <block name="active_up_txt"></block>
                 >
                 <a href="{:U('Upload/up_txt')}">
                     <i class="menu-icon fa fa-caret-right"></i>
                     <span class="menu-text"> txt整本数据导入 </span>
+                </a>
+                </li>
+            <b class="arrow"></b>
+                <li
+                <block name="active_up_word"></block>
+                >
+                <a href="{:U('Upload/up_word')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> word转txt数据导入 </span>
+                </a>
+                </li>
+            <b class="arrow"></b>
+                <li
+                <block name="active_up_ds_txt"></block>
+                >
+                <a href="{:U('Upload/up_ds_txt')}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> 散货船静力水表导入 </span>
                 </a>
                 </li>
             </ul>

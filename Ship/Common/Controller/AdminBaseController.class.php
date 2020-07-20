@@ -166,7 +166,7 @@ class AdminBaseController extends BaseController
 //        }
 //        //我count我自己
 //        $sh_ship_count = count($sh_ship_count);
-        $sh_ship_count= $sh_ship->field('id')->where($ship_where)->select();
+        $sh_ship_count = $sh_ship->field('id')->where($ship_where)->select();
         //我count我自己
         $sh_ship_count = count($sh_ship_count);
         /*
@@ -190,6 +190,9 @@ class AdminBaseController extends BaseController
         $table_review_count = $table_review->where($table_review_count_where)->count();
 
 
+        $firm = new \Common\Model\FirmModel();
+        $legalize_firm_count = $firm->where(array("legalize_img" => array('neq', ""), "legalize_code" => array('neq', ""), "claimed" => 1))->count();
+
         //初始化审核计数渲染数组
         $review_count_arr = array();
 
@@ -199,10 +202,11 @@ class AdminBaseController extends BaseController
         $review_count_arr['ship_count'] = $ship_count;
         $review_count_arr['firm_review_count'] = $firm_review_count;
         $review_count_arr['table_review_count'] = $table_review_count;
+        $review_count_arr['legalize_firm_count'] = $legalize_firm_count;
 
 
         //修改审核总数
-        $review_count_arr['review_count'] = $sh_ship_review_count + $ship_review_count + $firm_review_count;
+        $review_count_arr['review_count'] = $sh_ship_review_count + $ship_review_count + $firm_review_count + $legalize_firm_count;
 
         //新建审核总数
         $review_count_arr['create_count'] = $sh_ship_count + $ship_count + $table_review_count;

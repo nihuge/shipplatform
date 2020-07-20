@@ -114,24 +114,40 @@ class NoticeModel extends BaseModel
      * 获取站内信的列表
      * @param $uid
      * @param $statue
+     * @param $p
      * @return mixed
      */
-    public function noticeList($uid, $statue)
+    public function noticeList($uid, $statue,$p)
     {
         $where = array(
             'uid' => $uid,
             'statue' => array('ELT', $statue)
         );
+        $per = 10;
+        if ($p<1) {
+            $p = 1;
+        }
+        //分页
+        $begin = ($p - 1) * $per;
         $notice_list = $this
             ->where($where)
+            ->limit($begin, $per)
             ->select();
         $wx_info = C('WX_CONFIG.APP_INFO');
         //处理点击站内信时跳转小程序的APPID变量
         foreach ($notice_list as $key => $value) {
-            $notice_list[$key]['msg'] = substr_format($value['msg'], 20);//正文最多显示20个字
+            $notice_list[$key]['msg'] = substr_format($value['msg'], 50);//正文最多显示50个字
             $notice_list[$key]['app_name'] = $wx_info[$value['mini_program']]['APPNAME'];//显示APP名字
+            $time = $notice_list[$key]['create_date'];
+            $notice_list[$key]['create_date'] = date('Y-m-d',$time);//显示日期
+            $notice_list[$key]['create_time'] = date('H:i:s',$time);//显示时间
         }
-        return array('code' => $this->ERROR_CODE_COMMON['SUCCESS'], 'list' => $notice_list);
+
+        return array(
+            'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
+            'list' => $notice_list
+        );
+
     }
 
     /**
@@ -168,10 +184,16 @@ class NoticeModel extends BaseModel
         $wx_info = C('WX_CONFIG.APP_INFO');
         //匹配需要跳转的APPID
         $notice_msg['jump_appid'] = $wx_info[$notice_msg['mini_program']]['APPID'];
+        $notice_msg['app_name'] = $wx_info[$notice_msg['mini_program']]['APPNAME'];//显示APP名字
+
+        $time = $notice_msg['create_date'];
+        $notice_msg['create_date'] = date('Y-m-d',$time);//显示日期
+        $notice_msg['create_time'] = date('H:i:s',$time);//显示时间
+
 
         //自动将信息标为已读
         $data = array(
-            'status' => 1
+            'statue' => 2
         );
         $this->editData($where, $data);
 
@@ -191,11 +213,11 @@ class NoticeModel extends BaseModel
 
         //将信息标为已读
         $data = array(
-            'status' => 2
+            'statue' => 2
         );
 
         $result = $this->editData($where, $data);
-        if ($result === false) {
+        if ($result !== false) {
             //成功
             $res = array(
                 'code' => $this->ERROR_CODE_COMMON['SUCCESS']

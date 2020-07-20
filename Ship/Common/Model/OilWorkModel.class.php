@@ -60,6 +60,9 @@ class OilWorkModel extends BaseModel
     public function addResult($data, $uid)
     {
         $datas = $data;
+        foreach ($datas as $data_value) {
+            if (!filterString($data_value)) return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA'], 'msg' => "请不要提交异常字符信息");
+        }
         //判断船驳舱容表时间是否到期
         $ship = new \Common\Model\ShipFormModel();
 //        $expire_time = $ship->getFieldById($data['shipid'], 'expire_time');
@@ -883,7 +886,6 @@ class OilWorkModel extends BaseModel
             );
 
 
-
             if ($datas['solt'] == '1') {
                 $this->process["soltType"] = "作业前";
 
@@ -931,14 +933,21 @@ class OilWorkModel extends BaseModel
             );
             $num = M('forntrecord')->where($map)->count();
             M()->startTrans();  // 开启事物
-            if ($num > 0) {
-                //数据存在--修改
-                $r = M('forntrecord')->where($map)->save($data);
-            } else {
-                //数据不存在--新增
-                $r = M('forntrecord')->add($data);
+            try {
+                if ($num > 0) {
+                    //数据存在--修改
+                    $r = M('forntrecord')->where($map)->save($data);
+                } else {
+                    //数据不存在--新增
+                    $r = M('forntrecord')->add($data);
+                }
+            } catch (\Exception $exception) {
+                M()->rollback();
+                $res = array(
+                    'code' => $this->ERROR_CODE_COMMON['DB_ERROR']
+                );
+                exit(jsonreturn($res));
             }
-
             $datafile = array();
             // 判断是否存在首吃水 尾吃水
             if (!empty($datas['firstfiles']) && $datas['firstfiles'] != '[]') {
@@ -1011,7 +1020,7 @@ class OilWorkModel extends BaseModel
                             $this->process = array();
                             $value['uid'] = $datas['uid'];
                             $value['imei'] = $datas['imei'];
-                            $this->reckon($value);
+                            $this->reckon($value, 'l', true);
                         }
                     }
                 }
@@ -1096,7 +1105,7 @@ class OilWorkModel extends BaseModel
 
     /**
      * 根据密度获取不同油品的Alpha
-     * @param int $oilType 油类型，2：原油，3：石油产品，4：润滑油
+     * @param int   $oilType 油类型，2：原油，3：石油产品，4：润滑油
      * @param float $density 油品密度 t/m³
      */
     function getAlpha($oilType, $density)
@@ -1294,12 +1303,21 @@ class OilWorkModel extends BaseModel
 
     /**
      * 有表船计算接口
-     * @param array $data
+     * @param array  $data
      * @param string $type 默认l，代表没有发生错误时由此方法提交事务，传入其他值则外部提交事务
+     * @param boolean $is_repeat 默认false，是否重新计算
      * @return array
      */
-    public function reckon($data, $type = 'l')
+    public function reckon($data, $type = 'l', $is_repeat = false)
     {
+        if (!$is_repeat) {
+            $validata_result = validata_range($data);
+            if ($validata_result['error']) {
+                //提交的值超出约定范围，报错2044
+                M()->rollback();
+                return array('code' => $this->ERROR_CODE_RESULT['OUT_OF_RANGE'], 'msg' => "提交的信息中存在超出范围的值，请检查", 'key' => $validata_result['key']);
+            }
+        }
         $this->process = array();
         // 根据船ID获取纵倾值
         $ship = new \Common\Model\ShipModel();
@@ -1341,7 +1359,7 @@ class OilWorkModel extends BaseModel
             ->field('qianchi,houchi,qiantemperature,qiandensity,houtemperature,houdensity,qianweight,oil_type,qiansw,qiansw')
             ->where(array('id' => $data['resultid']))
             ->find();
-        \Think\Log::record("\r\n \r\n [ OilWork!!! ] ".json_encode($msg)." \r\n \r\n ", "DEBUG", true);
+        \Think\Log::record("\r\n \r\n [ OilWork!!! ] " . json_encode($msg) . " \r\n \r\n ", "DEBUG", true);
 
         if ($msg == false || empty($msg)) {
             M()->rollback();
@@ -1351,7 +1369,6 @@ class OilWorkModel extends BaseModel
             );
             die;
         }
-        
 
 
         // 根据前后状态获取吃水差
@@ -1399,9 +1416,9 @@ class OilWorkModel extends BaseModel
         $this->process['density_process']['P20'] = $P20;
 
         //标准密度
-        $CrP20 = round($P20 * $cp20,4);
+        $CrP20 = round($P20 * $cp20, 4);
         $this->process['density_process']['CrP20'] = $CrP20;
-        $volume = round($this->getVcf20($P15, $data['temperature'], $msg['oil_type'], $P20),5);
+        $volume = round($this->getVcf20($P15, $data['temperature'], $msg['oil_type'], $P20), 5);
         // 记录体积修正参数
         $this->process['coefficient'] = $shipmsg['coefficient'];
         $this->process['Cabin_temperature'] = $data['temperature'];
@@ -1654,7 +1671,7 @@ class OilWorkModel extends BaseModel
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
                 //计算重量 标准容量*密度
-                $cargo_weight = round($standardcapacity*($CrP20/1000-0.0011),3);
+                $cargo_weight = round($standardcapacity * ($CrP20 / 1000 - 0.0011), 3);
 
                 $this->process['cargo_weight'] = $cargo_weight;
                 $this->process['now_cabin_volume'] = $standardcapacity;
@@ -1677,10 +1694,10 @@ class OilWorkModel extends BaseModel
                     'water_sounding' => $data['water_sounding'],
                     'ob_temperature' => $data['ob_temperature'],
                     'ob_density' => $data['ob_density'],
-                    'mixed_volume'=>$mixed_weight,
-                    'water_volume'=>$water_weight,
-                    'density'=>$CrP20,
-                    'cargo_weight'=>$cargo_weight,
+                    'mixed_volume' => $mixed_weight,
+                    'water_volume' => $water_weight,
+                    'density' => $CrP20,
+                    'cargo_weight' => $cargo_weight,
                 );
 
                 break;
@@ -1919,7 +1936,7 @@ class OilWorkModel extends BaseModel
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
                 //计算重量 标准容量*密度
-                $cargo_weight = round($standardcapacity*($CrP20/1000-0.0011),3);
+                $cargo_weight = round($standardcapacity * ($CrP20 / 1000 - 0.0011), 3);
 
                 $this->process['cargo_weight'] = $cargo_weight;
                 $this->process['now_cabin_volume'] = $standardcapacity;
@@ -1944,10 +1961,10 @@ class OilWorkModel extends BaseModel
                     'water_sounding' => $data['water_sounding'],
                     'ob_temperature' => $data['ob_temperature'],
                     'ob_density' => $data['ob_density'],
-                    'mixed_volume'=>$mixed_weight,
-                    'water_volume'=>$water_weight,
-                    'density'=>$CrP20,
-                    'cargo_weight'=>$cargo_weight,
+                    'mixed_volume' => $mixed_weight,
+                    'water_volume' => $water_weight,
+                    'density' => $CrP20,
+                    'cargo_weight' => $cargo_weight,
 
                 );
                 break;
@@ -2362,7 +2379,7 @@ class OilWorkModel extends BaseModel
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
                 //计算重量 标准容量*密度
-                $cargo_weight = round($standardcapacity*($CrP20/1000-0.0011),3);
+                $cargo_weight = round($standardcapacity * ($CrP20 / 1000 - 0.0011), 3);
                 $this->process['cargo_weight'] = $cargo_weight;
                 $this->process['now_cabin_volume'] = $standardcapacity;
 
@@ -2386,10 +2403,10 @@ class OilWorkModel extends BaseModel
                     'water_sounding' => $data['water_sounding'],
                     'ob_temperature' => $data['ob_temperature'],
                     'ob_density' => $data['ob_density'],
-                    'mixed_volume'=>$mixed_weight,
-                    'water_volume'=>$water_weight,
-                    'density'=>$CrP20,
-                    'cargo_weight'=>$cargo_weight,
+                    'mixed_volume' => $mixed_weight,
+                    'water_volume' => $water_weight,
+                    'density' => $CrP20,
+                    'cargo_weight' => $cargo_weight,
                 );
                 break;
             case 'd':
@@ -2682,7 +2699,7 @@ class OilWorkModel extends BaseModel
                 // 计算标准容量   容量*体积*膨胀
                 $standardcapacity = round($cabinweight * $volume * $expand, 3);
                 //计算重量 标准容量*密度
-                $cargo_weight = round($standardcapacity*($CrP20/1000 - 0.0011),3);
+                $cargo_weight = round($standardcapacity * ($CrP20 / 1000 - 0.0011), 3);
                 $this->process['cargo_weight'] = $cargo_weight;
                 $this->process['now_cabin_volume'] = $standardcapacity;
 
@@ -2704,10 +2721,10 @@ class OilWorkModel extends BaseModel
                     'water_sounding' => $data['water_sounding'],
                     'ob_temperature' => $data['ob_temperature'],
                     'ob_density' => $data['ob_density'],
-                    'mixed_volume'=>$mixed_weight,
-                    'water_volume'=>$water_weight,
-                    'density'=>$CrP20,
-                    'cargo_weight'=>$cargo_weight,
+                    'mixed_volume' => $mixed_weight,
+                    'water_volume' => $water_weight,
+                    'density' => $CrP20,
+                    'cargo_weight' => $cargo_weight,
                 );
                 break;
             default:
@@ -2986,6 +3003,12 @@ class OilWorkModel extends BaseModel
      * */
     public function reckon1($data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if ($validata_result['error']) {
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code' => $this->ERROR_CODE_RESULT['OUT_OF_RANGE'], 'msg' => "提交的信息中存在超出范围的值，请检查", 'key' => $validata_result['key']);
+        }
         $this->process = array();
         self::$function_process = array();
 
@@ -3667,6 +3690,12 @@ class OilWorkModel extends BaseModel
      * */
     public function capacityreckon($data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if ($validata_result['error']) {
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code' => $this->ERROR_CODE_RESULT['OUT_OF_RANGE'], 'msg' => "提交的信息中存在超出范围的值，请检查", 'key' => $validata_result['key']);
+        }
         $this->process = array();
         self::$function_process = array();
         $user = new \Common\Model\UserModel();
@@ -4677,6 +4706,12 @@ class OilWorkModel extends BaseModel
      */
     public function adjust_cabin(array $data, $type = 'l')
     {
+        $validata_result = validata_range($data);
+        if ($validata_result['error']) {
+            //提交的值超出约定范围，报错2044
+            M()->rollback();
+            return array('code' => $this->ERROR_CODE_RESULT['OUT_OF_RANGE'], 'msg' => "提交的信息中存在超出范围的值，请检查", 'key' => $validata_result['key']);
+        }
         $result_record = M("resultrecord");
         $record_where = array(
             "solt" => $data['solt'],
@@ -4704,14 +4739,14 @@ class OilWorkModel extends BaseModel
         } catch (\Exception $e) {
             //数据格式有错 7
             M()->rollback();
-            return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA']);
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR']);
         }
 
         //如果保存失败
         if ($edit_result === false) {
-            //数据格式有错 7
+            //数据库错误 3
             M()->rollback();
-            return array('code' => $this->ERROR_CODE_COMMON['ERROR_DATA']);
+            return array('code' => $this->ERROR_CODE_COMMON['DB_ERROR']);
         }
 
         //查找新的数据库数据，之所以不直接算因为保存到数据库的数据有可能因为精度问题会舍去一部分
@@ -5066,9 +5101,9 @@ class OilWorkModel extends BaseModel
 
     /**
      * 调整累积舱容表数据
-     * @param $result_id 作业ID
-     * @param $solt 作业前后
-     * @param $cabinid 舱ID
+     * @param       $result_id 作业ID
+     * @param       $solt 作业前后
+     * @param       $cabinid 舱ID
      * @param array $trim_data 纵倾修正值数据
      * @return int $res 返回值：0错误，有特殊字符、1成功、2新值检测到重复，不录入、3失败
      */
@@ -5097,11 +5132,11 @@ class OilWorkModel extends BaseModel
 
     /**
      * 调整累积舱容表数据
-     * @param $result_id 作业ID
-     * @param $solt 作业前后
-     * @param $cabinid 舱ID
+     * @param       $result_id 作业ID
+     * @param       $solt 作业前后
+     * @param       $cabinid 舱ID
      * @param array $trim_data 纵倾修正值数据
-     * @param int $data_sources 数据来源，1自动累积，2手动累积
+     * @param int   $data_sources 数据来源，1自动累积，2手动累积
      * @return int $res 返回值：0错误，有特殊字符、1成功、2新值检测到重复，不录入、3失败
      */
     public function adjust_cumulative_capacity_data($result_id, $solt, $cabinid, $capacity_data, $book, $data_sources = 1)
@@ -5131,9 +5166,9 @@ class OilWorkModel extends BaseModel
 
     /**
      * 获取对应的纵倾修正表字段
-     * @param $cabinid 舱ID
-     * @param $ullage 空高
-     * @param $draft 吃水差
+     * @param      $cabinid 舱ID
+     * @param      $ullage 空高
+     * @param      $draft 吃水差
      * @param bool $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
      * @return array|bool
      */
@@ -5174,8 +5209,8 @@ class OilWorkModel extends BaseModel
 
     /**
      * 获取对应的容量表字段
-     * @param $cabinid 舱ID
-     * @param $ullage 空高
+     * @param      $cabinid 舱ID
+     * @param      $ullage 空高
      * @param bool $fullsearch 是否全部查询 true查询全部字段，false查询必要字段
      * @return array|bool
      */

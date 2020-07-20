@@ -195,6 +195,9 @@
                         <button onclick="match_ship_info()" type="button" class="btn btn-warning"
                                 style="margin-left: 50px;">智能识别舱容表信息
                         </button>
+                        <button onclick="match_word_ship_info()" type="button" class="btn btn-warning"
+                                style="margin-left: 50px;">识别word舱容表信息
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -257,7 +260,7 @@
 
 
             content += '<div class="layui-form-item">\n' +
-                '    <label class="layui-form-label" style="width: 150px">上传任意舱容书：</label>\n' +
+                '    <label class="layui-form-label" style="width: 150px">上传容量表：</label>\n' +
                 '   <div class="layui-upload-drag" id="test10">\n' +
                 '       <i class="layui-icon"></i>\n' +
                 '       <i class="layui-icon"></i>\n' +
@@ -397,6 +400,260 @@
                                         $("input[name='kedu\[\]']").each(function () {
                                                 $(this).val(data.ship_info.kedu[kedu_num])
                                                 kedu_num++;
+                                        });
+
+                                        let kedu1_num = 0;
+                                        $("input[name='kedu1\[\]']").each(function () {
+                                            $(this).val(data.ship_info.kedu1[kedu1_num])
+                                            kedu1_num++;
+                                        });
+
+                                        // let edc = $("#sample-table-1");
+                                        // edc.html(data.content);
+                                        // console.log(data.cabinnum, cabinnum);
+                                        // if (data.cabinnum != cabinnum) {
+                                        //     layer.alert("船舶资料的舱数与书内的舱数不符合，请检查", {
+                                        //         icon: 5
+                                        //     });
+                                        // }
+                                        layer.close(index);
+
+                                    } else {
+                                        layer.alert(data.error, {
+                                            icon: 5
+                                        });
+                                    }
+                                }
+                            });
+                        }
+
+                    }else {
+                        layer.alert("请选择文件", {
+                            icon: 5
+                        });
+                    }
+
+
+                    return false;
+                })
+            });
+        }
+
+        function match_word_ship_info() {
+            let content = '';
+            content += '<form class="layui-form" method="post">';
+
+            content += '<div class="layui-form-item">\n' +
+                '    <label class="layui-form-label" style="width: 150px">是否有底量书：</label>\n' +
+                '    <div class="layui-input-block">\n' +
+                '      <input type="radio" lay-filter="is_diliang" name="is_diliang" value="2" title="无" checked="">\n' +
+                '      <input type="radio" lay-filter="is_diliang" name="is_diliang" value="1" title="有">\n' +
+                '    </div>\n' +
+                '  </div>' +
+                '<div class="layui-form-item layui-hide" id="diliang_code">\n' +
+                '    <label class="layui-form-label" style="width: 150px">底量书编号：</label>\n' +
+                '    <div class="layui-input-block">\n' +
+                '      <input type="text" lay-filter="diliang_number" class="layui-text" name="diliang_number" placeholder="请输入底量书编号">\n' +
+                '    </div>\n' +
+                '</div>';
+
+
+            content += '<div class="layui-form-item">\n' +
+                '<div class="layui-inline">\n' +
+                '    <label class="layui-form-label" style="width: 150px">上传使用说明：</label>\n' +
+                '   <div class="layui-upload-drag" id="test11">\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <p id="fileSelectTip1">点击上传，或将文件拖拽到此处</p>\n' +
+                '       </div>\n ' +
+                '       </div>\n ' +
+                '<div class="layui-inline">\n' +
+                '    <label class="layui-form-label" style="width: 150px">上传证书：</label>\n' +
+                '   <div class="layui-upload-drag" id="test12">\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <p id="fileSelectTip2">点击上传，或将文件拖拽到此处</p>\n' +
+                '       </div>\n ' +
+                '       </div>\n ' +
+                '<div class="layui-inline">\n' +
+                '    <label class="layui-form-label" style="width: 150px">上传舱容表：</label>\n' +
+                '   <div class="layui-upload-drag" id="test13">\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <i class="layui-icon"></i>\n' +
+                '       <p id="fileSelectTip3">点击上传，或将文件拖拽到此处</p>\n' +
+                '       </div>\n ' +
+                '       </div>\n ' +
+                '   </div>\n ';
+            //
+            // content += '<div class="layui-form-item">\n' +
+            //     '    <div class="layui-input-block">\n' +
+            //     '      <input type="file" id="testfile15" name="files">\n' +
+            //     '    </div>\n' +
+            //     '  </div>';
+
+            content += '<div class="layui-form-item">\n' +
+                '    <div class="layui-input-block">\n' +
+                '      <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>\n' +
+                '    </div>\n' +
+                '  </div>';
+
+            content += '</form>';
+
+            let index = layer.open({
+                type: 1,
+                title: "识别书内船信息",
+                skin: 'layui-layer-rim', //加上边框
+                area: ['620px', '660px'], //宽高
+                content: content
+            });
+
+            layui.use(['form', 'upload'], function () {
+                var $ = layui.jquery
+                    , upload = layui.upload
+                    , myform = new FormData()
+                    , form = layui.form;
+
+                form.render();
+
+                //拖拽上传
+                upload.render({
+                    elem: '#test11'
+                    , auto: false
+                    , accept: 'file' //允许上传的文件类型
+                    , acceptMime: 'text/plain'
+                    , exts: 'txt'
+                    , drag: true //允许拖拽
+                    , multiple: false //不允许上传多个
+                    , choose: function (obj) {
+                        var files = obj.pushFile();
+                        obj.preview(function (index, file, result) {
+                            console.log(file)
+                            myform.append('sysm', file)
+                            let fileName = file.name;
+                            if(fileName.length>10){
+                                fileName=fileName.substring(0,10)+"... .txt";  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+                            }
+
+                            $("#fileSelectTip1").text(fileName+"已选中,再次操作支持更换文件");
+                            // console.log(myform.get('file'))
+                        })
+
+                    }
+                });
+
+                //拖拽上传
+                upload.render({
+                    elem: '#test12'
+                    , auto: false
+                    , accept: 'file' //允许上传的文件类型
+                    , acceptMime: 'text/plain'
+                    , exts: 'txt'
+                    , drag: true //允许拖拽
+                    , multiple: false //不允许上传多个
+                    , choose: function (obj) {
+                        var files = obj.pushFile();
+                        obj.preview(function (index, file, result) {
+                            console.log(file)
+                            myform.append('zs', file)
+                            let fileName = file.name;
+                            if(fileName.length>10){
+                                fileName=fileName.substring(0,10)+"... .txt";  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+                            }
+
+                            $("#fileSelectTip2").text(fileName+"已选中,再次操作支持更换文件");
+                            // console.log(myform.get('file'))
+                        })
+
+                    }
+                });
+
+                //拖拽上传
+                upload.render({
+                    elem: '#test13'
+                    , auto: false
+                    , accept: 'file' //允许上传的文件类型
+                    , acceptMime: 'text/plain'
+                    , exts: 'txt'
+                    , drag: true //允许拖拽
+                    , multiple: false //不允许上传多个
+                    , choose: function (obj) {
+                        var files = obj.pushFile();
+                        obj.preview(function (index, file, result) {
+                            console.log(file)
+                            myform.append('crb', file)
+                            let fileName = file.name;
+                            if(fileName.length>10){
+                                fileName=fileName.substring(0,10)+"... .txt";  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+                            }
+
+                            $("#fileSelectTip3").text(fileName+"已选中,再次操作支持更换文件");
+                            // console.log(myform.get('file'))
+                        })
+
+                    }
+                });
+
+                form.on('radio(is_diliang)', function(data){
+                    console.log(data.value); //被点击的radio的value值
+                    if(data.value == 1){
+                        $("#diliang_code").removeClass("layui-hide")
+                    }else {
+                        $("#diliang_code").addClass("layui-hide")
+                    }
+                });
+
+                form.on('submit(demo1)', function (data) {
+                    if (myform.get('crb') !== null && myform.get('zs') !== null && myform.get('sysm') !== null) {
+                        let is_diliang = $("input[name='is_diliang']:checked").val();
+                        let diliang_number = $("input[name='diliang_number']").val();
+                        myform.append('is_diliang',is_diliang)
+                        myform.append('diliang_number',diliang_number)
+                        console.log(diliang_number)
+                        if(is_diliang == 1 && diliang_number==""){
+                            layer.alert("请输入底量书编号", {
+                                icon: 5
+                            });
+                        }else {
+                            $.ajax({
+                                url: "{:U('Ship/match_word_ship_info')}",
+                                type: "POST",
+                                data: myform,
+                                dataType: "json",
+                                processData: false,  //tell jQuery not to process the data
+                                contentType: false,  //tell jQuery not to set contentType
+                                success: function (data) {
+                                    console.log(data);
+                                    if (data.state == 1) {
+
+                                        $("input[name='shipname']").val(data.ship_info.shipname)
+                                        $("input[name='number']").val(data.ship_info.number)
+                                        $("input[name='expire_time']").val(data.ship_info.expire_time)
+                                        $("input[name='cabinnum']").val(data.ship_info.cabinnum)
+                                        $("input[name='coefficient']").val(data.ship_info.coefficient)
+                                        $("input[name='weight']").val(data.ship_info.weight)
+                                        $("input[name='goodsname']").val(data.ship_info.goodsname)
+                                        if(data.ship_info.is_guanxian == 1){
+                                            $("input[name='is_guanxian']:eq(0)").attr("checked",'checked');
+                                        }else {
+                                            $("input[name='is_guanxian']:eq(1)").attr("checked",'checked');
+                                        }
+
+                                        //自动选择此算法
+                                        $("#suanfa option").each(function () {
+                                            if ($(this).text() == data.ship_info.suanfa) {
+                                                $('#suanfa').val($(this).val());
+                                            }
+                                        });
+                                        if (data.ship_info.suanfa == 'c' || data.ship_info.suanfa == 'd') {
+                                            $("#tname1").show()
+                                        } else {
+                                            $("#tname1").css('display', 'none');
+                                        }
+
+                                        let kedu_num = 0;
+                                        $("input[name='kedu\[\]']").each(function () {
+                                            $(this).val(data.ship_info.kedu[kedu_num])
+                                            kedu_num++;
                                         });
 
                                         let kedu1_num = 0;
